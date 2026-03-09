@@ -75,7 +75,7 @@ export default function Header() {
 
   const desktopFloating = isHome && !isScrolled
   const desktopHeaderClass = desktopFloating
-    ? 'xl:bg-transparent xl:border-white/18 xl:shadow-none xl:backdrop-blur-0'
+    ? 'xl:bg-transparent xl:border-white/10 xl:shadow-none xl:backdrop-blur-0'
     : 'bg-[#1e3a5f]/94 border-white/16 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.92)] backdrop-blur-xl'
 
   return (
@@ -119,7 +119,7 @@ export default function Header() {
 
       <header
         className={`sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${desktopHeaderClass} ${
-          isHome ? 'xl:-mb-14' : ''
+          isHome ? '' : ''
         } border-[#e8e7de] bg-[#f5f5f0] xl:border-white/16 xl:bg-[#1e3a5f]`}
       >
         <div className="mx-auto max-w-[1280px] px-4">
@@ -142,8 +142,8 @@ export default function Header() {
                 const isActive = pathname === item.href
                 const itemClass = desktopFloating
                   ? isActive
-                    ? 'text-white'
-                    : 'text-white/88 hover:text-white'
+                    ? 'text-white [text-shadow:0_1px_10px_rgba(15,23,42,0.38)]'
+                    : 'text-white/95 [text-shadow:0_1px_10px_rgba(15,23,42,0.38)] hover:text-white'
                   : isActive
                     ? 'text-white'
                     : 'text-white/84 hover:text-white'
@@ -177,7 +177,7 @@ export default function Header() {
                   href={cta.href}
                   className={`inline-flex min-h-10 items-center justify-center rounded-full border px-5 py-[10px] text-[11px] font-bold uppercase tracking-[0.1em] transition ${
                     desktopFloating
-                      ? 'border-white/24 bg-white/6 text-white hover:border-white/40 hover:bg-white/10'
+                      ? 'border-white/42 bg-slate-950/18 text-white shadow-[0_12px_28px_-20px_rgba(15,23,42,0.7)] backdrop-blur-md hover:border-white/60 hover:bg-slate-950/28'
                       : 'border-[#fbbf24]/75 bg-[#fbbf24]/12 text-[#fff6d4] hover:border-[#fbbf24] hover:bg-[#fbbf24]/18'
                   }`}
                 >
@@ -190,7 +190,7 @@ export default function Header() {
 
             <div
               className={`pointer-events-none absolute inset-x-0 bottom-0 hidden xl:block ${
-                desktopFloating ? 'border-b border-white/18' : 'border-b border-white/10'
+                desktopFloating ? 'border-b border-white/14' : 'border-b border-white/10'
               }`}
             />
           </div>

@@ -435,8 +435,9 @@ export default async function HomePage() {
 
   return (
     <main className="bg-white text-slate-700">
-      <section className="relative flex min-h-[620px] items-center overflow-hidden md:min-h-[700px]">
+      <section className="relative flex min-h-[620px] items-center overflow-hidden md:min-h-[700px] xl:-mt-[72px] xl:pt-[72px]">
         <HeroCarousel images={fallbackHeroSlides} autoplayMs={5500} pauseOnHover showDots showArrows />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] hidden h-[220px] bg-gradient-to-b from-slate-950/68 via-slate-950/34 to-transparent xl:block" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/35 to-transparent" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl items-center px-4 py-20 sm:px-6 lg:px-8">
