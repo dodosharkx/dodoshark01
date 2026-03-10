@@ -127,7 +127,7 @@ function splitTitle(title?: string) {
 }
 
 function hasFeatureListHeader(block: FeatureListBlockData) {
-  return Boolean(block.title?.trim() || block.subtitle?.trim())
+  return Boolean(block.title?.trim())
 }
 
 function shouldMergeRichAndFeature(
@@ -141,7 +141,7 @@ function shouldMergeRichAndFeature(
   const rich = richBlock as RichSectionBlockData
   const feature = featureBlock as FeatureListBlockData
 
-  if (hasFeatureListHeader(feature)) {
+  if (!feature.mergeWithPreviousRichSection) {
     return false
   }
 
@@ -203,7 +203,10 @@ async function getSolution(slug: string) {
       },
       items[] {
         ...,
-        "mediaType": coalesce(mediaType, select(defined(image) => "image", "icon")),
+        icon {
+          ...,
+          asset
+        },
         image {
           ...,
           asset

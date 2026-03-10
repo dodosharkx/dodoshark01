@@ -659,7 +659,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="overflow-hidden bg-slate-950 py-20 sm:py-24">
+      <section className="overflow-hidden bg-[#1e3a5f] py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">Project Cases</h2>
@@ -671,22 +671,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-slate-50 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
-          </div>
-
-          <HomeBlogCarousel items={blogItems} />
-
-          <div className="mt-10 text-center">
-            <Link href="/blogs" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">
-              More Videos
-              <ArrowRightIcon className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      
 
       <section id="contact" className="home-cta-bg relative overflow-hidden py-20 text-white sm:py-24">
         <div className="absolute inset-0 opacity-10">
@@ -710,6 +695,22 @@ export default async function HomePage() {
                 </article>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="bg-slate-50 py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
+          </div>
+
+          <HomeBlogCarousel items={blogItems} />
+
+          <div className="mt-10 text-center">
+            <Link href="/blogs" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">
+              More Videos
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>

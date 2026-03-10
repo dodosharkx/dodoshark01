@@ -17,34 +17,32 @@ type FeatureIconImage = {
 
 type FeatureListItem = {
   _key?: string
-  mediaType?: 'icon' | 'image'
   title?: string
   description?: string
   icon?: FeatureIconImage
-  image?: FeatureIconImage
 }
 
 export type FeatureListBlockData = {
   _type: 'featureListBlock'
   _key?: string
   title?: string
-  subtitle?: string
+  mergeWithPreviousRichSection?: boolean
   backgroundStyle?: 'white' | 'lightGray' | 'darkGray'
   items?: FeatureListItem[]
 }
 
 function FeatureMedia({ item }: { item: FeatureListItem }) {
-  const media = item.mediaType === 'image' ? item.image : item.icon
+  const media = item.icon
   if (!media?.asset) return null
 
   return (
-    <div className="relative mx-auto mb-5 h-24 w-24 overflow-hidden rounded-md border-2 border-[#E0B847] bg-white">
+    <div className="relative mx-auto mb-5 h-24 w-24">
       <Image
-        src={urlFor(media).width(160).height(160).fit('crop').url()}
+        src={urlFor(media).width(160).height(160).fit('max').url()}
         alt={media.alt || item.title || 'Feature media'}
         fill
         sizes="96px"
-        className="object-contain p-4"
+        className="object-contain"
       />
     </div>
   )
@@ -64,16 +62,15 @@ export default function FeatureListBlock({
   const backgroundVariant = mapFeatureBackgroundStyleToVariant(backgroundStyle)
   const theme = getSharedBackgroundTheme(backgroundVariant)
   const isDark = backgroundVariant === 'dark'
-  const hasHeader = Boolean(block.title?.trim() || block.subtitle?.trim())
+  const hasHeader = Boolean(block.title?.trim())
 
   if (!hasHeader && items.length === 0) return null
 
   const titleClass = theme.heading
-  const subtitleClass = isDark ? theme.subtitle : theme.body
   const itemTitleClass = theme.heading
   const itemDescriptionClass = theme.body
   const sectionSpacingClass =
-    seamlessFromPrev && !hasHeader ? '-mt-1 pt-0 pb-16 md:pb-20' : 'py-16 md:py-20'
+    seamlessFromPrev && !hasHeader ? '-mt-4 pt-0 pb-14 md:-mt-6 md:pb-16' : 'py-16 md:py-20'
 
   return (
     <section className={`${sectionSpacingClass} ${theme.section}`}>
@@ -81,23 +78,28 @@ export default function FeatureListBlock({
         {hasHeader && (
           <SectionHeader
             title={block.title}
-            subtitle={block.subtitle}
             isDark={isDark}
-            className="mx-auto mb-12 max-w-3xl"
-            titleClassName={`text-3xl font-display font-black tracking-tight md:text-4xl ${titleClass}`}
-            subtitleClassName={`text-base md:text-lg ${subtitleClass}`}
+            className="mx-auto mb-10 max-w-[36rem]"
+            titleClassName={`text-3xl font-display font-extrabold leading-[1.05] tracking-[-0.02em] md:text-[2.5rem] ${titleClass}`}
           />
         )}
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-8 gap-y-10">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-8 gap-y-12">
           {items.map((item, index) => (
-            <article key={item._key ?? `${item.title}-${index}`} className="text-center">
+            <article
+              key={item._key ?? `${item.title}-${index}`}
+              className="mx-auto flex max-w-[16rem] flex-col items-center text-center"
+            >
               <FeatureMedia item={item} />
-              <h3 className={`mb-3 text-3xl font-display font-black leading-tight ${itemTitleClass}`}>
+              <h3
+                className={`mb-4 max-w-[13ch] whitespace-pre-line text-[1.65rem] font-display font-extrabold leading-[1.08] tracking-[-0.02em] md:text-[1.75rem] ${itemTitleClass}`}
+              >
                 {item.title}
               </h3>
               {item.description && (
-                <p className={`mx-auto max-w-xs text-lg leading-snug ${itemDescriptionClass}`}>
+                <p
+                  className={`mx-auto max-w-[19ch] whitespace-pre-line text-base font-normal leading-8 ${itemDescriptionClass}`}
+                >
                   {item.description}
                 </p>
               )}

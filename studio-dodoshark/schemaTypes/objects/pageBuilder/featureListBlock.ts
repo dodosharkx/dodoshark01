@@ -7,15 +7,29 @@ export default defineType({
   icon: () => '✨',
   fields: [
     defineField({
+      name: 'mergeWithPreviousRichSection',
+      title: 'Merge With Previous Rich Section',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Enable when this feature list should visually continue the previous rich section.',
+    }),
+    defineField({
       name: 'title',
       title: 'Section Title',
       type: 'string',
-    }),
-    defineField({
-      name: 'subtitle',
-      title: 'Section Subtitle',
-      type: 'text',
-      rows: 2,
+      hidden: ({ parent }) => parent?.mergeWithPreviousRichSection === true,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const shouldMerge = (context.parent as { mergeWithPreviousRichSection?: boolean } | undefined)
+            ?.mergeWithPreviousRichSection
+
+          if (shouldMerge && typeof value === 'string' && value.trim()) {
+            return 'Clear section title when merging with the previous rich section.'
+          }
+
+          return true
+        }),
     }),
     defineField({
       name: 'backgroundStyle',
@@ -43,75 +57,34 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'mediaType',
-              title: 'Media Type',
-              type: 'string',
-              initialValue: 'icon',
-              options: {
-                list: [
-                  { title: 'Icon', value: 'icon' },
-                  { title: 'Image', value: 'image' },
-                ],
-                layout: 'radio',
-              },
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
               name: 'icon',
               title: 'Icon',
               type: 'image',
-              hidden: ({ parent }) => parent?.mediaType !== 'icon',
-              validation: (Rule) =>
-                Rule.custom((value, context) => {
-                  const mediaType = (context.parent as { mediaType?: string } | undefined)?.mediaType
-                  if (mediaType === 'icon' && !value) {
-                    return 'Icon is required when media type is Icon.'
-                  }
-                  if (mediaType === 'image' && value) {
-                    return 'Remove icon when media type is Image.'
-                  }
-                  return true
-                }),
-            }),
-            defineField({
-              name: 'image',
-              title: 'Image',
-              type: 'image',
-              hidden: ({ parent }) => parent?.mediaType !== 'image',
-              validation: (Rule) =>
-                Rule.custom((value, context) => {
-                  const mediaType = (context.parent as { mediaType?: string } | undefined)?.mediaType
-                  if (mediaType === 'image' && !value) {
-                    return 'Image is required when media type is Image.'
-                  }
-                  if (mediaType === 'icon' && value) {
-                    return 'Remove image when media type is Icon.'
-                  }
-                  return true
-                }),
+              description: 'Upload a transparent PNG-style icon image.',
+              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'title',
               title: 'Title',
-              type: 'string',
+              type: 'text',
+              rows: 2,
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'description',
               title: 'Description',
-              type: 'string',
-              validation: (Rule) => Rule.max(180),
+              type: 'text',
+              rows: 4,
             }),
           ],
           preview: {
             select: {
               title: 'title',
-              mediaType: 'mediaType',
             },
-            prepare({ title, mediaType }) {
+            prepare({ title }) {
               return {
                 title: title || 'Untitled feature item',
-                subtitle: mediaType ? `Media: ${mediaType}` : 'Media: icon',
+                subtitle: 'Icon item',
               }
             },
           },
@@ -121,12 +94,13 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'title', itemCount: 'items' },
-    prepare({ title, itemCount }) {
+    select: { title: 'title', itemCount: 'items', merged: 'mergeWithPreviousRichSection' },
+    prepare({ title, itemCount, merged }) {
       const count = Array.isArray(itemCount) ? itemCount.length : 0
+      const stateLabel = merged ? 'Merged with previous rich section' : `${count} item${count === 1 ? '' : 's'}`
       return {
         title: title || 'Feature List',
-        subtitle: `${count} item${count === 1 ? '' : 's'}`,
+        subtitle: stateLabel,
       }
     },
   },

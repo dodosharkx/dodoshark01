@@ -126,6 +126,10 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
     },
     items[] {
       ...,
+      icon {
+        ...,
+        asset
+      },
       image {
         ...,
         asset
@@ -341,7 +345,7 @@ function toImageSrc(image?: SanityImage, width = 1200) {
 }
 
 function hasFeatureListHeader(block: FeatureListBlockData) {
-  return Boolean(block.title?.trim() || block.subtitle?.trim())
+  return Boolean(block.title?.trim())
 }
 
 function shouldMergeRichAndFeature(
@@ -355,7 +359,7 @@ function shouldMergeRichAndFeature(
   const rich = richBlock as RichSectionBlockData
   const feature = featureBlock as FeatureListBlockData
 
-  if (hasFeatureListHeader(feature)) {
+  if (!feature.mergeWithPreviousRichSection) {
     return false
   }
 

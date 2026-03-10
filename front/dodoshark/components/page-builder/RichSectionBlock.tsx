@@ -69,17 +69,17 @@ function getPortableTextComponents(isDark: boolean): PortableTextComponents {
   return {
     block: {
       normal: ({ children }) => (
-        <p className={`mb-6 text-base md:text-lg leading-loose font-light ${textColor}`}>
+        <p className={`mb-5 text-[1.02rem] font-normal leading-[1.85] md:text-[1.06rem] ${textColor}`}>
           {children}
         </p>
       ),
       h2: ({ children }) => (
-        <h2 className={`text-2xl md:text-3xl font-display font-black mb-6 ${headingColor}`}>
+        <h2 className={`mb-5 text-2xl font-display font-extrabold leading-[1.08] tracking-[-0.02em] md:text-3xl ${headingColor}`}>
           {children}
         </h2>
       ),
       h3: ({ children }) => (
-        <h3 className={`text-xl md:text-2xl font-display font-bold mb-4 ${headingColor}`}>
+        <h3 className={`mb-4 text-xl font-display font-bold leading-[1.12] tracking-[-0.02em] md:text-2xl ${headingColor}`}>
           {children}
         </h3>
       ),
@@ -93,12 +93,12 @@ function getPortableTextComponents(isDark: boolean): PortableTextComponents {
     },
     list: {
       bullet: ({ children }) => (
-        <ul className={`mb-6 ml-6 list-disc space-y-2 ${listMarker} ${textColor}`}>
+        <ul className={`mb-5 ml-6 list-disc space-y-2 leading-[1.8] ${listMarker} ${textColor}`}>
           {children}
         </ul>
       ),
       number: ({ children }) => (
-        <ol className={`mb-6 ml-6 list-decimal space-y-2 ${listMarker} ${textColor}`}>
+        <ol className={`mb-5 ml-6 list-decimal space-y-2 leading-[1.8] ${listMarker} ${textColor}`}>
           {children}
         </ol>
       ),
@@ -188,34 +188,37 @@ export default function RichSectionBlock({
 
   const headingClass = theme.heading
   const subtitleClass = theme.subtitle
-  const layoutClass = 'grid lg:grid-cols-2 gap-16 items-center'
+  const layoutClass = 'grid items-start gap-14 lg:grid-cols-2 lg:gap-16'
 
   const textOrderClass =
     layout === 'mediaLeftTextRight' ? 'lg:order-2' : 'lg:order-1'
   const mediaOrderClass =
     layout === 'mediaLeftTextRight' ? 'lg:order-1' : 'lg:order-2'
+  const bodyClass = seamlessToNext
+    ? 'max-w-[36rem] [&_blockquote:last-child]:mb-0 [&_ol:last-child]:mb-0 [&_p:last-child]:mb-0 [&_ul:last-child]:mb-0'
+    : 'max-w-[36rem]'
 
-  const sectionSpacingClass = seamlessToNext ? 'pt-24 pb-6 md:pb-8' : 'py-24'
+  const sectionSpacingClass = seamlessToNext ? 'pt-24 pb-2 md:pb-4' : 'py-24'
 
   return (
     <section id={anchorId} className={`${sectionSpacingClass} ${theme.section}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={layoutClass}>
-          <div className={textOrderClass}>
+          <div className={`${textOrderClass} max-w-[36rem]`}>
             {(block.heading || hasSubtitle) && (
               <SectionHeader
                 title={block.heading}
                 subtitle={hasSubtitle ? block.subtitle : undefined}
                 isDark={isDark}
                 align="left"
-                className="mb-10"
-                titleClassName={`text-3xl md:text-4xl font-display font-black tracking-tight ${headingClass}`}
-                subtitleClassName={`text-base md:text-lg font-light ${subtitleClass}`}
+                className="mb-8 max-w-[36rem]"
+                titleClassName={`text-3xl font-display font-extrabold leading-[1.05] tracking-[-0.02em] md:text-[2.5rem] ${headingClass}`}
+                subtitleClassName={`max-w-[34rem] text-[0.98rem] font-normal leading-7 md:text-base ${subtitleClass}`}
               />
             )}
 
             {hasBody && (
-              <div>
+              <div className={bodyClass}>
                 <PortableText
                   value={block.body as PortableTextBlock[]}
                   components={getPortableTextComponents(isDark)}
