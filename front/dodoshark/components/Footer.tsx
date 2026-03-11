@@ -52,7 +52,7 @@ const contactItems = [
   },
 ]
 
-const networkItems = ['Jinan', 'Liaocheng', 'Weifang']
+const networkItems = ['Customers cover 1,000+ cities across China', 'Business operations cover 12+ countries worldwide', 'Three major production bases: Jinan / Liaocheng / Weifang']
 
 const socialLinks = [
   {
@@ -126,11 +126,11 @@ export default function Footer() {
               ))}
             </ul>
           </section>
-
+{/* 
           <section className="footer-block" aria-labelledby="footer-map-title">
             <p className="footer-kicker">Global Presence</p>
             <h2 className="footer-title" id="footer-map-title">
-              World Map
+              World Brand
             </h2>
             <div className="footer-rule" />
 
@@ -144,7 +144,7 @@ export default function Footer() {
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
               />
             </div>
-          </section>
+          </section> */}
 
           <section className="footer-block" aria-labelledby="footer-network-title">
             <p className="footer-kicker">Regional Coverage</p>
@@ -175,8 +175,8 @@ export default function Footer() {
                     </svg>
                   </span>
                   <div>
-                    <p className="footer-network-city">{city}</p>
-                    <p className="footer-network-phone">Service Line: +86 18251999196</p>
+                    <p className="footer-network-title">{city}</p>
+                    {/* <p className="footer-network-phone">Service Line: +86 18251999196</p> */}
                   </div>
                 </li>
               ))}
@@ -196,6 +196,16 @@ export default function Footer() {
                   <span className="footer-social-badge">{item.icon}</span>
                 </Link>
               ))}
+            </div>
+             <div className="footer-map-wrap" aria-label="Worldwide customer distribution map">
+              <Image
+                src="/assets/images/background/footer-map-image.png"
+                alt="World map showing DoDoShark global presence"
+                width={320}
+                height={156}
+                className="footer-map-image"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+              />
             </div>
           </section>
         </div>

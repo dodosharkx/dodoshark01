@@ -1,11 +1,18 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { useState } from 'react'
+import { A11y, Keyboard } from 'swiper/modules'
+import type { Swiper as SwiperInstance } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 import { getSharedBackgroundTheme } from './backgroundTheme'
 import SectionHeader from './SectionHeader'
+import 'swiper/css'
 
 type CardImage = {
   alt?: string
@@ -56,6 +63,18 @@ type CardGroup = {
   bottomCards?: CardItem[]
 }
 
+type SliderControls = {
+  hasOverflow: boolean
+  currentPage: number
+  totalPages: number
+}
+
+const defaultSliderControls: SliderControls = {
+  hasOverflow: false,
+  currentPage: 0,
+  totalPages: 1,
+}
+
 export type CardGridBlockData = {
   _type: 'cardGridBlock'
   _key?: string
@@ -78,6 +97,17 @@ const columnClassMap = {
 
 function isExternalHref(href: string) {
   return /^(https?:|mailto:|tel:)/i.test(href)
+}
+
+function getSliderControls(instance: SwiperInstance): SliderControls {
+  const hasOverflow = !instance.isLocked && instance.slides.length > 1
+  const totalPages = Math.max(instance.snapGrid.length, 1)
+
+  return {
+    hasOverflow,
+    currentPage: Math.min(instance.snapIndex, totalPages - 1),
+    totalPages,
+  }
 }
 
 function getReferenceHref(reference?: CardReference) {
@@ -187,7 +217,7 @@ function GridCard({
   const ctaTone = disableCardFrameEffect && isDarkBackground ? 'text-orange-300' : 'text-orange-500'
   const articleClass = disableCardFrameEffect
     ? 'text-center'
-    : 'bg-white rounded-lg border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow text-center'
+    : 'overflow-hidden rounded-lg border border-slate-100 bg-white text-center transition-shadow hover:shadow-lg'
   const contentClass = size === 'large' ? 'p-6' : 'p-5'
   const imageBgClass = disableCardFrameEffect && isDarkBackground ? 'bg-slate-800' : 'bg-slate-100'
   const emptyImageClass = disableCardFrameEffect && isDarkBackground ? 'text-slate-500' : 'text-slate-300'
@@ -211,19 +241,117 @@ function GridCard({
       </div>
       <div className={contentClass}>
         {data.title && (
-          <h3 className={`${titleClass} font-display font-black ${titleTone} mb-2`}>
+          <h3 className={`${titleClass} mb-2 font-display font-black ${titleTone}`}>
             {data.title}
           </h3>
         )}
         {data.description && (
-          <p className={`${textClass} ${descriptionTone} leading-relaxed mb-4`}>
+          <p className={`${textClass} mb-4 leading-relaxed ${descriptionTone}`}>
             {data.description}
           </p>
         )}
         {data.ctaLabel && (
           <CardLink
             href={data.href}
-            className={`${ctaClass} font-bold ${ctaTone} inline-flex items-center gap-2 justify-center`}
+            className={`${ctaClass} inline-flex items-center justify-center gap-2 font-bold ${ctaTone}`}
+          >
+            {data.ctaLabel}
+            <Icon icon="arrow-right" className="h-4 w-4" />
+          </CardLink>
+        )}
+      </div>
+    </article>
+  )
+}
+
+function MobileCarouselCard({
+  item,
+  isDarkBackground = false,
+  disableCardFrameEffect = false,
+  showControls = false,
+  controls,
+  onSelectPage,
+}: {
+  item: CardItem
+  isDarkBackground?: boolean
+  disableCardFrameEffect?: boolean
+  showControls?: boolean
+  controls: SliderControls
+  onSelectPage: (index: number) => void
+}) {
+  const data = resolveCard(item)
+  const hasContent = Boolean(data.title || data.description || data.image?.asset)
+  if (!hasContent) return null
+
+  const titleTone = disableCardFrameEffect && isDarkBackground ? 'text-slate-100' : 'text-slate-900'
+  const descriptionTone =
+    disableCardFrameEffect && isDarkBackground ? 'text-slate-300' : 'text-slate-500'
+  const ctaTone = disableCardFrameEffect && isDarkBackground ? 'text-orange-300' : 'text-orange-500'
+  const articleClass = disableCardFrameEffect
+    ? 'text-center'
+    : 'overflow-hidden rounded-lg border border-slate-100 bg-white text-center shadow-sm'
+  const imageBgClass = disableCardFrameEffect && isDarkBackground ? 'bg-slate-800' : 'bg-slate-100'
+  const emptyImageClass = disableCardFrameEffect && isDarkBackground ? 'text-slate-500' : 'text-slate-300'
+  const dotsBaseClass = isDarkBackground ? 'bg-slate-500/50' : 'bg-slate-300'
+  const dotsActiveClass = isDarkBackground ? 'bg-orange-300' : 'bg-orange-500'
+
+  return (
+    <article className={articleClass}>
+      <div className={`relative aspect-[16/10] ${imageBgClass}`}>
+        {data.image?.asset ? (
+          <Image
+            src={urlFor(data.image).width(900).height(700).fit('crop').url()}
+            alt={data.image.alt || data.title || 'Card image'}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className={`absolute inset-0 flex items-center justify-center ${emptyImageClass}`}>
+            <Icon icon="image" className="h-8 w-8" />
+          </div>
+        )}
+
+      </div>
+
+      {showControls && (
+        <div className="flex items-center justify-center px-5 py-4">
+          <div className="flex items-center gap-2">
+            {Array.from({ length: controls.totalPages }, (_, index) => {
+              const active = index === controls.currentPage
+
+              return (
+                <button
+                  key={`card-page-${index}`}
+                  type="button"
+                  aria-label={`Go to card page ${index + 1}`}
+                  aria-pressed={active}
+                  onClick={() => onSelectPage(index)}
+                  className={`h-2.5 rounded-full transition-all ${
+                    active ? `w-8 ${dotsActiveClass}` : `w-2.5 ${dotsBaseClass}`
+                  }`}
+                />
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      <div className="p-6">
+        {data.title && (
+          <h3 className={`mb-2 text-xl font-display font-black ${titleTone}`}>
+            {data.title}
+          </h3>
+        )}
+        {data.description && (
+          <p className={`mb-4 text-sm leading-relaxed ${descriptionTone}`}>
+            {data.description}
+          </p>
+        )}
+        {data.ctaLabel && (
+          <CardLink
+            href={data.href}
+            className={`inline-flex items-center justify-center gap-2 text-sm font-bold ${ctaTone}`}
           >
             {data.ctaLabel}
             <Icon icon="arrow-right" className="h-4 w-4" />
@@ -249,11 +377,11 @@ function SectionTitle({
   return (
     <header className="mb-10 text-center">
       <div className="flex items-center gap-6">
-        <span className={`h-px ${separatorClass} flex-1`} />
-        <h3 className={`text-3xl md:text-4xl font-display font-black ${titleClass}`}>
+        <span className={`h-px flex-1 ${separatorClass}`} />
+        <h3 className={`text-3xl font-display font-black md:text-4xl ${titleClass}`}>
           {title}
         </h3>
-        <span className={`h-px ${separatorClass} flex-1`} />
+        <span className={`h-px flex-1 ${separatorClass}`} />
       </div>
     </header>
   )
@@ -272,21 +400,62 @@ function GroupGrid({
   disableCardFrameEffect?: boolean
   isDarkBackground?: boolean
 }) {
+  const [mobileSwiper, setMobileSwiper] = useState<SwiperInstance | null>(null)
+  const [mobileControls, setMobileControls] = useState<SliderControls>(defaultSliderControls)
+
   const derivedColumns = cards.length <= 2 ? 2 : cards.length >= 4 ? 4 : 3
   const columnsToUse = derivedColumns || columns
-  const cardSize: 'large' | 'small' = columnsToUse <= 2 ? 'large' : 'small'
+  const desktopCardSize: 'large' | 'small' = columnsToUse <= 2 ? 'large' : 'small'
 
   if (cards.length === 0) return null
 
   return (
     <section className="py-8">
       <SectionTitle title={sectionTitle} isDarkBackground={isDarkBackground} />
-      <div className={`grid gap-6 ${columnClassMap[columnsToUse]}`}>
+
+      <div className="md:hidden">
+        <Swiper
+          key={`${sectionTitle ?? 'cards'}-${cards.length}`}
+          modules={[Keyboard, A11y]}
+          slidesPerView={1}
+          slidesPerGroup={1}
+          spaceBetween={16}
+          speed={450}
+          watchOverflow
+          grabCursor
+          keyboard={{ enabled: true }}
+          a11y={{
+            prevSlideMessage: 'Previous cards',
+            nextSlideMessage: 'Next cards',
+          }}
+          onSwiper={(instance) => {
+            setMobileSwiper(instance)
+            setMobileControls(getSliderControls(instance))
+          }}
+          onSlideChange={(instance) => setMobileControls(getSliderControls(instance))}
+          onResize={(instance) => setMobileControls(getSliderControls(instance))}
+        >
+          {cards.map((item, index) => (
+            <SwiperSlide key={item._key ?? `group-card-mobile-${index}`} className="h-auto">
+              <MobileCarouselCard
+                item={item}
+                disableCardFrameEffect={disableCardFrameEffect}
+                isDarkBackground={isDarkBackground}
+                showControls={mobileControls.hasOverflow}
+                controls={mobileControls}
+                onSelectPage={(pageIndex) => mobileSwiper?.slideTo(pageIndex)}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      <div className={`hidden gap-6 md:grid ${columnClassMap[columnsToUse]}`}>
         {cards.map((item, index) => (
           <GridCard
             key={item._key ?? `group-card-${index}`}
             item={item}
-            size={cardSize}
+            size={desktopCardSize}
             disableCardFrameEffect={disableCardFrameEffect}
             isDarkBackground={isDarkBackground}
           />
@@ -301,22 +470,22 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
   const theme = getSharedBackgroundTheme(variant)
   const isDarkBackground = variant === 'dark'
   const nestedCards = (block.nestedCards ?? []).filter(
-    (item) => item?.cardType || item?.reference || item?.inlineCard
+    (item) => item?.cardType || item?.reference || item?.inlineCard,
   )
   const legacyGroupCards = (block.groups ?? []).flatMap((group) => {
     const groupCards = (group.cards ?? []).filter(
-      (item) => item?.cardType || item?.reference || item?.inlineCard
+      (item) => item?.cardType || item?.reference || item?.inlineCard,
     )
     const fallbackTop = (group.topCards ?? []).filter(
-      (item) => item?.cardType || item?.reference || item?.inlineCard
+      (item) => item?.cardType || item?.reference || item?.inlineCard,
     )
     const fallbackBottom = (group.bottomCards ?? []).filter(
-      (item) => item?.cardType || item?.reference || item?.inlineCard
+      (item) => item?.cardType || item?.reference || item?.inlineCard,
     )
     return groupCards.length > 0 ? groupCards : [...fallbackTop, ...fallbackBottom]
   })
   const legacyCards = (block.cards ?? []).filter(
-    (item) => item?.cardType || item?.reference || item?.inlineCard
+    (item) => item?.cardType || item?.reference || item?.inlineCard,
   )
   const mergedNestedCards = nestedCards.length > 0 ? nestedCards : legacyGroupCards
   const legacyColumns = block.columns ?? 3
@@ -333,7 +502,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
 
   return (
     <section className={`py-24 ${theme.section}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {(block.title || block.subtitle) && (
           <SectionHeader
             title={block.title}
@@ -341,7 +510,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
             isDark={isDarkBackground}
             className="mb-14"
             titleClassName={`text-3xl md:text-4xl font-display font-black tracking-tight ${theme.heading}`}
-            subtitleClassName={`mt-5 text-base md:text-lg max-w-3xl mx-auto ${subtitleClass}`}
+            subtitleClassName={`mx-auto mt-5 max-w-3xl text-base md:text-lg ${subtitleClass}`}
           />
         )}
 

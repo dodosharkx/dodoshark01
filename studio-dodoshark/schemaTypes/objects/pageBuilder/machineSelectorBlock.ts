@@ -128,13 +128,14 @@ export default defineType({
     }),
     defineField({
       name: 'maxItemsPerRow',
-      title: '每行最大展示数量',
+      title: '桌面端每屏最大展示数量',
       type: 'number',
+      description: 'Desktop 端 slider 每屏最多展示 1-4 个型号；移动端始终只展示 1 个。',
       options: {
-        list: [1, 2, 3, 4, 5],
+        list: [1, 2, 3, 4],
       },
       initialValue: 4,
-      validation: (rule) => rule.required().min(1).max(5),
+      validation: (rule) => rule.required().min(1).max(4),
     }),
     defineField({
       name: 'showModelDescription',
