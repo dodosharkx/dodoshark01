@@ -160,7 +160,7 @@ export default function Header() {
               </Link>
             </div>
 
-            <nav className="hidden h-full items-center gap-4 overflow-x-auto [scrollbar-width:none] xl:flex">
+            <nav className="hidden h-full items-center gap-3 overflow-x-auto [scrollbar-width:none] xl:flex">
               {desktopNavItems.map((item) => {
                 const isActive = pathname === item.href
                 const itemClass = desktopFloating
@@ -175,7 +175,7 @@ export default function Header() {
                   <Link
                     key={`${item.label}-${item.href}`}
                     href={item.href}
-                    className={`shrink-0 px-1 py-2 text-[13px] font-semibold tracking-[0.08em] transition-colors ${itemClass}`}
+                    className={`shrink-0 px-2 py-2 text-[16px] font-semibold tracking-[0.08em] transition-colors ${itemClass}`}
                   >
                     {item.label}
                   </Link>
@@ -189,7 +189,7 @@ export default function Header() {
               <div className="xl:hidden">
                 <Link
                   href={cta.href}
-                  className="inline-flex min-h-9 items-center justify-center rounded-full bg-[#f0c54a] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.06em] text-[#1e3a5f] shadow-[0_10px_24px_-18px_rgba(240,197,74,0.7)] transition hover:bg-[#e7bb3a]"
+                  className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#f0c54a] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.06em] text-[#1e3a5f] shadow-[0_10px_24px_-18px_rgba(240,197,74,0.7)] transition hover:bg-[#e7bb3a]"
                 >
                   Quote
                 </Link>

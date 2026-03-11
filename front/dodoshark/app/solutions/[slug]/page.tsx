@@ -147,6 +147,10 @@ async function getSolution(slug: string) {
     },
     contentBlocks[] {
       ...,
+      backgroundImage {
+        ...,
+        asset
+      },
       content[] {
         ...,
         _type == "image" => {

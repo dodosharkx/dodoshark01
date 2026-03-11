@@ -120,6 +120,10 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
   },
   contentBlocks[] {
     ...,
+    backgroundImage {
+      ...,
+      asset
+    },
     media {
       ...,
       asset

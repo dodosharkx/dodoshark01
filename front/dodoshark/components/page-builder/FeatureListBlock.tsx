@@ -109,7 +109,7 @@ export function FeatureListBlockContent({
             </h3>
             {item.description && (
               <p
-                className={`mx-auto max-w-[17ch] whitespace-pre-line text-sm font-normal leading-6 md:text-[0.95rem] md:leading-7 ${itemDescriptionClass}`}
+                className={`mx-auto max-w-[17ch] whitespace-pre-line text-sm font-normal leading-5 md:text-[0.95rem] md:leading-7 ${itemDescriptionClass}`}
               >
                 {item.description}
               </p>

@@ -108,6 +108,7 @@
 
 .inlineCta {
   display: inline-flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 0.625rem;
   margin-top: auto;

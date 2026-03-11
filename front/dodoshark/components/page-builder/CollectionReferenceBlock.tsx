@@ -90,26 +90,30 @@ function ReferenceCard({ item }: { item: ReferenceItem }) {
   const image = resolveImage(item.reference)
   const href = item.isClickable === false ? undefined : resolveHref(item.reference)
   const content = (
-    <article className="premium-card p-4 md:p-5 h-full">
-      <div className="aspect-[4/3] rounded-lg overflow-hidden bg-slate-100 mb-5">
-        {image?.asset ? (
-          <Image
-            src={urlFor(image).width(800).fit('max').url()}
-            alt={image.alt || title}
-            width={800}
-            height={600}
-            className="w-full h-full object-cover"
-          />
-        ) : null}
-      </div>
+    <article className="premium-card h-full p-4 md:p-5">
+      <div className="flex h-full flex-col items-center text-center">
+        <div className="mb-4 aspect-square w-16 overflow-hidden rounded-lg bg-slate-100 sm:w-20 md:mb-5 md:w-full md:max-w-none md:aspect-[4/3]">
+          {image?.asset ? (
+            <Image
+              src={urlFor(image).width(800).fit('max').url()}
+              alt={image.alt || title}
+              width={800}
+              height={600}
+              className="h-full w-full object-cover"
+            />
+          ) : null}
+        </div>
 
-      <h3 className="text-lg font-display font-black text-slate-900 mb-2">{title}</h3>
-      {description && <p className="text-slate-500 text-sm leading-relaxed mb-4">{description}</p>}
-      {href && (
-        <span className="text-sm font-bold text-orange-600">
-          View Details <Icon icon="arrow-right" className="ms-1 inline h-4 w-4" />
-        </span>
-      )}
+        <h3 className="mb-2 text-base font-display font-black text-slate-900 md:text-lg">{title}</h3>
+        {description && (
+          <p className="mb-4 max-w-[28ch] text-sm leading-relaxed text-slate-500">{description}</p>
+        )}
+        {href && (
+          <span className="mt-auto inline-flex items-center justify-center text-sm font-bold text-orange-600">
+            View Details <Icon icon="arrow-right" className="ms-1 inline h-4 w-4" />
+          </span>
+        )}
+      </div>
     </article>
   )
 
@@ -119,9 +123,9 @@ function ReferenceCard({ item }: { item: ReferenceItem }) {
 }
 
 function columnsClass(columns?: number) {
-  if (columns === 2) return 'md:grid-cols-2'
-  if (columns === 4) return 'md:grid-cols-2 xl:grid-cols-4'
-  return 'md:grid-cols-2 xl:grid-cols-3'
+  if (columns === 2) return 'grid-cols-2'
+  if (columns === 4) return 'grid-cols-2 xl:grid-cols-4'
+  return 'grid-cols-2 xl:grid-cols-3'
 }
 
 export default function CollectionReferenceBlock({
@@ -154,7 +158,7 @@ export default function CollectionReferenceBlock({
         )}
 
         {layout === 'grid' && (
-          <div className={`grid gap-8 ${columnsClass(block.columns)}`}>
+          <div className={`grid gap-4 md:gap-8 ${columnsClass(block.columns)}`}>
             {refs.map((item, idx) => (
               <ReferenceCard key={item._key ?? idx} item={item} />
             ))}

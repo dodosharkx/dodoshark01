@@ -7,6 +7,19 @@ export default defineType({
     icon: () => '🎖️',
     fields: [
         defineField({
+            name: 'variant',
+            title: '展示样式',
+            type: 'string',
+            options: {
+                list: [
+                    { title: '全屏背景轮播（旧版）', value: 'legacyBackgroundSlider' },
+                    { title: '分栏产品展示（新版）', value: 'splitProductShowcase' },
+                ],
+                layout: 'radio'
+            },
+            initialValue: 'legacyBackgroundSlider'
+        }),
+        defineField({
             name: 'title',
             title: '标题',
             type: 'string',
@@ -24,7 +37,8 @@ export default defineType({
         }),
         defineField({
             name: 'images',
-            title: 'Hero 图片组 (支持滑动切换)',
+            title: 'Hero 图片组',
+            description: '旧版样式用于整屏背景轮播；新版分栏样式用于透明产品图轮播。',
             type: 'array',
             of: [
                 {
@@ -41,6 +55,29 @@ export default defineType({
                 }
             ],
             validation: (rule) => rule.min(1)
+        }),
+        defineField({
+            name: 'backgroundImage',
+            title: '背景图片',
+            description: '新版分栏样式使用的整块背景图，建议上传纯色或浅纹理背景。',
+            type: 'image',
+            options: { hotspot: true },
+            hidden: ({ parent }) => parent?.variant !== 'splitProductShowcase',
+            validation: (rule) =>
+                rule.custom((value, context) => {
+                    if (context.parent?.variant === 'splitProductShowcase' && !value) {
+                        return '分栏产品展示模式下必须设置背景图片'
+                    }
+                    return true
+                }),
+            fields: [
+                {
+                    name: 'alt',
+                    type: 'string',
+                    title: '替代文字',
+                    validation: (Rule) => Rule.required(),
+                }
+            ]
         }),
         defineField({
             name: 'ctaButtons',
@@ -67,6 +104,7 @@ export default defineType({
             name: 'alignment',
             title: '对齐方式',
             type: 'string',
+            hidden: ({ parent }) => parent?.variant === 'splitProductShowcase',
             options: {
                 list: [
                     { title: '居左', value: 'left' },
@@ -75,14 +113,32 @@ export default defineType({
                 layout: 'radio'
             },
             initialValue: 'left'
+        }),
+        defineField({
+            name: 'mediaLayout',
+            title: '图文排布',
+            type: 'string',
+            hidden: ({ parent }) => parent?.variant !== 'splitProductShowcase',
+            options: {
+                list: [
+                    { title: '文字在左，图片在右', value: 'textLeftImageRight' },
+                    { title: '图片在左，文字在右', value: 'imageLeftTextRight' },
+                ],
+                layout: 'radio'
+            },
+            initialValue: 'textLeftImageRight'
         })
     ],
     preview: {
-        select: { title: 'title', subtitle: 'subtitle', media: 'images.0' },
-        prepare({ title, subtitle, media }) {
+        select: { title: 'title', subtitle: 'subtitle', media: 'images.0', variant: 'variant' },
+        prepare({ title, subtitle, media, variant }) {
             return {
                 title: title || 'Hero Block (首屏)',
-                subtitle: subtitle || 'Hero Block (Slider)',
+                subtitle:
+                    subtitle ||
+                    (variant === 'splitProductShowcase'
+                        ? 'Hero Block (Split Product Showcase)'
+                        : 'Hero Block (Slider)'),
                 media
             }
         }

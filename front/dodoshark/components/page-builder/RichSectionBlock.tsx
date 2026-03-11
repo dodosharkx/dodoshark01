@@ -77,7 +77,7 @@ function getPortableTextComponents(isDark: boolean): PortableTextComponents {
   return {
     block: {
       normal: ({ children }) => (
-        <p className={`mb-5 text-[1.02rem] font-normal leading-[1.85] md:text-[1.06rem] ${textColor}`}>
+        <p className={`mb-5 text-[1.02rem] font-normal leading-[1.6] md:text-[1.06rem] ${textColor}`}>
           {children}
         </p>
       ),
