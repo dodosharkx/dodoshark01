@@ -3,10 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { client, urlFor } from '@/app/lib/sanity'
+import DeferredHeroCarousel from '@/components/home/DeferredHeroCarousel'
 import DeferredLiteYouTube from '@/components/home/DeferredLiteYouTube'
-import HeroCarousel, { type HeroCarouselImage } from '@/components/home/HeroCarousel'
-import HomeBlogCarousel from '@/components/home/HomeBlogCarousel'
-import ProjectCasesCarousel from '@/components/home/ProjectCasesCarousel'
+import DeferredHomeBlogCarousel from '@/components/home/DeferredHomeBlogCarousel'
+import DeferredProjectCasesCarousel from '@/components/home/DeferredProjectCasesCarousel'
+import { type HeroCarouselImage } from '@/components/home/HeroCarousel'
 
 type SanityImage = {
   asset?: {
@@ -425,7 +426,7 @@ export default async function HomePage() {
   return (
     <main className="bg-white text-slate-700">
       <section className="relative flex min-h-[620px] items-center overflow-hidden md:min-h-[700px] xl:-mt-[72px] xl:pt-[72px]">
-        <HeroCarousel images={fallbackHeroSlides} autoplayMs={5500} pauseOnHover showDots showArrows />
+        <DeferredHeroCarousel images={fallbackHeroSlides} autoplayMs={5500} pauseOnHover showDots showArrows />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] hidden h-[220px] bg-gradient-to-b from-slate-950/68 via-slate-950/34 to-transparent xl:block" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/35 to-transparent" />
 
@@ -677,7 +678,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <ProjectCasesCarousel items={projectCaseItems} />
+          <DeferredProjectCasesCarousel items={projectCaseItems} />
         </div>
       </section>
 
@@ -714,7 +715,7 @@ export default async function HomePage() {
             <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
           </div>
 
-          <HomeBlogCarousel items={blogItems} />
+          <DeferredHomeBlogCarousel items={blogItems} />
 
           <div className="mt-10 text-center">
             <Link href="/blogs" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">

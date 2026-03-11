@@ -1,5 +1,37 @@
 import { defineField, defineType } from 'sanity'
 
+function isYouTubeUrl(value: unknown) {
+  if (typeof value !== 'string') return false
+
+  const raw = value.trim()
+  if (!raw) return false
+
+  let parsed: URL
+  try {
+    parsed = new URL(raw)
+  } catch {
+    return false
+  }
+
+  const host = parsed.hostname.toLowerCase()
+  const pathname = parsed.pathname
+
+  if (host === 'youtu.be') {
+    return pathname.split('/').filter(Boolean).length > 0
+  }
+
+  if (host.includes('youtube.com') || host.includes('youtube-nocookie.com')) {
+    if (pathname === '/watch') return Boolean(parsed.searchParams.get('v'))
+
+    const segments = pathname.split('/').filter(Boolean)
+    if (!segments.length) return false
+
+    return ['embed', 'shorts', 'live'].includes(segments[0]) && Boolean(segments[1])
+  }
+
+  return false
+}
+
 export default defineType({
   name: 'machineSelectorBlock',
   title: 'Machine Selector (机型筛选器)',
@@ -57,6 +89,90 @@ export default defineType({
               description: '可选，显示在分组下方的简要说明。',
             }),
             defineField({
+              name: 'cta',
+              title: '分组 CTA',
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'enabled',
+                  title: '显示跳转按钮',
+                  type: 'boolean',
+                  initialValue: false,
+                }),
+                defineField({
+                  name: 'label',
+                  title: '按钮文案',
+                  type: 'string',
+                  hidden: ({ parent }) => parent?.enabled !== true,
+                  validation: (rule) =>
+                    rule.custom((value, context) => {
+                      const enabled = context.parent?.enabled === true
+                      if (!enabled) return true
+                      return typeof value === 'string' && value.trim()
+                        ? true
+                        : '开启 CTA 后必须填写按钮文案。'
+                    }),
+                }),
+                defineField({
+                  name: 'targetType',
+                  title: '跳转类型',
+                  type: 'string',
+                  options: {
+                    list: [
+                      { title: '普通链接', value: 'link' },
+                      { title: 'YouTube 视频', value: 'youtube' },
+                    ],
+                    layout: 'radio',
+                  },
+                  initialValue: 'link',
+                  hidden: ({ parent }) => parent?.enabled !== true,
+                  validation: (rule) =>
+                    rule.custom((value, context) => {
+                      const enabled = context.parent?.enabled === true
+                      if (!enabled) return true
+                      return value === 'link' || value === 'youtube'
+                        ? true
+                        : '开启 CTA 后必须选择跳转类型。'
+                    }),
+                }),
+                defineField({
+                  name: 'href',
+                  title: '跳转链接',
+                  type: 'url',
+                  description: '支持站内相对路径、http/https、mailto、tel。',
+                  hidden: ({ parent }) => parent?.enabled !== true || parent?.targetType !== 'link',
+                  validation: (rule) =>
+                    rule
+                      .uri({ allowRelative: true, scheme: ['http', 'https', 'mailto', 'tel'] })
+                      .custom((value, context) => {
+                        const enabled = context.parent?.enabled === true
+                        const targetType = context.parent?.targetType
+                        if (!enabled || targetType !== 'link') return true
+                        return typeof value === 'string' && value.trim()
+                          ? true
+                          : '选择普通链接时必须填写跳转链接。'
+                      }),
+                }),
+                defineField({
+                  name: 'youtubeUrl',
+                  title: 'YouTube 视频链接',
+                  type: 'url',
+                  description: '支持 youtube.com、youtu.be 或 youtube-nocookie.com 链接。',
+                  hidden: ({ parent }) => parent?.enabled !== true || parent?.targetType !== 'youtube',
+                  validation: (rule) =>
+                    rule.uri({ scheme: ['http', 'https'] }).custom((value, context) => {
+                      const enabled = context.parent?.enabled === true
+                      const targetType = context.parent?.targetType
+                      if (!enabled || targetType !== 'youtube') return true
+                      if (typeof value !== 'string' || !value.trim()) {
+                        return '选择 YouTube 视频时必须填写视频链接。'
+                      }
+                      return isYouTubeUrl(value) ? true : '请输入有效的 YouTube 视频链接。'
+                    }),
+                }),
+              ],
+            }),
+            defineField({
               name: 'items',
               title: '型号列表',
               type: 'array',
@@ -106,12 +222,12 @@ export default defineType({
             }),
           ],
           preview: {
-            select: { title: 'label', itemCount: 'items' },
-            prepare({ title, itemCount }) {
+            select: { title: 'label', itemCount: 'items', ctaEnabled: 'cta.enabled' },
+            prepare({ title, itemCount, ctaEnabled }) {
               const count = Array.isArray(itemCount) ? itemCount.length : 0
               return {
                 title: title || '未命名分组',
-                subtitle: `${count} 个型号`,
+                subtitle: `${count} 个型号${ctaEnabled ? ' · 含 CTA' : ''}`,
               }
             },
           },
@@ -131,10 +247,10 @@ export default defineType({
       title: '每行最大展示数量',
       type: 'number',
       options: {
-        list: [2, 3, 4, 5],
+        list: [1, 2, 3, 4, 5],
       },
       initialValue: 4,
-      validation: (rule) => rule.required().min(2).max(5),
+      validation: (rule) => rule.required().min(1).max(5),
     }),
     defineField({
       name: 'showModelDescription',
