@@ -1,6 +1,6 @@
 import {PresentationIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
-import {pickFirst} from '../../shared/studio'
+import {itemCount, joinPreview, pickFirst} from '../../shared/studio'
 
 export default defineType({
   name: 'heroBlock',
@@ -18,5 +18,33 @@ export default defineType({
     defineField({name: 'alignment', title: 'Alignment', type: 'string', hidden: ({parent}) => parent?.variant === 'splitProductShowcase', options: {list: [{title: 'Left', value: 'left'}, {title: 'Right', value: 'right'}], layout: 'radio'}, initialValue: 'left'}),
     defineField({name: 'mediaLayout', title: 'Media Layout', type: 'string', hidden: ({parent}) => parent?.variant !== 'splitProductShowcase', options: {list: [{title: 'Text Left / Image Right', value: 'textLeftImageRight'}, {title: 'Image Left / Text Right', value: 'imageLeftTextRight'}], layout: 'radio'}, initialValue: 'textLeftImageRight'}),
   ],
-  preview: {select: {title: 'title', subtitle: 'subtitle', media: 'images.0', backgroundImage: 'backgroundImage', variant: 'variant'}, prepare({title, subtitle, media, backgroundImage, variant}) { return {title: title || 'Hero Block', subtitle: subtitle || (variant === 'splitProductShowcase' ? 'Split Product Showcase' : 'Legacy Background Slider'), media: pickFirst(media, backgroundImage)} }},
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      media: 'images.0',
+      backgroundImage: 'backgroundImage',
+      variant: 'variant',
+      images: 'images',
+      ctaButtons: 'ctaButtons',
+    },
+    prepare({title, subtitle, media, backgroundImage, variant, images, ctaButtons}) {
+      const variantLabel =
+        variant === 'splitProductShowcase'
+          ? 'Split product showcase'
+          : 'Legacy background slider'
+
+      return {
+        title: title || 'Hero Block',
+        subtitle:
+          joinPreview([
+            subtitle,
+            variantLabel,
+            itemCount(images) ? `${itemCount(images)} images` : undefined,
+            itemCount(ctaButtons) ? `${itemCount(ctaButtons)} CTA buttons` : undefined,
+          ]) || 'Hero block',
+        media: pickFirst(media, backgroundImage),
+      }
+    },
+  },
 })

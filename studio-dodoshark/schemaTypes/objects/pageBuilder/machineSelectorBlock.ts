@@ -1,6 +1,6 @@
 import {ControlsIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
-import {iconForSchemaType, itemCount, pickFirst, pickText} from '../../shared/studio'
+import {iconForSchemaType, itemCount, joinPreview, pickFirst, pickText} from '../../shared/studio'
 
 export default defineType({
   name: 'machineSelectorBlock',
@@ -17,5 +17,53 @@ export default defineType({
     defineField({name: 'showModelDescription', title: 'Show Model Description', type: 'boolean', description: 'Uses productVariant.shortDescription in cards.', initialValue: true}),
     defineField({name: 'footerText', title: 'Footer Text', type: 'string', description: 'Optional note shown below the selector.'}),
   ],
-  preview: {select: {title: 'title', subtitle: 'subtitle', groups: 'groups'}, prepare({title, subtitle, groups}) { return {title: title || 'Machine Selector', subtitle: pickText(subtitle, `${itemCount(groups)} groups`) || 'Machine selector block'} }},
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      groups: 'groups',
+      firstVariantImage: 'groups.0.items.0.productVariant.image',
+      secondVariantImage: 'groups.0.items.1.productVariant.image',
+      thirdVariantImage: 'groups.1.items.0.productVariant.image',
+      fourthVariantImage: 'groups.1.items.1.productVariant.image',
+      maxItemsPerRow: 'maxItemsPerRow',
+      showModelDescription: 'showModelDescription',
+    },
+    prepare({
+      title,
+      subtitle,
+      groups,
+      firstVariantImage,
+      secondVariantImage,
+      thirdVariantImage,
+      fourthVariantImage,
+      maxItemsPerRow,
+      showModelDescription,
+    }) {
+      const groupCount = itemCount(groups)
+      const variantCount = Array.isArray(groups)
+        ? groups.reduce((total, group) => total + itemCount(group?.items), 0)
+        : 0
+
+      return {
+        title: title || 'Machine Selector',
+        subtitle:
+          pickText(
+            subtitle,
+            joinPreview([
+              `${groupCount} groups`,
+              variantCount ? `${variantCount} variants` : undefined,
+              maxItemsPerRow ? `${maxItemsPerRow} per row` : undefined,
+              showModelDescription ? 'Descriptions on' : undefined,
+            ]),
+          ) || 'Machine selector block',
+        media: pickFirst(
+          firstVariantImage,
+          secondVariantImage,
+          thirdVariantImage,
+          fourthVariantImage,
+        ),
+      }
+    },
+  },
 })

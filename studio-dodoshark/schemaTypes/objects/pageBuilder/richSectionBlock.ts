@@ -1,6 +1,6 @@
 import {BlockContentIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {itemCount, pickText} from '../../shared/studio'
+import {itemCount, joinPreview, pickText} from '../../shared/studio'
 
 export default defineType({
   name: 'richSectionBlock',
@@ -17,5 +17,31 @@ export default defineType({
     defineField({name: 'backgroundVariant', title: 'Background Variant', type: 'string', options: {list: [{title: 'Default', value: 'default'}, {title: 'Muted', value: 'muted'}, {title: 'Dark', value: 'dark'}]}, initialValue: 'default'}),
     defineField({name: 'anchorId', title: 'Anchor ID', type: 'string', description: 'Example: features'}),
   ],
-  preview: {select: {title: 'heading', layout: 'layout', media: 'mediaItems.0.image', mediaItems: 'mediaItems', subtitle: 'subtitle'}, prepare({title, layout, media, mediaItems, subtitle}) { return {title: title || 'Rich Section', subtitle: pickText(subtitle, `${layout || 'textLeftMediaRight'} | ${itemCount(mediaItems)} media items`), media} }},
+  preview: {
+    select: {
+      title: 'heading',
+      layout: 'layout',
+      media: 'mediaItems.0.image',
+      mediaItems: 'mediaItems',
+      subtitle: 'subtitle',
+      disableMediaFrameEffect: 'disableMediaFrameEffect',
+      body: 'body',
+    },
+    prepare({title, layout, media, mediaItems, subtitle, disableMediaFrameEffect, body}) {
+      return {
+        title: title || 'Rich Section',
+        subtitle:
+          pickText(
+            subtitle,
+            joinPreview([
+              layout || 'textLeftMediaRight',
+              itemCount(mediaItems) ? `${itemCount(mediaItems)} media items` : undefined,
+              itemCount(body) ? `${itemCount(body)} body blocks` : undefined,
+              disableMediaFrameEffect ? 'Frame effect off' : undefined,
+            ]),
+          ) || 'Rich section',
+        media,
+      }
+    },
+  },
 })
