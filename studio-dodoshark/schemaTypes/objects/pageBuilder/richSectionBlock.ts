@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
     name: 'richSectionBlock',
@@ -32,16 +32,45 @@ export default defineType({
             ]
         }),
         defineField({
-            name: 'media',
+            name: 'mediaItems',
             title: '媒体文件',
-            type: 'image',
-            options: { hotspot: true },
-            fields: [
-                {
-                    name: 'alt',
-                    type: 'string',
-                    title: '替代文字 (Alt Text)',
-                }
+            type: 'array',
+            of: [
+                defineArrayMember({
+                    title: '媒体项',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'image',
+                            title: '图片',
+                            type: 'image',
+                            options: { hotspot: true },
+                        }),
+                        defineField({
+                            name: 'alt',
+                            type: 'string',
+                            title: '替代文字 (Alt Text)',
+                        }),
+                        defineField({
+                            name: 'caption',
+                            type: 'string',
+                            title: '说明文字',
+                        })
+                    ],
+                    preview: {
+                        select: {
+                            image: 'image',
+                            title: 'caption',
+                            alt: 'alt',
+                        },
+                        prepare({ image, title, alt }) {
+                            return {
+                                title: title || alt || '媒体项',
+                                media: image,
+                            }
+                        }
+                    }
+                })
             ]
         }),
         defineField({
@@ -85,11 +114,12 @@ export default defineType({
         })
     ],
     preview: {
-        select: { title: 'heading', subtitle: 'layout', media: 'media' },
-        prepare({ title, subtitle, media }) {
+        select: { title: 'heading', layout: 'layout', media: 'mediaItems.0.image', mediaItems: 'mediaItems' },
+        prepare({ title, layout, media, mediaItems }) {
+            const mediaCount = Array.isArray(mediaItems) ? mediaItems.length : 0
             return {
                 title: title || '图文排版 (Rich Section)',
-                subtitle: `布局: ${subtitle}`,
+                subtitle: `布局: ${layout || 'textLeftMediaRight'} · 媒体数: ${mediaCount}`,
                 media
             }
         }

@@ -185,6 +185,13 @@ async function getSolution(slug: string) {
         ...,
         asset
       },
+      mediaItems[] {
+        ...,
+        image {
+          ...,
+          asset
+        }
+      },
       images[] {
         ...,
         asset

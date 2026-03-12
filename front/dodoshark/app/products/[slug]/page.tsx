@@ -132,6 +132,13 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
       ...,
       asset
     },
+    mediaItems[] {
+      ...,
+      image {
+        ...,
+        asset
+      }
+    },
     images[] {
       ...,
       asset

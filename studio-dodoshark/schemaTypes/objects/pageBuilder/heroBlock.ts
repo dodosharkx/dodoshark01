@@ -133,7 +133,7 @@ export default defineType({
         select: { title: 'title', subtitle: 'subtitle', media: 'images.0', variant: 'variant' },
         prepare({ title, subtitle, media, variant }) {
             return {
-                title: title || 'Hero Block (首屏)',
+                title: title || 'Hero Block',
                 subtitle:
                     subtitle ||
                     (variant === 'splitProductShowcase'

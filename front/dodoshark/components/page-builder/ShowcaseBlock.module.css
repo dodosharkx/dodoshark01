@@ -204,6 +204,35 @@
   height: 1rem;
 }
 
+.splitMedia {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: rgb(226 232 240);
+  box-shadow: 0 24px 56px -28px rgb(15 23 42 / 0.35);
+  isolation: isolate;
+}
+
+.splitMediaFrame,
+.splitMediaFallback {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.splitMediaImage {
+  object-fit: cover;
+  transform: scale(1.02);
+  transform-origin: center;
+}
+
+.splitMediaFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(148 163 184);
+}
+
 .darkShell .mobileCounter {
   color: rgba(248, 250, 252, 0.88);
 }
@@ -233,6 +262,14 @@
 @media (max-width: 767px) {
   .shell {
     margin-top: 2rem;
+  }
+
+  .splitMedia {
+    border-radius: 1.25rem;
+  }
+
+  .splitMediaImage {
+    transform: scale(1.04);
   }
 
   .cardLink {
@@ -291,6 +328,13 @@
 
   .mobileCounter {
     display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .splitMediaFrame,
+  .splitMediaFallback {
+    aspect-ratio: 16 / 10;
   }
 }
 

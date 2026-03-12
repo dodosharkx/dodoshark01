@@ -213,19 +213,19 @@ function SplitCarousel({
                   ) : null}
                 </div>
 
-                <div className="order-1 overflow-hidden rounded-[1.5rem] bg-slate-200 shadow-[0_24px_56px_-28px_rgba(15,23,42,0.35)] md:order-1 lg:order-2">
+                <div className={`order-1 md:order-1 lg:order-2 ${styles.splitMedia}`}>
                   {imageSrc ? (
-                    <div className="relative aspect-[4/3] w-full md:aspect-[16/10]">
+                    <div className={styles.splitMediaFrame}>
                       <Image
                         src={imageSrc}
                         alt={item.image?.alt || title}
                         fill
-                        sizes="(max-width: 1023px) 100vw, 52vw"
-                        className="object-cover"
+                        sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1023px) 100vw, 52vw"
+                        className={styles.splitMediaImage}
                       />
                     </div>
                   ) : (
-                    <div className="flex aspect-[4/3] items-center justify-center text-slate-400 md:aspect-[16/10]">
+                    <div className={styles.splitMediaFallback}>
                       <ArrowRightIcon className="h-10 w-10 rotate-45" />
                     </div>
                   )}
