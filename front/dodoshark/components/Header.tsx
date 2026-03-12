@@ -6,8 +6,9 @@ import { useEffect, useEffectEvent, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 import MobileNavToggle from '@/components/header/MobileNavToggle'
+import { isNavItemActive, type NavItem } from '@/components/header/nav-utils'
 
-const desktopNavItems = [
+const desktopNavItems: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Products', href: '/products' },
   { label: 'Solutions', href: '/solutions' },
@@ -19,7 +20,7 @@ const desktopNavItems = [
   { label: 'Careers', href: '#' },
 ]
 
-const mobileNavItems = [
+const mobileNavItems: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Products', href: '/products' },
   { label: 'Solutions', href: '/solutions' },
@@ -162,22 +163,31 @@ export default function Header() {
 
             <nav className="hidden h-full items-center gap-3 overflow-x-auto [scrollbar-width:none] xl:flex">
               {desktopNavItems.map((item) => {
-                const isActive = pathname === item.href
+                const isActive = isNavItemActive(pathname, item.href)
                 const itemClass = desktopFloating
                   ? isActive
-                    ? 'text-white [text-shadow:0_1px_10px_rgba(15,23,42,0.38)]'
-                    : 'text-white/95 [text-shadow:0_1px_10px_rgba(15,23,42,0.38)] hover:text-white'
+                    ? 'text-white [text-shadow:0_1px_12px_rgba(15,23,42,0.42)]'
+                    : 'text-white/88 [text-shadow:0_1px_12px_rgba(15,23,42,0.42)]'
                   : isActive
                     ? 'text-white'
-                    : 'text-white/84 hover:text-white'
+                    : 'text-white/82'
 
                 return (
                   <Link
                     key={`${item.label}-${item.href}`}
                     href={item.href}
-                    className={`shrink-0 px-2 py-2 text-[16px] font-semibold tracking-[0.08em] transition-colors ${itemClass}`}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`group relative inline-flex h-full shrink-0 items-center px-3 text-[16px] font-semibold tracking-[0.08em] transition-[color,filter,background-color] duration-300 ${itemClass} hover:bg-white/8 hover:text-[#f6a43c] hover:brightness-125`}
                   >
-                    {item.label}
+                    <span className="relative">
+                      {item.label}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute left-0 top-[calc(100%+0.35rem)] h-[2px] rounded-full bg-[#f97316] transition-transform duration-300 ${
+                          isActive ? 'w-full scale-x-100' : 'w-full scale-x-0'
+                        }`}
+                      />
+                    </span>
                   </Link>
                 )
               })}

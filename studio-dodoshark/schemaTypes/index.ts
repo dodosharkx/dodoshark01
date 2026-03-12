@@ -19,6 +19,7 @@ import ctaBlock from './objects/pageBuilder/ctaBlock'
 import pageBuilderPortableTextBlock from './objects/pageBuilder/portableTextBlock'
 import collectionReferenceBlock from './objects/pageBuilder/collectionReferenceBlock'
 import machineSelectorBlock from './objects/pageBuilder/machineSelectorBlock'
+import showcaseBlock from './objects/pageBuilder/showcaseBlock'
 
 // Documents - Reference Libraries
 import category from './documents/category'
@@ -64,6 +65,7 @@ export const schemaTypes = [
     pageBuilderPortableTextBlock,
     collectionReferenceBlock,
     machineSelectorBlock,
+    showcaseBlock,
 
     // Reference Libraries
     category,

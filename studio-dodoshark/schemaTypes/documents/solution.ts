@@ -81,6 +81,7 @@ export default defineType({
                 { type: 'portableTextBlock' },
                 { type: 'collectionReferenceBlock' },
                 { type: 'machineSelectorBlock' },
+                { type: 'showcaseBlock' },
             ],
         }),
     ],

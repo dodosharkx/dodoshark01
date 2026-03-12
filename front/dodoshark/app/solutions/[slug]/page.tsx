@@ -23,6 +23,9 @@ import PortableTextBlock, {
 import RichSectionBlock, {
   type RichSectionBlockData,
 } from '@/components/page-builder/RichSectionBlock'
+import ShowcaseBlock, {
+  type ShowcaseBlockData,
+} from '@/components/page-builder/ShowcaseBlock'
 import TableBlock, { type TableBlockData } from '@/components/page-builder/TableBlock'
 import Icon from '@/components/ui/Icon'
 import {
@@ -107,6 +110,7 @@ type SolutionBlock =
   | CtaBlockData
   | PortableTextBlockData
   | CollectionReferenceBlockData
+  | ShowcaseBlockData
   | FeatureGridBlock
   | VideoGalleryBlock
 
@@ -195,10 +199,17 @@ async function getSolution(slug: string) {
           ...,
           asset
         },
+        logo {
+          ...,
+          asset
+        },
         videoThumbnail {
           ...,
           asset
         }
+      },
+      footerCta {
+        ...
       },
       videos[] {
         ...,
@@ -438,6 +449,10 @@ function renderSolutionGroup(group: PageBuilderRenderGroup<SolutionBlock>) {
 
   if (block._type === 'collectionReferenceBlock') {
     return <CollectionReferenceBlock key={key} block={block} />
+  }
+
+  if (block._type === 'showcaseBlock') {
+    return <ShowcaseBlock key={key} block={block} />
   }
 
   if (block._type !== 'featureGridBlock' && block._type !== 'videoGalleryBlock') {

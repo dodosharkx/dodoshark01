@@ -126,8 +126,8 @@ export default function Footer() {
               ))}
             </ul>
           </section>
-{/* 
-          <section className="footer-block" aria-labelledby="footer-map-title">
+
+          {/* <section className="footer-block" aria-labelledby="footer-map-title">
             <p className="footer-kicker">Global Presence</p>
             <h2 className="footer-title" id="footer-map-title">
               World Brand

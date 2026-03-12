@@ -25,6 +25,9 @@ import PortableTextBlock, {
 import RichSectionBlock, {
   type RichSectionBlockData,
 } from '@/components/page-builder/RichSectionBlock'
+import ShowcaseBlock, {
+  type ShowcaseBlockData,
+} from '@/components/page-builder/ShowcaseBlock'
 import TableBlock, { type TableBlockData } from '@/components/page-builder/TableBlock'
 import {
   groupPageBuilderBlocks,
@@ -94,6 +97,7 @@ type ProductBlock =
   | CtaBlockData
   | PortableTextBlockData
   | CollectionReferenceBlockData
+  | ShowcaseBlockData
   | FeatureGridBlockData
   | VideoGalleryBlockData
   | { _type?: string; _key?: string }
@@ -142,10 +146,17 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
         ...,
         asset
       },
+      logo {
+        ...,
+        asset
+      },
       videoThumbnail {
         ...,
         asset
       }
+    },
+    footerCta {
+      ...
     },
     videos[] {
       ...,
@@ -477,6 +488,8 @@ function renderPageBuilderGroup(group: PageBuilderRenderGroup<ProductBlock>) {
           block={block as CollectionReferenceBlockData}
         />
       )
+    case 'showcaseBlock':
+      return <ShowcaseBlock key={key} block={block as ShowcaseBlockData} />
     case 'featureGridBlock':
       return renderLegacyFeatureGrid(block as FeatureGridBlockData, key)
     case 'videoGalleryBlock':
