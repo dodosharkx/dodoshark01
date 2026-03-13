@@ -1,28 +1,16 @@
 import Image from 'next/image'
 
-import { urlFor } from '@/app/lib/sanity'
+import {urlFor} from '@/app/lib/sanity'
+
+import FeatureListBlockCarousel from './FeatureListBlockCarousel'
+import {getSharedBackgroundTheme, mapFeatureBackgroundStyleToVariant} from './backgroundTheme'
 import {
-  getSharedBackgroundTheme,
-  mapFeatureBackgroundStyleToVariant,
-} from './backgroundTheme'
+  type FeatureListImage,
+  type FeatureListItem,
+} from './FeatureListBlockCard'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
-import { bodyTextClass, cardTitleClass } from './sectionStyles'
-
-type FeatureIconImage = {
-  alt?: string
-  asset?: {
-    _id?: string
-    url?: string
-  }
-}
-
-type FeatureListItem = {
-  _key?: string
-  title?: string
-  description?: string
-  icon?: FeatureIconImage
-}
+import {bodyTextClass, cardTitleClass} from './sectionStyles'
 
 export type FeatureListBlockData = {
   _type: 'featureListBlock'
@@ -44,7 +32,7 @@ export function hasFeatureListContent(
 }
 
 function FeatureMedia({ item }: { item: FeatureListItem }) {
-  const media = item.icon
+  const media: FeatureListImage | undefined = item.icon?.asset ? item.icon : item.image
   if (!media?.asset) return null
 
   return (
@@ -137,28 +125,7 @@ export function FeatureListBlockContent({
           })}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:gap-x-6 sm:gap-y-10">
-          {items.map((item, index) => (
-            <article
-              key={item._key ?? `${item.title}-${index}`}
-              className="mx-auto flex max-w-[10rem] flex-col items-center text-center sm:max-w-[13rem]"
-            >
-              <FeatureMedia item={item} />
-              <h3
-                className={`mb-3 max-w-[12ch] whitespace-pre-line ${cardTitleClass} ${itemTitleClass}`}
-              >
-                {item.title}
-              </h3>
-              {item.description && (
-                <p
-                  className={`mx-auto max-w-[17ch] whitespace-pre-line font-normal ${bodyTextClass} ${itemDescriptionClass}`}
-                >
-                  {item.description}
-                </p>
-              )}
-            </article>
-          ))}
-        </div>
+        <FeatureListBlockCarousel items={items} isDarkSection={isDark} />
       )}
     </div>
   )
