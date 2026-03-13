@@ -1,6 +1,6 @@
 import {LinkIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
-import {iconForSchemaType, itemCount, joinPreview, pickFirst} from '../../shared/studio'
+import {iconForSchemaType, joinPreview, pickFirst} from '../../shared/studio'
 
 export default defineType({
   name: 'collectionReferenceBlock',
@@ -19,7 +19,6 @@ export default defineType({
     select: {
       title: 'title',
       layout: 'layout',
-      references: 'references',
       firstMediaMain: 'references.0.reference.mainImage',
       firstMediaImage: 'references.0.reference.image',
       firstMediaCover: 'references.0.reference.coverImage',
@@ -37,7 +36,6 @@ export default defineType({
     prepare({
       title,
       layout,
-      references,
       firstMediaMain,
       firstMediaImage,
       firstMediaCover,
@@ -57,7 +55,6 @@ export default defineType({
         subtitle: joinPreview([
           layout || 'grid',
           layout === 'grid' && columns ? `${columns} columns` : undefined,
-          `${itemCount(references)} references`,
         ]),
         media: pickFirst(
           firstMediaMain,

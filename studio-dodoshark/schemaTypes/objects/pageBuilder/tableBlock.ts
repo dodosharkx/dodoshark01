@@ -1,6 +1,7 @@
 import {DocumentSheetIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 import {joinPreview} from '../../shared/studio'
+import TableBlockPreviewMedia from '../../shared/TableBlockPreviewMedia'
 
 export default defineType({
   name: 'tableBlock',
@@ -31,6 +32,7 @@ export default defineType({
           hasHeaderRow ? 'Header row on' : 'Header row off',
           note ? 'Note added' : undefined,
         ]) || 'Table block',
+        media: TableBlockPreviewMedia,
       }
     },
   },

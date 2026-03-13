@@ -1,6 +1,41 @@
 import {ImagesIcon, PlayIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
-import {itemCount, joinPreview, pickFirst} from '../../shared/studio'
+import {joinPreview} from '../../shared/studio'
+
+type StudioImageLike = {
+  asset?: {
+    _ref?: string
+    _id?: string
+    url?: string
+  }
+}
+
+type MediaGalleryPreviewItem = {
+  type?: 'image' | 'videoUrl'
+  image?: StudioImageLike
+  videoThumbnail?: StudioImageLike
+  videoUrl?: string
+}
+
+function hasImageAsset(image?: StudioImageLike): boolean {
+  return Boolean(image?.asset?._ref || image?.asset?._id || image?.asset?.url)
+}
+
+function hasVideoUrl(url?: string): boolean {
+  return Boolean(url?.trim())
+}
+
+function isValidMediaGalleryItem(item?: MediaGalleryPreviewItem): boolean {
+  if (!item) return false
+  if (item.type === 'videoUrl') return hasVideoUrl(item.videoUrl)
+  return hasImageAsset(item.image)
+}
+
+function getMediaGalleryPreviewMedia(item?: MediaGalleryPreviewItem) {
+  if (!item) return ImagesIcon
+  if (item.type === 'videoUrl') return hasImageAsset(item.videoThumbnail) ? item.videoThumbnail : PlayIcon
+  return hasImageAsset(item.image) ? item.image : ImagesIcon
+}
 
 export default defineType({
   name: 'mediaGalleryBlock',
@@ -19,27 +54,21 @@ export default defineType({
       title: 'title',
       layout: 'layout',
       items: 'items',
-      firstImage: 'items.0.image',
-      firstVideoThumbnail: 'items.0.videoThumbnail',
       ctaLabel: 'cta.label',
     },
-    prepare({title, layout, items, firstImage, firstVideoThumbnail, ctaLabel}) {
-      const media = Array.isArray(items)
-        ? pickFirst(
-            ...items.flatMap((item) => [item?.image, item?.videoThumbnail]),
-            firstImage,
-            firstVideoThumbnail,
-          )
-        : pickFirst(firstImage, firstVideoThumbnail)
+    prepare({title, layout, items, ctaLabel}) {
+      const validItems = Array.isArray(items)
+        ? items.filter((item): item is MediaGalleryPreviewItem => isValidMediaGalleryItem(item))
+        : []
 
       return {
         title: title || 'Media Gallery',
         subtitle: joinPreview([
           layout || 'thumbnailGallery',
-          `${itemCount(items)} items`,
+          `${validItems.length} items`,
           ctaLabel ? 'CTA enabled' : undefined,
         ]),
-        media,
+        media: getMediaGalleryPreviewMedia(validItems[0]),
       }
     },
   },
