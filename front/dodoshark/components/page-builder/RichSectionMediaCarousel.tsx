@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
 import type { RichSectionMediaItem } from './RichSectionBlock'
+import SplitHeroArrow from './SplitHeroArrow'
 import 'swiper/css'
 
 function hasImageIdentity(item?: RichSectionMediaItem) {
@@ -90,6 +91,8 @@ export default function RichSectionMediaCarousel({
   const captionClass = isDark ? 'text-slate-400' : 'text-slate-500'
   const dotsBaseClass = isDark ? 'bg-slate-500/50' : 'bg-slate-300'
   const dotsActiveClass = isDark ? 'bg-orange-300' : 'bg-orange-500'
+  const canPrev = currentIndex > 0
+  const canNext = currentIndex < items.length - 1
 
   if (items.length === 0) return null
 
@@ -112,40 +115,69 @@ export default function RichSectionMediaCarousel({
 
   return (
     <div className="w-full min-w-0">
-      <Swiper
-        className="w-full overflow-hidden"
-        modules={[Keyboard, A11y]}
-        slidesPerView={1}
-        spaceBetween={16}
-        speed={550}
-        grabCursor
-        watchOverflow
-        allowTouchMove={items.length > 1}
-        keyboard={{ enabled: true }}
-        a11y={{
-          prevSlideMessage: 'Previous media item',
-          nextSlideMessage: 'Next media item',
-          slideLabelMessage: 'Media item {{index}}',
-        }}
-        onSwiper={(instance) => {
-          setSwiper(instance)
-          setCurrentIndex(instance.realIndex)
-        }}
-        onSlideChange={(instance) => setCurrentIndex(instance.realIndex)}
-      >
-        {items.map((item, index) => (
-          <SwiperSlide
-            key={item._key ?? `rich-section-media-${index}`}
-            className="!h-auto min-w-0"
-          >
-            <MediaFigure
-              item={item}
-              title={title}
-              disableMediaFrameEffect={disableMediaFrameEffect}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="relative md:px-10 lg:px-12">
+        <Swiper
+          className="w-full overflow-hidden"
+          modules={[Keyboard, A11y]}
+          slidesPerView={1}
+          spaceBetween={16}
+          speed={550}
+          grabCursor
+          watchOverflow
+          allowTouchMove={items.length > 1}
+          keyboard={{ enabled: true }}
+          a11y={{
+            prevSlideMessage: 'Previous media item',
+            nextSlideMessage: 'Next media item',
+            slideLabelMessage: 'Media item {{index}}',
+          }}
+          onSwiper={(instance) => {
+            setSwiper(instance)
+            setCurrentIndex(instance.realIndex)
+          }}
+          onSlideChange={(instance) => setCurrentIndex(instance.realIndex)}
+        >
+          {items.map((item, index) => (
+            <SwiperSlide
+              key={item._key ?? `rich-section-media-${index}`}
+              className="!h-auto min-w-0"
+            >
+              <MediaFigure
+                item={item}
+                title={title}
+                disableMediaFrameEffect={disableMediaFrameEffect}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        <SplitHeroArrow
+          direction="previous"
+          ariaLabel="Previous media item"
+          disabled={!canPrev}
+          className={[
+            'left-2 sm:left-3 md:left-0 lg:left-1',
+            isDark ? 'border-slate-200/40 bg-slate-900/78 text-slate-50 hover:bg-slate-900' : '',
+          ].join(' ')}
+          onClick={() => {
+            if (!swiper || swiper.destroyed || !canPrev) return
+            swiper.slidePrev()
+          }}
+        />
+        <SplitHeroArrow
+          direction="next"
+          ariaLabel="Next media item"
+          disabled={!canNext}
+          className={[
+            'right-2 sm:right-3 md:right-0 lg:right-1',
+            isDark ? 'border-slate-200/40 bg-slate-900/78 text-slate-50 hover:bg-slate-900' : '',
+          ].join(' ')}
+          onClick={() => {
+            if (!swiper || swiper.destroyed || !canNext) return
+            swiper.slideNext()
+          }}
+        />
+      </div>
 
       {caption ? (
         <p className={`mx-auto mt-4 max-w-[42rem] text-center text-sm leading-6 md:text-[0.95rem] ${captionClass}`}>

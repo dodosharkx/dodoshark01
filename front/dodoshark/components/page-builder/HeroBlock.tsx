@@ -11,6 +11,7 @@ import {
   heroSubtitleClass,
   heroTitleClass,
 } from './sectionStyles'
+import SplitHeroArrow from './SplitHeroArrow'
 
 type HeroImage = {
   _key?: string
@@ -219,46 +220,6 @@ function HeroIndicators({
   )
 }
 
-function SplitHeroArrow({
-  direction,
-  onClick,
-}: {
-  direction: 'previous' | 'next'
-  onClick: () => void
-}) {
-  const isPrevious = direction === 'previous'
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={isPrevious ? 'Previous hero image' : 'Next hero image'}
-      className={[
-        'absolute top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full',
-        'border border-slate-300/80 bg-white/85 text-slate-700 shadow-md backdrop-blur-sm transition-colors',
-        'hover:bg-white hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400',
-        'sm:h-11 sm:w-11',
-        isPrevious ? 'left-0 sm:left-1' : 'right-0 sm:right-1',
-      ].join(' ')}
-    >
-      <svg
-        viewBox="0 0 24 24"
-        className={`h-4 w-4 sm:h-5 sm:w-5 ${isPrevious ? '' : 'rotate-180'}`}
-        aria-hidden="true"
-      >
-        <path
-          d="M15 5 8 12l7 7"
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.9"
-        />
-      </svg>
-    </button>
-  )
-}
-
 function SplitHeroMedia({
   image,
   title,
@@ -281,8 +242,16 @@ function SplitHeroMedia({
       <div className="relative px-10 sm:px-12">
         {showControls && (
           <>
-            <SplitHeroArrow direction="previous" onClick={onPrevious} />
-            <SplitHeroArrow direction="next" onClick={onNext} />
+            <SplitHeroArrow
+              direction="previous"
+              onClick={onPrevious}
+              ariaLabel="Previous hero image"
+            />
+            <SplitHeroArrow
+              direction="next"
+              onClick={onNext}
+              ariaLabel="Next hero image"
+            />
           </>
         )}
         <div className="flex h-[260px] w-full items-center justify-center rounded-[1.5rem] border border-slate-300/60 bg-white/35 sm:h-[340px] lg:h-[520px]">
@@ -299,8 +268,16 @@ function SplitHeroMedia({
     <div className="relative px-10 sm:px-12">
       {showControls && (
         <>
-          <SplitHeroArrow direction="previous" onClick={onPrevious} />
-          <SplitHeroArrow direction="next" onClick={onNext} />
+          <SplitHeroArrow
+            direction="previous"
+            onClick={onPrevious}
+            ariaLabel="Previous hero image"
+          />
+          <SplitHeroArrow
+            direction="next"
+            onClick={onNext}
+            ariaLabel="Next hero image"
+          />
         </>
       )}
 

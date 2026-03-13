@@ -11,6 +11,7 @@ import { urlFor } from '@/app/lib/sanity'
 import { getSharedBackgroundTheme } from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
+import SplitHeroArrow from './SplitHeroArrow'
 import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
 import styles from './ShowcaseBlock.module.css'
 import 'swiper/css'
@@ -203,7 +204,30 @@ function SplitCarousel({
 
           return (
             <SwiperSlide key={item._key ?? `${title}-${index}`} className="!h-auto">
-              <article className="grid h-full gap-8 md:items-start lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
+              <article className={`relative grid h-full gap-8 md:items-start md:px-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:px-14 ${styles.splitSlide}`}>
+                {items.length > 1 && (
+                  <div className={styles.splitDesktopNav}>
+                    <SplitHeroArrow
+                      direction="previous"
+                      ariaLabel="Previous showcase slide"
+                      className={styles.splitDesktopNavButton}
+                      onClick={() => {
+                        if (!swiper || swiper.destroyed) return
+                        swiper.slidePrev()
+                      }}
+                    />
+                    <SplitHeroArrow
+                      direction="next"
+                      ariaLabel="Next showcase slide"
+                      className={styles.splitDesktopNavButton}
+                      onClick={() => {
+                        if (!swiper || swiper.destroyed) return
+                        swiper.slideNext()
+                      }}
+                    />
+                  </div>
+                )}
+
                 <div className="order-2 flex md:pt-8 flex-col justify-center md:order-2 lg:order-1">
                   <h3 className={`${cardTitleClass} ${titleClass}`}>
                     {title}
@@ -229,6 +253,29 @@ function SplitCarousel({
                   ) : (
                     <div className={styles.splitMediaFallback}>
                       <ArrowRightIcon className="h-10 w-10 rotate-45" />
+                    </div>
+                  )}
+
+                  {items.length > 1 && (
+                    <div className={styles.splitMediaMobileNav}>
+                      <SplitHeroArrow
+                        direction="previous"
+                        ariaLabel="Previous showcase slide"
+                        className={styles.splitMediaMobileNavButton}
+                        onClick={() => {
+                          if (!swiper || swiper.destroyed) return
+                          swiper.slidePrev()
+                        }}
+                      />
+                      <SplitHeroArrow
+                        direction="next"
+                        ariaLabel="Next showcase slide"
+                        className={styles.splitMediaMobileNavButton}
+                        onClick={() => {
+                          if (!swiper || swiper.destroyed) return
+                          swiper.slideNext()
+                        }}
+                      />
                     </div>
                   )}
                 </div>

@@ -211,6 +211,7 @@
 }
 
 .splitMedia {
+  position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
   background: rgb(226 232 240);
@@ -237,6 +238,40 @@
   align-items: center;
   justify-content: center;
   color: rgb(148 163 184);
+}
+
+.splitSlide {
+  position: relative;
+}
+
+.splitDesktopNav {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  inset: 0;
+  pointer-events: none;
+}
+
+.splitDesktopNavButton {
+  display: none;
+  pointer-events: auto;
+}
+
+.splitMediaMobileNav {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  pointer-events: none;
+}
+
+.splitMediaMobileNavButton {
+  pointer-events: auto;
 }
 
 .darkShell .mobileCounter {
@@ -277,6 +312,15 @@
 
   .splitMedia {
     border-radius: 1.25rem;
+  }
+
+  .splitMediaMobileNav {
+    padding: 0.625rem;
+  }
+
+  .splitMediaMobileNavButton {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .splitMediaImage {
@@ -343,6 +387,22 @@
 }
 
 @media (min-width: 768px) {
+  .splitDesktopNavButton {
+    display: flex;
+  }
+
+  .splitDesktopNavButton:first-child {
+    left: 0;
+  }
+
+  .splitDesktopNavButton:last-child {
+    right: 0;
+  }
+
+  .splitMediaMobileNav {
+    display: none;
+  }
+
   .splitMediaFrame,
   .splitMediaFallback {
     aspect-ratio: 16 / 10;
