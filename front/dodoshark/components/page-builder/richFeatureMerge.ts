@@ -55,7 +55,10 @@ export function shouldMergeRichAndFeature(
     featureBlock.backgroundStyle ?? 'white',
   )
 
-  return richVariant === featureVariant
+  return (
+    richVariant === featureVariant &&
+    richBlock.layout === 'centeredMediaGridBodyBelow'
+  )
 }
 
 export function groupPageBuilderBlocks<T extends PageBuilderBlockBase>(

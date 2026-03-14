@@ -59,7 +59,7 @@ type FeatureListBlockProps = {
 type FeatureListBlockContentProps = {
   block: FeatureListBlockData
   showHeader?: boolean
-  renderMode?: 'default' | 'mergedCards'
+  renderMode?: 'default' | 'mergedCards' | 'mergedCarousel'
 }
 
 export function FeatureListBlockContent({
@@ -73,6 +73,7 @@ export function FeatureListBlockContent({
   const theme = getSharedBackgroundTheme(backgroundVariant)
   const hasHeader = showHeader && Boolean(block.title?.trim())
   const isMergedCards = renderMode === 'mergedCards'
+  const useCarousel = renderMode === 'default' || renderMode === 'mergedCarousel'
 
   if (!hasFeatureListContent(block, showHeader)) return null
 
@@ -125,9 +126,14 @@ export function FeatureListBlockContent({
             )
           })}
         </div>
-      ) : (
-        <FeatureListBlockCarousel items={items} theme={theme} />
-      )}
+      ) : useCarousel ? (
+        <FeatureListBlockCarousel
+          items={items}
+          theme={theme}
+          showMobileArrows={renderMode === 'mergedCarousel'}
+        />
+      ) : null
+      }
     </div>
   )
 }

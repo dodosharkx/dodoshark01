@@ -10,43 +10,19 @@ import {
   type SharedBackgroundVariant,
 } from './backgroundTheme'
 import RichSectionMediaCarousel from './RichSectionMediaCarousel'
+import {
+  getValidRichSectionMediaItems,
+  RichSectionMediaGrid,
+  type RichSectionMediaItem,
+} from './RichSectionMedia'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
 
-type RichSectionImage = {
-  alt?: string
-  asset?: {
-    _ref?: string
-    _id?: string
-    url?: string
-    metadata?: {
-      lqip?: string
-      dimensions?: {
-        width?: number
-        height?: number
-      }
-    }
-  }
-}
-
-export type RichSectionMediaItem = {
-  _key?: string
-  image?: RichSectionImage
-  alt?: string
-  caption?: string
-}
-
-function hasImageIdentity(image?: RichSectionImage) {
-  const ref = image?.asset?._ref?.trim()
-  const id = image?.asset?._id?.trim()
-  const url = image?.asset?.url?.trim()
-  return Boolean(ref || id || url)
-}
-
-function getValidMediaItems(items?: RichSectionMediaItem[]) {
-  return (items ?? []).filter((item) => hasImageIdentity(item.image))
-}
+export type RichSectionLayout =
+  | 'textLeftMediaRight'
+  | 'mediaLeftTextRight'
+  | 'centeredMediaGridBodyBelow'
 
 export type RichSectionBlockData = {
   _type: 'richSectionBlock'
@@ -55,14 +31,14 @@ export type RichSectionBlockData = {
   subtitle?: string
   body?: PortableTextBlock[]
   mediaItems?: RichSectionMediaItem[]
-  layout?: 'textLeftMediaRight' | 'mediaLeftTextRight'
+  layout?: RichSectionLayout
   disableMediaFrameEffect?: boolean
   backgroundVariant?: SharedBackgroundVariant
   anchorId?: string
 }
 
 export function hasRichSectionContent(block: RichSectionBlockData) {
-  const hasMedia = getValidMediaItems(block.mediaItems).length > 0
+  const hasMedia = getValidRichSectionMediaItems(block.mediaItems).length > 0
   const hasBody = Boolean(block.body?.length)
   const hasSubtitle = Boolean(block.subtitle?.trim())
 
@@ -143,14 +119,22 @@ type RichSectionBlockContentProps = {
   trimTrailingContentSpacing?: boolean
 }
 
+function normalizeRichSectionLayout(layout?: RichSectionLayout): RichSectionLayout {
+  if (layout === 'mediaLeftTextRight' || layout === 'centeredMediaGridBodyBelow') {
+    return layout
+  }
+
+  return 'textLeftMediaRight'
+}
+
 export function RichSectionBlockContent({
   block,
   trimTrailingContentSpacing = false,
 }: RichSectionBlockContentProps) {
-  const layout = block.layout === 'mediaLeftTextRight' ? 'mediaLeftTextRight' : 'textLeftMediaRight'
+  const layout = normalizeRichSectionLayout(block.layout)
   const variant = block.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
-  const mediaItems = getValidMediaItems(block.mediaItems)
+  const mediaItems = getValidRichSectionMediaItems(block.mediaItems)
   const hasMedia = mediaItems.length > 0
   const hasBody = Boolean(block.body?.length)
   const hasSubtitle = Boolean(block.subtitle?.trim())
@@ -166,6 +150,50 @@ export function RichSectionBlockContent({
   const bodyClass = trimTrailingContentSpacing
     ? 'max-w-[36rem] [&_blockquote:last-child]:mb-0 [&_h2:last-child]:mb-0 [&_h3:last-child]:mb-0 [&_ol:last-child]:mb-0 [&_p:last-child]:mb-0 [&_ul:last-child]:mb-0'
     : 'max-w-[36rem]'
+
+  if (layout === 'centeredMediaGridBodyBelow') {
+    const centeredBodyClass = trimTrailingContentSpacing
+      ? 'mx-auto max-w-5xl [&_blockquote:last-child]:mb-0 [&_h2:last-child]:mb-0 [&_h3:last-child]:mb-0 [&_ol:last-child]:mb-0 [&_p:last-child]:mb-0 [&_ul:last-child]:mb-0'
+      : 'mx-auto max-w-5xl'
+
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {(block.heading || hasSubtitle) && (
+          <SectionHeader
+            title={block.heading}
+            subtitle={hasSubtitle ? block.subtitle : undefined}
+            tone="light"
+            align="center"
+            className="mx-auto mb-10 max-w-4xl md:mb-12"
+            titleClassName={theme.heading}
+            subtitleClassName={`mx-auto max-w-3xl font-normal ${sectionSubtitleClass} ${theme.subtitle}`}
+          />
+        )}
+
+        <div className="space-y-10 md:space-y-12">
+          {hasMedia && (
+            <div className="mx-auto max-w-5xl">
+              <RichSectionMediaGrid
+                items={mediaItems}
+                title={block.heading}
+                theme={theme}
+                disableMediaFrameEffect={block.disableMediaFrameEffect}
+              />
+            </div>
+          )}
+
+          {hasBody && (
+            <div className={centeredBodyClass}>
+              <PortableText
+                value={block.body as PortableTextBlock[]}
+                components={getPortableTextComponents(theme)}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

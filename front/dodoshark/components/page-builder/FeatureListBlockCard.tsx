@@ -94,6 +94,8 @@ export function FeatureListStandaloneCard({
   const mediaBackgroundClass = theme.surfaceMuted
   const placeholderClass = theme.subtitle
   const frameClass = theme.surfaceElevated
+  const contentClass = 'bg-white/95 text-slate-900'
+  const descriptionClass = 'text-slate-700'
 
   return (
     <article className={`flex h-full flex-col overflow-hidden rounded-[1.125rem] ${frameClass}`}>
@@ -115,14 +117,14 @@ export function FeatureListStandaloneCard({
         )}
       </div>
 
-      <div className={`flex flex-1 flex-col justify-start px-6 py-6 md:px-7 md:py-7 ${theme.accentDark}`}>
+      <div className={`flex flex-1 flex-col justify-start px-6 py-6 md:px-7 md:py-7 ${contentClass}`}>
         {item.title && (
           <h3 className={`mb-3 whitespace-pre-line ${cardTitleClass}`}>
             {item.title}
           </h3>
         )}
         {item.description && (
-          <p className={`whitespace-pre-line ${bodyTextClass} text-slate-200`}>
+          <p className={`whitespace-pre-line ${bodyTextClass} ${descriptionClass}`}>
             {item.description}
           </p>
         )}

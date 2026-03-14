@@ -24,7 +24,7 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
       description:
-        'Enable only when the previous block is a Rich Section with matching background style.',
+        'Enable only when the previous block uses the centered media-grid Rich Section layout and matches the same background style.',
     }),
     defineField({
       name: 'title',

@@ -1,83 +1,17 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 import { A11y, Keyboard } from 'swiper/modules'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { urlFor } from '@/app/lib/sanity'
+import { type SharedBackgroundTheme } from './backgroundTheme'
 import {
-  getSharedSurfaceClasses,
-  type SharedBackgroundTheme,
-} from './backgroundTheme'
-import type { RichSectionMediaItem } from './RichSectionBlock'
+  RichSectionMediaFigure,
+  type RichSectionMediaItem,
+} from './RichSectionMedia'
 import SplitHeroArrow from './SplitHeroArrow'
 import 'swiper/css'
-
-function hasImageIdentity(item?: RichSectionMediaItem) {
-  const ref = item?.image?.asset?._ref?.trim()
-  const id = item?.image?.asset?._id?.trim()
-  const url = item?.image?.asset?.url?.trim()
-  return Boolean(ref || id || url)
-}
-
-function resolveMediaSrc(item?: RichSectionMediaItem) {
-  if (!item?.image) return undefined
-
-  const directUrl = item.image.asset?.url?.trim()
-  if (directUrl) return directUrl
-
-  if (!hasImageIdentity(item)) return undefined
-
-  try {
-    return urlFor(item.image).width(1400).fit('max').url()
-  } catch {
-    return undefined
-  }
-}
-
-function MediaFigure({
-  item,
-  title,
-  theme,
-  disableMediaFrameEffect = false,
-}: {
-  item: RichSectionMediaItem
-  title?: string
-  theme: SharedBackgroundTheme
-  disableMediaFrameEffect?: boolean
-}) {
-  const src = resolveMediaSrc(item)
-  if (!src || !item.image?.asset) {
-    const fallbackClass = disableMediaFrameEffect
-      ? `w-full aspect-[4/3] ${getSharedSurfaceClasses(theme, 'muted')}`
-      : `w-full aspect-[4/3] rounded-lg ${getSharedSurfaceClasses(theme, 'muted')}`
-    return <div className={fallbackClass} />
-  }
-
-  const width = item.image.asset.metadata?.dimensions?.width ?? 1200
-  const height = item.image.asset.metadata?.dimensions?.height ?? 900
-  const hasLqip = Boolean(item.image.asset.metadata?.lqip)
-  const alt = item.alt?.trim() || item.caption?.trim() || title || 'Section media'
-  const frameClass = disableMediaFrameEffect
-    ? 'relative overflow-hidden'
-    : `relative overflow-hidden rounded-lg ${getSharedSurfaceClasses(theme, 'elevated')}`
-
-  return (
-    <div className={frameClass}>
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className="h-auto w-full object-cover"
-        placeholder={hasLqip ? 'blur' : 'empty'}
-        blurDataURL={item.image.asset.metadata?.lqip}
-      />
-    </div>
-  )
-}
 
 export default function RichSectionMediaCarousel({
   items,
@@ -105,7 +39,7 @@ export default function RichSectionMediaCarousel({
   if (items.length === 1) {
     return (
       <div className="w-full min-w-0">
-        <MediaFigure
+        <RichSectionMediaFigure
           item={items[0]}
           title={title}
           theme={theme}
@@ -149,7 +83,7 @@ export default function RichSectionMediaCarousel({
               key={item._key ?? `rich-section-media-${index}`}
               className="!h-auto min-w-0"
             >
-              <MediaFigure
+              <RichSectionMediaFigure
                 item={item}
                 title={title}
                 theme={theme}

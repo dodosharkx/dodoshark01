@@ -18,6 +18,7 @@ import 'swiper/css'
 type FeatureListBlockCarouselProps = {
   items: FeatureListItem[]
   theme: SharedBackgroundTheme
+  showMobileArrows?: boolean
 }
 
 const carouselBreakpoints = {
@@ -28,6 +29,7 @@ const carouselBreakpoints = {
 export default function FeatureListBlockCarousel({
   items,
   theme,
+  showMobileArrows = false,
 }: FeatureListBlockCarouselProps) {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
   const [controls, setControls] = useState(defaultSliderControls)
@@ -35,6 +37,7 @@ export default function FeatureListBlockCarousel({
   const dotsActiveClass = theme.dotActive
   const cardSizes =
     '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 33vw'
+  const arrowVisibilityClass = showMobileArrows ? 'inline-flex' : 'hidden md:inline-flex'
 
   if (items.length === 0) return null
 
@@ -50,7 +53,7 @@ export default function FeatureListBlockCarousel({
               buttonClassName={`${theme.control} ${theme.controlHover}`}
               label="Previous feature cards"
               onClick={() => swiper?.slidePrev()}
-              className="absolute left-0 top-[35%] z-20 hidden -translate-y-1/2 md:inline-flex md:-left-5 lg:-left-6"
+              className={`absolute left-2 top-[35%] z-20 -translate-y-1/2 ${arrowVisibilityClass} md:left-0 md:-left-5 lg:-left-6`}
             />
 
             <SliderNavButton
@@ -60,7 +63,7 @@ export default function FeatureListBlockCarousel({
               buttonClassName={`${theme.control} ${theme.controlHover}`}
               label="Next feature cards"
               onClick={() => swiper?.slideNext()}
-              className="absolute right-0 top-[35%] z-20 hidden -translate-y-1/2 md:inline-flex md:-right-5 lg:-right-6"
+              className={`absolute right-2 top-[35%] z-20 -translate-y-1/2 ${arrowVisibilityClass} md:right-0 md:-right-5 lg:-right-6`}
             />
           </>
         )}

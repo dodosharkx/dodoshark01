@@ -18,6 +18,8 @@ export default function MergedRichFeatureSection({
   const variant = richBlock.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
   const anchorId = richBlock.anchorId?.trim() || undefined
+  const featureRenderMode =
+    richBlock.layout === 'centeredMediaGridBodyBelow' ? 'mergedCarousel' : 'mergedCards'
 
   return (
     <SectionShell id={anchorId} sectionClassName={theme.section}>
@@ -26,7 +28,7 @@ export default function MergedRichFeatureSection({
         <FeatureListBlockContent
           block={featureBlock}
           showHeader={false}
-          renderMode="mergedCards"
+          renderMode={featureRenderMode}
         />
       </div>
     </SectionShell>
