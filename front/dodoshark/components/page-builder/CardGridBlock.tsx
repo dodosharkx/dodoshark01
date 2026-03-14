@@ -10,7 +10,11 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
@@ -78,15 +82,13 @@ const defaultSliderControls: SliderControls = {
   totalPages: 1,
 }
 
-const defaultBannerOverlayColor = 'rgba(15,23,42,0.45)'
-
 export type CardGridBlockData = {
   _type: 'cardGridBlock'
   _key?: string
   title?: string
   subtitle?: string
   firstLineCardTitle?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   enableBannerOverlap?: boolean
   bannerImage?: CardImage
   bannerOverlayColor?: string
@@ -238,13 +240,13 @@ function CardLink({
 function GridCard({
   item,
   size,
+  theme,
   disableCardFrameEffect = false,
-  isDarkBackground = false,
 }: {
   item: CardItem
   size: 'large' | 'small'
+  theme: SharedBackgroundTheme
   disableCardFrameEffect?: boolean
-  isDarkBackground?: boolean
 }) {
   const data = resolveCard(item)
   const hasContent = Boolean(data.title || data.description || data.image?.asset)
@@ -257,20 +259,18 @@ function GridCard({
       : 'text-lg font-display font-bold leading-[1.2] tracking-[-0.02em]'
   const textClass = size === 'large' ? bodyTextClass : 'text-sm leading-6'
   const ctaClass = size === 'large' ? 'text-sm' : 'text-xs'
-  const titleTone = disableCardFrameEffect && isDarkBackground ? 'text-slate-100' : 'text-slate-900'
-  const descriptionTone =
-    disableCardFrameEffect && isDarkBackground ? 'text-slate-300' : 'text-slate-500'
-  const ctaTone = disableCardFrameEffect && isDarkBackground ? 'text-orange-300' : 'text-orange-500'
-  const framedArticleBaseClass =
-    'overflow-hidden rounded-lg border border-slate-200 bg-white text-center shadow-[0_10px_30px_-24px_rgba(15,23,42,0.3)]'
+  const titleTone = theme.heading
+  const descriptionTone = theme.subtitle
+  const ctaTone = 'text-orange-600'
+  const framedArticleBaseClass = `overflow-hidden rounded-lg text-center ${theme.surfaceElevated}`
   const articleClass = disableCardFrameEffect
     ? 'text-center'
     : data.isInteractive
-      ? `${framedArticleBaseClass} transition-[box-shadow,border-color] duration-200 hover:border-slate-300 hover:shadow-md`
+      ? `${framedArticleBaseClass} transition-[box-shadow,border-color,transform] duration-200 hover:-translate-y-1`
       : framedArticleBaseClass
   const contentClass = size === 'large' ? 'p-6' : 'p-5'
-  const imageBgClass = disableCardFrameEffect && isDarkBackground ? 'bg-slate-800' : 'bg-slate-100'
-  const emptyImageClass = disableCardFrameEffect && isDarkBackground ? 'text-slate-500' : 'text-slate-300'
+  const imageBgClass = theme.surfaceMuted
+  const emptyImageClass = theme.subtitle
   const imageSrc = resolveImageSrc(data.image, { width: 900, height: 700, fit: 'crop' })
 
   return (
@@ -317,14 +317,14 @@ function GridCard({
 
 function MobileCarouselCard({
   item,
-  isDarkBackground = false,
+  theme,
   disableCardFrameEffect = false,
   showControls = false,
   controls,
   onSelectPage,
 }: {
   item: CardItem
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
   disableCardFrameEffect?: boolean
   showControls?: boolean
   controls: SliderControls
@@ -334,19 +334,17 @@ function MobileCarouselCard({
   const hasContent = Boolean(data.title || data.description || data.image?.asset)
   if (!hasContent) return null
 
-  const titleTone = disableCardFrameEffect && isDarkBackground ? 'text-slate-100' : 'text-slate-900'
-  const descriptionTone =
-    disableCardFrameEffect && isDarkBackground ? 'text-slate-300' : 'text-slate-500'
-  const ctaTone = disableCardFrameEffect && isDarkBackground ? 'text-orange-300' : 'text-orange-500'
-  const framedArticleBaseClass =
-    'overflow-hidden rounded-lg border border-slate-200 bg-white text-center shadow-[0_10px_30px_-24px_rgba(15,23,42,0.3)]'
+  const titleTone = theme.heading
+  const descriptionTone = theme.subtitle
+  const ctaTone = 'text-orange-600'
+  const framedArticleBaseClass = `overflow-hidden rounded-lg text-center ${theme.surfaceElevated}`
   const articleClass = disableCardFrameEffect
     ? 'text-center'
     : framedArticleBaseClass
-  const imageBgClass = disableCardFrameEffect && isDarkBackground ? 'bg-slate-800' : 'bg-slate-100'
-  const emptyImageClass = disableCardFrameEffect && isDarkBackground ? 'text-slate-500' : 'text-slate-300'
-  const dotsBaseClass = isDarkBackground ? 'bg-slate-500/50' : 'bg-slate-300'
-  const dotsActiveClass = isDarkBackground ? 'bg-orange-300' : 'bg-orange-500'
+  const imageBgClass = theme.surfaceMuted
+  const emptyImageClass = theme.subtitle
+  const dotsBaseClass = theme.dotIdle
+  const dotsActiveClass = theme.dotActive
   const imageSrc = resolveImageSrc(data.image, { width: 900, height: 700, fit: 'crop' })
 
   return (
@@ -418,15 +416,15 @@ function MobileCarouselCard({
 
 function SectionTitle({
   title,
-  isDarkBackground = false,
+  theme,
 }: {
   title?: string
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
 }) {
   if (!title) return null
 
-  const separatorClass = isDarkBackground ? 'bg-slate-600' : 'bg-slate-300'
-  const titleClass = isDarkBackground ? 'text-slate-100' : 'text-slate-800'
+  const separatorClass = theme.line
+  const titleClass = theme.heading
 
   return (
     <header className="mb-8 text-center md:mb-10">
@@ -445,13 +443,13 @@ function SectionTitle({
 function GroupGrid({
   sectionTitle,
   cards,
+  theme,
   disableCardFrameEffect,
-  isDarkBackground,
 }: {
   sectionTitle?: string
   cards: CardItem[]
+  theme: SharedBackgroundTheme
   disableCardFrameEffect?: boolean
-  isDarkBackground?: boolean
 }) {
   const [mobileSwiper, setMobileSwiper] = useState<SwiperInstance | null>(null)
   const [mobileControls, setMobileControls] = useState<SliderControls>(defaultSliderControls)
@@ -463,7 +461,7 @@ function GroupGrid({
 
   return (
     <section className="pt-0 pb-8">
-      <SectionTitle title={sectionTitle} isDarkBackground={isDarkBackground} />
+      <SectionTitle title={sectionTitle} theme={theme} />
 
       <div className="md:hidden">
         <Swiper
@@ -491,8 +489,8 @@ function GroupGrid({
             <SwiperSlide key={item._key ?? `group-card-mobile-${index}`} className="h-auto">
               <MobileCarouselCard
                 item={item}
+                theme={theme}
                 disableCardFrameEffect={disableCardFrameEffect}
-                isDarkBackground={isDarkBackground}
                 showControls={mobileControls.hasOverflow}
                 controls={mobileControls}
                 onSelectPage={(pageIndex) => mobileSwiper?.slideTo(pageIndex)}
@@ -508,8 +506,8 @@ function GroupGrid({
             key={item._key ?? `group-card-${index}`}
             item={item}
             size={desktopCardSize}
+            theme={theme}
             disableCardFrameEffect={disableCardFrameEffect}
-            isDarkBackground={isDarkBackground}
           />
         ))}
       </div>
@@ -518,9 +516,8 @@ function GroupGrid({
 }
 
 export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
-  const variant = block.backgroundVariant ?? 'muted'
+  const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
-  const isDarkBackground = variant === 'dark'
   const enableBannerOverlap = Boolean(block.enableBannerOverlap)
   const nestedCards = (block.nestedCards ?? []).filter(
     (item) => item?.cardType || item?.reference || item?.inlineCard,
@@ -550,11 +547,10 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
     firstLineCardTitle || (!enableBannerOverlap && hasLegacy ? block.subtitle?.trim() || undefined : undefined)
   const nestedSectionTitle = block.nestedCardTitle?.trim() || undefined
   const bannerImageSrc = resolveImageSrc(block.bannerImage, { width: 2000, height: 900, fit: 'crop' })
-  const bannerOverlayColor = block.bannerOverlayColor?.trim() || defaultBannerOverlayColor
-  const contentIsDarkBackground = enableBannerOverlap ? false : isDarkBackground
+  const bannerOverlayColor = block.bannerOverlayColor?.trim() || theme.overlay
 
   const headerSubtitle = firstLineCardTitle ? block.subtitle : hasLegacy ? undefined : block.subtitle
-  const subtitleClass = isDarkBackground ? theme.subtitle : theme.body
+  const subtitleClass = theme.body
 
   if (!block.title && !block.subtitle && !hasNestedCards && !hasLegacy) return null
 
@@ -564,8 +560,8 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
         <GroupGrid
           sectionTitle={cardsSectionTitle}
           cards={legacyCards}
+          theme={theme}
           disableCardFrameEffect={disableCardFrameEffect}
-          isDarkBackground={contentIsDarkBackground}
         />
       )}
 
@@ -573,8 +569,8 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
         <GroupGrid
           sectionTitle={nestedSectionTitle}
           cards={mergedNestedCards}
+          theme={theme}
           disableCardFrameEffect={disableCardFrameEffect}
-          isDarkBackground={contentIsDarkBackground}
         />
       )}
     </>
@@ -612,7 +608,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
 
         {hasCardContent && (
           <div className="relative z-10 mx-auto -mt-20 max-w-7xl px-4 sm:px-6 lg:-mt-24 lg:px-8">
-            <div className="rounded-[1.5rem] bg-white px-6 py-8 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.35)] sm:px-8 md:py-10 lg:px-10 lg:py-12">
+            <div className={`rounded-[1.5rem] px-6 py-8 sm:px-8 md:py-10 lg:px-10 lg:py-12 ${theme.surfaceElevated}`}>
               {content}
             </div>
           </div>
@@ -627,7 +623,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
         <SectionHeader
           title={block.title}
           subtitle={headerSubtitle}
-          tone={isDarkBackground ? 'dark' : 'light'}
+          tone="light"
           className="mb-10 md:mb-12"
           titleClassName={theme.heading}
           subtitleClassName={`mx-auto max-w-3xl ${sectionSubtitleClass} ${subtitleClass}`}

@@ -53,7 +53,8 @@ export default defineType({
         list: [
           {title: 'White', value: 'white'},
           {title: 'Light Gray', value: 'lightGray'},
-          {title: 'Dark Gray', value: 'darkGray'},
+          {title: 'Blue Gradient Soft', value: 'blueGradientSoft'},
+          {title: 'Blue Gradient Air', value: 'blueGradientAir'},
         ],
         layout: 'radio',
       },

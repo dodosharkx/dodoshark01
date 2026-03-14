@@ -7,6 +7,10 @@ import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
+import {
+  getSharedSurfaceClasses,
+  type SharedBackgroundTheme,
+} from './backgroundTheme'
 import type { RichSectionMediaItem } from './RichSectionBlock'
 import SplitHeroArrow from './SplitHeroArrow'
 import 'swiper/css'
@@ -36,17 +40,19 @@ function resolveMediaSrc(item?: RichSectionMediaItem) {
 function MediaFigure({
   item,
   title,
+  theme,
   disableMediaFrameEffect = false,
 }: {
   item: RichSectionMediaItem
   title?: string
+  theme: SharedBackgroundTheme
   disableMediaFrameEffect?: boolean
 }) {
   const src = resolveMediaSrc(item)
   if (!src || !item.image?.asset) {
     const fallbackClass = disableMediaFrameEffect
-      ? 'w-full aspect-[4/3] bg-slate-100'
-      : 'w-full aspect-[4/3] rounded-lg border border-slate-200 bg-slate-100'
+      ? `w-full aspect-[4/3] ${getSharedSurfaceClasses(theme, 'muted')}`
+      : `w-full aspect-[4/3] rounded-lg ${getSharedSurfaceClasses(theme, 'muted')}`
     return <div className={fallbackClass} />
   }
 
@@ -56,7 +62,7 @@ function MediaFigure({
   const alt = item.alt?.trim() || item.caption?.trim() || title || 'Section media'
   const frameClass = disableMediaFrameEffect
     ? 'relative overflow-hidden'
-    : 'relative overflow-hidden rounded-lg bg-white shadow-xl'
+    : `relative overflow-hidden rounded-lg ${getSharedSurfaceClasses(theme, 'elevated')}`
 
   return (
     <div className={frameClass}>
@@ -76,21 +82,21 @@ function MediaFigure({
 export default function RichSectionMediaCarousel({
   items,
   title,
-  isDark,
+  theme,
   disableMediaFrameEffect = false,
 }: {
   items: RichSectionMediaItem[]
   title?: string
-  isDark: boolean
+  theme: SharedBackgroundTheme
   disableMediaFrameEffect?: boolean
 }) {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const currentItem = items[Math.min(currentIndex, items.length - 1)]
   const caption = currentItem?.caption?.trim()
-  const captionClass = isDark ? 'text-slate-400' : 'text-slate-500'
-  const dotsBaseClass = isDark ? 'bg-slate-500/50' : 'bg-slate-300'
-  const dotsActiveClass = isDark ? 'bg-orange-300' : 'bg-orange-500'
+  const captionClass = theme.subtitle
+  const dotsBaseClass = theme.dotIdle
+  const dotsActiveClass = theme.dotActive
   const canPrev = currentIndex > 0
   const canNext = currentIndex < items.length - 1
 
@@ -102,6 +108,7 @@ export default function RichSectionMediaCarousel({
         <MediaFigure
           item={items[0]}
           title={title}
+          theme={theme}
           disableMediaFrameEffect={disableMediaFrameEffect}
         />
         {caption ? (
@@ -145,6 +152,7 @@ export default function RichSectionMediaCarousel({
               <MediaFigure
                 item={item}
                 title={title}
+                theme={theme}
                 disableMediaFrameEffect={disableMediaFrameEffect}
               />
             </SwiperSlide>
@@ -157,7 +165,7 @@ export default function RichSectionMediaCarousel({
           disabled={!canPrev}
           className={[
             'left-2 sm:left-3 md:left-0 lg:left-1',
-            isDark ? 'border-slate-200/40 bg-slate-900/78 text-slate-50 hover:bg-slate-900' : '',
+            theme.accentDarkSoft,
           ].join(' ')}
           onClick={() => {
             if (!swiper || swiper.destroyed || !canPrev) return
@@ -170,7 +178,7 @@ export default function RichSectionMediaCarousel({
           disabled={!canNext}
           className={[
             'right-2 sm:right-3 md:right-0 lg:right-1',
-            isDark ? 'border-slate-200/40 bg-slate-900/78 text-slate-50 hover:bg-slate-900' : '',
+            theme.accentDarkSoft,
           ].join(' ')}
           onClick={() => {
             if (!swiper || swiper.destroyed || !canNext) return

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import {urlFor} from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 
+import type {SharedBackgroundTheme} from './backgroundTheme'
 import {bodyTextClass, cardTitleClass} from './sectionStyles'
 
 export type FeatureListImage = {
@@ -74,11 +75,11 @@ function resolveFeatureMedia(item: FeatureListItem) {
 
 export function FeatureListStandaloneCard({
   item,
-  isDarkSection = false,
+  theme,
   sizes,
 }: {
   item: FeatureListItem
-  isDarkSection?: boolean
+  theme: SharedBackgroundTheme
   sizes: string
 }) {
   const {image, isIconFallback} = resolveFeatureMedia(item)
@@ -90,11 +91,9 @@ export function FeatureListStandaloneCard({
   )
   const blurDataURL = image?.asset?.metadata?.lqip
   const hasLqip = Boolean(blurDataURL)
-  const mediaBackgroundClass = isDarkSection ? 'bg-slate-200/95' : 'bg-slate-100'
-  const placeholderClass = isDarkSection ? 'text-slate-500' : 'text-slate-300'
-  const frameClass = isDarkSection
-    ? 'border border-white/10 bg-white/95 shadow-[0_24px_60px_-34px_rgba(2,8,23,0.85)]'
-    : 'border border-slate-200/80 bg-white shadow-[0_24px_60px_-34px_rgba(15,23,42,0.3)]'
+  const mediaBackgroundClass = theme.surfaceMuted
+  const placeholderClass = theme.subtitle
+  const frameClass = theme.surfaceElevated
 
   return (
     <article className={`flex h-full flex-col overflow-hidden rounded-[1.125rem] ${frameClass}`}>
@@ -116,14 +115,14 @@ export function FeatureListStandaloneCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col justify-start bg-[#273577] px-6 py-6 text-white md:px-7 md:py-7">
+      <div className={`flex flex-1 flex-col justify-start px-6 py-6 md:px-7 md:py-7 ${theme.accentDark}`}>
         {item.title && (
-          <h3 className={`mb-3 whitespace-pre-line ${cardTitleClass} text-white`}>
+          <h3 className={`mb-3 whitespace-pre-line ${cardTitleClass}`}>
             {item.title}
           </h3>
         )}
         {item.description && (
-          <p className={`whitespace-pre-line ${bodyTextClass} text-white/82`}>
+          <p className={`whitespace-pre-line ${bodyTextClass} text-slate-200`}>
             {item.description}
           </p>
         )}

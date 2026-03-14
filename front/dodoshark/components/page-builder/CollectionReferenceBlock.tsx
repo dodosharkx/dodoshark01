@@ -3,7 +3,11 @@ import Link from 'next/link'
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { cardTitleClass, sectionSubtitleClass } from './sectionStyles'
@@ -51,7 +55,7 @@ export type CollectionReferenceBlockData = {
   _key?: string
   title?: string
   subtitle?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   layout?: 'grid' | 'list' | 'carousel'
   columns?: 2 | 3 | 4
   references?: ReferenceItem[]
@@ -86,13 +90,19 @@ function resolveHref(doc?: ReferenceDoc) {
   return undefined
 }
 
-function ReferenceCard({ item }: { item: ReferenceItem }) {
+function ReferenceCard({
+  item,
+  theme,
+}: {
+  item: ReferenceItem
+  theme: SharedBackgroundTheme
+}) {
   const title = resolveTitle(item)
   const description = resolveDescription(item.reference)
   const image = resolveImage(item.reference)
   const href = item.isClickable === false ? undefined : resolveHref(item.reference)
   const content = (
-    <article className="premium-card h-full p-4 md:p-5">
+    <article className={`h-full p-4 md:p-5 ${theme.surfaceElevated}`}>
       <div className="flex h-full flex-col items-center text-center">
         <div className="mb-4 aspect-square w-16 overflow-hidden rounded-lg sm:w-20 md:mb-5 md:w-full md:max-w-none md:aspect-[1/1]">
           {image?.asset ? (
@@ -135,13 +145,12 @@ export default function CollectionReferenceBlock({
 }: {
   block: CollectionReferenceBlockData
 }) {
-  const variant = block.backgroundVariant ?? 'muted'
+  const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
   const layout = block.layout ?? 'grid'
   const refs = (block.references ?? []).filter((item) => item.reference)
-  const sectionBorderClass = isDark ? 'border-y border-slate-800' : 'border-y border-slate-100'
-  const subtitleClass = isDark ? theme.subtitle : theme.body
+  const sectionBorderClass = theme.sectionBorder
+  const subtitleClass = theme.body
 
   if (!block.title && !block.subtitle && refs.length === 0) return null
 
@@ -151,7 +160,7 @@ export default function CollectionReferenceBlock({
         <SectionHeader
           title={block.title}
           subtitle={block.subtitle}
-          tone={isDark ? 'dark' : 'light'}
+          tone="light"
           className="mb-10 md:mb-12"
           titleClassName={theme.heading}
           subtitleClassName={`${subtitleClass} ${sectionSubtitleClass} mx-auto max-w-3xl`}
@@ -161,7 +170,7 @@ export default function CollectionReferenceBlock({
       {layout === 'grid' && (
         <div className={`grid gap-4 md:gap-8 ${columnsClass(block.columns)}`}>
           {refs.map((item, idx) => (
-            <ReferenceCard key={item._key ?? idx} item={item} />
+            <ReferenceCard key={item._key ?? idx} item={item} theme={theme} />
           ))}
         </div>
       )}
@@ -170,7 +179,7 @@ export default function CollectionReferenceBlock({
         <div className="space-y-6">
           {refs.map((item, idx) => (
             <div key={item._key ?? idx} className="mx-auto max-w-5xl">
-              <ReferenceCard item={item} />
+              <ReferenceCard item={item} theme={theme} />
             </div>
           ))}
         </div>
@@ -183,7 +192,7 @@ export default function CollectionReferenceBlock({
               key={item._key ?? idx}
               className="max-w-[400px] min-w-[280px] snap-start md:min-w-[360px]"
             >
-              <ReferenceCard item={item} />
+              <ReferenceCard item={item} theme={theme} />
             </div>
           ))}
         </div>

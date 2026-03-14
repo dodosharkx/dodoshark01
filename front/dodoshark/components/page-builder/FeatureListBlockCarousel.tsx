@@ -11,12 +11,13 @@ import {
   getSlidesPerGroup,
   SliderNavButton,
 } from './PageBuilderSliderControls'
+import type {SharedBackgroundTheme} from './backgroundTheme'
 import {FeatureListStandaloneCard, type FeatureListItem} from './FeatureListBlockCard'
 import 'swiper/css'
 
 type FeatureListBlockCarouselProps = {
   items: FeatureListItem[]
-  isDarkSection?: boolean
+  theme: SharedBackgroundTheme
 }
 
 const carouselBreakpoints = {
@@ -26,12 +27,12 @@ const carouselBreakpoints = {
 
 export default function FeatureListBlockCarousel({
   items,
-  isDarkSection = false,
+  theme,
 }: FeatureListBlockCarouselProps) {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
   const [controls, setControls] = useState(defaultSliderControls)
-  const dotsBaseClass = isDarkSection ? 'bg-slate-500/50' : 'bg-slate-300'
-  const dotsActiveClass = isDarkSection ? 'bg-orange-300' : 'bg-orange-500'
+  const dotsBaseClass = theme.dotIdle
+  const dotsActiveClass = theme.dotActive
   const cardSizes =
     '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 33vw'
 
@@ -45,19 +46,21 @@ export default function FeatureListBlockCarousel({
             <SliderNavButton
               direction="prev"
               disabled={!controls.canPrev}
-              isDark={isDarkSection}
+              isDark={false}
+              buttonClassName={`${theme.control} ${theme.controlHover}`}
               label="Previous feature cards"
               onClick={() => swiper?.slidePrev()}
-              className="absolute left-2 top-[35%] z-20 hidden -translate-y-1/2 md:inline-flex md:-left-3"
+              className="absolute left-0 top-[35%] z-20 hidden -translate-y-1/2 md:inline-flex md:-left-5 lg:-left-6"
             />
 
             <SliderNavButton
               direction="next"
               disabled={!controls.canNext}
-              isDark={isDarkSection}
+              isDark={false}
+              buttonClassName={`${theme.control} ${theme.controlHover}`}
               label="Next feature cards"
               onClick={() => swiper?.slideNext()}
-              className="absolute right-2 top-[35%] z-20 hidden -translate-y-1/2 md:inline-flex md:-right-3"
+              className="absolute right-0 top-[35%] z-20 hidden -translate-y-1/2 md:inline-flex md:-right-5 lg:-right-6"
             />
           </>
         )}
@@ -91,7 +94,7 @@ export default function FeatureListBlockCarousel({
             >
               <FeatureListStandaloneCard
                 item={item}
-                isDarkSection={isDarkSection}
+                theme={theme}
                 sizes={cardSizes}
               />
             </SwiperSlide>

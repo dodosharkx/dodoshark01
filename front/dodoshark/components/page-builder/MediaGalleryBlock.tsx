@@ -9,7 +9,12 @@ import type { Swiper as SwiperInstance } from 'swiper'
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedSurfaceClasses,
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { sectionSubtitleClass } from './sectionStyles'
@@ -55,7 +60,7 @@ export type MediaGalleryBlockData = {
   _type: 'mediaGalleryBlock'
   _key?: string
   title?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   layout?: 'carousel' | 'thumbnailGallery' | 'videoCardCarousel'
   cta?: MediaGalleryCta
   items?: GalleryItem[]
@@ -255,17 +260,19 @@ function isExternalHref(href: string) {
 function ImageTile({
   image,
   caption,
-  isDarkBackground = false,
+  theme,
 }: {
   image?: GalleryImage
   caption?: string
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
 }) {
   const src = resolveImageSrc({ image, width: 1200 })
 
   if (!src || !image) {
     return (
-      <div className="border border-slate-200 bg-slate-100 p-10 text-center text-sm text-slate-400">
+      <div
+        className={`p-10 text-center text-sm ${theme.subtitle} ${getSharedSurfaceClasses(theme, 'muted')}`}
+      >
         Image unavailable
       </div>
     )
@@ -290,7 +297,7 @@ function ImageTile({
       </div>
       {caption && (
         <figcaption
-          className={`mt-4 text-center text-sm font-bold uppercase tracking-wide ${isDarkBackground ? 'text-slate-200' : 'text-slate-700'}`}
+          className={`mt-4 text-center text-sm font-bold uppercase tracking-wide ${theme.body}`}
         >
           {caption}
         </figcaption>
@@ -303,13 +310,13 @@ function VideoTile({
   url,
   thumbnail,
   caption,
-  isDarkBackground = false,
+  theme,
   onOpenVideo,
 }: {
   url?: string
   thumbnail?: GalleryImage
   caption?: string
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
   onOpenVideo: (url?: string, caption?: string) => void
 }) {
   if (!url) return null
@@ -343,7 +350,7 @@ function VideoTile({
       </div>
       {caption && (
         <h5
-          className={`mt-4 text-center text-sm font-bold font-display uppercase tracking-widest ${isDarkBackground ? 'text-slate-100' : 'text-slate-900'}`}
+          className={`mt-4 text-center text-sm font-bold font-display uppercase tracking-widest ${theme.heading}`}
         >
           {caption}
         </h5>
@@ -354,11 +361,11 @@ function VideoTile({
 
 function GalleryTile({
   item,
-  isDarkBackground = false,
+  theme,
   onOpenVideo,
 }: {
   item: GalleryItem
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
   onOpenVideo: (url?: string, caption?: string) => void
 }) {
   if (item.type === 'videoUrl') {
@@ -367,13 +374,13 @@ function GalleryTile({
         url={item.videoUrl}
         thumbnail={item.videoThumbnail}
         caption={item.caption}
-        isDarkBackground={isDarkBackground}
+        theme={theme}
         onOpenVideo={onOpenVideo}
       />
     )
   }
 
-  return <ImageTile image={item.image} caption={item.caption} isDarkBackground={isDarkBackground} />
+  return <ImageTile image={item.image} caption={item.caption} theme={theme} />
 }
 
 function ThumbnailGalleryStage({
@@ -465,7 +472,7 @@ const ThumbnailGalleryThumb = forwardRef<HTMLButtonElement, {
   index: number
   isActive: boolean
   onSelect: () => void
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
 }>(
   function ThumbnailGalleryThumb(
     {
@@ -473,17 +480,15 @@ const ThumbnailGalleryThumb = forwardRef<HTMLButtonElement, {
       index,
       isActive,
       onSelect,
-      isDarkBackground = false,
+      theme,
     },
     ref
   ) {
     const previewSrc = resolveGalleryItemPreviewSrc(item, 320)
     const { width, height } = getGalleryItemDimensions(item, 320, 240)
     const isVideo = item.type === 'videoUrl'
-    const idleBorder = isDarkBackground ? 'border-white/10 bg-slate-900/70' : 'border-slate-200 bg-white'
-    const activeBorder = isDarkBackground
-      ? 'border-orange-400 ring-2 ring-orange-400/30'
-      : 'border-orange-500 ring-2 ring-orange-500/25'
+    const idleBorder = getSharedSurfaceClasses(theme)
+    const activeBorder = `${getSharedSurfaceClasses(theme, 'elevated')} border-orange-500 ring-2 ring-orange-500/25`
 
     return (
       <button
@@ -529,12 +534,12 @@ ThumbnailGalleryThumb.displayName = 'ThumbnailGalleryThumb'
 
 function ThumbnailGallery({
   items,
-  isDarkBackground = false,
+  theme,
   captionClassName,
   onOpenVideo,
 }: {
   items: GalleryItem[]
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
   captionClassName: string
   onOpenVideo: (url?: string, caption?: string) => void
 }) {
@@ -605,7 +610,7 @@ function ThumbnailGallery({
                   index={index}
                   isActive={index === clampedActiveIndex}
                   onSelect={() => mainSwiper?.slideTo(index)}
-                  isDarkBackground={isDarkBackground}
+                  theme={theme}
                 />
               </div>
             ))}
@@ -618,9 +623,11 @@ function ThumbnailGallery({
 
 function HomeStyleVideoCard({
   item,
+  theme,
   onOpenVideo,
 }: {
   item: GalleryItem
+  theme: SharedBackgroundTheme
   onOpenVideo: (url?: string, caption?: string) => void
 }) {
   const previewSrc = resolveGalleryItemPreviewSrc(item, 960)
@@ -686,7 +693,7 @@ function HomeStyleVideoCard({
       <button
         type="button"
         onClick={() => onOpenVideo(item.videoUrl, item.caption)}
-        className="group flex h-full w-full flex-col overflow-hidden rounded-[1rem] border border-slate-200 bg-white text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+        className={`group flex h-full w-full flex-col overflow-hidden rounded-[1rem] text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${theme.surfaceElevated}`}
       >
         {cardBody}
       </button>
@@ -694,7 +701,7 @@ function HomeStyleVideoCard({
   }
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <article className={`group flex h-full flex-col overflow-hidden rounded-[1rem] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${theme.surfaceElevated}`}>
       {cardBody}
     </article>
   )
@@ -704,13 +711,13 @@ function VideoCardCarousel({
   title,
   cta,
   items,
-  isDarkBackground = false,
+  theme,
   onOpenVideo,
 }: {
   title?: string
   cta?: MediaGalleryCta
   items: GalleryItem[]
-  isDarkBackground?: boolean
+  theme: SharedBackgroundTheme
   onOpenVideo: (url?: string, caption?: string) => void
 }) {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
@@ -730,10 +737,10 @@ function VideoCardCarousel({
       {title && (
         <SectionHeader
           title={title}
-          tone={isDarkBackground ? 'dark' : 'light'}
+          tone="light"
           align="center"
           className="mb-10 md:mb-12"
-          titleClassName={isDarkBackground ? 'text-white' : 'text-slate-900'}
+          titleClassName={theme.heading}
         />
       )}
 
@@ -742,7 +749,7 @@ function VideoCardCarousel({
           <button
             type="button"
             aria-label="Previous videos"
-            className="absolute left-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:-left-3 md:h-11 md:w-11 xl:opacity-0 xl:group-hover:opacity-100"
+            className={`absolute left-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition disabled:cursor-not-allowed disabled:opacity-35 md:-left-3 md:h-11 md:w-11 xl:opacity-0 xl:group-hover:opacity-100 ${theme.control} ${theme.controlHover}`}
             disabled={isBeginning}
             onClick={() => swiper?.slidePrev()}
           >
@@ -752,7 +759,7 @@ function VideoCardCarousel({
           <button
             type="button"
             aria-label="Next videos"
-            className="absolute right-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:-right-3 md:h-11 md:w-11 xl:opacity-0 xl:group-hover:opacity-100"
+            className={`absolute right-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition disabled:cursor-not-allowed disabled:opacity-35 md:-right-3 md:h-11 md:w-11 xl:opacity-0 xl:group-hover:opacity-100 ${theme.control} ${theme.controlHover}`}
             disabled={isEnd}
             onClick={() => swiper?.slideNext()}
           >
@@ -786,7 +793,7 @@ function VideoCardCarousel({
           >
             {items.map((item, index) => (
               <SwiperSlide key={item._key ?? `${item.caption ?? 'media-card'}-${index}`} className="h-auto">
-                <HomeStyleVideoCard item={item} onOpenVideo={onOpenVideo} />
+                <HomeStyleVideoCard item={item} theme={theme} onOpenVideo={onOpenVideo} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -821,9 +828,8 @@ function VideoCardCarousel({
 }
 
 export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockData }) {
-  const variant = block.backgroundVariant ?? 'default'
+  const variant = block.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
   const layout =
     block.layout === 'carousel' || block.layout === 'videoCardCarousel'
       ? block.layout
@@ -878,7 +884,7 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
         {block.title && layout !== 'videoCardCarousel' && (
           <SectionHeader
             title={block.title}
-            tone={isDark ? 'dark' : 'light'}
+            tone="light"
             className="mb-10 md:mb-12"
             titleClassName={theme.heading}
             subtitleClassName={`mx-auto max-w-3xl ${sectionSubtitleClass} ${theme.subtitle}`}
@@ -892,7 +898,7 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
                 key={item._key ?? `${item.caption}-${index}`}
                 className="max-w-[500px] min-w-[280px] snap-start md:min-w-[420px]"
               >
-                <GalleryTile item={item} isDarkBackground={isDark} onOpenVideo={openVideo} />
+                <GalleryTile item={item} theme={theme} onOpenVideo={openVideo} />
               </div>
             ))}
           </div>
@@ -901,8 +907,8 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
         {layout === 'thumbnailGallery' && (
           <ThumbnailGallery
             items={items}
-            isDarkBackground={isDark}
-            captionClassName={isDark ? 'text-slate-100' : 'text-slate-700'}
+            theme={theme}
+            captionClassName={theme.body}
             onOpenVideo={openVideo}
           />
         )}
@@ -912,7 +918,7 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
             title={block.title}
             cta={block.cta}
             items={items}
-            isDarkBackground={isDark}
+            theme={theme}
             onOpenVideo={openVideo}
           />
         )}

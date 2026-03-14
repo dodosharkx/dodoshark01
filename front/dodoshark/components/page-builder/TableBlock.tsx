@@ -1,4 +1,7 @@
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { sectionSubtitleClass } from './sectionStyles'
@@ -18,7 +21,7 @@ export type TableBlockData = {
   _key?: string
   title?: string
   description?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   table?: TableValue | TableRow[]
   hasHeaderRow?: boolean
   note?: string
@@ -196,16 +199,15 @@ function renderCellContent(value: string | undefined, context: 'header' | 'body'
 }
 
 export default function TableBlock({ block }: { block: TableBlockData }) {
-  const variant = block.backgroundVariant ?? 'muted'
+  const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
   const sourceRows = extractRows(block.table).filter((row) => (row.cells?.length ?? 0) > 0)
   const { rows } = normalizeRows(sourceRows)
   const hasHeader = Boolean(block.hasHeaderRow) && rows.length > 0
   const headerCells = hasHeader ? rows[0] : []
   const bodyRows = hasHeader ? rows.slice(1) : rows
-  const sectionBorderClass = isDark ? 'border-y border-slate-800' : 'border-y border-slate-100'
-  const subtitleClass = isDark ? theme.subtitle : theme.body
+  const sectionBorderClass = theme.sectionBorder
+  const subtitleClass = theme.body
 
   if (!block.title && !block.description && rows.length === 0 && !block.note) return null
 
@@ -215,21 +217,21 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
         <SectionHeader
           title={block.title}
           subtitle={block.description}
-          tone={isDark ? 'dark' : 'light'}
+          tone="light"
           className="mb-10 md:mb-12"
           titleClassName={theme.heading}
           subtitleClassName={`${subtitleClass} ${sectionSubtitleClass} mx-auto max-w-3xl`}
         />
       )}
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div className={`overflow-hidden rounded-lg ${theme.surfaceElevated}`}>
           {rows.length === 0 ? (
             <div className="p-10 text-center text-slate-400 text-sm">No table data.</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full">
                 {hasHeader && (
-                  <thead className="bg-slate-800 text-white">
+                  <thead className={theme.accentDark}>
                     <tr>
                       {headerCells.map((cell, idx) => (
                         <th

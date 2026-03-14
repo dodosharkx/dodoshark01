@@ -8,7 +8,11 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
@@ -72,7 +76,7 @@ export type MachineSelectorBlockData = {
   _key?: string
   title?: string
   subtitle?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   groups?: MachineGroup[]
   defaultGroupIndex?: number
   maxItemsPerRow?: 1 | 2 | 3 | 4
@@ -169,21 +173,19 @@ function ArrowRightIcon({ className }: { className?: string }) {
 function SliderNavButton({
   direction,
   disabled,
-  isDark,
+  theme,
   label,
   onClick,
   className = '',
 }: {
   direction: 'prev' | 'next'
   disabled: boolean
-  isDark: boolean
+  theme: SharedBackgroundTheme
   label: string
   onClick: () => void
   className?: string
 }) {
-  const buttonClass = isDark
-    ? 'border-slate-600 bg-slate-900 text-slate-100 shadow-xl shadow-slate-950/30 hover:border-orange-300 hover:bg-slate-800 hover:text-orange-300'
-    : 'border-slate-200 bg-white text-slate-900 shadow-xl shadow-slate-900/15 hover:border-orange-400 hover:bg-orange-500 hover:text-white'
+  const buttonClass = `${theme.control} ${theme.controlHover}`
 
   return (
     <button
@@ -204,9 +206,11 @@ function SliderNavButton({
 
 function MachineCard({
   item,
+  theme,
   shouldShowModelDescription,
 }: {
   item: MachineItem
+  theme: SharedBackgroundTheme
   shouldShowModelDescription: boolean
 }) {
   const variantItem = item.productVariant
@@ -218,7 +222,7 @@ function MachineCard({
   return (
     <article
       className={`h-full rounded-[0.75rem] p-5 ${
-        item.isFeatured ? 'ring-2 ring-orange-400 bg-white shadow-lg' : 'border border-slate-200 bg-white'
+        item.isFeatured ? `ring-2 ring-orange-400 ${theme.surfaceElevated}` : theme.surface
       }`}
     >
       <div className="mb-5 flex aspect-[4/3] items-center justify-center overflow-hidden rounded-sm">
@@ -251,9 +255,8 @@ function MachineCard({
 }
 
 export default function MachineSelectorBlock({ block }: { block: MachineSelectorBlockData }) {
-  const variant = block.backgroundVariant ?? 'muted'
+  const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
 
   const groups = useMemo(
     () =>
@@ -279,16 +282,14 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
   )
 
   const tabActiveClass = 'bg-orange-400 text-slate-900'
-  const tabInactiveClass = isDark
-    ? 'bg-slate-700 text-slate-100 hover:bg-slate-600'
-    : 'bg-slate-800 text-white hover:bg-slate-700'
-  const footerClass = isDark ? 'text-slate-300' : 'text-slate-700'
-  const groupDescriptionClass = isDark ? 'text-slate-300' : theme.body
-  const subtitleClass = isDark ? theme.subtitle : theme.body
+  const tabInactiveClass = `${theme.accentDark} hover:bg-slate-800`
+  const footerClass = theme.body
+  const groupDescriptionClass = theme.body
+  const subtitleClass = theme.subtitle
   const shouldShowModelDescription = block.showModelDescription !== false
   const maxItemsPerRow = block.maxItemsPerRow ?? 4
-  const dotsBaseClass = isDark ? 'bg-slate-500/50' : 'bg-slate-300'
-  const dotsActiveClass = isDark ? 'bg-orange-300' : 'bg-orange-500'
+  const dotsBaseClass = theme.dotIdle
+  const dotsActiveClass = theme.dotActive
 
   useEffect(() => {
     setActiveIndex(initialIndex)
@@ -326,7 +327,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
         <SectionHeader
           title={block.title}
           subtitle={block.subtitle}
-          tone={isDark ? 'dark' : 'light'}
+          tone="light"
           className="mb-10 md:mb-12"
           titleClassName={theme.heading}
           subtitleClassName={`mx-auto max-w-3xl ${sectionSubtitleClass} ${subtitleClass}`}
@@ -397,7 +398,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                   <SliderNavButton
                     direction="prev"
                     disabled={!machineControls.canPrev}
-                    isDark={isDark}
+                    theme={theme}
                     label="Previous machine"
                     onClick={() => machineSwiper?.slidePrev()}
                     className="absolute left-2 top-[35%] z-20 hidden -translate-y-1/2 xl:inline-flex"
@@ -405,7 +406,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                   <SliderNavButton
                     direction="next"
                     disabled={!machineControls.canNext}
-                    isDark={isDark}
+                    theme={theme}
                     label="Next machine"
                     onClick={() => machineSwiper?.slideNext()}
                     className="absolute right-2 top-[35%] z-20 hidden -translate-y-1/2 xl:inline-flex"
@@ -445,6 +446,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                     <SwiperSlide key={item._key ?? `${title}-${idx}`} className="!h-auto">
                       <MachineCard
                         item={item}
+                        theme={theme}
                         shouldShowModelDescription={shouldShowModelDescription}
                       />
                     </SwiperSlide>

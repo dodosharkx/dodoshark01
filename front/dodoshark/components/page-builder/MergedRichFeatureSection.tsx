@@ -15,7 +15,7 @@ export default function MergedRichFeatureSection({
   richBlock,
   featureBlock,
 }: MergedRichFeatureSectionProps) {
-  const variant = richBlock.backgroundVariant ?? 'default'
+  const variant = richBlock.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
   const anchorId = richBlock.anchorId?.trim() || undefined
 

@@ -76,6 +76,7 @@ export function SliderNavButton({
   direction,
   disabled,
   isDark,
+  buttonClassName,
   label,
   onClick,
   className = '',
@@ -83,13 +84,16 @@ export function SliderNavButton({
   direction: 'prev' | 'next'
   disabled: boolean
   isDark: boolean
+  buttonClassName?: string
   label: string
   onClick: () => void
   className?: string
 }) {
-  const buttonClass = isDark
-    ? 'border-slate-600 bg-slate-900 text-slate-100 shadow-xl shadow-slate-950/30 hover:border-orange-300 hover:bg-slate-800 hover:text-orange-300'
-    : 'border-slate-200 bg-white text-slate-900 shadow-xl shadow-slate-900/15 hover:border-orange-400 hover:bg-orange-500 hover:text-white'
+  const buttonClass =
+    buttonClassName ||
+    (isDark
+      ? 'border-slate-600 bg-slate-900 text-slate-100 shadow-xl shadow-slate-950/30 hover:border-orange-300 hover:bg-slate-800 hover:text-orange-300'
+      : 'border-slate-200 bg-white text-slate-900 shadow-xl shadow-slate-900/15 hover:border-orange-400 hover:bg-orange-500 hover:text-white')
 
   return (
     <button

@@ -1,5 +1,15 @@
 .shell {
   margin-top: 2.5rem;
+  --showcase-card-bg: #f8fafc;
+  --showcase-card-border: rgb(148 163 184 / 0.18);
+  --showcase-card-shadow: 0 24px 56px -32px rgb(15 23 42 / 0.42);
+  --showcase-media-bg: rgb(226 232 240);
+  --showcase-title: #0f172a;
+  --showcase-description: #475569;
+  --showcase-nav-bg: rgb(255 255 255 / 0.92);
+  --showcase-nav-border: rgb(255 255 255 / 0.16);
+  --showcase-nav-text: #0f172a;
+  --showcase-counter: rgba(15, 23, 42, 0.92);
 }
 
 .carouselViewport {
@@ -27,11 +37,10 @@
   width: 100%;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgb(148 163 184 / 0.18);
+  border: 1px solid var(--showcase-card-border);
   border-radius: 1.5rem;
-  background-color: whitesmoke;
-  /* background: linear-gradient(180deg, rgb(51 65 85 / 0.9) 0%, rgb(30 41 59 / 0.94) 100%); */
-  box-shadow: 0 24px 56px -32px rgb(15 23 42 / 0.42);
+  background-color: var(--showcase-card-bg);
+  box-shadow: var(--showcase-card-shadow);
   transition:
     transform 220ms ease,
     border-color 220ms ease,
@@ -60,7 +69,7 @@
   position: relative;
   aspect-ratio: 3 / 2;
   overflow: hidden;
-  background: rgb(51 65 85 / 0.72);
+  background: var(--showcase-media-bg);
 }
 
 .image {
@@ -104,7 +113,7 @@
 .title {
   display: -webkit-box;
   overflow: hidden;
-  color: black;
+  color: var(--showcase-title);
   font-size: 1.55rem;
   font-weight: 700;
   line-height: 1.2;
@@ -117,7 +126,7 @@
   display: -webkit-box;
   overflow: hidden;
   margin-top: 1rem;
-  color:black;
+  color: var(--showcase-description);
   font-size: 0.98rem;
   line-height: 1.75;
   min-height: calc(1.75em * 3);
@@ -169,10 +178,10 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  border: 1px solid rgb(255 255 255 / 0.16);
+  border: 1px solid var(--showcase-nav-border);
   border-radius: 9999px;
-  background: rgb(255 255 255 / 0.92);
-  color: #0f172a;
+  background: var(--showcase-nav-bg);
+  color: var(--showcase-nav-text);
   box-shadow: 0 18px 40px -24px rgb(2 6 23 / 0.9);
   transition:
     transform 180ms ease,
@@ -200,7 +209,7 @@
 
 .mobileCounter {
   display: none;
-  color: rgba(15, 23, 42, 0.92);
+  color: var(--showcase-counter);
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -273,22 +282,6 @@
 
 .splitMediaMobileNavButton {
   pointer-events: auto;
-}
-
-.darkShell .mobileCounter {
-  color: rgba(248, 250, 252, 0.88);
-}
-
-.darkShell .navButton {
-  border-color: rgb(148 163 184 / 0.22);
-  background: rgb(15 23 42 / 0.92);
-  color: #f8fafc;
-  box-shadow: 0 18px 40px -24px rgb(2 6 23 / 0.75);
-}
-
-.darkShell .navButton:hover:not(:disabled) {
-  background: rgb(30 41 59 / 0.98);
-  border-color: rgb(148 163 184 / 0.36);
 }
 
 @media (max-width: 1199px) {

@@ -1,4 +1,7 @@
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import Icon from '@/components/ui/Icon'
@@ -16,16 +19,15 @@ export type MetricsBlockData = {
   _type: 'metricsBlock'
   _key?: string
   title?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   items?: MetricItem[]
 }
 
 export default function MetricsBlock({ block }: { block: MetricsBlockData }) {
-  const variant = block.backgroundVariant ?? 'default'
+  const variant = block.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
   const items = (block.items ?? []).filter((item) => item.value || item.label)
-  const sectionBorderClass = isDark ? 'border-y border-slate-800' : 'border-y border-slate-100'
+  const sectionBorderClass = theme.sectionBorder
 
   if (!block.title && items.length === 0) return null
 
@@ -34,7 +36,7 @@ export default function MetricsBlock({ block }: { block: MetricsBlockData }) {
       {block.title && (
         <SectionHeader
           title={block.title}
-          tone={isDark ? 'dark' : 'light'}
+          tone="light"
           className="mb-10 md:mb-12"
           titleClassName={theme.heading}
         />
@@ -47,7 +49,7 @@ export default function MetricsBlock({ block }: { block: MetricsBlockData }) {
             return (
               <article
                 key={item._key ?? `${item.label}-${idx}`}
-                className="premium-card p-6 md:p-8 text-center"
+                className={`p-6 md:p-8 text-center ${theme.surfaceElevated}`}
               >
                 <div className="w-12 h-12 mx-auto mb-4 rounded-md bg-orange-50 text-orange-600 border border-orange-100 flex items-center justify-center">
                   <Icon icon={iconClass} className="h-5 w-5" />

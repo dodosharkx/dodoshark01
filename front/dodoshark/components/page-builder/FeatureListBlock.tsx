@@ -3,7 +3,11 @@ import Image from 'next/image'
 import {urlFor} from '@/app/lib/sanity'
 
 import FeatureListBlockCarousel from './FeatureListBlockCarousel'
-import {getSharedBackgroundTheme, mapFeatureBackgroundStyleToVariant} from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  mapFeatureBackgroundStyleToVariant,
+  type FeatureListBackgroundStyle,
+} from './backgroundTheme'
 import {
   type FeatureListImage,
   type FeatureListItem,
@@ -17,7 +21,7 @@ export type FeatureListBlockData = {
   _key?: string
   title?: string
   mergeWithPreviousRichSection?: boolean
-  backgroundStyle?: 'white' | 'lightGray' | 'darkGray'
+  backgroundStyle?: FeatureListBackgroundStyle
   items?: FeatureListItem[]
 }
 
@@ -67,25 +71,22 @@ export function FeatureListBlockContent({
   const backgroundStyle = block.backgroundStyle ?? 'white'
   const backgroundVariant = mapFeatureBackgroundStyleToVariant(backgroundStyle)
   const theme = getSharedBackgroundTheme(backgroundVariant)
-  const isDark = backgroundVariant === 'dark'
   const hasHeader = showHeader && Boolean(block.title?.trim())
   const isMergedCards = renderMode === 'mergedCards'
 
   if (!hasFeatureListContent(block, showHeader)) return null
 
   const titleClass = theme.heading
-  const itemTitleClass = isDark ? 'text-gray-200' : 'text-gray-900'
+  const itemTitleClass = 'text-gray-900'
   const itemDescriptionClass = theme.body
-  const mergedCardClass = isDark
-    ? 'h-full rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-6 text-center shadow-[0_18px_48px_-28px_rgba(15,23,42,0.55)] backdrop-blur-sm sm:px-6'
-    : 'h-full rounded-2xl border border-slate-200 bg-white px-4 py-6 text-center shadow-[0_18px_40px_-28px_rgba(15,23,42,0.18)] sm:px-6'
+  const mergedCardClass = `h-full rounded-2xl px-4 py-6 text-center sm:px-6 ${theme.surfaceElevated}`
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {hasHeader && (
         <SectionHeader
           title={block.title}
-          tone={isDark ? 'dark' : 'light'}
+          tone="light"
           className="mx-auto mb-10 max-w-[36rem] md:mb-12"
           titleClassName={titleClass}
         />
@@ -125,7 +126,7 @@ export function FeatureListBlockContent({
           })}
         </div>
       ) : (
-        <FeatureListBlockCarousel items={items} isDarkSection={isDark} />
+        <FeatureListBlockCarousel items={items} theme={theme} />
       )}
     </div>
   )

@@ -8,7 +8,11 @@ import {
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import { bodyTextClass, cardTitleClass } from './sectionStyles'
 
@@ -45,34 +49,24 @@ type PortableTextNode = PortableTextBlock & {
 export type PortableTextBlockData = {
   _type: 'portableTextBlock'
   _key?: string
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   content?: PortableTextNode[]
 }
 
-function getPortableTextComponents(isDark: boolean): PortableTextComponents {
-  const textColor = isDark ? 'text-slate-300' : 'text-slate-600'
-  const headingColor = isDark ? 'text-slate-100' : 'text-slate-900'
-  const blockQuoteClass = isDark
-    ? 'border-l-4 border-orange-300 bg-slate-800 text-slate-200'
-    : 'border-l-4 border-orange-400 bg-orange-50 text-slate-700'
-  const listMarkerClass = isDark ? 'marker:text-orange-300' : 'marker:text-orange-500'
-  const highlightClass = isDark
-    ? 'bg-orange-400/20 text-orange-200'
-    : 'bg-orange-100 text-orange-800'
-  const linkClass = isDark
-    ? 'text-orange-300 underline underline-offset-4 hover:text-orange-200'
-    : 'text-orange-600 underline underline-offset-4 hover:text-orange-700'
-  const mediaFrameClass = isDark ? 'border-slate-700' : 'border-slate-200'
-  const imageCaptionClass = isDark ? 'text-slate-400' : 'text-slate-500'
-  const productCardClass = isDark
-    ? 'my-10 rounded-lg border border-slate-700 bg-slate-800 p-4 md:p-6'
-    : 'my-10 premium-card p-4 md:p-6'
-  const productTitleClass = isDark ? 'text-slate-100' : 'text-slate-900'
-  const productDescriptionClass = isDark ? 'text-slate-300' : 'text-slate-500'
-  const productLinkClass = isDark
-    ? 'text-orange-300 font-bold text-sm hover:text-orange-200'
-    : 'text-orange-600 font-bold text-sm hover:text-orange-700'
-  const productImageFallbackClass = isDark ? 'bg-slate-700' : 'bg-slate-100'
+function getPortableTextComponents(theme: SharedBackgroundTheme): PortableTextComponents {
+  const textColor = theme.body
+  const headingColor = theme.heading
+  const blockQuoteClass = 'border-l-4 border-orange-400 bg-orange-50 text-slate-700'
+  const listMarkerClass = 'marker:text-orange-500'
+  const highlightClass = 'bg-orange-100 text-orange-800'
+  const linkClass = 'text-orange-600 underline underline-offset-4 hover:text-orange-700'
+  const mediaFrameClass = 'border-slate-200'
+  const imageCaptionClass = theme.subtitle
+  const productCardClass = `my-10 rounded-lg p-4 md:p-6 ${theme.surfaceElevated}`
+  const productTitleClass = theme.heading
+  const productDescriptionClass = theme.subtitle
+  const productLinkClass = 'text-orange-600 font-bold text-sm hover:text-orange-700'
+  const productImageFallbackClass = theme.surfaceMuted
 
   return {
     block: {
@@ -223,15 +217,14 @@ export default function PortableTextBlockComponent({
 }: {
   block: PortableTextBlockData
 }) {
-  const variant = block.backgroundVariant ?? 'default'
+  const variant = block.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
   if (!block.content?.length) return null
 
   return (
     <SectionShell container="prose" sectionClassName={theme.section}>
       <article className="portable-text">
-        <PortableText value={block.content} components={getPortableTextComponents(isDark)} />
+        <PortableText value={block.content} components={getPortableTextComponents(theme)} />
       </article>
     </SectionShell>
   )

@@ -8,7 +8,11 @@ import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import SplitHeroArrow from './SplitHeroArrow'
@@ -46,7 +50,7 @@ export type ShowcaseBlockData = {
   title?: string
   subtitle?: string
   layout?: 'cardCarousel' | 'splitCarousel'
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   items?: ShowcaseItem[]
   footerCta?: {
     label?: string
@@ -147,19 +151,19 @@ function isExternalHref(href: string) {
 
 function SplitCarousel({
   items,
-  isDark,
+  theme,
   footerCta,
 }: {
   items: ShowcaseItem[]
-  isDark: boolean
+  theme: SharedBackgroundTheme
   footerCta?: ShowcaseBlockData['footerCta']
 }) {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const dotsBaseClass = isDark ? 'bg-slate-500/50' : 'bg-slate-300'
-  const dotsActiveClass = isDark ? 'bg-orange-300' : 'bg-orange-500'
-  const titleClass = isDark ? 'text-white' : 'text-slate-900'
-  const bodyClass = isDark ? 'text-slate-300' : 'text-slate-600'
+  const dotsBaseClass = theme.dotIdle
+  const dotsActiveClass = theme.dotActive
+  const titleClass = theme.heading
+  const bodyClass = theme.body
   const footerHref = footerCta?.href?.trim() || ''
   const footerLabel = footerCta?.label?.trim() || ''
 
@@ -347,9 +351,8 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [canPrev, setCanPrev] = useState(false)
   const [canNext, setCanNext] = useState(items.length > 1)
-  const variant = block.backgroundVariant ?? 'muted'
+  const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
 
   if (!block.title && !block.subtitle && items.length === 0) return null
 
@@ -365,7 +368,7 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
         <SectionHeader
           title={block.title}
           subtitle={block.subtitle}
-          tone={isDark ? 'dark' : 'light'}
+          tone="light"
           className={layout === 'splitCarousel' ? 'mb-12 md:mb-14' : 'mb-10 md:mb-12'}
           titleClassName={theme.heading}
           subtitleClassName={`mx-auto max-w-3xl ${sectionSubtitleClass} ${theme.subtitle}`}
@@ -374,9 +377,9 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
 
       {items.length > 0 && (
         layout === 'splitCarousel' ? (
-          <SplitCarousel items={items} isDark={isDark} footerCta={block.footerCta} />
+          <SplitCarousel items={items} theme={theme} footerCta={block.footerCta} />
         ) : (
-          <div className={`${styles.shell} ${isDark ? styles.darkShell : ''}`.trim()}>
+          <div className={styles.shell} style={theme.showcaseVars}>
             <div className={styles.carouselViewport}>
               <Swiper
                 modules={[Keyboard, A11y]}

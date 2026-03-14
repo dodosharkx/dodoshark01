@@ -50,7 +50,7 @@ export function shouldMergeRichAndFeature(
     return false
   }
 
-  const richVariant = richBlock.backgroundVariant ?? 'default'
+  const richVariant = richBlock.backgroundVariant ?? 'white'
   const featureVariant = mapFeatureBackgroundStyleToVariant(
     featureBlock.backgroundStyle ?? 'white',
   )

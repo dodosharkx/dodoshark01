@@ -4,7 +4,11 @@ import {
   type PortableTextComponents,
 } from 'next-sanity'
 
-import { getSharedBackgroundTheme } from './backgroundTheme'
+import {
+  getSharedBackgroundTheme,
+  type SharedBackgroundTheme,
+  type SharedBackgroundVariant,
+} from './backgroundTheme'
 import RichSectionMediaCarousel from './RichSectionMediaCarousel'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
@@ -53,7 +57,7 @@ export type RichSectionBlockData = {
   mediaItems?: RichSectionMediaItem[]
   layout?: 'textLeftMediaRight' | 'mediaLeftTextRight'
   disableMediaFrameEffect?: boolean
-  backgroundVariant?: 'default' | 'muted' | 'dark'
+  backgroundVariant?: SharedBackgroundVariant
   anchorId?: string
 }
 
@@ -65,12 +69,12 @@ export function hasRichSectionContent(block: RichSectionBlockData) {
   return Boolean(block.heading || hasSubtitle || hasBody || hasMedia)
 }
 
-function getPortableTextComponents(isDark: boolean): PortableTextComponents {
-  const textColor = isDark ? 'text-slate-300' : 'text-slate-600'
-  const headingColor = isDark ? 'text-white' : 'text-slate-900'
-  const quoteBorder = isDark ? 'border-slate-600' : 'border-slate-300'
-  const listMarker = isDark ? 'marker:text-orange-300' : 'marker:text-orange-500'
-  const linkColor = isDark ? 'text-orange-300' : 'text-orange-600'
+function getPortableTextComponents(theme: SharedBackgroundTheme): PortableTextComponents {
+  const textColor = theme.body
+  const headingColor = theme.heading
+  const quoteBorder = 'border-slate-300'
+  const listMarker = 'marker:text-orange-500'
+  const linkColor = 'text-orange-600'
 
   return {
     block: {
@@ -144,9 +148,8 @@ export function RichSectionBlockContent({
   trimTrailingContentSpacing = false,
 }: RichSectionBlockContentProps) {
   const layout = block.layout === 'mediaLeftTextRight' ? 'mediaLeftTextRight' : 'textLeftMediaRight'
-  const variant = block.backgroundVariant ?? 'default'
+  const variant = block.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
-  const isDark = variant === 'dark'
   const mediaItems = getValidMediaItems(block.mediaItems)
   const hasMedia = mediaItems.length > 0
   const hasBody = Boolean(block.body?.length)
@@ -172,7 +175,7 @@ export function RichSectionBlockContent({
             <SectionHeader
               title={block.heading}
               subtitle={hasSubtitle ? block.subtitle : undefined}
-              tone={isDark ? 'dark' : 'light'}
+              tone="light"
               align="left"
               className="mb-10 max-w-[36rem] md:mb-12"
               titleClassName={theme.heading}
@@ -184,7 +187,7 @@ export function RichSectionBlockContent({
             <div className={bodyClass}>
               <PortableText
                 value={block.body as PortableTextBlock[]}
-                components={getPortableTextComponents(isDark)}
+                components={getPortableTextComponents(theme)}
               />
             </div>
           )}
@@ -195,7 +198,7 @@ export function RichSectionBlockContent({
             <RichSectionMediaCarousel
               items={mediaItems}
               title={block.heading}
-              isDark={isDark}
+              theme={theme}
               disableMediaFrameEffect={block.disableMediaFrameEffect}
             />
           </div>
@@ -208,7 +211,7 @@ export function RichSectionBlockContent({
 export default function RichSectionBlock({ block }: RichSectionBlockProps) {
   if (!hasRichSectionContent(block)) return null
 
-  const variant = block.backgroundVariant ?? 'default'
+  const variant = block.backgroundVariant ?? 'white'
   const theme = getSharedBackgroundTheme(variant)
   const anchorId = block.anchorId?.trim() || undefined
 
