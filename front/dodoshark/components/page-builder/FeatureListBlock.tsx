@@ -89,6 +89,8 @@ function FeatureMedia({
   theme: SharedBackgroundTheme
 }) {
   const {image: media, isIconFallback} = resolveFeatureMedia(item)
+  if (!media) return null
+
   const mediaSrc = resolveImageSrc(
     media,
     isIconFallback
