@@ -15,6 +15,12 @@ import {
   type SharedBackgroundTheme,
   type SharedBackgroundVariant,
 } from './backgroundTheme'
+import {
+  defaultSliderControls,
+  getSliderControls,
+  SliderNavButton,
+  type SliderControls,
+} from './PageBuilderSliderControls'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
@@ -68,18 +74,6 @@ type CardGroup = {
   groupSubtitle?: string
   topCards?: CardItem[]
   bottomCards?: CardItem[]
-}
-
-type SliderControls = {
-  hasOverflow: boolean
-  currentPage: number
-  totalPages: number
-}
-
-const defaultSliderControls: SliderControls = {
-  hasOverflow: false,
-  currentPage: 0,
-  totalPages: 1,
 }
 
 export type CardGridBlockData = {
@@ -138,17 +132,6 @@ function getColumnsForCardCount(count: number): 2 | 3 | 4 {
   if (count <= 2) return 2
   if (count >= 4) return 4
   return 3
-}
-
-function getSliderControls(instance: SwiperInstance): SliderControls {
-  const hasOverflow = !instance.isLocked && instance.slides.length > 1
-  const totalPages = Math.max(instance.snapGrid.length, 1)
-
-  return {
-    hasOverflow,
-    currentPage: Math.min(instance.snapIndex, totalPages - 1),
-    totalPages,
-  }
 }
 
 function getReferenceHref(reference?: CardReference) {
@@ -337,19 +320,22 @@ function MobileCarouselCard({
   const titleTone = theme.heading
   const descriptionTone = theme.subtitle
   const ctaTone = 'text-orange-600'
-  const framedArticleBaseClass = `overflow-hidden rounded-lg text-center ${theme.surfaceElevated}`
+  const framedArticleBaseClass = `relative rounded-lg text-center ${theme.surfaceElevated}`
   const articleClass = disableCardFrameEffect
-    ? 'text-center'
+    ? 'relative text-center'
     : framedArticleBaseClass
   const imageBgClass = theme.surfaceMuted
   const emptyImageClass = theme.subtitle
   const dotsBaseClass = theme.dotIdle
   const dotsActiveClass = theme.dotActive
   const imageSrc = resolveImageSrc(data.image, { width: 900, height: 700, fit: 'crop' })
+  const imageFrameClass = disableCardFrameEffect
+    ? `relative aspect-[16/10] ${imageBgClass}`
+    : `relative aspect-[16/10] overflow-hidden rounded-t-lg ${imageBgClass}`
 
   return (
     <article className={articleClass}>
-      <div className={`relative aspect-[16/10] ${imageBgClass}`}>
+      <div className={imageFrameClass}>
         {imageSrc ? (
           <Image
             src={imageSrc}
@@ -363,12 +349,11 @@ function MobileCarouselCard({
             <Icon icon="image" className="h-8 w-8" />
           </div>
         )}
-
       </div>
 
       {showControls && (
         <div className="flex items-center justify-center px-5 py-4">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center justify-center gap-2">
             {Array.from({ length: controls.totalPages }, (_, index) => {
               const active = index === controls.currentPage
 
@@ -454,6 +439,7 @@ function GroupGrid({
 
   const columnsToUse = getColumnsForCardCount(cards.length)
   const desktopCardSize: 'large' | 'small' = columnsToUse <= 2 ? 'large' : 'small'
+  const mobileButtonClassName = `${theme.control} ${theme.controlHover}`
 
   if (cards.length === 0) return null
 
@@ -462,40 +448,66 @@ function GroupGrid({
       <SectionTitle title={sectionTitle} theme={theme} />
 
       <div className="md:hidden">
-        <Swiper
-          key={`${sectionTitle ?? 'cards'}-${cards.length}`}
-          modules={[Keyboard, A11y]}
-          slidesPerView={1}
-          slidesPerGroup={1}
-          spaceBetween={16}
-          speed={450}
-          watchOverflow
-          grabCursor
-          keyboard={{ enabled: true }}
-          a11y={{
-            prevSlideMessage: 'Previous cards',
-            nextSlideMessage: 'Next cards',
-          }}
-          onSwiper={(instance) => {
-            setMobileSwiper(instance)
-            setMobileControls(getSliderControls(instance))
-          }}
-          onSlideChange={(instance) => setMobileControls(getSliderControls(instance))}
-          onResize={(instance) => setMobileControls(getSliderControls(instance))}
-        >
-          {cards.map((item, index) => (
-            <SwiperSlide key={item._key ?? `group-card-mobile-${index}`} className="h-auto">
-              <MobileCarouselCard
-                item={item}
-                theme={theme}
-                disableCardFrameEffect={disableCardFrameEffect}
-                showControls={mobileControls.hasOverflow}
-                controls={mobileControls}
-                onSelectPage={(pageIndex) => mobileSwiper?.slideTo(pageIndex)}
+        <div className="relative px-2">
+          {mobileControls.hasOverflow && (
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 aspect-[16/10]">
+              <SliderNavButton
+                direction="prev"
+                disabled={!mobileControls.canPrev}
+                isDark={false}
+                buttonClassName={mobileButtonClassName}
+                label="Previous card"
+                onClick={() => mobileSwiper?.slidePrev()}
+                className="pointer-events-auto absolute left-0 top-1/2 z-10 h-10 w-10 -translate-x-1/3 -translate-y-1/2"
               />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+
+              <SliderNavButton
+                direction="next"
+                disabled={!mobileControls.canNext}
+                isDark={false}
+                buttonClassName={mobileButtonClassName}
+                label="Next card"
+                onClick={() => mobileSwiper?.slideNext()}
+                className="pointer-events-auto absolute right-0 top-1/2 z-10 h-10 w-10 translate-x-1/3 -translate-y-1/2"
+              />
+            </div>
+          )}
+
+          <Swiper
+            key={`${sectionTitle ?? 'cards'}-${cards.length}`}
+            modules={[Keyboard, A11y]}
+            slidesPerView={1}
+            slidesPerGroup={1}
+            spaceBetween={16}
+            speed={450}
+            watchOverflow
+            grabCursor
+            keyboard={{ enabled: true }}
+            a11y={{
+              prevSlideMessage: 'Previous cards',
+              nextSlideMessage: 'Next cards',
+            }}
+            onSwiper={(instance) => {
+              setMobileSwiper(instance)
+              setMobileControls(getSliderControls(instance))
+            }}
+            onSlideChange={(instance) => setMobileControls(getSliderControls(instance))}
+            onResize={(instance) => setMobileControls(getSliderControls(instance))}
+          >
+            {cards.map((item, index) => (
+              <SwiperSlide key={item._key ?? `group-card-mobile-${index}`} className="h-auto">
+                <MobileCarouselCard
+                  item={item}
+                  theme={theme}
+                  disableCardFrameEffect={disableCardFrameEffect}
+                  showControls={mobileControls.hasOverflow}
+                  controls={mobileControls}
+                  onSelectPage={(pageIndex) => mobileSwiper?.slideTo(pageIndex)}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       <div className={`hidden gap-6 md:grid ${columnClassMap[columnsToUse]}`}>

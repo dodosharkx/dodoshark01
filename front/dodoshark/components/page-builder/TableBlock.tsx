@@ -208,6 +208,10 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
   const bodyRows = hasHeader ? rows.slice(1) : rows
   const sectionBorderClass = theme.sectionBorder
   const subtitleClass = theme.body
+  const columnDividerClass =
+    variant === 'blueGradientSoft' || variant === 'blueGradientAir'
+      ? 'border-sky-200/90'
+      : 'border-slate-200'
 
   if (!block.title && !block.description && rows.length === 0 && !block.note) return null
 
@@ -229,14 +233,16 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
             <div className="p-10 text-center text-slate-400 text-sm">No table data.</div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full">
+              <table className="min-w-full border-collapse">
                 {hasHeader && (
-                  <thead className="bg-blue-600 text-white">
+                  <thead className="bg-sky-300 text-black">
                     <tr>
                       {headerCells.map((cell, idx) => (
                         <th
                           key={idx}
-                          className="px-5 py-4 text-center text-xs font-black tracking-wider align-middle md:text-sm"
+                          className={`px-5 py-4 text-center text-xs font-black tracking-wider align-middle md:text-sm ${
+                            idx < headerCells.length - 1 ? `border-r ${columnDividerClass}` : ''
+                          }`}
                         >
                           {renderCellContent(cell, 'header')}
                         </th>
@@ -254,7 +260,9 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
                       {row.map((cell, cellIdx) => (
                         <td
                           key={`${rowIdx}-${cellIdx}`}
-                          className="px-5 py-4 text-sm text-slate-600 text-center align-middle leading-relaxed"
+                          className={`px-5 py-4 text-sm text-slate-600 text-center align-middle leading-relaxed ${
+                            cellIdx < row.length - 1 ? `border-r ${columnDividerClass}` : ''
+                          }`}
                         >
                           {renderCellContent(cell, 'body')}
                         </td>
