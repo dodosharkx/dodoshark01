@@ -91,22 +91,26 @@ export function FeatureListStandaloneCard({
   )
   const blurDataURL = image?.asset?.metadata?.lqip
   const hasLqip = Boolean(blurDataURL)
-  const mediaBackgroundClass = theme.surfaceMuted
+  const hasFilledImage = Boolean(imageSrc && !isIconFallback)
+  const mediaFrameClass = hasFilledImage ? 'bg-white' : theme.surfaceMuted
+  const imageClass = isIconFallback
+    ? 'h-full w-full object-contain p-7 md:p-8'
+    : 'h-full w-full object-cover'
   const placeholderClass = theme.subtitle
   const frameClass = theme.surfaceElevated
   const contentClass = 'bg-white/95 text-slate-900'
   const descriptionClass = 'text-slate-700'
 
   return (
-    <article className={`flex min-h-0 h-full flex-col overflow-hidden rounded-[1.125rem] ${frameClass}`}>
-      <div className={`relative aspect-[5/4] overflow-hidden ${mediaBackgroundClass}`}>
+    <article className={`flex min-h-0 h-full flex-col overflow-hidden rounded-2xl ${frameClass}`}>
+      <div className={`relative aspect-[5/4] overflow-hidden ${mediaFrameClass}`}>
         {imageSrc ? (
           <Image
             src={imageSrc}
             alt={image?.alt || item.title || 'Feature image'}
             fill
             sizes={sizes}
-            className={isIconFallback ? 'object-contain p-10' : 'object-cover'}
+            className={imageClass}
             placeholder={hasLqip ? 'blur' : 'empty'}
             blurDataURL={blurDataURL}
           />

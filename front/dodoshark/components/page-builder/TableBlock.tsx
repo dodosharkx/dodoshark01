@@ -231,7 +231,7 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
             <div className="overflow-x-auto">
               <table className="min-w-full">
                 {hasHeader && (
-                  <thead className={theme.accentDark}>
+                  <thead className="bg-blue-600 text-white">
                     <tr>
                       {headerCells.map((cell, idx) => (
                         <th

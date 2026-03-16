@@ -8,6 +8,7 @@ import {
   getSharedBackgroundTheme,
   mapFeatureBackgroundStyleToVariant,
   type FeatureListBackgroundStyle,
+  type SharedBackgroundTheme,
 } from './backgroundTheme'
 import {type FeatureListImage, type FeatureListItem} from './FeatureListBlockCard'
 import SectionShell from './SectionShell'
@@ -37,18 +38,80 @@ export function hasFeatureListContent(
   return hasHeader || items.length > 0
 }
 
-function FeatureMedia({ item }: { item: FeatureListItem }) {
-  const media: FeatureListImage | undefined = item.icon?.asset ? item.icon : item.image
-  if (!media?.asset) return null
+function hasImageIdentity(image?: FeatureListImage) {
+  const ref = image?.asset?._ref?.trim()
+  const id = image?.asset?._id?.trim()
+  const url = image?.asset?.url?.trim()
+
+  return Boolean(ref || id || url)
+}
+
+function resolveFeatureMedia(item: FeatureListItem) {
+  if (hasImageIdentity(item.image)) {
+    return {image: item.image, isIconFallback: false}
+  }
+
+  if (hasImageIdentity(item.icon)) {
+    return {image: item.icon, isIconFallback: true}
+  }
+
+  return {image: item.image ?? item.icon, isIconFallback: false}
+}
+
+function resolveImageSrc(
+  image?: FeatureListImage,
+  options: {width?: number; height?: number; fit?: 'crop' | 'max'} = {},
+) {
+  if (!image) return undefined
+
+  const directUrl = image.asset?.url?.trim()
+  if (directUrl) return directUrl
+  if (!hasImageIdentity(image)) return undefined
+
+  try {
+    let builder = urlFor(image).width(options.width ?? 240)
+
+    if (options.height) {
+      builder = builder.height(options.height)
+    }
+
+    return builder.fit(options.fit ?? 'crop').url()
+  } catch {
+    return undefined
+  }
+}
+
+function FeatureMedia({
+  item,
+  theme,
+}: {
+  item: FeatureListItem
+  theme: SharedBackgroundTheme
+}) {
+  const {image: media, isIconFallback} = resolveFeatureMedia(item)
+  const mediaSrc = resolveImageSrc(
+    media,
+    isIconFallback
+      ? {width: 160, height: 160, fit: 'max'}
+      : {width: 240, height: 240, fit: 'crop'},
+  )
+  if (!mediaSrc) return null
+
+  const containerClass = isIconFallback
+    ? `relative mx-auto mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl md:mb-5 md:h-20 md:w-20 ${theme.surfaceMuted}`
+    : 'relative mx-auto mb-4 h-16 w-16 overflow-hidden rounded-xl bg-white md:mb-5 md:h-20 md:w-20'
+  const imageClass = isIconFallback
+    ? 'h-full w-full object-contain p-3 md:p-3.5'
+    : 'h-full w-full object-cover'
 
   return (
-    <div className="relative mx-auto mb-4 h-16 w-16 md:h-20 md:w-20">
+    <div className={containerClass}>
       <Image
-        src={urlFor(media).width(160).height(160).fit('max').url()}
+        src={mediaSrc}
         alt={media.alt || item.title || 'Feature media'}
         fill
         sizes="(min-width: 768px) 80px, 64px"
-        className="object-contain"
+        className={imageClass}
       />
     </div>
   )
@@ -86,7 +149,7 @@ export function FeatureListBlockContent({
   const titleClass = theme.heading
   const itemTitleClass = 'text-gray-900'
   const itemDescriptionClass = theme.body
-  const mergedCardClass = `h-full rounded-2xl px-4 py-6 text-center sm:px-6 ${theme.surfaceElevated}`
+  const mergedCardClass = `h-full rounded-xl px-4 py-6 text-center sm:px-6 ${theme.surfaceElevated}`
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -116,7 +179,7 @@ export function FeatureListBlockContent({
                 className={`${wrapperClass} flex h-full flex-col`}
               >
                 <article className={`${mergedCardClass} flex min-h-0 flex-1 flex-col`}>
-                  <FeatureMedia item={item} />
+                  <FeatureMedia item={item} theme={theme} />
                   <h3
                     className={`mx-auto mb-3 max-w-[14ch] whitespace-pre-line ${cardTitleClass} ${itemTitleClass}`}
                   >

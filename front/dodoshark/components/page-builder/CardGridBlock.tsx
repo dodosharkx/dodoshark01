@@ -423,18 +423,14 @@ function SectionTitle({
 }) {
   if (!title) return null
 
-  const separatorClass = theme.line
   const titleClass = theme.heading
 
   return (
-    <header className="mb-8 text-center md:mb-10">
+    <header className="mb-3 text-center md:mb-4">
       <div className="flex justify-center">
         <h3 className={`inline-block px-4 text-2xl font-display font-bold tracking-[-0.02em] md:text-[1.75rem] ${titleClass}`}>
           {title}
         </h3>
-      </div>
-      <div className="mt-2 md:mt-3">
-        <span className={`block h-px w-full ${separatorClass}`} />
       </div>
     </header>
   )
@@ -445,11 +441,13 @@ function GroupGrid({
   cards,
   theme,
   disableCardFrameEffect,
+  sectionClassName,
 }: {
   sectionTitle?: string
   cards: CardItem[]
   theme: SharedBackgroundTheme
   disableCardFrameEffect?: boolean
+  sectionClassName?: string
 }) {
   const [mobileSwiper, setMobileSwiper] = useState<SwiperInstance | null>(null)
   const [mobileControls, setMobileControls] = useState<SliderControls>(defaultSliderControls)
@@ -460,7 +458,7 @@ function GroupGrid({
   if (cards.length === 0) return null
 
   return (
-    <section className="pt-0 pb-8">
+    <section className={`pt-0 pb-8 ${sectionClassName ?? ''}`.trim()}>
       <SectionTitle title={sectionTitle} theme={theme} />
 
       <div className="md:hidden">
@@ -562,6 +560,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
           cards={legacyCards}
           theme={theme}
           disableCardFrameEffect={disableCardFrameEffect}
+          sectionClassName={hasNestedCards ? 'pb-12 md:pb-14' : undefined}
         />
       )}
 
