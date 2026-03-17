@@ -262,6 +262,36 @@
   position: relative;
 }
 
+.splitDesktopNav {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.splitDesktopNavButton {
+  display: none;
+  pointer-events: auto;
+}
+
+.splitMediaMobileNav {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -0.875rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.splitMediaMobileNavButton {
+  pointer-events: auto;
+}
+
 @media (max-width: 1199px) {
   .title {
     font-size: 1.35rem;
@@ -284,6 +314,15 @@
 
   .splitMedia {
     border-radius: 1.25rem;
+  }
+
+  .splitMediaMobileNav {
+    inset-inline: -0.75rem;
+  }
+
+  .splitMediaMobileNavButton {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .splitMediaImage {
@@ -350,6 +389,14 @@
 }
 
 @media (min-width: 768px) {
+  .splitDesktopNavButton {
+    display: flex;
+  }
+
+  .splitMediaMobileNav {
+    display: none;
+  }
+
   .splitMediaFrame,
   .splitMediaFallback {
     aspect-ratio: 16 / 10;
