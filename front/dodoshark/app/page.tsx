@@ -480,7 +480,7 @@ export default async function HomePage() {
           <div className="text-center">
 
             <h2 className="font-display text-3xl font-bold tracking-[0.08em] text-white sm:text-5xl">About &nbsp;Us</h2>
-            <div className="mx-auto mt-6 h-1.5 w-20 rounded-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)]" />
+            <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
           </div>
 
           <div className="mt-16 grid gap-10 md:grid-cols-3 lg:gap-12">
@@ -508,7 +508,7 @@ export default async function HomePage() {
           <div className="mb-16 grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
             <div className="pt-2 sm:pt-8">
               <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl lg:text-5xl"><span>Choose DodoShark</span><br /><span>Choose Confidence</span></h2>
-              <div className="mt-7 h-1 w-16 bg-[#f5a623]" />
+              <div className="mt-5 h-1 w-16 bg-[#f5a623]" />
               <p className="mt-8 text-base leading-8 text-slate-600 sm:text-lg">
                 DoDoShark practices &quot;Carefree Production, Joyful Harvest&quot; through innovation and high quality.
               </p>
@@ -567,7 +567,7 @@ export default async function HomePage() {
           <Image src="/assets/images/banner.png" alt="Industrial Background" fill sizes="100vw" className="object-cover" />
           <div className="relative z-10 mx-auto px-4 pt-16 text-center sm:px-6 sm:pt-20 lg:max-w-7xl lg:px-8">
             <h2 className="font-display text-3xl font-bold tracking-wide text-white sm:text-4xl md:text-5xl">Wonderful Products</h2>
-            <div className="mx-auto mt-6 h-1.5 w-20 rounded-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)]" />
+            <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
           </div>
         </div>
 
@@ -618,7 +618,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-950/70 via-blue-900/60 to-blue-950/70" />
           <div className="relative z-10 mx-auto px-4 pt-16 text-center sm:px-6 sm:pt-20 lg:max-w-7xl lg:px-8">
             <h2 className="font-display text-3xl font-bold tracking-wide text-white sm:text-4xl md:text-5xl">Efficient Solutions</h2>
-            <div className="mx-auto mt-6 h-1.5 w-20 rounded-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)]" />
+            <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
           </div>
         </div>
 
@@ -671,7 +671,7 @@ export default async function HomePage() {
             <h2 className="font-display text-3xl font-extrabold tracking-[-0.02em] text-slate-800 sm:text-4xl md:text-5xl">
               Project Cases
             </h2>
-            <div className="mx-auto mt-6 h-1.5 w-20 rounded-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)]" />
+            <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
             <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
               Every case is a benchmark for industrial excellence.
             </p>
@@ -712,7 +712,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
-            <div className="mx-auto mt-6 h-1.5 w-20 rounded-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)]" />
+            <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
           </div>
 
           <DeferredHomeBlogCarousel items={blogItems} />

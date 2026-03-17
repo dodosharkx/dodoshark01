@@ -141,7 +141,7 @@ function HeroAccent({
 
   return (
     <div className={`mb-7 flex ${className}`}>
-      <span className={`h-1 w-16 rounded-full ${toneClasses.divider}`} />
+      <span className={`h-1.5 w-20 rounded-full ${toneClasses.divider}`} />
     </div>
   )
 }
@@ -344,8 +344,8 @@ function LegacyHero({
           <div className={`flex max-w-xl flex-col ${panelAlignClass}`}>
             <HeroTextContent
               block={block}
-              titleClassName={`mb-4 ${heroTitleClass} text-white`}
-              subtitleClassName={`mb-4 ${heroSubtitleClass} text-slate-200`}
+              titleClassName={`mb-3 ${heroTitleClass} text-white`}
+              subtitleClassName={`mb-3 ${heroSubtitleClass} text-slate-200`}
               descriptionClassName={`whitespace-pre-line ${heroDescriptionClass} text-slate-100`}
               accentAlignClass={indicatorAlignClass}
               actionsClassName={`mt-8 flex flex-wrap gap-3 ${indicatorAlignClass}`}
@@ -446,8 +446,8 @@ function SplitHero({
             <div className="max-w-xl text-left">
               <HeroTextContent
                 block={block}
-                titleClassName={`mb-4 text-slate-900 ${heroTitleClass}`}
-                subtitleClassName={`mb-4 ${heroSubtitleClass} text-slate-500`}
+                titleClassName={`mb-3 text-slate-900 ${heroTitleClass}`}
+                subtitleClassName={`mb-3 ${heroSubtitleClass} text-slate-500`}
                 descriptionClassName={`whitespace-pre-line ${heroDescriptionClass} text-slate-700`}
                 accentAlignClass="justify-start"
                 actionsClassName="mt-8 flex flex-wrap gap-3 justify-start"

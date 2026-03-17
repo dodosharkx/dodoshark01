@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { A11y, Autoplay, Keyboard } from 'swiper/modules'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -353,6 +353,12 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
   const [canNext, setCanNext] = useState(items.length > 1)
   const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
+  const cardCarouselVars: CSSProperties = {
+    ...theme.showcaseVars,
+    '--showcase-card-bg': '#ffffff',
+    '--showcase-media-bg': '#ffffff',
+    '--showcase-card-shadow': '0 10px 24px -18px rgb(15 23 42 / 0.12)',
+  }
 
   if (!block.title && !block.subtitle && items.length === 0) return null
 
@@ -379,7 +385,7 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
         layout === 'splitCarousel' ? (
           <SplitCarousel items={items} theme={theme} footerCta={block.footerCta} />
         ) : (
-          <div className={styles.shell} style={theme.showcaseVars}>
+          <div className={`${styles.shell} ${styles.cardCarouselShell}`} style={cardCarouselVars}>
             <div className={styles.carouselViewport}>
               <Swiper
                 modules={[Keyboard, A11y]}

@@ -1,8 +1,20 @@
+'use client'
+
+import {useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import {A11y, Keyboard} from 'swiper/modules'
+import type {Swiper as SwiperInstance} from 'swiper'
+import {Swiper, SwiperSlide} from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
+import {
+  defaultSliderControls,
+  getSliderControls,
+  getSlidesPerGroup,
+  SliderNavButton,
+} from './PageBuilderSliderControls'
 import {
   getSharedBackgroundTheme,
   type SharedBackgroundTheme,
@@ -11,6 +23,7 @@ import {
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { cardTitleClass, sectionSubtitleClass } from './sectionStyles'
+import 'swiper/css'
 
 type SanityImage = {
   alt?: string
@@ -60,6 +73,14 @@ export type CollectionReferenceBlockData = {
   columns?: 2 | 3 | 4
   references?: ReferenceItem[]
 }
+
+const MAX_REFERENCE_ITEMS = 20
+
+const carouselBreakpoints = {
+  768: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 20 },
+  1024: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 24 },
+  1280: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 24 },
+} as const
 
 function resolveTitle(item: ReferenceItem) {
   return (
@@ -140,6 +161,100 @@ function columnsClass(columns?: number) {
   return 'grid-cols-2 xl:grid-cols-3'
 }
 
+function CollectionReferenceCarousel({
+  items,
+  theme,
+}: {
+  items: ReferenceItem[]
+  theme: SharedBackgroundTheme
+}) {
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
+  const [controls, setControls] = useState(defaultSliderControls)
+
+  if (items.length === 0) return null
+
+  return (
+    <div className="group relative">
+      {controls.hasOverflow && (
+        <>
+          <SliderNavButton
+            direction="prev"
+            disabled={!controls.canPrev}
+            isDark={false}
+            buttonClassName={`${theme.control} ${theme.controlHover}`}
+            label="Previous collection references"
+            onClick={() => swiper?.slidePrev()}
+            className="absolute left-2 top-[35%] z-20 -translate-y-1/2 md:left-0 md:-left-5 lg:-left-6"
+          />
+
+          <SliderNavButton
+            direction="next"
+            disabled={!controls.canNext}
+            isDark={false}
+            buttonClassName={`${theme.control} ${theme.controlHover}`}
+            label="Next collection references"
+            onClick={() => swiper?.slideNext()}
+            className="absolute right-2 top-[35%] z-20 -translate-y-1/2 md:right-0 md:-right-5 lg:-right-6"
+          />
+        </>
+      )}
+
+      <Swiper
+        modules={[A11y, Keyboard]}
+        slidesPerView={1}
+        slidesPerGroup={1}
+        spaceBetween={16}
+        speed={500}
+        keyboard={{ enabled: true }}
+        watchOverflow
+        breakpoints={carouselBreakpoints}
+        a11y={{
+          slideLabelMessage: 'Collection reference {{index}}',
+          prevSlideMessage: 'Previous collection references',
+          nextSlideMessage: 'Next collection references',
+        }}
+        onSwiper={(instance) => {
+          setSwiper(instance)
+          setControls(getSliderControls(instance))
+        }}
+        onSlideChange={(instance) => setControls(getSliderControls(instance))}
+        onResize={(instance) => setControls(getSliderControls(instance))}
+        onBreakpoint={(instance) => setControls(getSliderControls(instance))}
+      >
+        {items.map((item, idx) => (
+          <SwiperSlide key={item._key ?? idx} className="!h-auto">
+            <ReferenceCard item={item} theme={theme} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {controls.hasOverflow && (
+        <div className="mt-6 flex items-center justify-center gap-2">
+          {Array.from({ length: controls.totalPages }, (_, index) => {
+            const active = index === controls.currentPage
+
+            return (
+              <button
+                key={`collection-reference-page-${index}`}
+                type="button"
+                aria-label={`Go to collection reference page ${index + 1}`}
+                aria-pressed={active}
+                onClick={() => {
+                  if (!swiper || swiper.destroyed) return
+                  swiper.slideTo(index * getSlidesPerGroup(swiper))
+                }}
+                className={`h-2.5 rounded-full transition-all ${
+                  active ? `w-8 ${theme.dotActive}` : `w-2.5 ${theme.dotIdle}`
+                }`}
+              />
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function CollectionReferenceBlock({
   block,
 }: {
@@ -148,7 +263,9 @@ export default function CollectionReferenceBlock({
   const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
   const layout = block.layout ?? 'grid'
-  const refs = (block.references ?? []).filter((item) => item.reference)
+  const refs = (block.references ?? [])
+    .filter((item) => item.reference)
+    .slice(0, MAX_REFERENCE_ITEMS)
   const sectionBorderClass = theme.sectionBorder
   const subtitleClass = theme.body
 
@@ -186,16 +303,7 @@ export default function CollectionReferenceBlock({
       )}
 
       {layout === 'carousel' && (
-        <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2">
-          {refs.map((item, idx) => (
-            <div
-              key={item._key ?? idx}
-              className="max-w-[400px] min-w-[280px] snap-start md:min-w-[360px]"
-            >
-              <ReferenceCard item={item} theme={theme} />
-            </div>
-          ))}
-        </div>
+        <CollectionReferenceCarousel items={refs} theme={theme} />
       )}
     </SectionShell>
   )

@@ -29,7 +29,7 @@ export function getSectionToneClasses(tone: SectionTone) {
       body: 'text-slate-300',
       muted: 'text-slate-400',
       eyebrow: 'text-slate-300',
-      divider: 'bg-gradient-to-r from-slate-300 to-orange-400',
+      divider: 'bg-orange-500',
     }
   }
 
@@ -39,6 +39,6 @@ export function getSectionToneClasses(tone: SectionTone) {
     body: 'text-slate-600',
     muted: 'text-slate-500',
     eyebrow: 'text-slate-500',
-    divider: 'bg-gradient-to-r from-slate-800 to-orange-500',
+    divider: 'bg-orange-500',
   }
 }

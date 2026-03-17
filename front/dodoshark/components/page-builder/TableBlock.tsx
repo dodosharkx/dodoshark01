@@ -208,10 +208,10 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
   const bodyRows = hasHeader ? rows.slice(1) : rows
   const sectionBorderClass = theme.sectionBorder
   const subtitleClass = theme.body
-  const columnDividerClass =
-    variant === 'blueGradientSoft' || variant === 'blueGradientAir'
-      ? 'border-sky-200/90'
-      : 'border-slate-200'
+  const isBlueVariant = variant === 'blueGradientSoft' || variant === 'blueGradientAir'
+  const columnDividerClass = 'border-slate-200/80'
+  const rowDividerClass = isBlueVariant ? 'border-slate-200/70' : 'border-slate-100'
+  const rowHoverClass = isBlueVariant ? 'hover:bg-white/75' : 'hover:bg-slate-50/80'
 
   if (!block.title && !block.description && rows.length === 0 && !block.note) return null
 
@@ -240,7 +240,7 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
                       {headerCells.map((cell, idx) => (
                         <th
                           key={idx}
-                          className={`px-5 py-4 text-center text-xs font-black tracking-wider align-middle md:text-sm ${
+                          className={`px-5 py-4 text-center text-xs font-black tracking-[0.16em] align-middle md:text-sm ${
                             idx < headerCells.length - 1 ? `border-r ${columnDividerClass}` : ''
                           }`}
                         >
@@ -255,7 +255,7 @@ export default function TableBlock({ block }: { block: TableBlockData }) {
                   {bodyRows.map((row, rowIdx) => (
                     <tr
                       key={rowIdx}
-                      className="border-t border-slate-100 hover:bg-slate-50 transition-colors"
+                      className={`border-t ${rowDividerClass} ${rowHoverClass} transition-colors`}
                     >
                       {row.map((cell, cellIdx) => (
                         <td

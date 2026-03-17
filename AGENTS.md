@@ -20,6 +20,7 @@
 - Reuse existing helpers before creating new files.
 - Keep frontend block data types aligned with Sanity schema values.
 - Do not silently change schema enum values without updating frontend renderers.
+- After an AI agent finishes code changes, do not run `pnpm run lint` or `pnpm run build`; those verification steps are handled manually.
 - If changing page builder merge behavior, also review:
   - `front/dodoshark/components/page-builder/richFeatureMerge.ts`
   - `front/dodoshark/components/page-builder/MergedRichFeatureSection.tsx`
@@ -53,6 +54,7 @@
 - Frontend lint: `cd front/dodoshark && pnpm run lint`
 - Studio dev: `cd studio-dodoshark && pnpm run dev`
 - Studio build: `cd studio-dodoshark && pnpm run build`
+- Note: AI agents should not run `pnpm run lint` or `pnpm run build` after edits; a human will perform those checks manually.
 
 ## Change Checklist
 - If you change a page builder schema:

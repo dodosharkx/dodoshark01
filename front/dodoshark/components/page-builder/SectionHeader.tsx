@@ -43,7 +43,7 @@ export default function SectionHeader({
   const alignClass = align === 'left' ? 'text-left' : 'text-center'
   const lineAlignClass = align === 'left' ? 'mx-0' : 'mx-auto'
   const stackClass = spacing === 'compact' ? 'space-y-3' : 'space-y-4'
-  const dividerSpacingClass = spacing === 'compact' ? 'mt-5' : 'mt-6'
+  const dividerSpacingClass = spacing === 'compact' ? 'mt-4' : 'mt-5'
   const resolvedSubtitleClass =
     subtitleClassName || `${sectionSubtitleClass} max-w-3xl ${toneClasses.subtitle}`
 
@@ -68,7 +68,7 @@ export default function SectionHeader({
       </div>
       {showDivider && (title || subtitle) && (
         <div
-          className={`${dividerSpacingClass} h-1 w-16 rounded-full ${toneClasses.divider} ${lineAlignClass}`}
+          className={`${dividerSpacingClass} h-1.5 w-20 rounded-full ${toneClasses.divider} ${lineAlignClass}`}
         />
       )}
     </header>

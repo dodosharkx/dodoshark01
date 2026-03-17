@@ -93,10 +93,10 @@ export default function Header() {
       ? {
           backgroundColor: '#17346e',
           backgroundImage:
-            "radial-gradient(circle at 74% 42%, rgba(251, 191, 36, 0.42) 0%, rgba(251, 191, 36, 0.18) 12%, rgba(251, 191, 36, 0) 26%), linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('/assets/images/background/footer-background.png')",
-          backgroundPosition: 'center, center, center, 66% 24%',
+            "linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('/assets/images/background/footer-background.png')",
+          backgroundPosition: 'center, center, 66% 24%',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover, cover, cover, 138% auto',
+          backgroundSize: 'cover, cover, 138% auto',
         }
       : undefined
   const desktopHeaderClass = desktopFloating
