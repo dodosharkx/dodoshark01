@@ -218,121 +218,19 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
         heroImage { ..., asset }
       }
     },
-    cards[] {
-      ...,
-      reference->{
-        _id,
-        _type,
-        title,
-        name,
-        modelName,
-        slug { current },
-        shortDescription,
-        description,
-        excerpt,
-        "image": coalesce(mainImage, image, coverImage, heroImage),
-        mainImage { ..., asset },
-        image { ..., asset },
-        coverImage { ..., asset },
-        heroImage { ..., asset }
-      },
-      inlineCard {
-        ...,
-        image { ..., asset }
-      }
-    },
     enableBannerOverlap,
     bannerImage {
       ...,
       asset
     },
     bannerOverlayColor,
-    nestedCardTitle,
     defaultGroupIndex,
     maxItemsPerRow,
     showModelDescription,
     footerText,
-    nestedCards[] {
+    rows[] {
       ...,
-      reference->{
-        _id,
-        _type,
-        title,
-        name,
-        modelName,
-        slug { current },
-        shortDescription,
-        description,
-        excerpt,
-        "image": coalesce(mainImage, image, coverImage, heroImage),
-        mainImage { ..., asset },
-        image { ..., asset },
-        coverImage { ..., asset },
-        heroImage { ..., asset }
-      },
-      inlineCard {
-        ...,
-        image { ..., asset }
-      }
-    },
-    groups[] {
-      ...,
-      items[] {
-        ...,
-        productVariant->{
-          _id,
-          modelName,
-          shortDescription,
-          image { ..., asset }
-        }
-      },
       cards[] {
-        ...,
-        reference->{
-          _id,
-          _type,
-          title,
-          name,
-          modelName,
-          slug { current },
-          shortDescription,
-          description,
-          excerpt,
-          "image": coalesce(mainImage, image, coverImage, heroImage),
-          mainImage { ..., asset },
-          image { ..., asset },
-          coverImage { ..., asset },
-          heroImage { ..., asset }
-        },
-        inlineCard {
-          ...,
-          image { ..., asset }
-        }
-      },
-      topCards[] {
-        ...,
-        reference->{
-          _id,
-          _type,
-          title,
-          name,
-          modelName,
-          slug { current },
-          shortDescription,
-          description,
-          excerpt,
-          "image": coalesce(mainImage, image, coverImage, heroImage),
-          mainImage { ..., asset },
-          image { ..., asset },
-          coverImage { ..., asset },
-          heroImage { ..., asset }
-        },
-        inlineCard {
-          ...,
-          image { ..., asset }
-        }
-      },
-      bottomCards[] {
         ...,
         reference->{
           _id,

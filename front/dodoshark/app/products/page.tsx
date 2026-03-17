@@ -221,7 +221,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <section id="catalog" className="py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0">
-            <div className="inline-flex min-w-full gap-3 rounded-lg border border-slate-100 bg-white p-4 shadow-sm md:flex md:w-full md:flex-wrap md:justify-center">
+            <div className="inline-flex min-w-full gap-3 md:flex md:w-full md:flex-wrap md:justify-center">
               <Link
                 href={buildHref({})}
                 className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black uppercase tracking-widest transition-all md:px-6 ${

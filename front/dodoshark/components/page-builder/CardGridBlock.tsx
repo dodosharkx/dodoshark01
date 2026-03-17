@@ -2,13 +2,13 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import type { ReactNode } from 'react'
-import { useState } from 'react'
-import { A11y, Keyboard } from 'swiper/modules'
-import type { Swiper as SwiperInstance } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import type {ReactNode} from 'react'
+import {useState} from 'react'
+import {A11y, Keyboard} from 'swiper/modules'
+import type {Swiper as SwiperInstance} from 'swiper'
+import {Swiper, SwiperSlide} from 'swiper/react'
 
-import { urlFor } from '@/app/lib/sanity'
+import {urlFor} from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 import {
   getSharedBackgroundTheme,
@@ -19,12 +19,13 @@ import {
   defaultSliderControls,
   getEdgeAlignedNavButtonClass,
   getSliderControls,
+  getSlidesPerGroup,
   SliderNavButton,
   type SliderControls,
 } from './PageBuilderSliderControls'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
-import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
+import {bodyTextClass, cardTitleClass, sectionSubtitleClass} from './sectionStyles'
 import 'swiper/css'
 
 type CardImage = {
@@ -44,7 +45,7 @@ type CardCta = {
 type CardReference = {
   _type?: 'product' | 'solution' | 'caseStudy' | 'post' | string
   title?: string
-  slug?: { current?: string }
+  slug?: {current?: string}
   shortDescription?: string
   description?: string
   mainImage?: CardImage
@@ -67,14 +68,10 @@ type CardItem = {
   }
 }
 
-type CardGroup = {
+type CardRow = {
   _key?: string
-  subtitle?: string
+  title?: string
   cards?: CardItem[]
-  groupTitle?: string
-  groupSubtitle?: string
-  topCards?: CardItem[]
-  bottomCards?: CardItem[]
 }
 
 export type CardGridBlockData = {
@@ -82,23 +79,31 @@ export type CardGridBlockData = {
   _key?: string
   title?: string
   subtitle?: string
-  firstLineCardTitle?: string
   backgroundVariant?: SharedBackgroundVariant
   enableBannerOverlap?: boolean
   bannerImage?: CardImage
   bannerOverlayColor?: string
-  nestedCards?: CardItem[]
-  nestedCardTitle?: string
-  cards?: CardItem[]
-  groups?: CardGroup[]
+  rows?: CardRow[]
   disableCardFrameEffect?: boolean
 }
 
-const columnClassMap = {
+const staticColumnClassMap = {
   2: 'md:grid-cols-2',
   3: 'md:grid-cols-2 lg:grid-cols-3',
-  4: 'md:grid-cols-2 lg:grid-cols-4',
 } as const
+
+const desktopCarouselBreakpoints = {
+  768: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+    spaceBetween: 24,
+  },
+  1024: {
+    slidesPerView: 3,
+    slidesPerGroup: 3,
+    spaceBetween: 24,
+  },
+}
 
 function isExternalHref(href: string) {
   return /^(https?:|mailto:|tel:)/i.test(href)
@@ -106,7 +111,7 @@ function isExternalHref(href: string) {
 
 function resolveImageSrc(
   image?: CardImage,
-  options: { width?: number; height?: number; fit?: 'crop' | 'max' } = {},
+  options: {width?: number; height?: number; fit?: 'crop' | 'max'} = {},
 ) {
   if (!image) return undefined
 
@@ -129,10 +134,12 @@ function resolveImageSrc(
   }
 }
 
-function getColumnsForCardCount(count: number): 2 | 3 | 4 {
-  if (count <= 2) return 2
-  if (count >= 4) return 4
-  return 3
+function getStaticDesktopColumns(count: number): 2 | 3 {
+  return count <= 2 ? 2 : 3
+}
+
+function hasCardData(item?: CardItem) {
+  return Boolean(item?.cardType || item?.reference || item?.inlineCard)
 }
 
 function getReferenceHref(reference?: CardReference) {
@@ -255,7 +262,7 @@ function GridCard({
   const contentClass = size === 'large' ? 'p-6' : 'p-5'
   const imageBgClass = theme.surfaceMuted
   const emptyImageClass = theme.subtitle
-  const imageSrc = resolveImageSrc(data.image, { width: 900, height: 700, fit: 'crop' })
+  const imageSrc = resolveImageSrc(data.image, {width: 900, height: 700, fit: 'crop'})
 
   return (
     <article className={articleClass}>
@@ -275,16 +282,8 @@ function GridCard({
         )}
       </div>
       <div className={contentClass}>
-        {data.title && (
-          <h3 className={`${titleClass} mb-2 ${titleTone}`}>
-            {data.title}
-          </h3>
-        )}
-        {data.description && (
-          <p className={`${textClass} mb-4 ${descriptionTone}`}>
-            {data.description}
-          </p>
-        )}
+        {data.title && <h3 className={`${titleClass} mb-2 ${titleTone}`}>{data.title}</h3>}
+        {data.description && <p className={`${textClass} mb-4 ${descriptionTone}`}>{data.description}</p>}
         {data.ctaLabel && (
           <CardLink
             href={data.href}
@@ -322,14 +321,12 @@ function MobileCarouselCard({
   const descriptionTone = theme.subtitle
   const ctaTone = 'text-orange-600'
   const framedArticleBaseClass = `relative rounded-lg text-center ${theme.surfaceElevated}`
-  const articleClass = disableCardFrameEffect
-    ? 'relative text-center'
-    : framedArticleBaseClass
+  const articleClass = disableCardFrameEffect ? 'relative text-center' : framedArticleBaseClass
   const imageBgClass = theme.surfaceMuted
   const emptyImageClass = theme.subtitle
   const dotsBaseClass = theme.dotIdle
   const dotsActiveClass = theme.dotActive
-  const imageSrc = resolveImageSrc(data.image, { width: 900, height: 700, fit: 'crop' })
+  const imageSrc = resolveImageSrc(data.image, {width: 900, height: 700, fit: 'crop'})
   const imageFrameClass = disableCardFrameEffect
     ? `relative aspect-[16/10] ${imageBgClass}`
     : `relative aspect-[16/10] overflow-hidden rounded-t-lg ${imageBgClass}`
@@ -355,7 +352,7 @@ function MobileCarouselCard({
       {showControls && (
         <div className="flex items-center justify-center px-5 py-4">
           <div className="flex min-w-0 items-center justify-center gap-2">
-            {Array.from({ length: controls.totalPages }, (_, index) => {
+            {Array.from({length: controls.totalPages}, (_, index) => {
               const active = index === controls.currentPage
 
               return (
@@ -376,16 +373,8 @@ function MobileCarouselCard({
       )}
 
       <div className="p-6">
-        {data.title && (
-          <h3 className={`mb-2 ${cardTitleClass} ${titleTone}`}>
-            {data.title}
-          </h3>
-        )}
-        {data.description && (
-          <p className={`mb-4 ${bodyTextClass} ${descriptionTone}`}>
-            {data.description}
-          </p>
-        )}
+        {data.title && <h3 className={`mb-2 ${cardTitleClass} ${titleTone}`}>{data.title}</h3>}
+        {data.description && <p className={`mb-4 ${bodyTextClass} ${descriptionTone}`}>{data.description}</p>}
         {data.ctaLabel && (
           <CardLink
             href={data.href}
@@ -426,6 +415,109 @@ function SectionTitle({
   )
 }
 
+function DesktopCarousel({
+  cards,
+  theme,
+  disableCardFrameEffect,
+}: {
+  cards: CardItem[]
+  theme: SharedBackgroundTheme
+  disableCardFrameEffect?: boolean
+}) {
+  const [desktopSwiper, setDesktopSwiper] = useState<SwiperInstance | null>(null)
+  const [desktopControls, setDesktopControls] = useState<SliderControls>(defaultSliderControls)
+  const desktopButtonClassName = `${theme.control} ${theme.controlHover}`
+
+  return (
+    <div className="group relative hidden md:block">
+      <div className="relative overflow-x-hidden">
+        {desktopControls.hasOverflow && (
+          <>
+            <SliderNavButton
+              direction="prev"
+              disabled={!desktopControls.canPrev}
+              isDark={false}
+              buttonClassName={desktopButtonClassName}
+              label="Previous cards"
+              onClick={() => desktopSwiper?.slidePrev()}
+              className={getEdgeAlignedNavButtonClass('prev')}
+            />
+
+            <SliderNavButton
+              direction="next"
+              disabled={!desktopControls.canNext}
+              isDark={false}
+              buttonClassName={desktopButtonClassName}
+              label="Next cards"
+              onClick={() => desktopSwiper?.slideNext()}
+              className={getEdgeAlignedNavButtonClass('next')}
+            />
+          </>
+        )}
+
+        <Swiper
+          modules={[Keyboard, A11y]}
+          slidesPerView={1}
+          slidesPerGroup={1}
+          spaceBetween={16}
+          speed={500}
+          keyboard={{enabled: true}}
+          watchOverflow
+          grabCursor
+          breakpoints={desktopCarouselBreakpoints}
+          a11y={{
+            slideLabelMessage: 'Card {{index}}',
+            prevSlideMessage: 'Previous cards',
+            nextSlideMessage: 'Next cards',
+          }}
+          onSwiper={(instance) => {
+            setDesktopSwiper(instance)
+            setDesktopControls(getSliderControls(instance))
+          }}
+          onSlideChange={(instance) => setDesktopControls(getSliderControls(instance))}
+          onResize={(instance) => setDesktopControls(getSliderControls(instance))}
+          onBreakpoint={(instance) => setDesktopControls(getSliderControls(instance))}
+        >
+          {cards.map((item, index) => (
+            <SwiperSlide key={item._key ?? `group-card-desktop-${index}`} className="!h-auto">
+              <GridCard
+                item={item}
+                size="small"
+                theme={theme}
+                disableCardFrameEffect={disableCardFrameEffect}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {desktopControls.hasOverflow && (
+        <div className="mt-6 flex items-center justify-center gap-2">
+          {Array.from({length: desktopControls.totalPages}, (_, index) => {
+            const active = index === desktopControls.currentPage
+
+            return (
+              <button
+                key={`desktop-card-page-${index}`}
+                type="button"
+                aria-label={`Go to card page ${index + 1}`}
+                aria-pressed={active}
+                onClick={() => {
+                  if (!desktopSwiper || desktopSwiper.destroyed) return
+                  desktopSwiper.slideTo(index * getSlidesPerGroup(desktopSwiper))
+                }}
+                className={`h-2.5 rounded-full transition-all ${
+                  active ? `w-8 ${theme.dotActive}` : `w-2.5 ${theme.dotIdle}`
+                }`}
+              />
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function GroupGrid({
   sectionTitle,
   cards,
@@ -441,12 +533,13 @@ function GroupGrid({
 }) {
   const [mobileSwiper, setMobileSwiper] = useState<SwiperInstance | null>(null)
   const [mobileControls, setMobileControls] = useState<SliderControls>(defaultSliderControls)
-
-  const columnsToUse = getColumnsForCardCount(cards.length)
-  const desktopCardSize: 'large' | 'small' = columnsToUse <= 2 ? 'large' : 'small'
+  const validCards = cards.filter(hasCardData)
+  const desktopUsesCarousel = validCards.length > 3
+  const desktopCardSize: 'large' | 'small' = validCards.length <= 2 ? 'large' : 'small'
+  const desktopColumns = getStaticDesktopColumns(validCards.length)
   const mobileButtonClassName = `${theme.control} ${theme.controlHover}`
 
-  if (cards.length === 0) return null
+  if (validCards.length < 2) return null
 
   return (
     <section className={`pt-0 pb-8 ${sectionClassName ?? ''}`.trim()}>
@@ -479,7 +572,7 @@ function GroupGrid({
           )}
 
           <Swiper
-            key={`${sectionTitle ?? 'cards'}-${cards.length}`}
+            key={`${sectionTitle ?? 'cards'}-${validCards.length}-mobile`}
             modules={[Keyboard, A11y]}
             slidesPerView={1}
             slidesPerGroup={1}
@@ -487,7 +580,7 @@ function GroupGrid({
             speed={450}
             watchOverflow
             grabCursor
-            keyboard={{ enabled: true }}
+            keyboard={{enabled: true}}
             a11y={{
               prevSlideMessage: 'Previous cards',
               nextSlideMessage: 'Next cards',
@@ -499,7 +592,7 @@ function GroupGrid({
             onSlideChange={(instance) => setMobileControls(getSliderControls(instance))}
             onResize={(instance) => setMobileControls(getSliderControls(instance))}
           >
-            {cards.map((item, index) => (
+            {validCards.map((item, index) => (
               <SwiperSlide key={item._key ?? `group-card-mobile-${index}`} className="h-auto">
                 <MobileCarouselCard
                   item={item}
@@ -515,80 +608,61 @@ function GroupGrid({
         </div>
       </div>
 
-      <div className={`hidden gap-6 md:grid ${columnClassMap[columnsToUse]}`}>
-        {cards.map((item, index) => (
-          <GridCard
-            key={item._key ?? `group-card-${index}`}
-            item={item}
-            size={desktopCardSize}
-            theme={theme}
-            disableCardFrameEffect={disableCardFrameEffect}
-          />
-        ))}
-      </div>
+      {desktopUsesCarousel ? (
+        <DesktopCarousel
+          cards={validCards}
+          theme={theme}
+          disableCardFrameEffect={disableCardFrameEffect}
+        />
+      ) : (
+        <div className={`hidden gap-6 md:grid ${staticColumnClassMap[desktopColumns]}`}>
+          {validCards.map((item, index) => (
+            <GridCard
+              key={item._key ?? `group-card-${index}`}
+              item={item}
+              size={desktopCardSize}
+              theme={theme}
+              disableCardFrameEffect={disableCardFrameEffect}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
 
-export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
+export default function CardGridBlock({block}: {block: CardGridBlockData}) {
   const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
   const enableBannerOverlap = Boolean(block.enableBannerOverlap)
-  const nestedCards = (block.nestedCards ?? []).filter(
-    (item) => item?.cardType || item?.reference || item?.inlineCard,
-  )
-  const legacyGroupCards = (block.groups ?? []).flatMap((group) => {
-    const groupCards = (group.cards ?? []).filter(
-      (item) => item?.cardType || item?.reference || item?.inlineCard,
-    )
-    const fallbackTop = (group.topCards ?? []).filter(
-      (item) => item?.cardType || item?.reference || item?.inlineCard,
-    )
-    const fallbackBottom = (group.bottomCards ?? []).filter(
-      (item) => item?.cardType || item?.reference || item?.inlineCard,
-    )
-    return groupCards.length > 0 ? groupCards : [...fallbackTop, ...fallbackBottom]
-  })
-  const legacyCards = (block.cards ?? []).filter(
-    (item) => item?.cardType || item?.reference || item?.inlineCard,
-  )
-  const mergedNestedCards = nestedCards.length > 0 ? nestedCards : legacyGroupCards
-  const hasNestedCards = mergedNestedCards.length > 0
-  const hasLegacy = legacyCards.length > 0
-  const hasCardContent = hasLegacy || hasNestedCards
+  const rows =
+    (block.rows ?? [])
+      .map((row) => ({
+        ...row,
+        cards: (row.cards ?? []).filter(hasCardData),
+      }))
+      .filter((row) => (row.cards?.length ?? 0) >= 2) ?? []
+  const hasRows = rows.length > 0
   const disableCardFrameEffect = Boolean(block.disableCardFrameEffect)
-  const firstLineCardTitle = block.firstLineCardTitle?.trim() || undefined
-  const cardsSectionTitle =
-    firstLineCardTitle || (!enableBannerOverlap && hasLegacy ? block.subtitle?.trim() || undefined : undefined)
-  const nestedSectionTitle = block.nestedCardTitle?.trim() || undefined
-  const bannerImageSrc = resolveImageSrc(block.bannerImage, { width: 2000, height: 900, fit: 'crop' })
+  const bannerImageSrc = resolveImageSrc(block.bannerImage, {width: 2000, height: 900, fit: 'crop'})
   const bannerOverlayColor = block.bannerOverlayColor?.trim() || theme.overlay
-
-  const headerSubtitle = firstLineCardTitle ? block.subtitle : hasLegacy ? undefined : block.subtitle
+  const headerSubtitle = block.subtitle
   const subtitleClass = theme.body
 
-  if (!block.title && !block.subtitle && !hasNestedCards && !hasLegacy) return null
+  if (!block.title && !block.subtitle && !hasRows) return null
 
   const content = (
     <>
-      {hasLegacy && (
+      {rows.map((row, index) => (
         <GroupGrid
-          sectionTitle={cardsSectionTitle}
-          cards={legacyCards}
+          key={row._key ?? `row-${index}`}
+          sectionTitle={row.title}
+          cards={row.cards ?? []}
           theme={theme}
           disableCardFrameEffect={disableCardFrameEffect}
-          sectionClassName={hasNestedCards ? 'pb-12 md:pb-14' : undefined}
+          sectionClassName={index < rows.length - 1 ? 'pb-12 md:pb-14' : undefined}
         />
-      )}
-
-      {hasNestedCards && (
-        <GroupGrid
-          sectionTitle={nestedSectionTitle}
-          cards={mergedNestedCards}
-          theme={theme}
-          disableCardFrameEffect={disableCardFrameEffect}
-        />
-      )}
+      ))}
     </>
   )
 
@@ -607,7 +681,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
           ) : (
             <div className="absolute inset-0 bg-slate-800" />
           )}
-          <div className="absolute inset-0" style={{ backgroundColor: bannerOverlayColor }} />
+          <div className="absolute inset-0" style={{backgroundColor: bannerOverlayColor}} />
 
           <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 text-center sm:px-6 lg:px-8">
             <div className="w-full">
@@ -622,7 +696,7 @@ export default function CardGridBlock({ block }: { block: CardGridBlockData }) {
           </div>
         </div>
 
-        {hasCardContent && (
+        {hasRows && (
           <div className="relative z-10 mx-auto -mt-20 max-w-7xl px-4 sm:px-6 lg:-mt-24 lg:px-8">
             <div className={`rounded-[1.5rem] px-6 py-8 sm:px-8 md:py-10 lg:px-10 lg:py-12 ${theme.surfaceElevated}`}>
               {content}
