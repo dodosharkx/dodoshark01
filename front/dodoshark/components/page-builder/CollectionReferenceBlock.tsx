@@ -176,7 +176,7 @@ function CollectionReferenceCarousel({
 
   return (
     <div className="group relative">
-      <div className="relative overflow-x-hidden px-5 sm:px-6">
+      <div className="relative overflow-x-hidden">
         {controls.hasOverflow && (
           <>
             <SliderNavButton

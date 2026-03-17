@@ -24,20 +24,17 @@ export default function SplitHeroArrow({
       aria-label={ariaLabel}
       disabled={disabled}
       className={[
-        'absolute top-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full',
-        'border border-slate-300/80 bg-white/85 text-slate-700 shadow-md backdrop-blur-sm transition-colors',
-        'hover:bg-white hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400',
+        'absolute top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border',
+        'border-slate-200 bg-white text-slate-900 shadow-xl shadow-slate-900/15 transition',
+        'hover:border-orange-400 hover:bg-orange-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400',
         'disabled:cursor-not-allowed disabled:opacity-40',
-        'sm:h-11 sm:w-11',
-        isPrevious
-          ? 'left-0 -translate-x-1/2 -translate-y-1/2'
-          : 'right-0 translate-x-1/2 -translate-y-1/2',
+        isPrevious ? 'left-2' : 'right-2',
         className,
       ].join(' ')}
     >
       <svg
         viewBox="0 0 24 24"
-        className={`h-4 w-4 sm:h-5 sm:w-5 ${isPrevious ? '' : 'rotate-180'}`}
+        className={`h-5 w-5 ${isPrevious ? '' : 'rotate-180'}`}
         aria-hidden="true"
       >
         <path

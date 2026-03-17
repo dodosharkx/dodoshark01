@@ -14,6 +14,10 @@ import {
   type SharedBackgroundTheme,
   type SharedBackgroundVariant,
 } from './backgroundTheme'
+import {
+  SliderNavButton,
+  getEdgeAlignedNavButtonClass,
+} from './PageBuilderSliderControls'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import SplitHeroArrow from './SplitHeroArrow'
@@ -63,14 +67,6 @@ function ArrowRightIcon({ className }: { className?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-    </svg>
-  )
-}
-
-function ArrowLeftIcon({ className }: { className?: string }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
     </svg>
   )
 }
@@ -210,29 +206,6 @@ function SplitCarousel({
           return (
             <SwiperSlide key={item._key ?? `${title}-${index}`} className="!h-auto">
               <article className={`relative grid h-full gap-8 md:items-start md:px-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:px-14 ${styles.splitSlide}`}>
-                {items.length > 1 && (
-                  <div className={styles.splitDesktopNav}>
-                    <SplitHeroArrow
-                      direction="previous"
-                      ariaLabel="Previous showcase slide"
-                      className={styles.splitDesktopNavButton}
-                      onClick={() => {
-                        if (!swiper || swiper.destroyed) return
-                        swiper.slidePrev()
-                      }}
-                    />
-                    <SplitHeroArrow
-                      direction="next"
-                      ariaLabel="Next showcase slide"
-                      className={styles.splitDesktopNavButton}
-                      onClick={() => {
-                        if (!swiper || swiper.destroyed) return
-                        swiper.slideNext()
-                      }}
-                    />
-                  </div>
-                )}
-
                 <div className="order-2 flex md:pt-8 flex-col justify-center md:order-2 lg:order-1">
                   <h3 className={`${cardTitleClass} ${titleClass}`}>
                     {title}
@@ -262,11 +235,11 @@ function SplitCarousel({
                   )}
 
                   {items.length > 1 && (
-                    <div className={styles.splitMediaMobileNav}>
+                    <div className="pointer-events-none absolute inset-0 z-20">
                       <SplitHeroArrow
                         direction="previous"
                         ariaLabel="Previous showcase slide"
-                        className={styles.splitMediaMobileNavButton}
+                        className="pointer-events-auto"
                         onClick={() => {
                           if (!swiper || swiper.destroyed) return
                           swiper.slidePrev()
@@ -275,7 +248,7 @@ function SplitCarousel({
                       <SplitHeroArrow
                         direction="next"
                         ariaLabel="Next showcase slide"
-                        className={styles.splitMediaMobileNavButton}
+                        className="pointer-events-auto"
                         onClick={() => {
                           if (!swiper || swiper.destroyed) return
                           swiper.slideNext()
@@ -388,6 +361,29 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
         ) : (
           <div className={`${styles.shell} ${styles.cardCarouselShell}`} style={cardCarouselVars}>
             <div className={styles.carouselViewport}>
+              {items.length > 1 && (
+                <>
+                  <SliderNavButton
+                    direction="prev"
+                    disabled={!canPrev}
+                    isDark={false}
+                    buttonClassName={`${theme.control} ${theme.controlHover}`}
+                    label="Previous showcase"
+                    onClick={() => swiper?.slidePrev()}
+                    className={getEdgeAlignedNavButtonClass('prev')}
+                  />
+                  <SliderNavButton
+                    direction="next"
+                    disabled={!canNext}
+                    isDark={false}
+                    buttonClassName={`${theme.control} ${theme.controlHover}`}
+                    label="Next showcase"
+                    onClick={() => swiper?.slideNext()}
+                    className={getEdgeAlignedNavButtonClass('next')}
+                  />
+                </>
+              )}
+
               <Swiper
                 modules={[Keyboard, A11y]}
                 className={styles.carousel}
@@ -429,27 +425,6 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
 
             <div className={styles.footerBar}>
               <div className={styles.footerLead}>
-                <div className={styles.controls}>
-                  <button
-                    type="button"
-                    aria-label="Previous showcase"
-                    className={styles.navButton}
-                    disabled={!canPrev}
-                    onClick={() => swiper?.slidePrev()}
-                  >
-                    <ArrowLeftIcon className={styles.navIcon} />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Next showcase"
-                    className={styles.navButton}
-                    disabled={!canNext}
-                    onClick={() => swiper?.slideNext()}
-                  >
-                    <ArrowRightIcon className={styles.navIcon} />
-                  </button>
-                </div>
-
                 <p className={styles.mobileCounter} aria-live="polite">
                   {Math.min(currentIndex + 1, items.length)} of {items.length}
                 </p>

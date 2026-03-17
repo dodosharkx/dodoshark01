@@ -453,7 +453,7 @@ function GroupGrid({
       <SectionTitle title={sectionTitle} theme={theme} />
 
       <div className="md:hidden">
-        <div className="relative overflow-x-hidden px-5 sm:px-6">
+        <div className="relative overflow-x-hidden">
           {mobileControls.hasOverflow && (
             <div className="pointer-events-none absolute inset-x-0 top-0 z-10 aspect-[16/10]">
               <SliderNavButton

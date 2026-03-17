@@ -735,7 +735,7 @@ function VideoCardCarousel({
 
       {items.length > 0 && (
         <div className="group relative mx-auto max-w-7xl">
-          <div className="relative overflow-x-hidden px-5 sm:px-6">
+          <div className="relative overflow-x-hidden">
             <SliderNavButton
               direction="prev"
               disabled={isBeginning}

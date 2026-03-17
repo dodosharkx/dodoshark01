@@ -50,7 +50,7 @@ export default function RichSectionMediaCarousel({
 
   return (
     <div className="w-full min-w-0">
-      <div className="overflow-x-hidden px-5 sm:px-6">
+      <div className="overflow-x-hidden">
         <div className="relative">
           <Swiper
             className="w-full overflow-hidden"

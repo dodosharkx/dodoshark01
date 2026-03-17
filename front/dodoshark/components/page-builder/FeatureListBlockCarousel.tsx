@@ -45,7 +45,7 @@ export default function FeatureListBlockCarousel({
   return (
     <div className="group relative">
       <div className="mx-auto max-w-7xl">
-        <div className="relative overflow-x-hidden px-5 sm:px-6">
+        <div className="relative overflow-x-hidden">
           {controls.hasOverflow && (
             <>
               <SliderNavButton

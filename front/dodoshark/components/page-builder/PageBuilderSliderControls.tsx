@@ -118,8 +118,8 @@ export function getEdgeAlignedNavButtonClass(
 ) {
   const positionClass =
     direction === 'prev'
-      ? 'left-0 -translate-x-1/2'
-      : 'right-0 translate-x-1/2'
+      ? 'left-2'
+      : 'right-2'
 
   return [
     'absolute top-1/2 z-20 -translate-y-1/2',

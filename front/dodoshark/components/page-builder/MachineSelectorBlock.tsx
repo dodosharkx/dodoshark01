@@ -13,7 +13,10 @@ import {
   type SharedBackgroundTheme,
   type SharedBackgroundVariant,
 } from './backgroundTheme'
-import { getEdgeAlignedNavButtonClass } from './PageBuilderSliderControls'
+import {
+  SliderNavButton,
+  getEdgeAlignedNavButtonClass,
+} from './PageBuilderSliderControls'
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { bodyTextClass, cardTitleClass, sectionSubtitleClass } from './sectionStyles'
@@ -153,56 +156,6 @@ function getMachineSliderBreakpoints(columns: 1 | 2 | 3 | 4) {
 function getSlidesPerGroup(instance: SwiperInstance) {
   const { slidesPerGroup } = instance.params
   return typeof slidesPerGroup === 'number' && slidesPerGroup > 0 ? slidesPerGroup : 1
-}
-
-function ArrowLeftIcon({ className }: { className?: string }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-    </svg>
-  )
-}
-
-function ArrowRightIcon({ className }: { className?: string }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-    </svg>
-  )
-}
-
-function SliderNavButton({
-  direction,
-  disabled,
-  theme,
-  label,
-  onClick,
-  className = '',
-}: {
-  direction: 'prev' | 'next'
-  disabled: boolean
-  theme: SharedBackgroundTheme
-  label: string
-  onClick: () => void
-  className?: string
-}) {
-  const buttonClass = `${theme.control} ${theme.controlHover}`
-
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      disabled={disabled}
-      onClick={onClick}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-35 ${buttonClass} ${className}`}
-    >
-      {direction === 'prev' ? (
-        <ArrowLeftIcon className="h-5 w-5" />
-      ) : (
-        <ArrowRightIcon className="h-5 w-5" />
-      )}
-    </button>
-  )
 }
 
 function MachineCard({
@@ -393,13 +346,14 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
 
         {activeItems.length > 0 && (
           <div>
-            <div className="group relative overflow-x-hidden px-5 sm:px-6">
+            <div className="group relative overflow-x-hidden">
               {machineControls.hasOverflow && (
                 <>
                   <SliderNavButton
                     direction="prev"
                     disabled={!machineControls.canPrev}
-                    theme={theme}
+                    isDark={false}
+                    buttonClassName={`${theme.control} ${theme.controlHover}`}
                     label="Previous machine"
                     onClick={() => machineSwiper?.slidePrev()}
                     className={getEdgeAlignedNavButtonClass('prev', 'hidden xl:inline-flex')}
@@ -407,7 +361,8 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                   <SliderNavButton
                     direction="next"
                     disabled={!machineControls.canNext}
-                    theme={theme}
+                    isDark={false}
+                    buttonClassName={`${theme.control} ${theme.controlHover}`}
                     label="Next machine"
                     onClick={() => machineSwiper?.slideNext()}
                     className={getEdgeAlignedNavButtonClass('next', 'hidden xl:inline-flex')}
