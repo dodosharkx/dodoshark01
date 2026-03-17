@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, type CSSProperties } from 'react'
+import { useState } from 'react'
 import { A11y, Autoplay, Keyboard } from 'swiper/modules'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { urlFor } from '@/app/lib/sanity'
 import {
   getSharedBackgroundTheme,
+  type ShowcaseCssVars,
   type SharedBackgroundTheme,
   type SharedBackgroundVariant,
 } from './backgroundTheme'
@@ -353,7 +354,7 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
   const [canNext, setCanNext] = useState(items.length > 1)
   const variant = block.backgroundVariant ?? 'lightGray'
   const theme = getSharedBackgroundTheme(variant)
-  const cardCarouselVars: CSSProperties = {
+  const cardCarouselVars: ShowcaseCssVars = {
     ...theme.showcaseVars,
     '--showcase-card-bg': '#ffffff',
     '--showcase-media-bg': '#ffffff',

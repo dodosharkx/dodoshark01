@@ -31,7 +31,11 @@ export default function HeroCarousel({
   const safeActiveIndex = slides.length > 0 ? activeIndex % slides.length : 0
 
   useEffect(() => {
-    setHasHydrated(true)
+    const frame = window.requestAnimationFrame(() => {
+      setHasHydrated(true)
+    })
+
+    return () => window.cancelAnimationFrame(frame)
   }, [])
 
   useEffect(() => {

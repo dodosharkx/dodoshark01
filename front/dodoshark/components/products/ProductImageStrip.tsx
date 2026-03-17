@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Image from 'next/image'
 
 import type { ProductImageAsset } from '@/app/lib/mvp-data'
@@ -23,12 +23,6 @@ export default function ProductImageStrip({ images, productName }: ProductImageS
   const uniqueImages = useMemo(() => buildUniqueImages(images), [images])
   const [activeIndex, setActiveIndex] = useState(0)
 
-  useEffect(() => {
-    if (activeIndex >= uniqueImages.length) {
-      setActiveIndex(0)
-    }
-  }, [activeIndex, uniqueImages.length])
-
   if (uniqueImages.length === 0) {
     return (
       <div className="flex aspect-square items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 text-center text-sm text-slate-500">
@@ -37,7 +31,8 @@ export default function ProductImageStrip({ images, productName }: ProductImageS
     )
   }
 
-  const activeImage = uniqueImages[Math.min(activeIndex, uniqueImages.length - 1)]
+  const safeActiveIndex = Math.min(activeIndex, uniqueImages.length - 1)
+  const activeImage = uniqueImages[safeActiveIndex]
 
   return (
     <div>
@@ -54,7 +49,7 @@ export default function ProductImageStrip({ images, productName }: ProductImageS
       {uniqueImages.length > 1 ? (
         <div className="no-scrollbar mt-3 flex snap-x gap-2 overflow-x-auto pb-1">
           {uniqueImages.map((image, index) => {
-            const isActive = index === activeIndex
+            const isActive = index === safeActiveIndex
             return (
               <button
                 key={`${image.src}-${index}`}

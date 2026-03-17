@@ -61,14 +61,8 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
     return () => window.removeEventListener('resize', syncItemsVisible)
   }, [])
 
-  useEffect(() => {
-    const maxIndex = Math.max(0, items.length - itemsVisible)
-    if (currentIndex > maxIndex) {
-      setCurrentIndex(maxIndex)
-    }
-  }, [currentIndex, items.length, itemsVisible])
-
   const maxIndex = Math.max(0, items.length - itemsVisible)
+  const safeCurrentIndex = Math.min(currentIndex, maxIndex)
 
   return (
     <div className="group relative mx-auto max-w-7xl">
@@ -76,8 +70,8 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
         type="button"
         aria-label="Previous videos"
         className="absolute left-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:h-11 md:w-11 md:-left-3 xl:opacity-0 xl:group-hover:opacity-100"
-        disabled={currentIndex === 0}
-        onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
+        disabled={safeCurrentIndex === 0}
+        onClick={() => setCurrentIndex(Math.max(0, safeCurrentIndex - 1))}
       >
         <ArrowLeft className="h-5 w-5" />
       </button>
@@ -86,8 +80,8 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
         type="button"
         aria-label="Next videos"
         className="absolute right-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:h-11 md:w-11 md:-right-3 xl:opacity-0 xl:group-hover:opacity-100"
-        disabled={currentIndex >= maxIndex}
-        onClick={() => setCurrentIndex((prev) => Math.min(maxIndex, prev + 1))}
+        disabled={safeCurrentIndex >= maxIndex}
+        onClick={() => setCurrentIndex(Math.min(maxIndex, safeCurrentIndex + 1))}
       >
         <ArrowRight className="h-5 w-5" />
       </button>
@@ -96,7 +90,7 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
         <div
           className="flex gap-6 transition-transform duration-500 ease-out"
           style={{
-            transform: `translateX(-${currentIndex * (100 / itemsVisible)}%)`,
+            transform: `translateX(-${safeCurrentIndex * (100 / itemsVisible)}%)`,
           }}
         >
           {items.map((item) => (

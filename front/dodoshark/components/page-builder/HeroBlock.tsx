@@ -469,15 +469,6 @@ export default function HeroBlock({ block }: { block: HeroBlockData }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
   useEffect(() => {
-    if (images.length === 0) {
-      setActiveImageIndex(0)
-      return
-    }
-
-    setActiveImageIndex((prev) => (prev >= images.length ? 0 : prev))
-  }, [images.length])
-
-  useEffect(() => {
     if (images.length <= 1) return
 
     const timer = setInterval(() => {

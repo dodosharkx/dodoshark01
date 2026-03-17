@@ -1,5 +1,18 @@
 import type {CSSProperties} from 'react'
 
+export type ShowcaseCssVars = CSSProperties & {
+  '--showcase-card-bg'?: string
+  '--showcase-card-border'?: string
+  '--showcase-card-shadow'?: string
+  '--showcase-media-bg'?: string
+  '--showcase-title'?: string
+  '--showcase-description'?: string
+  '--showcase-nav-bg'?: string
+  '--showcase-nav-border'?: string
+  '--showcase-nav-text'?: string
+  '--showcase-counter'?: string
+}
+
 export type SharedBackgroundVariant =
   | 'white'
   | 'lightGray'
@@ -24,7 +37,7 @@ export type SharedBackgroundTheme = {
   overlay: string
   accentDark: string
   accentDarkSoft: string
-  showcaseVars: CSSProperties
+  showcaseVars: ShowcaseCssVars
 }
 
 const sharedBackgroundThemes: Record<SharedBackgroundVariant, SharedBackgroundTheme> = {
@@ -58,7 +71,7 @@ const sharedBackgroundThemes: Record<SharedBackgroundVariant, SharedBackgroundTh
       '--showcase-nav-border': 'rgb(203 213 225 / 0.92)',
       '--showcase-nav-text': '#0f172a',
       '--showcase-counter': 'rgba(15,23,42,0.92)',
-    } as CSSProperties,
+    } as ShowcaseCssVars,
   },
   lightGray: {
     section: 'bg-slate-50',
@@ -90,7 +103,7 @@ const sharedBackgroundThemes: Record<SharedBackgroundVariant, SharedBackgroundTh
       '--showcase-nav-border': 'rgb(203 213 225 / 0.92)',
       '--showcase-nav-text': '#0f172a',
       '--showcase-counter': 'rgba(15,23,42,0.92)',
-    } as CSSProperties,
+    } as ShowcaseCssVars,
   },
   blueGradientSoft: {
     section:
@@ -124,7 +137,7 @@ const sharedBackgroundThemes: Record<SharedBackgroundVariant, SharedBackgroundTh
       '--showcase-nav-border': 'rgb(186 230 253 / 0.95)',
       '--showcase-nav-text': '#0f172a',
       '--showcase-counter': 'rgba(15,23,42,0.88)',
-    } as CSSProperties,
+    } as ShowcaseCssVars,
   },
   blueGradientAir: {
     section:
@@ -158,7 +171,7 @@ const sharedBackgroundThemes: Record<SharedBackgroundVariant, SharedBackgroundTh
       '--showcase-nav-border': 'rgb(186 230 253 / 0.98)',
       '--showcase-nav-text': '#0f172a',
       '--showcase-counter': 'rgba(15,23,42,0.88)',
-    } as CSSProperties,
+    } as ShowcaseCssVars,
   },
 }
 

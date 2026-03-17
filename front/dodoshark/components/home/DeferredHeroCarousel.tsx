@@ -10,7 +10,11 @@ export default function DeferredHeroCarousel(props: HeroCarouselProps) {
   const fallbackSlide = props.images.find((item) => Boolean(item?.src))
 
   useEffect(() => {
-    setHasMounted(true)
+    const frame = window.requestAnimationFrame(() => {
+      setHasMounted(true)
+    })
+
+    return () => window.cancelAnimationFrame(frame)
   }, [])
 
   if (!hasMounted) {

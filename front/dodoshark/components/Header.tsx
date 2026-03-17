@@ -57,11 +57,11 @@ function ClockIcon() {
 export default function Header() {
   const pathname = usePathname()
   const isHome = pathname === '/'
-  const [isScrolled, setIsScrolled] = useState(() => pathname !== '/')
+  const [homeIsScrolled, setHomeIsScrolled] = useState(false)
   const [isDesktopViewport, setIsDesktopViewport] = useState(false)
 
   const syncScrolled = useEffectEvent(() => {
-    setIsScrolled(window.scrollY > 18)
+    setHomeIsScrolled(window.scrollY > 18)
   })
 
   const syncDesktopViewport = useEffectEvent(() => {
@@ -69,15 +69,12 @@ export default function Header() {
   })
 
   useEffect(() => {
-    if (!isHome) {
-      setIsScrolled(true)
-      return
-    }
+    if (!isHome) return
 
     syncScrolled()
     window.addEventListener('scroll', syncScrolled, { passive: true })
     return () => window.removeEventListener('scroll', syncScrolled)
-  }, [isHome, syncScrolled])
+  }, [isHome])
 
   useEffect(() => {
     syncDesktopViewport()
@@ -85,8 +82,9 @@ export default function Header() {
     const mediaQuery = window.matchMedia('(min-width: 1280px)')
     mediaQuery.addEventListener('change', syncDesktopViewport)
     return () => mediaQuery.removeEventListener('change', syncDesktopViewport)
-  }, [syncDesktopViewport])
+  }, [])
 
+  const isScrolled = !isHome || homeIsScrolled
   const desktopFloating = isHome && !isScrolled
   const desktopHeaderBackgroundStyle =
     !desktopFloating && isDesktopViewport
