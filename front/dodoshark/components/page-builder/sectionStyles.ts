@@ -17,7 +17,7 @@ export const cardTitleClass =
   'text-xl font-display font-extrabold leading-[1.15] tracking-[-0.02em] md:text-[1.375rem]'
 export const eyebrowClass = 'text-[11px] font-semibold uppercase tracking-[0.2em]'
 export const heroTitleClass =
-  'text-4xl font-display font-black leading-[1.04] tracking-[-0.03em] md:text-6xl lg:text-7xl'
+  'text-3xl font-display font-black leading-[1.04] tracking-[-0.03em] md:text-4xl lg:text-5xl'
 export const heroSubtitleClass = 'text-[11px] font-semibold uppercase tracking-[0.2em]'
 export const heroDescriptionClass = 'text-sm leading-7 md:text-base lg:text-lg'
 

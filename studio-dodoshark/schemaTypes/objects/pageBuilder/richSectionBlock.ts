@@ -117,17 +117,24 @@ export default defineType({
               type: 'string',
               title: 'Caption',
             }),
+            defineField({
+              name: 'description',
+              type: 'text',
+              title: 'Description',
+              rows: 3,
+            }),
           ],
           preview: {
             select: {
               image: 'image',
               title: 'caption',
               alt: 'alt',
+              description: 'description',
             },
-            prepare({image, title, alt}) {
+            prepare({image, title, alt, description}) {
               return {
                 title: title || alt || 'Media Item',
-                subtitle: 'Media item',
+                subtitle: pickText(description, alt) || 'Media item',
                 media: image,
               }
             },
