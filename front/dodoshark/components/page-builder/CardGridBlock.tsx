@@ -403,13 +403,16 @@ function SectionTitle({
   const titleClass = theme.heading
 
   return (
-    <header className="mb-3 text-center md:mb-4">
+    <header className="mb-5 text-center md:mb-6">
       <div className="flex justify-center">
         <h3
           className={`inline-block whitespace-pre-line px-4 text-2xl font-display font-bold tracking-[-0.02em] md:text-[1.75rem] ${titleClass}`}
         >
           {resolvedTitle}
         </h3>
+      </div>
+      <div className="mt-1.5 flex justify-center md:mt-2">
+        <div className="h-1 w-16 rounded-full bg-orange-500 md:w-20" />
       </div>
     </header>
   )

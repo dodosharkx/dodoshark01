@@ -107,6 +107,7 @@ export function RichSectionMediaCard({
   showDescription = false,
   captionClassName,
   descriptionClassName,
+  descriptionSpacingClassName,
   disableMediaFrameEffect = false,
 }: {
   item: RichSectionMediaItem
@@ -115,6 +116,7 @@ export function RichSectionMediaCard({
   showDescription?: boolean
   captionClassName?: string
   descriptionClassName?: string
+  descriptionSpacingClassName?: string
   disableMediaFrameEffect?: boolean
 }) {
   const caption = item.caption?.trim()
@@ -141,7 +143,7 @@ export function RichSectionMediaCard({
       {description ? (
         <p
           className={`whitespace-pre-line ${
-            caption ? 'mt-1.5 md:mt-2' : 'mt-3 md:mt-4'
+            descriptionSpacingClassName ?? (caption ? 'mt-1.5 md:mt-2' : 'mt-3 md:mt-4')
           } ${descriptionClassName ?? `text-center text-sm leading-6 md:text-[0.95rem] ${theme.subtitle}`}`}
         >
           {description}
@@ -158,6 +160,7 @@ export function RichSectionMediaGrid({
   showDescription = false,
   captionClassName,
   descriptionClassName,
+  descriptionSpacingClassName,
   disableMediaFrameEffect = false,
 }: {
   items: RichSectionMediaItem[]
@@ -166,6 +169,7 @@ export function RichSectionMediaGrid({
   showDescription?: boolean
   captionClassName?: string
   descriptionClassName?: string
+  descriptionSpacingClassName?: string
   disableMediaFrameEffect?: boolean
 }) {
   if (items.length === 0) return null
@@ -182,6 +186,7 @@ export function RichSectionMediaGrid({
           showDescription={showDescription}
           captionClassName={captionClassName}
           descriptionClassName={descriptionClassName}
+          descriptionSpacingClassName={descriptionSpacingClassName}
           disableMediaFrameEffect={disableMediaFrameEffect}
         />
       </div>
@@ -200,6 +205,7 @@ export function RichSectionMediaGrid({
             showDescription={showDescription}
             captionClassName={captionClassName}
             descriptionClassName={descriptionClassName}
+            descriptionSpacingClassName={descriptionSpacingClassName}
             disableMediaFrameEffect={disableMediaFrameEffect}
           />
         )

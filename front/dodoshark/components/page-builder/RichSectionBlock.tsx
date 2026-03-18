@@ -313,8 +313,9 @@ export function RichSectionBlockContent({
   const hasCenteredSplitHeader = centerHeaderInSplitLayout(block)
   const hasBody = hasTwoColumnMode ? false : Boolean(block.body?.length)
   const hasSubtitle = Boolean(block.subtitle?.trim())
-  const centeredCaptionClassName = `mt-3.5 text-center text-[0.98rem] font-medium leading-6 md:mt-4 md:text-[1.05rem] md:leading-7 ${theme.body}`
+  const centeredCaptionClassName = `mt-1.5 text-center text-[1.08rem] font-medium leading-6 md:mt-2 md:text-[1.16rem] md:leading-7 ${theme.body}`
   const centeredDescriptionClassName = `text-center text-sm leading-6 md:text-[0.95rem] md:leading-7 ${theme.subtitle}`
+  const centeredDescriptionSpacingClassName = '-mt-0.5 md:-mt-1'
 
   if (!hasRichSectionContent(block)) return null
 
@@ -358,6 +359,7 @@ export function RichSectionBlockContent({
                 showDescription
                 captionClassName={centeredCaptionClassName}
                 descriptionClassName={centeredDescriptionClassName}
+                descriptionSpacingClassName={centeredDescriptionSpacingClassName}
                 disableMediaFrameEffect={block.disableMediaFrameEffect}
               />
             </div>

@@ -210,7 +210,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               heroTitle
             ) : (
               <>
-                Complete Machine <span className="accent-gradient-text">Ecosystem</span>
+                Product <span className="accent-gradient-text">Center</span>
               </>
             )}
           </h1>
@@ -224,7 +224,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <div className="inline-flex min-w-full gap-3 md:flex md:w-full md:flex-wrap md:justify-center">
               <Link
                 href={buildHref({})}
-                className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black uppercase tracking-widest transition-all md:px-6 ${
+                className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${
                   category
                     ? 'border-slate-200 text-slate-700 hover:border-slate-300'
                     : 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
@@ -240,7 +240,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   <Link
                     key={item._id ?? slug}
                     href={buildHref({ category: slug })}
-                    className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black uppercase tracking-widest transition-all md:px-6 ${
+                    className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${
                       active
                         ? 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
                         : 'border-slate-200 text-slate-700 hover:border-slate-300'
@@ -277,7 +277,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                           <i className="fas fa-image text-3xl" aria-hidden />
                         </div>
                       )}
-                      <div className="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-slate-900 shadow-sm backdrop-blur-md">
+                      <div className="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-[9px] font-black tracking-widest text-slate-900 shadow-sm backdrop-blur-md">
                         {product.category?.title || product.seriesTag || 'Machine'}
                       </div>
                     </div>
@@ -290,9 +290,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                       </p>
                       <Link
                         href={href}
-                        className="flex w-full items-center justify-center rounded-lg bg-slate-50 py-3 text-[11px] font-black uppercase tracking-widest transition-all hover:bg-slate-800 hover:text-white"
+                        className="flex w-full items-center justify-center rounded-lg bg-slate-50 py-3 text-[11px] font-black tracking-widest transition-all hover:bg-slate-800 hover:text-white"
                       >
-                        View Series Details
+                        View&nbsp; Details
                       </Link>
                     </div>
                   </article>

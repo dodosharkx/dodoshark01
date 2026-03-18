@@ -64,6 +64,8 @@ type ReferenceItem = {
   reference?: ReferenceDoc
 }
 
+type ReferenceCardVariant = 'default' | 'gridMobile'
+
 export type CollectionReferenceBlockData = {
   _type: 'collectionReferenceBlock'
   _key?: string
@@ -115,35 +117,64 @@ function resolveHref(doc?: ReferenceDoc) {
 function ReferenceCard({
   item,
   theme,
+  variant = 'default',
 }: {
   item: ReferenceItem
   theme: SharedBackgroundTheme
+  variant?: ReferenceCardVariant
 }) {
   const title = resolveTitle(item)
   const description = resolveDescription(item.reference)
   const image = resolveImage(item.reference)
   const href = item.isClickable === false ? undefined : resolveHref(item.reference)
+  const isGridMobile = variant === 'gridMobile'
+  const articleClass = isGridMobile
+    ? `h-full overflow-hidden rounded-2xl p-4 md:overflow-visible md:rounded-none md:p-5 ${theme.surfaceElevated}`
+    : `h-full p-4 md:p-5 ${theme.surfaceElevated}`
+  const mediaFrameClass = isGridMobile
+    ? '-mx-4 -mt-4 mb-3 flex aspect-square w-[calc(100%+2rem)] items-center justify-center overflow-hidden border-b border-slate-100 bg-white/95 sm:mb-4 md:mx-0 md:mt-0 md:mb-5 md:w-full md:max-w-none md:aspect-[1/1] md:rounded-lg md:border-0 md:bg-transparent'
+    : 'mb-4 aspect-square w-16 overflow-hidden rounded-lg sm:w-20 md:mb-5 md:w-full md:max-w-none md:aspect-[1/1]'
+  const imageClass = isGridMobile
+    ? 'h-full w-full object-contain p-1 sm:p-2 md:object-cover md:p-0'
+    : 'h-full w-full object-cover'
+  const titleClass = isGridMobile
+    ? 'mb-1.5 line-clamp-3 text-base font-display font-extrabold leading-[1.1] tracking-[-0.02em] text-slate-900 sm:text-lg md:mb-2 md:line-clamp-none md:text-[1.375rem] md:leading-[1.15]'
+    : `${cardTitleClass} mb-2 text-slate-900`
+  const descriptionClass = isGridMobile
+    ? 'hidden max-w-[28ch] text-sm leading-7 text-slate-500 md:mb-4 md:block md:text-base'
+    : 'mb-4 max-w-[28ch] text-sm leading-7 text-slate-500 md:text-base'
+  const ctaClass = isGridMobile
+    ? 'mt-auto hidden items-center justify-center text-sm font-bold text-orange-600 md:inline-flex'
+    : 'mt-auto inline-flex items-center justify-center text-sm font-bold text-orange-600'
+  const imageSizes = isGridMobile
+    ? '(max-width: 767px) calc((100vw - 2.75rem) / 2), (max-width: 1279px) calc((100vw - 5rem) / 2), (max-width: 1535px) calc((100vw - 6rem) / 3), 25vw'
+    : '(max-width: 767px) 5rem, (max-width: 1279px) 50vw, 33vw'
   const content = (
-    <article className={`h-full p-4 md:p-5 ${theme.surfaceElevated}`}>
+    <article className={articleClass}>
       <div className="flex h-full flex-col items-center text-center">
-        <div className="mb-4 aspect-square w-16 overflow-hidden rounded-lg sm:w-20 md:mb-5 md:w-full md:max-w-none md:aspect-[1/1]">
+        <div className={mediaFrameClass}>
           {image?.asset ? (
             <Image
               src={urlFor(image).width(800).fit('max').url()}
               alt={image.alt || title}
               width={800}
               height={800}
-              className="h-full w-full object-cover"
+              sizes={imageSizes}
+              className={imageClass}
             />
-          ) : null}
+          ) : (
+            <div className={`flex h-full w-full items-center justify-center ${theme.subtitle}`}>
+              <Icon icon="image" className="h-8 w-8 sm:h-10 sm:w-10" />
+            </div>
+          )}
         </div>
 
-        <h3 className={`mb-2 ${cardTitleClass} text-slate-900`}>{title}</h3>
+        <h3 className={titleClass}>{title}</h3>
         {description && (
-          <p className="mb-4 max-w-[28ch] text-sm leading-7 text-slate-500 md:text-base">{description}</p>
+          <p className={descriptionClass}>{description}</p>
         )}
         {href && (
-          <span className="mt-auto inline-flex items-center justify-center text-sm font-bold text-orange-600">
+          <span className={ctaClass}>
             View Details <Icon icon="arrow-right" className="ms-1 inline h-4 w-4" />
           </span>
         )}
@@ -153,7 +184,7 @@ function ReferenceCard({
 
   if (!href) return content
 
-  return <Link href={href}>{content}</Link>
+  return <Link href={href} className="block h-full">{content}</Link>
 }
 
 function columnsClass(columns?: number) {
@@ -288,9 +319,9 @@ export default function CollectionReferenceBlock({
       )}
 
       {layout === 'grid' && (
-        <div className={`grid gap-4 md:gap-8 ${columnsClass(block.columns)}`}>
+        <div className={`grid gap-3 sm:gap-4 md:gap-8 ${columnsClass(block.columns)}`}>
           {refs.map((item, idx) => (
-            <ReferenceCard key={item._key ?? idx} item={item} theme={theme} />
+            <ReferenceCard key={item._key ?? idx} item={item} theme={theme} variant="gridMobile" />
           ))}
         </div>
       )}

@@ -107,6 +107,16 @@ const cardFields = [
   }),
 ]
 
+const maxCardsPerRow = 12
+
+const rowCardKeySelect = Object.fromEntries(
+  Array.from({length: maxCardsPerRow}, (_, index) => [`cardKey${index}`, `cards.${index}._key`]),
+)
+
+function countSelectedKeys(source: Record<string, unknown>, prefix: string, size: number) {
+  return Array.from({length: size}, (_, index) => source[`${prefix}${index}`]).filter(Boolean).length
+}
+
 const cardPreview = {
   select: {
     cardType: 'cardType',
@@ -167,6 +177,7 @@ const rowPreview = {
   select: {
     title: 'title',
     cards: 'cards',
+    ...rowCardKeySelect,
     inlineMedia: 'cards.0.inlineCard.image',
     inlineMedia2: 'cards.1.inlineCard.image',
     refMediaMain: 'cards.0.reference.mainImage',
@@ -191,6 +202,7 @@ const rowPreview = {
     refMediaImage2,
     refMediaCover2,
     refMediaHero2,
+    ...selection
   }: {
     title?: string
     cards?: Array<{inlineCard?: {image?: unknown}; reference?: Record<string, unknown>}>
@@ -204,8 +216,9 @@ const rowPreview = {
     refMediaImage2?: unknown
     refMediaCover2?: unknown
     refMediaHero2?: unknown
+    [key: string]: unknown
   }) {
-    const count = itemCount(cards)
+    const count = countSelectedKeys(selection, 'cardKey', maxCardsPerRow) || itemCount(cards)
     const inlineMediaFallback = Array.isArray(cards)
       ? pickFirst(...cards.map((card) => card?.inlineCard?.image))
       : undefined
