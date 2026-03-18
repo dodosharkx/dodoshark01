@@ -228,8 +228,8 @@ body {
   height: 3px;
   margin: 16px 0 20px;
   border-radius: 999px;
-  background: var(--footer-accent);
-  box-shadow: 0 0 18px rgba(242, 194, 48, 0.28);
+  background: #f97316;
+  box-shadow: 0 0 18px rgba(249, 115, 22, 0.24);
 }
 
 .footer-copy {

@@ -181,7 +181,7 @@ export default function Header() {
                       {item.label}
                       <span
                         aria-hidden="true"
-                        className={`absolute left-0 top-[calc(100%+0.35rem)] h-[2px] rounded-full bg-[#f97316] transition-transform duration-300 ${
+                        className={`absolute left-0 top-[calc(100%+0.35rem)] h-[3px] rounded-full bg-orange-500 transition-transform duration-300 ${
                           isActive ? 'w-full scale-x-100' : 'w-full scale-x-0'
                         }`}
                       />

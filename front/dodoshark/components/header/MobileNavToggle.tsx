@@ -96,7 +96,7 @@ export default function MobileNavToggle({ navItems, ctaHref, ctaLabel }: MobileN
                       {item.label}
                       <span
                         aria-hidden="true"
-                        className={`absolute left-0 top-[calc(100%+0.25rem)] h-[2px] w-full rounded-full bg-[#f97316] transition-transform duration-300 ${
+                        className={`absolute left-0 top-[calc(100%+0.25rem)] h-[3px] w-full rounded-full bg-orange-500 transition-transform duration-300 ${
                           isActive ? 'scale-x-100' : 'scale-x-0'
                         }`}
                       />
