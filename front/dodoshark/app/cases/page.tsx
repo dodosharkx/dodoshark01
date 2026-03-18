@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { client, urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 
@@ -168,10 +169,6 @@ function buildHref({ industry, page }: { industry?: string; page?: number }) {
   return query ? `/cases?${query}` : '/cases'
 }
 
-function isExternalHref(href: string) {
-  return /^(https?:|mailto:|tel:)/i.test(href)
-}
-
 export async function generateMetadata(): Promise<Metadata> {
   const landing = await client.fetch<CasesLandingData | null>(casesLandingQuery)
   const seo = landing?.seo
@@ -212,7 +209,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
     'Discover how industrial partners improve throughput and efficiency with real deployments.'
   const heroStats = landing?.hero?.stats ?? []
   const ctaTitle = landing?.cta?.title?.trim()
-  const ctaHref = landing?.cta?.buttonLink?.trim() || '/contact'
+  const ctaHref = getSafeHref(landing?.cta?.buttonLink) || '/contact'
   const ctaButtonText = landing?.cta?.buttonText || 'Request Simulation Hub'
   const ctaIsExternal = isExternalHref(ctaHref)
 

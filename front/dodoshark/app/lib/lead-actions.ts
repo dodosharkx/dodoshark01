@@ -1,5 +1,6 @@
 'use server'
 
+import { headers } from 'next/headers'
 import { Resend } from 'resend'
 
 import type { InquiryType } from '@/app/lib/mvp-data'
@@ -22,9 +23,31 @@ export type LeadActionResult = {
   message: string
 }
 
+type LeadRateLimitEntry = {
+  count: number
+  resetAt: number
+}
+
+const BOT_TRAP_FIELD = 'companyWebsite'
+const FORM_STARTED_AT_FIELD = 'formStartedAt'
+const LEAD_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+const LEAD_RATE_LIMIT_MAX_REQUESTS = 5
+const MIN_FORM_COMPLETION_MS = 800
+const globalLeadRateLimitStore = globalThis as typeof globalThis & {
+  __dodosharkLeadRateLimit?: Map<string, LeadRateLimitEntry>
+}
+
 function cleanValue(value: FormDataEntryValue | null) {
   if (typeof value !== 'string') return ''
   return value.trim()
+}
+
+function getLeadRateLimitStore() {
+  if (!globalLeadRateLimitStore.__dodosharkLeadRateLimit) {
+    globalLeadRateLimitStore.__dodosharkLeadRateLimit = new Map()
+  }
+
+  return globalLeadRateLimitStore.__dodosharkLeadRateLimit
 }
 
 function escapeHtml(value: string) {
@@ -59,6 +82,56 @@ function hasValue(value?: string) {
   return Boolean(value?.trim())
 }
 
+function hasValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
+
+function getClientIdentifier(headerStore: Headers) {
+  const forwardedFor = headerStore.get('x-forwarded-for')
+  if (forwardedFor) {
+    return forwardedFor
+      .split(',')
+      .map((item) => item.trim())
+      .find(Boolean)
+  }
+
+  return (
+    headerStore.get('cf-connecting-ip')?.trim() ||
+    headerStore.get('x-real-ip')?.trim() ||
+    undefined
+  )
+}
+
+function isRateLimited(identifier?: string) {
+  if (!identifier) return false
+
+  const now = Date.now()
+  const store = getLeadRateLimitStore()
+
+  for (const [key, entry] of store.entries()) {
+    if (entry.resetAt <= now) {
+      store.delete(key)
+    }
+  }
+
+  const existing = store.get(identifier)
+  if (!existing || existing.resetAt <= now) {
+    store.set(identifier, {
+      count: 1,
+      resetAt: now + LEAD_RATE_LIMIT_WINDOW_MS,
+    })
+    return false
+  }
+
+  if (existing.count >= LEAD_RATE_LIMIT_MAX_REQUESTS) {
+    return true
+  }
+
+  existing.count += 1
+  store.set(identifier, existing)
+  return false
+}
+
 function getFieldLabel(field: RequiredLeadField) {
   if (field === 'name') return 'Name'
   if (field === 'email') return 'Email'
@@ -77,6 +150,23 @@ export async function submitLeadInquiry(formData: FormData): Promise<LeadActionR
   const apiKey = process.env.RESEND_API_KEY
   const toEmail = process.env.LEAD_TO_EMAIL || 'service@dodoshark.com'
   const fromEmail = process.env.LEAD_FROM_EMAIL || 'DoDoShark Leads <onboarding@resend.dev>'
+  const inquiryTypeValue = cleanValue(formData.get('inquiryType'))
+  const inquiryType: InquiryType = inquiryTypeValue === 'video_demo' ? 'video_demo' : 'quote'
+  const botTrapValue = cleanValue(formData.get(BOT_TRAP_FIELD))
+  const startedAtValue = Number.parseInt(cleanValue(formData.get(FORM_STARTED_AT_FIELD)), 10)
+  const elapsedMs = Number.isFinite(startedAtValue) ? Date.now() - startedAtValue : undefined
+
+  if (botTrapValue || (elapsedMs !== undefined && elapsedMs >= 0 && elapsedMs < MIN_FORM_COMPLETION_MS)) {
+    return { success: true, message: getSuccessMessage(inquiryType) }
+  }
+
+  const headerStore = await headers()
+  if (isRateLimited(getClientIdentifier(headerStore))) {
+    return {
+      success: false,
+      message: 'Too many submissions. Please wait a few minutes and try again.',
+    }
+  }
 
   if (!apiKey) {
     return {
@@ -85,9 +175,6 @@ export async function submitLeadInquiry(formData: FormData): Promise<LeadActionR
         'Form service is not configured yet. Please email us directly at your business contact address.',
     }
   }
-
-  const inquiryTypeValue = cleanValue(formData.get('inquiryType'))
-  const inquiryType: InquiryType = inquiryTypeValue === 'video_demo' ? 'video_demo' : 'quote'
 
   const payload: LeadInquiry = {
     inquiryType,
@@ -114,6 +201,13 @@ export async function submitLeadInquiry(formData: FormData): Promise<LeadActionR
     return {
       success: false,
       message: `Please fill in ${formatList(missingFields.map(getFieldLabel))}.`,
+    }
+  }
+
+  if (!hasValidEmail(payload.email)) {
+    return {
+      success: false,
+      message: 'Please enter a valid email address.',
     }
   }
 

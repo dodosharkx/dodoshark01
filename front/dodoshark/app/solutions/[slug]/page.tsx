@@ -36,10 +36,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export const metadata: Metadata = {
-  robots: { index: false, follow: false },
-}
-
 interface SolutionPageProps {
   params: Promise<{ slug: string }>
 }
@@ -61,6 +57,15 @@ type SanityImage = {
   _type?: string
   asset?: SanityAsset
   alt?: string
+}
+
+type SeoMeta = {
+  title?: string
+  description?: string
+  keywords?: string[]
+  canonicalUrl?: string
+  noIndex?: boolean
+  ogImage?: SanityImage
 }
 
 type CategoryData = {
@@ -116,6 +121,7 @@ type SolutionBlock =
 
 type SolutionData = {
   _id: string
+  seo?: SeoMeta
   title?: string
   slug?: { current?: string }
   summary?: string
@@ -137,6 +143,17 @@ function splitTitle(title?: string) {
 async function getSolution(slug: string) {
   const query = `*[_type == "solution" && slug.current == $slug][0] {
     _id,
+    seo {
+      title,
+      description,
+      keywords,
+      canonicalUrl,
+      noIndex,
+      ogImage {
+        ...,
+        asset
+      }
+    },
     title,
     slug { current },
     summary,
@@ -275,6 +292,32 @@ async function getSolution(slug: string) {
           }
         }
       }
+    }
+  }`
+
+  return client.fetch<SolutionData | null>(query, { slug })
+}
+
+async function getSolutionMetadata(slug: string) {
+  const query = `*[_type == "solution" && slug.current == $slug][0] {
+    _id,
+    seo {
+      title,
+      description,
+      keywords,
+      canonicalUrl,
+      noIndex,
+      ogImage {
+        ...,
+        asset
+      }
+    },
+    title,
+    slug { current },
+    summary,
+    heroImage {
+      ...,
+      asset
     }
   }`
 
@@ -473,6 +516,53 @@ function renderSolutionGroup(group: PageBuilderRenderGroup<SolutionBlock>) {
       </div>
     </section>
   )
+}
+
+export async function generateMetadata({ params }: SolutionPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const solution = await getSolutionMetadata(slug)
+
+  if (!solution) {
+    return {
+      title: 'Solution Not Found | DoDoShark',
+      description: 'The requested solution page is not available.',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const title = solution.seo?.title?.trim() || solution.title || 'DoDoShark Solution'
+  const description =
+    solution.seo?.description?.trim() ||
+    solution.summary?.trim() ||
+    'Explore DoDoShark industrial processing solutions and deployment details.'
+  const canonical =
+    solution.seo?.canonicalUrl?.trim() || `/solutions/${solution.slug?.current || slug}`
+  const ogImage = toImageSrc(solution.seo?.ogImage || solution.heroImage, 1200, {
+    height: 630,
+    fit: 'crop',
+  })
+
+  return {
+    title,
+    description,
+    keywords: solution.seo?.keywords?.filter(Boolean),
+    alternates: { canonical },
+    robots: { index: false, follow: false },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      images: ogImage
+        ? [{ url: ogImage, alt: solution.seo?.ogImage?.alt || solution.heroImage?.alt || title }]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
+    },
+  }
 }
 
 export default async function SolutionPage({ params }: SolutionPageProps) {

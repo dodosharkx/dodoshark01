@@ -8,6 +8,7 @@ import {A11y, Keyboard} from 'swiper/modules'
 import type {Swiper as SwiperInstance} from 'swiper'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
+import {getSafeHref, isExternalHref} from '@/app/lib/safeHref'
 import {urlFor} from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 import {
@@ -105,10 +106,6 @@ const desktopCarouselBreakpoints = {
   },
 }
 
-function isExternalHref(href: string) {
-  return /^(https?:|mailto:|tel:)/i.test(href)
-}
-
 function resolveImageSrc(
   image?: CardImage,
   options: {width?: number; height?: number; fit?: 'crop' | 'max'} = {},
@@ -149,9 +146,9 @@ function getReferenceHref(reference?: CardReference) {
   if (reference?._type === 'product') return `/products/${slug}`
   if (reference?._type === 'solution') return `/solutions/${slug}`
   if (reference?._type === 'caseStudy') return `/cases/${slug}`
-  if (reference?._type === 'post') return `/blog/${slug}`
+  if (reference?._type === 'post') return `/blogs/${slug}`
 
-  return `/${slug}`
+  return ''
 }
 
 function resolveCard(item: CardItem) {
@@ -160,7 +157,7 @@ function resolveCard(item: CardItem) {
   const clickable = item.clickable !== false
 
   if (item.cardType === 'inline') {
-    const href = clickable ? item.inlineCard?.cta?.href?.trim() || '' : ''
+    const href = clickable ? getSafeHref(item.inlineCard?.cta?.href) || '' : ''
     const legacyTitle = item.inlineCard?.title?.trim() || ''
     const legacyDescription = item.inlineCard?.description?.trim() || ''
     const isInteractive = Boolean(href)
@@ -182,7 +179,7 @@ function resolveCard(item: CardItem) {
     reference?.shortDescription?.trim() ||
     reference?.description?.trim() ||
     ''
-  const href = clickable ? reference?.cta?.href?.trim() || getReferenceHref(reference) : ''
+  const href = clickable ? getSafeHref(reference?.cta?.href) || getReferenceHref(reference) : ''
   const isInteractive = Boolean(href)
 
   return {

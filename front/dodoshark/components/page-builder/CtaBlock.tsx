@@ -1,5 +1,8 @@
 import Link from 'next/link'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
+import LeadInquiryForm from '@/components/forms/LeadInquiryForm'
+
 import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { sectionSubtitleClass } from './sectionStyles'
@@ -20,13 +23,9 @@ export type CtaBlockData = {
   buttons?: CtaButton[]
 }
 
-function isExternalHref(href: string) {
-  return /^(https?:|mailto:|tel:)/i.test(href)
-}
-
 function CtaButtonLink({ button }: { button: CtaButton }) {
   const label = button.label?.trim()
-  const href = button.href?.trim()
+  const href = getSafeHref(button.href)
 
   if (!label || !href) return null
 
@@ -59,52 +58,40 @@ function FormTitle(formType?: CtaBlockData['formType']) {
   return 'Get Product Brief'
 }
 
-function FormFields({ formType }: { formType?: CtaBlockData['formType'] }) {
-  const isContact = formType === 'contact'
-  const isDemo = formType === 'demo'
+function EmbeddedLeadForm({ formType }: { formType?: CtaBlockData['formType'] }) {
+  if (formType === 'demo') {
+    return (
+      <LeadInquiryForm
+        inquiryType="video_demo"
+        variant="video_demo"
+        submitLabel="Book Video Demo"
+        introText="Share your material and preferred time. We will confirm the live demo schedule within 24 hours."
+        className="mt-8 space-y-4"
+      />
+    )
+  }
+
+  if (formType === 'contact') {
+    return (
+      <LeadInquiryForm
+        inquiryType="quote"
+        variant="mini"
+        submitLabel="Send Inquiry"
+        introText="Leave your city and contact details. Our engineer will follow up shortly."
+        className="mt-8 space-y-4"
+      />
+    )
+  }
 
   return (
-    <form className="grid sm:grid-cols-2 gap-4 mt-8">
-      <input
-        type="text"
-        placeholder="Your Name"
-        className="px-4 py-3 rounded-md border border-white/20 bg-white/10 text-white placeholder:text-white/60"
-      />
-      <input
-        type="email"
-        placeholder="Business Email"
-        className="px-4 py-3 rounded-md border border-white/20 bg-white/10 text-white placeholder:text-white/60"
-      />
-
-      {(isContact || isDemo) && (
-        <input
-          type="text"
-          placeholder="Company Name"
-          className="px-4 py-3 rounded-md border border-white/20 bg-white/10 text-white placeholder:text-white/60"
-        />
-      )}
-
-      {isDemo && (
-        <input
-          type="text"
-          placeholder="Preferred Date"
-          className="px-4 py-3 rounded-md border border-white/20 bg-white/10 text-white placeholder:text-white/60"
-        />
-      )}
-
-      <textarea
-        placeholder={isContact ? 'Your Requirements' : 'Message (Optional)'}
-        rows={isContact ? 4 : 3}
-        className="sm:col-span-2 px-4 py-3 rounded-md border border-white/20 bg-white/10 text-white placeholder:text-white/60"
-      />
-
-      <button
-        type="button"
-        className="sm:col-span-2 px-6 py-3 rounded-md bg-white text-slate-900 font-black hover:bg-slate-100 transition-all"
-      >
-        Submit Inquiry
-      </button>
-    </form>
+    <LeadInquiryForm
+      inquiryType="quote"
+      variant="mini"
+      submitLabel="Get Product Brief"
+      introText="Leave your business contact details and we will send the relevant product brief."
+      className="mt-8 space-y-4"
+      showMessageField={false}
+    />
   )
 }
 
@@ -156,7 +143,7 @@ export default function CtaBlock({ block }: { block: CtaBlockData }) {
           )}
         </div>
 
-        {variant === 'form' && <FormFields formType={block.formType} />}
+        {variant === 'form' && <EmbeddedLeadForm formType={block.formType} />}
       </div>
     </SectionShell>
   )

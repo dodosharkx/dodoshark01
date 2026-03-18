@@ -7,6 +7,7 @@ import { A11y, Autoplay, Keyboard } from 'swiper/modules'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { urlFor } from '@/app/lib/sanity'
 import {
   getSharedBackgroundTheme,
@@ -103,14 +104,10 @@ function resolveImageSrc(
   }
 }
 
-function isExternalUrl(href?: string) {
-  return Boolean(href?.trim())
-}
-
 function ShowcaseCard({ item }: { item: ShowcaseItem }) {
   const title = item.title?.trim() || 'Untitled Showcase'
   const description = item.description?.trim()
-  const href = item.href?.trim() || ''
+  const href = getSafeHref(item.href)
   const imageSrc = resolveImageSrc(item.image, { width: 1200, height: 800, fit: 'crop' })
   const className = `${styles.cardLink} ${href ? '' : styles.cardStatic}`.trim()
 
@@ -135,8 +132,16 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
     </>
   )
 
-  if (!isExternalUrl(href)) {
+  if (!href) {
     return <article className={className}>{content}</article>
+  }
+
+  if (!isExternalHref(href)) {
+    return (
+      <Link href={href} className={className}>
+        {content}
+      </Link>
+    )
   }
 
   return (
@@ -144,10 +149,6 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
       {content}
     </a>
   )
-}
-
-function isExternalHref(href: string) {
-  return /^(https?:|mailto:|tel:)/i.test(href)
 }
 
 function SplitCarousel({
@@ -165,7 +166,7 @@ function SplitCarousel({
   const dotsActiveClass = theme.dotActive
   const titleClass = theme.heading
   const bodyClass = theme.body
-  const footerHref = footerCta?.href?.trim() || ''
+  const footerHref = getSafeHref(footerCta?.href)
   const footerLabel = footerCta?.label?.trim() || ''
 
   if (items.length === 0) return null

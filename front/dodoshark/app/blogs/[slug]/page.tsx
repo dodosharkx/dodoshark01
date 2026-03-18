@@ -8,6 +8,7 @@ import {
   type PortableTextComponents,
 } from 'next-sanity'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { client, urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 
@@ -393,13 +394,12 @@ function buildPortableTextComponents(headingIdByKey: Map<string, string>): Porta
       em: ({ children }) => <em className="italic">{children}</em>,
       underline: ({ children }) => <span className="underline">{children}</span>,
       link: ({ children, value }) => {
-        const href = (value as PortableTextLinkMark | undefined)?.href
+        const href = getSafeHref((value as PortableTextLinkMark | undefined)?.href)
         if (!href) return <>{children}</>
 
-        const isExternal = /^(https?:|mailto:|tel:)/i.test(href)
         const className = 'text-orange-500 underline underline-offset-4 hover:text-orange-700 transition-colors'
 
-        if (isExternal) {
+        if (isExternalHref(href)) {
           return (
             <a href={href} className={className} target="_blank" rel="noreferrer">
               {children}

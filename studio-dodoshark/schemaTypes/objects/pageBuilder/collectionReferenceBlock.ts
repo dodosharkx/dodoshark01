@@ -34,9 +34,6 @@ export default defineType({
               type: 'reference',
               to: [
                 {type: 'product'},
-                {type: 'productVariant'},
-                {type: 'accessory'},
-                {type: 'author'},
                 {type: 'post'},
                 {type: 'solution'},
                 {type: 'caseStudy'},

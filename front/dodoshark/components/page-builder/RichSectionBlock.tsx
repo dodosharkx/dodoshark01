@@ -1,9 +1,11 @@
+import Link from 'next/link'
 import {
   PortableText,
   type PortableTextBlock,
   type PortableTextComponents,
 } from 'next-sanity'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import {
   getSharedBackgroundTheme,
   type SharedBackgroundTheme,
@@ -146,19 +148,26 @@ function getPortableTextComponents(theme: SharedBackgroundTheme): PortableTextCo
     },
     marks: {
       link: ({children, value}) => {
-        const href = value?.href as string | undefined
+        const href = getSafeHref(value?.href as string | undefined)
         if (!href) return <>{children}</>
 
-        const isExternal = /^https?:\/\//i.test(href)
+        if (isExternalHref(href)) {
+          return (
+            <a
+              href={href}
+              className={`${linkColor} underline underline-offset-4`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {children}
+            </a>
+          )
+        }
+
         return (
-          <a
-            href={href}
-            className={`${linkColor} underline underline-offset-4`}
-            target={isExternal ? '_blank' : undefined}
-            rel={isExternal ? 'noreferrer' : undefined}
-          >
+          <Link href={href} className={`${linkColor} underline underline-offset-4`}>
             {children}
-          </a>
+          </Link>
         )
       },
     },

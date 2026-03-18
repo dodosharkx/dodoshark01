@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
@@ -60,6 +61,15 @@ type SanityImage = {
   alt?: string
 }
 
+type SeoMeta = {
+  title?: string
+  description?: string
+  keywords?: string[]
+  canonicalUrl?: string
+  noIndex?: boolean
+  ogImage?: SanityImage
+}
+
 type FeatureGridItem = {
   _key?: string
   title?: string
@@ -107,6 +117,7 @@ type ProductBlock =
 
 type ProductData = {
   _id: string
+  seo?: SeoMeta
   title?: string
   seriesTag?: string
   shortDescription?: string
@@ -117,6 +128,17 @@ type ProductData = {
 
 const productQuery = `*[_type == "product" && slug.current == $slug][0] {
   _id,
+  seo {
+    title,
+    description,
+    keywords,
+    canonicalUrl,
+    noIndex,
+    ogImage {
+      ...,
+      asset
+    }
+  },
   title,
   seriesTag,
   shortDescription,
@@ -257,8 +279,34 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
   }
 }`
 
+const productMetadataQuery = `*[_type == "product" && slug.current == $slug][0] {
+  _id,
+  seo {
+    title,
+    description,
+    keywords,
+    canonicalUrl,
+    noIndex,
+    ogImage {
+      ...,
+      asset
+    }
+  },
+  title,
+  shortDescription,
+  slug { current },
+  mainImage {
+    ...,
+    asset
+  }
+}`
+
 async function getProduct(slug: string) {
   return client.fetch<ProductData | null>(productQuery, { slug })
+}
+
+async function getProductMetadata(slug: string) {
+  return client.fetch<ProductData | null>(productMetadataQuery, { slug })
 }
 
 function toImageSrc(image?: SanityImage, width = 1200) {
@@ -404,6 +452,49 @@ function renderPageBuilderGroup(group: PageBuilderRenderGroup<ProductBlock>) {
       return renderLegacyVideoGallery(block as VideoGalleryBlockData, key)
     default:
       return null
+  }
+}
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const product = await getProductMetadata(slug)
+
+  if (!product) {
+    return {
+      title: 'Product Not Found | DoDoShark',
+      description: 'The requested product page is not available.',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const title = product.seo?.title?.trim() || product.title || 'DoDoShark Product'
+  const description =
+    product.seo?.description?.trim() ||
+    product.shortDescription?.trim() ||
+    'Explore DoDoShark industrial processing equipment and machine details.'
+  const canonical = product.seo?.canonicalUrl?.trim() || `/products/${product.slug?.current || slug}`
+  const ogImage = toImageSrc(product.seo?.ogImage || product.mainImage, 1200)
+
+  return {
+    title,
+    description,
+    keywords: product.seo?.keywords?.filter(Boolean),
+    alternates: { canonical },
+    robots: { index: false, follow: false },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      images: ogImage
+        ? [{ url: ogImage, alt: product.seo?.ogImage?.alt || product.mainImage?.alt || title }]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
+    },
   }
 }
 

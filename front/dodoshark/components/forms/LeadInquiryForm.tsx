@@ -27,13 +27,23 @@ export default function LeadInquiryForm({
 }: LeadInquiryFormProps) {
   const [pending, setPending] = useState(false)
   const [result, setResult] = useState<LeadActionResult | null>(null)
+  const [formStartedAt] = useState(() => Date.now())
 
   async function handleSubmit(formData: FormData) {
     setPending(true)
     setResult(null)
-    const response = await submitLeadInquiry(formData)
-    setResult(response)
-    setPending(false)
+
+    try {
+      const response = await submitLeadInquiry(formData)
+      setResult(response)
+    } catch {
+      setResult({
+        success: false,
+        message: 'Submission failed. Please try again or contact us by email/WhatsApp directly.',
+      })
+    } finally {
+      setPending(false)
+    }
   }
 
   const resolvedVariant = variant || (inquiryType === 'video_demo' ? 'video_demo' : 'contact')
@@ -51,6 +61,21 @@ export default function LeadInquiryForm({
   return (
     <form action={handleSubmit} className={className || 'space-y-4'}>
       <input type="hidden" name="inquiryType" value={inquiryType} />
+      <input type="hidden" name="formStartedAt" value={String(formStartedAt)} />
+      <div
+        aria-hidden="true"
+        className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+      >
+        <label>
+          Company website
+          <input
+            name="companyWebsite"
+            tabIndex={-1}
+            autoComplete="off"
+            defaultValue=""
+          />
+        </label>
+      </div>
       {introText ? <p className="text-sm leading-6 text-slate-600">{introText}</p> : null}
 
       {isContactVariant ? (

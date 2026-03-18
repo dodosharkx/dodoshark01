@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PortableText, type PortableTextBlock, type PortableTextComponents } from 'next-sanity'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { client, urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 
@@ -198,13 +199,12 @@ function buildPortableTextComponents(): PortableTextComponents {
       strong: ({ children }) => <strong className="font-bold text-slate-900">{children}</strong>,
       em: ({ children }) => <em className="italic">{children}</em>,
       link: ({ children, value }) => {
-        const href = (value as PortableTextLinkMark | undefined)?.href
+        const href = getSafeHref((value as PortableTextLinkMark | undefined)?.href)
         if (!href) return <>{children}</>
 
-        const isExternal = /^(https?:|mailto:|tel:)/i.test(href)
         const className = 'text-orange-500 underline underline-offset-4 hover:text-orange-700 transition-colors'
 
-        if (isExternal) {
+        if (isExternalHref(href)) {
           return (
             <a href={href} className={className} target="_blank" rel="noreferrer">
               {children}

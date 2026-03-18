@@ -7,6 +7,7 @@ import { A11y, Keyboard } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Swiper as SwiperInstance } from 'swiper'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 import {
@@ -240,10 +241,6 @@ function ArrowRightIcon({ className }: { className?: string }) {
       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5 15.75 12l-7.5 7.5" />
     </svg>
   )
-}
-
-function isExternalHref(href: string) {
-  return /^(https?:|mailto:|tel:)/i.test(href)
 }
 
 function ImageTile({
@@ -713,7 +710,7 @@ function VideoCardCarousel({
   const [isBeginning, setIsBeginning] = useState(true)
   const [isEnd, setIsEnd] = useState(items.length <= 1)
   const ctaLabel = cta?.label?.trim()
-  const ctaHref = cta?.href?.trim()
+  const ctaHref = getSafeHref(cta?.href)
   const isExternalCta = Boolean(ctaHref && isExternalHref(ctaHref))
 
   function syncSwiperState(instance: SwiperInstance) {
@@ -826,7 +823,7 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
       ? block.layout
       : 'thumbnailGallery'
   const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null)
-  const hasCta = Boolean(block.cta?.label?.trim() && block.cta?.href?.trim())
+  const hasCta = Boolean(block.cta?.label?.trim() && getSafeHref(block.cta?.href))
   const items = (block.items ?? []).filter(
     (item) =>
       (item.type === 'videoUrl' && item.videoUrl) ||

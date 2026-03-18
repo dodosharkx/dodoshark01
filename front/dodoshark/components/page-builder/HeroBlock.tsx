@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { urlFor } from '@/app/lib/sanity'
 import {
   getSectionToneClasses,
@@ -93,13 +94,9 @@ function resolveMediaLayout(value?: string): 'textLeftImageRight' | 'imageLeftTe
   return value === 'imageLeftTextRight' ? 'imageLeftTextRight' : 'textLeftImageRight'
 }
 
-function isExternalHref(href: string) {
-  return /^(https?:|mailto:|tel:)/i.test(href)
-}
-
 function CtaButton({ button }: { button: HeroCtaButton }) {
   const label = button.label?.trim()
-  const href = button.href?.trim()
+  const href = getSafeHref(button.href)
 
   if (!label || !href) return null
 

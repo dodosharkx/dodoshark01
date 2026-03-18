@@ -6,6 +6,7 @@ import {
   type PortableTextComponents,
 } from 'next-sanity'
 
+import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { urlFor } from '@/app/lib/sanity'
 import Icon from '@/components/ui/Icon'
 import {
@@ -113,11 +114,10 @@ function getPortableTextComponents(theme: SharedBackgroundTheme): PortableTextCo
         <span className={`px-1.5 py-0.5 rounded ${highlightClass}`}>{children}</span>
       ),
       link: ({ children, value }) => {
-        const href = value?.href as string | undefined
+        const href = getSafeHref(value?.href as string | undefined)
         if (!href) return <>{children}</>
 
-        const isExternal = /^https?:\/\//i.test(href)
-        if (isExternal) {
+        if (isExternalHref(href)) {
           return (
             <a href={href} className={linkClass} target="_blank" rel="noreferrer">
               {children}
