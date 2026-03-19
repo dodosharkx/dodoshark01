@@ -189,7 +189,7 @@ function buildHref({
   if (q) params.set('q', q)
   if (page && page > 1) params.set('page', String(page))
   const query = params.toString()
-  return query ? `/blogs?${query}` : '/blogs'
+  return query ? `/vlog?${query}` : '/vlog'
 }
 
 function formatDate(value?: string) {
@@ -336,7 +336,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
               })}
             </div>
 
-            <form action="/blogs" method="get" className="relative w-full lg:w-96">
+            <form action="/vlog" method="get" className="relative w-full lg:w-96">
               {category && <input type="hidden" name="category" value={category} />}
               <Icon icon="search" className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <input
@@ -355,7 +355,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
           {featuredPost ? (
             <div className="mb-20">
               <Link
-                href={featuredPost.slug?.current ? `/blogs/${featuredPost.slug.current}` : '/blogs'}
+                href={featuredPost.slug?.current ? `/vlog/${featuredPost.slug.current}` : '/vlog'}
                 className="group flex flex-col overflow-hidden rounded-lg border border-slate-100 bg-white shadow-2xl transition-all duration-500 lg:flex-row"
               >
                 <div className="h-[400px] w-full overflow-hidden lg:w-3/5">
@@ -446,7 +446,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                           {post.readingTime ? ` · ${post.readingTime} min` : ''}
                         </span>
                         <Link
-                          href={post.slug?.current ? `/blogs/${post.slug.current}` : '/blogs'}
+                          href={post.slug?.current ? `/vlog/${post.slug.current}` : '/vlog'}
                           className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-orange-500"
                         >
                           Read More

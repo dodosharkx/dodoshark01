@@ -312,7 +312,7 @@ function ArrowRightIcon({ className }: { className?: string }) {
 }
 
 const cardInlineCtaClass =
-  'group inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4] underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-[#2dd4bf] hover:decoration-current focus-visible:outline-none focus-visible:text-[#2dd4bf] focus-visible:decoration-current'
+  'group inline-flex items-center gap-1 text-sm font-semibold text-center text-[#14b8a6] underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-[#0d9488] focus-visible:outline-none focus-visible:text-[#0d9488]'
 
 function CardInlineCta({ href }: { href: string }) {
   return (
@@ -351,7 +351,7 @@ function ProductCard({
       <div className="p-6">
         <h4 className="text-lg font-bold text-slate-900">{title}</h4>
         <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{description}</p>
-        <div className="mt-5 flex items-center justify-end">
+        <div className="mt-5 flex items-center justify-center">
           <CardInlineCta href="/products" />
         </div>
       </div>
@@ -370,7 +370,7 @@ function SolutionCard({ title, description, image }: { title: string; descriptio
           {title}
         </h4>
         <p className="mt-4 text-sm leading-6 text-slate-500">{description}</p>
-        <div className="mt-5 flex items-center justify-end">
+        <div className="mt-5 flex items-center justify-center">
           <CardInlineCta href="/solutions" />
         </div>
       </div>
@@ -718,7 +718,7 @@ export default async function HomePage() {
           <DeferredHomeBlogCarousel items={blogItems} />
 
           <div className="mt-10 text-center">
-            <Link href="/blogs" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">
+            <Link href="/vlog" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">
               More Videos
               <ArrowRightIcon className="h-4 w-4" />
             </Link>

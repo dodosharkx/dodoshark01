@@ -544,7 +544,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
     post.excerpt?.trim() ||
     'Industrial milling insights and engineering knowledge from DoDoShark.'
   const ogImage = toImageSrc(post.seo?.ogImage || post.mainImage, 1200)
-  const canonical = post.seo?.canonicalUrl?.trim() || `/blogs/${post.slug?.current || slug}`
+  const canonical = post.seo?.canonicalUrl?.trim() || `/vlog/${post.slug?.current || slug}`
 
   return {
     title,
@@ -709,7 +709,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
             <div className="grid md:grid-cols-3 gap-8">
               {relatedPosts.map((relatedPost, idx) => {
-                const href = relatedPost.slug?.current ? `/blogs/${relatedPost.slug.current}` : undefined
+                const href = relatedPost.slug?.current ? `/vlog/${relatedPost.slug.current}` : undefined
                 const imageSrc = toImageSrc(relatedPost.mainImage, 900)
                 const categoryTitle = relatedPost.categories?.[0]?.title || 'Blog'
                 const relatedReadingTime = relatedPost.readingTime

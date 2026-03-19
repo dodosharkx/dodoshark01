@@ -66,7 +66,7 @@ const socialLinks = [
   },
   {
     label: 'X',
-    href: '/blogs',
+    href: '/vlog',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M18.901 4.153H21.98L15.255 11.839L23.166 20.847H16.972L12.121 15.379L7.336 20.847H4.255L11.449 12.622L3.859 4.153H10.209L14.594 9.151L18.901 4.153ZM17.82 18.99H19.526L9.282 5.912H7.451L17.82 18.99Z" />
