@@ -180,11 +180,12 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
   const params = await searchParams
   const tag = firstParam(params.tag)?.trim() || ''
   const initialPage = parsePositiveInt(firstParam(params.page), 1)
+  const tagParams: Record<string, string> = { tag }
 
   const landing = await client.fetch<CasesLandingData | null>(casesLandingQuery)
 
   const [cases, fallbackTags] = await Promise.all([
-    client.fetch<CaseCard[]>(casesListQuery, { tag }),
+    client.fetch<CaseCard[]>(casesListQuery, tagParams),
     client.fetch<ContentTagItem[]>(allTagsQuery),
   ])
 

@@ -180,11 +180,12 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   const params = await searchParams
   const tag = firstParam(params.tag)?.trim() || ''
   const requestedPage = parsePositiveInt(firstParam(params.page), 1)
+  const tagParams: Record<string, string> = { tag }
 
   const landing = await client.fetch<VlogLandingData | null>(blogsLandingQuery)
 
   const total = await client.fetch<number>(blogsCountQuery, {
-    tag,
+    ...tagParams,
   })
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
   const currentPage = Math.min(requestedPage, totalPages)
@@ -193,7 +194,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
 
   const [posts, fallbackTags] = await Promise.all([
     client.fetch<VlogItemCard[]>(blogsListQuery, {
-      tag,
+      ...tagParams,
       start,
       end,
     }),
