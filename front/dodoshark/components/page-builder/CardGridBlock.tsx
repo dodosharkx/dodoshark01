@@ -49,8 +49,11 @@ type CardReference = {
   slug?: {current?: string}
   shortDescription?: string
   description?: string
+  excerpt?: string
   mainImage?: CardImage
   image?: CardImage
+  coverImage?: CardImage
+  heroImage?: CardImage
   cta?: CardCta
 }
 
@@ -172,23 +175,28 @@ function resolveCard(item: CardItem) {
     }
   }
 
-  const reference = item.reference
-  const resolvedTitle = title || reference?.title?.trim() || ''
-  const resolvedDescription =
-    description ||
-    reference?.shortDescription?.trim() ||
-    reference?.description?.trim() ||
-    ''
-  const href = clickable ? getSafeHref(reference?.cta?.href) || getReferenceHref(reference) : ''
-  const isInteractive = Boolean(href)
+	  const reference = item.reference
+	  const resolvedTitle = title || reference?.title?.trim() || ''
+	  const resolvedDescription =
+	    description ||
+	    reference?.shortDescription?.trim() ||
+	    reference?.description?.trim() ||
+	    reference?.excerpt?.trim() ||
+	    ''
+	  const href = clickable ? getSafeHref(reference?.cta?.href) || getReferenceHref(reference) : ''
+	  const isInteractive = Boolean(href)
 
-  return {
-    title: resolvedTitle,
-    description: resolvedDescription,
-    image: reference?.mainImage || reference?.image,
-    ctaLabel: isInteractive ? reference?.cta?.label?.trim() || 'View Details' : '',
-    href,
-    isInteractive,
+	  return {
+	    title: resolvedTitle,
+	    description: resolvedDescription,
+	    image:
+	      reference?.mainImage ||
+	      reference?.image ||
+	      reference?.coverImage ||
+	      reference?.heroImage,
+	    ctaLabel: isInteractive ? reference?.cta?.label?.trim() || 'View Details' : '',
+	    href,
+	    isInteractive,
   }
 }
 

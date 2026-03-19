@@ -243,6 +243,42 @@ function ArrowRightIcon({ className }: { className?: string }) {
   )
 }
 
+function MediaGalleryCtaLink({
+  cta,
+  className = '',
+}: {
+  cta?: MediaGalleryCta
+  className?: string
+}) {
+  const label = cta?.label?.trim()
+  const href = getSafeHref(cta?.href)
+
+  if (!label || !href) return null
+
+  const buttonClassName = `inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto ${className}`.trim()
+
+  if (isExternalHref(href)) {
+    return (
+      <a
+        href={href}
+        className={buttonClassName}
+        target={href.startsWith('http') ? '_blank' : undefined}
+        rel={href.startsWith('http') ? 'noreferrer' : undefined}
+      >
+        {label}
+        <ArrowRightIcon className="h-4 w-4" />
+      </a>
+    )
+  }
+
+  return (
+    <Link href={href} className={buttonClassName}>
+      {label}
+      <ArrowRightIcon className="h-4 w-4" />
+    </Link>
+  )
+}
+
 function ImageTile({
   image,
   caption,
@@ -709,9 +745,6 @@ function VideoCardCarousel({
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null)
   const [isBeginning, setIsBeginning] = useState(true)
   const [isEnd, setIsEnd] = useState(items.length <= 1)
-  const ctaLabel = cta?.label?.trim()
-  const ctaHref = getSafeHref(cta?.href)
-  const isExternalCta = Boolean(ctaHref && isExternalHref(ctaHref))
 
   function syncSwiperState(instance: SwiperInstance) {
     setIsBeginning(instance.isBeginning || instance.isLocked)
@@ -788,32 +821,14 @@ function VideoCardCarousel({
         </div>
       )}
 
-      {ctaLabel && ctaHref && (
+      {getSafeHref(cta?.href) && (
         <div className="mt-10 text-center">
-          {isExternalCta ? (
-            <a
-              href={ctaHref}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto"
-              target={ctaHref.startsWith('http') ? '_blank' : undefined}
-              rel={ctaHref.startsWith('http') ? 'noreferrer' : undefined}
-            >
-              {ctaLabel}
-              <ArrowRightIcon className="h-4 w-4" />
-            </a>
-          ) : (
-            <Link
-              href={ctaHref}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto"
-            >
-              {ctaLabel}
-              <ArrowRightIcon className="h-4 w-4" />
-            </Link>
-          )}
+          <MediaGalleryCtaLink cta={cta} />
         </div>
       )}
-    </>
-  )
-}
+	    </>
+	  )
+	}
 
 export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockData }) {
   const variant = block.backgroundVariant ?? 'white'
@@ -824,6 +839,7 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
       : 'thumbnailGallery'
   const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null)
   const hasCta = Boolean(block.cta?.label?.trim() && getSafeHref(block.cta?.href))
+  const showInlineSectionCta = hasCta && layout !== 'videoCardCarousel'
   const items = (block.items ?? []).filter(
     (item) =>
       (item.type === 'videoUrl' && item.videoUrl) ||
@@ -877,6 +893,18 @@ export default function MediaGalleryBlock({ block }: { block: MediaGalleryBlockD
             titleClassName={theme.heading}
             subtitleClassName={`mx-auto max-w-3xl ${sectionSubtitleClass} ${theme.subtitle}`}
           />
+        )}
+
+        {showInlineSectionCta && (
+          <div
+            className={
+              block.title
+                ? '-mt-4 mb-10 text-center md:-mt-6 md:mb-12'
+                : 'mb-10 text-center md:mb-12'
+            }
+          >
+            <MediaGalleryCtaLink cta={block.cta} />
+          </div>
         )}
 
         {layout === 'carousel' && (

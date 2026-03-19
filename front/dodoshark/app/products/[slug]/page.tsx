@@ -241,34 +241,48 @@ const productQuery = `*[_type == "product" && slug.current == $slug][0] {
       }
     },
     enableBannerOverlap,
-    bannerImage {
-      ...,
-      asset
-    },
-    bannerOverlayColor,
-    defaultGroupIndex,
-    maxItemsPerRow,
-    showModelDescription,
-    footerText,
+	    bannerImage {
+	      ...,
+	      asset
+	    },
+	    bannerOverlayColor,
+	    groups[] {
+	      ...,
+	      items[] {
+	        ...,
+	        productVariant->{
+	          _id,
+	          modelName,
+	          shortDescription,
+	          image {
+	            ...,
+	            asset
+	          }
+	        }
+	      }
+	    },
+	    defaultGroupIndex,
+	    maxItemsPerRow,
+	    showModelDescription,
+	    footerText,
     rows[] {
       ...,
       cards[] {
         ...,
-        reference->{
-          _id,
-          _type,
-          title,
-          name,
-          modelName,
-          slug { current },
-          shortDescription,
-          description,
-          excerpt,
-          "image": coalesce(mainImage, image, coverImage, heroImage),
-          mainImage { ..., asset },
-          image { ..., asset },
-          coverImage { ..., asset },
-          heroImage { ..., asset }
+	        reference->{
+	          _id,
+	          _type,
+	          title,
+	          name,
+	          modelName,
+	          slug { current },
+	          shortDescription,
+	          description,
+	          excerpt,
+	          mainImage { ..., asset },
+	          image { ..., asset },
+	          coverImage { ..., asset },
+	          heroImage { ..., asset }
         },
         inlineCard {
           ...,
