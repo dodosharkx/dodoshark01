@@ -108,7 +108,7 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
   const title = item.title?.trim() || 'Untitled Showcase'
   const description = item.description?.trim()
   const href = getSafeHref(item.href)
-  const imageSrc = resolveImageSrc(item.image, { width: 1200, height: 800, fit: 'crop' })
+  const imageSrc = resolveImageSrc(item.image, { width: 1200, height: 900, fit: 'crop' })
   const className = `${styles.cardLink} ${href ? '' : styles.cardStatic}`.trim()
 
   const content = (
