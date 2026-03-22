@@ -5,7 +5,9 @@
   "packageManager": "pnpm@10.11.1",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm dlx @opennextjs/cloudflare@1.17.1 build",
+    "build:next": "next build",
+    "deploy": "npx wrangler deploy",
     "start": "next start",
     "lint": "eslint",
     "check:no-font-awesome": "bash ./scripts/check-no-font-awesome.sh"
