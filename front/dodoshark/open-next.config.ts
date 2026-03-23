@@ -1,4 +1,5 @@
 const config = {
+  buildCommand: "pnpm run build:next",
   default: {
     override: {
       wrapper: "cloudflare-node",
