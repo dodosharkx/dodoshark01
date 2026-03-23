@@ -17,7 +17,7 @@ const desktopNavItems: NavItem[] = [
   { label: 'Support', href: '#' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Careers', href: '#' },
+  { label: 'Recruit Agents', href: '/recruit-agents' },
 ]
 
 const mobileNavItems: NavItem[] = [
@@ -29,7 +29,7 @@ const mobileNavItems: NavItem[] = [
   { label: 'Support', href: '#' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Careers', href: '#' },
+  { label: 'Recruit Agents', href: '/recruit-agents' },
 ]
 
 const cta = { label: 'Request Quote', href: '/contact' }

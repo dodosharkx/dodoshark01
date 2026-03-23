@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import AboutVideoCard from '@/components/about/AboutVideoCard'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -99,24 +100,33 @@ export default function AboutPage() {
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
             Rooted in China <br /> <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">Empowering the World</span>
           </h1>
-          <p className="text-xl font-bold italic text-orange-300 mb-6 font-serif">
-            "Work with confidence, Reap in joy"
-          </p>
           <p className="text-lg text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
-            We aim to build partnerships that transcend equipment, serving every workshop globally. Whether you run a large-scale factory or a small processing operation, we provide stable, efficient, and worry-free DoDoShark machinery.
+            We provide stable, efficient, and worry-free DoDoShark machinery.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link href="/products" className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold uppercase tracking-wider text-sm transition-colors shadow-lg shadow-orange-500/30">
-              View Product Matrices
-            </Link>
-          </div>
+
         </div>
       </section>
 
-      {/* Corporate DNA & Technical Strength */}
+      {/* Video & Technical Strength */}
       <section className="py-24 bg-slate-50 relative z-20 -mt-16 rounded-t-[3rem]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <AboutVideoCard
+              youtubeUrl="https://www.youtube.com/shorts/C_JWSMn42eA"
+              title="DoDoShark Brand Story"
+            />
+
+            <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:border-orange-500 transition-colors shadow-xl">
+              <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Our slogan</h2>
+              <p className="text-xl font-bold italic text-orange-600 mb-6 font-serif">
+                "Work with Confidence, Reap in Joy"
+                {/* With a heritage stemming from a state-owned factory founded in 1970, we carry half a century of engineering depth. DoDoShark Machinery was established in Nanjing in 2019, anchoring our core mission as <strong>"Empowering Productivity."</strong> */}
+              </p>
+              <p className="text-slate-600 leading-relaxed font-light">
+                We aim to build partnerships that transcend equipment, serving every workshop globally with the philosophy of "Work with Confidence, Reap in Joy".
+                {/* We prioritize a "Technology-led Development" model, rejecting homogenization to build a three-dimensional ecosystem: <strong>R&D as the core, Manufacturing as the base, and Service as the wings.</strong> */}
+              </p>
+            </div>
             <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:border-orange-500 transition-colors shadow-xl">
               <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Corporate <span className="text-orange-500">DNA</span></h2>
               <p className="text-slate-600 leading-relaxed mb-6 font-light">
@@ -153,6 +163,11 @@ export default function AboutPage() {
             <p className="mt-4 text-slate-500 max-w-2xl mx-auto font-light">
               Exceeding industry standards to meet diverse production needs with full-process customized solutions. Seamlessly connecting production segments for maximum efficiency.
             </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <Link href="/products" className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold uppercase tracking-wider text-sm transition-colors shadow-lg shadow-orange-500/30">
+                View Product Matrices
+              </Link>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
