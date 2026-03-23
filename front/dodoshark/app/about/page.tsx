@@ -108,48 +108,47 @@ export default function AboutPage() {
       </section>
 
       {/* Video & Technical Strength */}
-      <section className="py-24 bg-slate-50 relative z-20 -mt-16 rounded-t-[3rem]">
+      <section className="py-24 bg-slate-50 relative z-20 -mt-16 rounded-none md:rounded-t-[1rem]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <AboutVideoCard
-              youtubeUrl="https://www.youtube.com/shorts/C_JWSMn42eA"
-              title="DoDoShark Brand Story"
-            />
-
-            <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:border-orange-500 transition-colors shadow-xl">
-              <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Our slogan</h2>
-              <p className="text-xl font-bold italic text-orange-600 mb-6 font-serif">
-                "Work with Confidence, Reap in Joy"
-                {/* With a heritage stemming from a state-owned factory founded in 1970, we carry half a century of engineering depth. DoDoShark Machinery was established in Nanjing in 2019, anchoring our core mission as <strong>"Empowering Productivity."</strong> */}
-              </p>
-              <p className="text-slate-600 leading-relaxed font-light">
-                We aim to build partnerships that transcend equipment, serving every workshop globally with the philosophy of "Work with Confidence, Reap in Joy".
-                {/* We prioritize a "Technology-led Development" model, rejecting homogenization to build a three-dimensional ecosystem: <strong>R&D as the core, Manufacturing as the base, and Service as the wings.</strong> */}
-              </p>
-            </div>
-            <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:border-orange-500 transition-colors shadow-xl">
-              <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Corporate <span className="text-orange-500">DNA</span></h2>
-              <p className="text-slate-600 leading-relaxed mb-6 font-light">
-                With a heritage stemming from a state-owned factory founded in 1970, we carry half a century of engineering depth. DoDoShark Machinery was established in Nanjing in 2019, anchoring our core mission as <strong>"Empowering Productivity."</strong>
-              </p>
-              <p className="text-slate-600 leading-relaxed font-light">
-                We prioritize a "Technology-led Development" model, rejecting homogenization to build a three-dimensional ecosystem: <strong>R&D as the core, Manufacturing as the base, and Service as the wings.</strong>
-              </p>
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+            {/* Left Column: Sticky Video */}
+            <div className="w-full lg:w-5/12 lg:sticky lg:top-32">
+              <AboutVideoCard
+                youtubeUrl="https://www.youtube.com/shorts/C_JWSMn42eA"
+                title="DoDoShark Brand Story"
+                thumbnailUrl="/assets/images/brand/DoDoShark-Brand-cover.jpg"
+                aspectRatio="aspect-[9/16]"
+              />
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:border-orange-500 transition-colors shadow-xl">
-              <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Technical <span className="text-orange-500">Strength</span></h2>
-              <p className="text-slate-600 leading-relaxed mb-6 font-light">
-                Our products significantly outperform peers. For instance, our stainless steel crushers were the first to achieve <strong>150-mesh fineness at 1 ton/hour</strong>, supporting 12 hours continuous operation—multiplying standard industry efficiency.
-              </p>
-              {/* <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6">
-                 <h4 className="font-bold text-slate-900 mb-3 flex items-center gap-2"><svg className="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Multi-level Dust-Free Solutions</h4>
-                 <ul className="text-sm text-slate-600 space-y-2 font-light">
-                   <li><strong className="text-slate-800">Economic:</strong> Single-bag collection</li>
-                   <li><strong className="text-slate-800">Efficient:</strong> Cyclone + Multi-bag system</li>
-                   <li><strong className="text-slate-800">Premium:</strong> Pulse dust removal (99.99% suppression)</li>
-                 </ul>
-               </div> */}
+            {/* Right Column: Text Cards */}
+            <div className="w-full lg:w-7/12 space-y-8">
+              <div className="bg-white border border-slate-200 rounded-xl p-10 md:p-12 hover:border-orange-500 transition-all duration-300 shadow-xl hover:shadow-2xl group">
+                <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight group-hover:text-orange-500 transition-colors">Our slogan</h2>
+                <p className="text-xl md:text-2xl font-bold italic text-orange-600 mb-6 font-serif leading-relaxed">
+                  "Work with Confidence, Reap in Joy"
+                </p>
+                <p className="text-slate-600 leading-relaxed font-light text-lg">
+                  We aim to build partnerships that transcend equipment, serving every workshop globally with the philosophy of "Work with Confidence, Reap in Joy".
+                </p>
+              </div>
+
+              <div className="bg-white border border-slate-200 rounded-xl p-10 md:p-12 hover:border-orange-500 transition-all duration-300 shadow-xl hover:shadow-2xl group">
+                <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight group-hover:text-orange-500 transition-colors">Corporate <span className="text-orange-500">DNA</span></h2>
+                <p className="text-slate-600 leading-relaxed mb-6 font-light text-lg">
+                  With a heritage stemming from a state-owned factory founded in 1970, we carry half a century of engineering depth. DoDoShark Machinery was established in Nanjing in 2019, anchoring our core mission as <strong>"Empowering Productivity."</strong>
+                </p>
+                <p className="text-slate-600 leading-relaxed font-light text-lg">
+                  We prioritize a "Technology-led Development" model, rejecting homogenization to build a three-dimensional ecosystem: <strong>R&D as the core, Manufacturing as the base, and Service as the wings.</strong>
+                </p>
+              </div>
+
+              <div className="bg-white border border-slate-200 rounded-xl p-10 md:p-12 hover:border-orange-500 transition-all duration-300 shadow-xl hover:shadow-2xl group">
+                <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight group-hover:text-orange-500 transition-colors">Technical <span className="text-orange-500">Strength</span></h2>
+                <p className="text-slate-600 leading-relaxed mb-6 font-light text-lg">
+                  Our products significantly outperform peers. For instance, our stainless steel crushers were the first to achieve <strong>150-mesh fineness at 1 ton/hour</strong>, supporting 12 hours continuous operation—multiplying standard industry efficiency.
+                </p>
+              </div>
             </div>
           </div>
         </div>
