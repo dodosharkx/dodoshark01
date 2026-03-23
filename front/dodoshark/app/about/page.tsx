@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About Us | DoDoShark Machinery',
-  description: 'Rooted in China, Empowering the World. Discover DoDoShark\'s 50-year engineering heritage and our commitment to high-performance agricultural and food processing machinery.',
+  description: 'Rooted in China, Serving the World. Discover DoDoShark\'s 50-year engineering heritage and our commitment to high-performance agricultural and food processing machinery.',
 }
 
 const PRODUCT_SYSTEMS = [
@@ -171,7 +171,7 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {PRODUCT_SYSTEMS.map((sys) => (
-              <div key={sys.title} className="bg-slate-900 text-white rounded-[2.5rem] overflow-hidden group">
+              <div key={sys.title} className="bg-slate-900 text-white rounded-xl overflow-hidden group">
                 <div className="aspect-[16/9] relative overflow-hidden">
                   <Image src={sys.image} alt={sys.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(min-width: 768px) 50vw, 100vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 flex flex-col justify-end p-8">
@@ -213,19 +213,19 @@ export default function AboutPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-[2rem] text-center">
+              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-xl text-center">
                 <div className="text-4xl font-black mb-2">10+</div>
                 <div className="text-xs uppercase tracking-widest text-orange-200">Senior Engineers</div>
               </div>
-              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-[2rem] text-center">
+              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-xl text-center">
                 <div className="text-4xl font-black mb-2">3</div>
                 <div className="text-xs uppercase tracking-widest text-orange-200">Production Bases</div>
               </div>
-              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-[2rem] text-center">
+              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-xl text-center">
                 <div className="text-4xl font-black mb-2">60+</div>
                 <div className="text-xs uppercase tracking-widest text-orange-200">Skilled Technicians</div>
               </div>
-              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-[2rem] text-center">
+              <div className="bg-white/10 backdrop-blur border border-white/20 p-6 rounded-xl text-center">
                 <div className="text-4xl font-black mb-2">10+</div>
                 <div className="text-xs uppercase tracking-widest text-orange-200">Countries Served</div>
               </div>
@@ -263,16 +263,16 @@ export default function AboutPage() {
                       <p className="text-slate-600 leading-relaxed font-light">{item.desc}</p>
                     </div>
                     <div className="w-full md:w-1/2 pl-14 md:pl-16 mt-8 md:mt-0">
-                      <div className="aspect-[16/9] bg-white rounded-3xl p-2 border border-slate-200 shadow-xl overflow-hidden group-hover:border-orange-500 transition-colors">
-                        <Image src={item.img} alt={item.title} width={600} height={400} className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700" />
+                      <div className="aspect-[16/9] bg-white rounded-xl p-2 border border-slate-200 shadow-xl overflow-hidden group-hover:border-orange-500 transition-colors">
+                        <Image src={item.img} alt={item.title} width={600} height={400} className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-700" />
                       </div>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="w-full md:w-1/2 md:pr-16 pl-14 md:pl-0 mt-8 md:mt-0 order-2 md:order-1 flex md:justify-end">
-                      <div className="aspect-[16/9] w-full bg-white rounded-3xl p-2 border border-slate-200 shadow-xl overflow-hidden group-hover:border-orange-500 transition-colors">
-                        <Image src={item.img} alt={item.title} width={600} height={400} className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700" />
+                      <div className="aspect-[16/9] w-full bg-white rounded-xl p-2 border border-slate-200 shadow-xl overflow-hidden group-hover:border-orange-500 transition-colors">
+                        <Image src={item.img} alt={item.title} width={600} height={400} className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-700" />
                       </div>
                     </div>
                     <div className="w-full md:w-1/2 pr-0 md:pl-16 pl-14 md:pl-0 text-left order-1 md:order-2">
@@ -301,7 +301,7 @@ export default function AboutPage() {
       {/* Value Proposition / CTA */}
       <section className="py-24 bg-white relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-slate-900 rounded-[3rem] p-12 lg:p-16 text-white text-center shadow-2xl relative overflow-hidden border border-slate-800">
+          <div className="bg-slate-900 rounded-[1rem] p-12 lg:p-16 text-white text-center shadow-2xl relative overflow-hidden border border-slate-800">
             <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500 rounded-full blur-[100px] opacity-20 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-500 rounded-full blur-[100px] opacity-20 pointer-events-none" />
 

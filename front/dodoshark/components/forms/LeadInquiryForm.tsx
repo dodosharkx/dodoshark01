@@ -56,7 +56,7 @@ export default function LeadInquiryForm({
   const preferredTimePlaceholder = 'e.g. Tuesday 15:00 UTC+8'
   const notesPlaceholder = isVideoDemoVariant
     ? 'Optional: sample details, required output, power standard...'
-    : 'Optional: your application, quantity plan, and timeline.'
+    : 'Optional: your needs, quantity plan, and timeline.'
 
   return (
     <form action={handleSubmit} className={className || 'space-y-4'}>
@@ -94,8 +94,8 @@ export default function LeadInquiryForm({
 
           <div className="grid gap-4 md:grid-cols-2">
             <label className="block">
-              <span className="mb-1 block text-xs font-semibold text-slate-600">City *</span>
-              <input name="city" required placeholder="e.g. Jakarta" className={FIELD_CLASS} />
+              <span className="mb-1 block text-xs font-semibold text-slate-600">City / Country *</span>
+              <input name="city" required placeholder="e.g. Jakarta, Indonesia" className={FIELD_CLASS} />
             </label>
 
             <label className="block">
@@ -188,7 +188,7 @@ export default function LeadInquiryForm({
 
       {showMessageField ? (
         <label className="block">
-          <span className="mb-1 block text-xs font-semibold text-slate-600">Notes</span>
+          <span className="mb-1 block text-xs font-semibold text-slate-600">Notes / Message</span>
           <textarea
             name="message"
             rows={4}
@@ -200,11 +200,10 @@ export default function LeadInquiryForm({
 
       {result ? (
         <div
-          className={`rounded-md border px-4 py-3 text-sm ${
-            result.success
-              ? 'border-green-200 bg-green-50 text-green-700'
-              : 'border-red-200 bg-red-50 text-red-700'
-          }`}
+          className={`rounded-md border px-4 py-3 text-sm ${result.success
+            ? 'border-green-200 bg-green-50 text-green-700'
+            : 'border-red-200 bg-red-50 text-red-700'
+            }`}
         >
           {result.message}
         </div>
