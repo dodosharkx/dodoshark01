@@ -38,14 +38,7 @@ export default function CornMillingSolutionPage() {
             <p className="mb-8 text-xl font-light leading-relaxed text-slate-400">
               This solution provides you with a corn milling selection system. Whether you are an individual user, a small-scale farmer, or a large-scale processing enterprise, you can find the suitable corn milling machine or complete production line that matches your needs.
             </p>
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-              <a href="#products" className="rounded-md border-2 border-orange-500 bg-orange-500 px-8 py-3.5 text-sm font-black tracking-widest text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-600 hover:border-orange-600">
-                View Equipment
-              </a>
-              <a href="#contact" className="rounded-md border-2 border-slate-600 bg-transparent px-8 py-3.5 text-sm font-black tracking-widest text-white transition-all hover:border-slate-400 hover:bg-slate-800">
-                Contact Us
-              </a>
-            </div>
+
           </div>
           <div className="lg:w-3/5 w-full">
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
@@ -70,8 +63,8 @@ export default function CornMillingSolutionPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Low Cost */}
-            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5">
-              <div className="h-16 w-16 mb-6 relative">
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col items-center text-center">
+              <div className="h-16 w-16 mb-6 relative mx-auto">
                 <Image src="/assets/images/solutions/corn-milling/advantages/low-cost.png" alt="Low Cost" fill className="object-contain" />
               </div>
               <h3 className="text-xl font-display font-bold mb-3">Low Cost & High ROI</h3>
@@ -80,8 +73,8 @@ export default function CornMillingSolutionPage() {
               </p>
             </div>
             {/* Clean Workshop */}
-            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5">
-              <div className="h-16 w-16 mb-6 relative">
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col items-center text-center">
+              <div className="h-16 w-16 mb-6 relative mx-auto">
                 <Image src="/assets/images/solutions/corn-milling/advantages/clean.png" alt="Clean Workshop" fill className="object-contain" />
               </div>
               <h3 className="text-xl font-display font-bold mb-3">Clean Workshop</h3>
@@ -90,8 +83,8 @@ export default function CornMillingSolutionPage() {
               </p>
             </div>
             {/* Quality */}
-            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5">
-              <div className="h-16 w-16 mb-6 relative">
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col items-center text-center">
+              <div className="h-16 w-16 mb-6 relative mx-auto">
                 <Image src="/assets/images/solutions/corn-milling/advantages/quality.png" alt="Excellent Quality" fill className="object-contain" />
               </div>
               <h3 className="text-xl font-display font-bold mb-3">Excellent Flour Quality</h3>
@@ -100,8 +93,8 @@ export default function CornMillingSolutionPage() {
               </p>
             </div>
             {/* Efficiency */}
-            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5">
-              <div className="h-16 w-16 mb-6 relative">
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col items-center text-center">
+              <div className="h-16 w-16 mb-6 relative mx-auto">
                 <Image src="/assets/images/solutions/corn-milling/advantages/efficiency.png" alt="Efficiency" fill className="object-contain" />
               </div>
               <h3 className="text-xl font-display font-bold mb-3">Efficiency Improvement</h3>
@@ -110,8 +103,8 @@ export default function CornMillingSolutionPage() {
               </p>
             </div>
             {/* Intelligent */}
-            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5">
-              <div className="h-16 w-16 mb-6 relative">
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col items-center text-center">
+              <div className="h-16 w-16 mb-6 relative mx-auto">
                 <Image src="/assets/images/solutions/corn-milling/advantages/smart.png" alt="Intelligent" fill className="object-contain" />
               </div>
               <h3 className="text-xl font-display font-bold mb-3">Intelligent & Worry-Free</h3>
@@ -120,8 +113,8 @@ export default function CornMillingSolutionPage() {
               </p>
             </div>
             {/* Guarantee */}
-            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5">
-              <div className="h-16 w-16 mb-6 relative">
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col items-center text-center">
+              <div className="h-16 w-16 mb-6 relative mx-auto">
                 <Image src="/assets/images/solutions/corn-milling/advantages/guarantee.png" alt="Guarantee" fill className="object-contain" />
               </div>
               <h3 className="text-xl font-display font-bold mb-3">Long-Term Guarantee</h3>
@@ -232,7 +225,7 @@ export default function CornMillingSolutionPage() {
                 <p className="text-sm mt-1">99.9% dust collection system</p>
               </div>
             </div>
-            <div className="rounded-xl border border-slate-100 bg-white p-6 flex flex-col hover:shadow-lg transition-all">
+            <div className="rounded-xl border border-red-100 bg-red-50 p-6 flex flex-col">
               <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-4 shadow-sm">
                 <Image src="/assets/images/solutions/corn-milling/pain-points/unstable-performance.jpg" alt="Unstable Performance" fill className="object-cover" />
               </div>
@@ -377,7 +370,7 @@ export default function CornMillingSolutionPage() {
 
           <div className="mb-16">
             <Image
-              src="/assets/images/solutions/corn-milling/process-flow.png"
+              src="/assets/images/solutions/corn-milling/process-flow-en.png"
               alt="Corn Dust-Free Milling Process Flow Diagram"
               width={1400}
               height={800}
@@ -412,32 +405,32 @@ export default function CornMillingSolutionPage() {
       </section>
 
       {/* 8. Why Choose Us */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-slate-50 border-y border-slate-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Why Choose DoDoShark" subtitle="Expertise and commitment that drive your success." />
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
-            <div className="p-4 flex flex-col items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center h-full">
               <div className="relative h-16 w-16 mb-4">
                 <Image src="/assets/images/solutions/corn-milling/cases/complete-products.png" alt="Complete Products" fill className="object-contain" />
               </div>
               <h4 className="font-bold text-lg mb-2 text-slate-900">Complete Products</h4>
               <p className="text-sm text-slate-500">Match suitable models for optimal efficiency.</p>
             </div>
-            <div className="p-4 flex flex-col items-center">
+            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center h-full">
               <div className="relative h-16 w-16 mb-4">
                 <Image src="/assets/images/solutions/corn-milling/cases/high-return.png" alt="High Return" fill className="object-contain" />
               </div>
               <h4 className="font-bold text-lg mb-2 text-slate-900">High Return</h4>
               <p className="text-sm text-slate-500">Self-production ensures low costs and better price.</p>
             </div>
-            <div className="p-4 flex flex-col items-center">
+            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center h-full">
               <div className="relative h-16 w-16 mb-4">
                 <Image src="/assets/images/solutions/corn-milling/cases/full-link-delivery.png" alt="Full-Link Delivery" fill className="object-contain" />
               </div>
               <h4 className="font-bold text-lg mb-2 text-slate-900">Full-Link Delivery</h4>
               <p className="text-sm text-slate-500">Design to installation handled seamlessly.</p>
             </div>
-            <div className="p-4 flex flex-col items-center">
+            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center h-full">
               <div className="relative h-16 w-16 mb-4">
                 <Image src="/assets/images/solutions/corn-milling/cases/sustainable-upgrade.png" alt="Sustainable Upgrade" fill className="object-contain" />
               </div>

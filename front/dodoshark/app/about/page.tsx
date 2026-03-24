@@ -98,6 +98,7 @@ export default function AboutPage() {
             <span>DoDoShark Enterprise</span>
           </div> */}
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
+            <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">DoDoShark Machinery</span><br />
             Rooted in China <br /> <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">Empowering the World</span>
           </h1>
           <p className="text-lg text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
