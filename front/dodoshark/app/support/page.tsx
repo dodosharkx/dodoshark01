@@ -45,7 +45,7 @@ export default function SupportPage() {
     <main className="bg-[#fcfdfd] text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-900">
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-48 overflow-hidden bg-slate-800">
+      <section className="relative pt-24 pb-32 overflow-hidden bg-slate-800">
         <div className="absolute inset-0 z-0">
           <Image
             src="/assets/images/about/support-hero.jpg"

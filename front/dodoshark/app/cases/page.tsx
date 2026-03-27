@@ -178,7 +178,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
 
   return (
     <main className="bg-[#fcfdfd] text-slate-900">
-      <section className="relative overflow-hidden bg-slate-800 pb-24 pt-32">
+      <section className="relative overflow-hidden bg-slate-800 pb-12 pt-16">
         {heroImageSrc && (
           <Image
             src={heroImageSrc}
@@ -245,11 +245,10 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
             <div className="inline-flex min-w-full gap-3 md:flex md:w-full md:flex-wrap md:justify-center">
               <Link
                 href={buildHref({})}
-                className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${
-                  tag
-                    ? 'border-slate-200 text-slate-700 hover:border-slate-300'
-                    : 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
-                }`}
+                className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${tag
+                  ? 'border-slate-200 text-slate-700 hover:border-slate-300'
+                  : 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                  }`}
               >
                 All Tags
               </Link>
@@ -261,11 +260,10 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
                   <Link
                     key={item._id ?? slug}
                     href={buildHref({ tag: slug })}
-                    className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${
-                      active
-                        ? 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
-                        : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                    }`}
+                    className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${active
+                      ? 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
+                      }`}
                   >
                     {item.title || slug}
                   </Link>
