@@ -283,25 +283,10 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
             <div className="absolute inset-0 bg-gradient-to-b from-slate-800/85 via-slate-800/70 to-slate-800" />
           </div>
         )}
-
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          {(caseStudy.industry?.title || caseStudy.location) && (
-            <div className="mb-8 inline-flex flex-wrap items-center justify-center gap-3 rounded-md border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
-              {caseStudy.industry?.title && (
-                <>
-                  <Icon icon="industry" className="h-4 w-4 text-orange-400" />
-                  <span>{caseStudy.industry.title}</span>
-                </>
-              )}
-              {caseStudy.location && (
-                <>
-                  {caseStudy.industry?.title && <span className="h-3 w-px bg-white/30" />}
-                  <Icon icon="location" className="h-4 w-4 text-orange-400" />
-                  <span>{caseStudy.location}</span>
-                </>
-              )}
-            </div>
-          )}
+          <div className="mb-8 inline-flex items-center justify-center rounded-md border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
+            customer cases
+          </div>
 
           {caseStudy.title && (
             <h1 className="mb-8 text-4xl font-display font-black leading-tight tracking-tight md:text-6xl">
@@ -309,36 +294,27 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
             </h1>
           )}
 
-          {caseStudy.excerpt && (
-            <p className="mx-auto max-w-3xl text-lg font-light leading-relaxed text-slate-300 md:text-xl">
-              {caseStudy.excerpt}
-            </p>
+          {(caseStudy.industry?.title || caseStudy.location) && (
+            <div className="mb-8 flex flex-wrap justify-center gap-4">
+              {caseStudy.industry?.title && (
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <Icon icon="industry" className="h-4 w-4 text-orange-400" />
+                  <span>{caseStudy.industry.title}</span>
+                </div>
+              )}
+              {caseStudy.location && (
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <Icon icon="location" className="h-4 w-4 text-orange-400" />
+                  <span>{caseStudy.location}</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </section>
 
-      {metrics.length > 0 && (
-        <div className="relative z-20 mx-auto -mt-24 mb-16 max-w-6xl px-4 sm:px-6 lg:-mt-28 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 rounded-lg border border-slate-100 bg-white p-8 shadow-2xl md:grid-cols-4 lg:p-12">
-            {metrics.map((metric, idx) => (
-              <div key={`${metric.label}-${idx}`} className="px-2 text-center">
-                {metric.label && (
-                  <p className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    {metric.label}
-                  </p>
-                )}
-                {metric.value && (
-                  <p className="text-2xl font-display font-black text-slate-900 lg:text-4xl">
-                    {metric.value}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <article className="bg-white py-24">
 
-      <article className={`bg-white ${metrics.length > 0 ? 'pb-24 pt-8' : 'py-24'}`}>
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="portable-text">
             <PortableText value={caseStudy.body ?? []} components={components} />
@@ -421,24 +397,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
         </section>
       )}
 
-      <section className="relative overflow-hidden bg-slate-800 py-24 text-white">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]" />
-        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h3 className="mb-8 text-4xl font-display font-black uppercase tracking-tight">
-            Ready to Replicate This Success?
-          </h3>
-          <p className="mb-12 text-lg font-light text-slate-400">
-            Send us your material and output target. Our engineers will return a validated processing proposal within
-            48 hours.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block rounded-md bg-orange-500 px-12 py-5 text-sm font-black uppercase tracking-widest text-white shadow-2xl transition-all hover:scale-105 hover:bg-orange-600"
-          >
-            Calculate ROI For My Project
-          </Link>
-        </div>
-      </section>
+
     </div>
   )
 }

@@ -43,7 +43,7 @@ const SERVICE_STAGES = [
 export default function SupportPage() {
   return (
     <main className="bg-[#fcfdfd] text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-900">
-      
+
       {/* Hero Section */}
       <section className="relative pt-32 pb-48 overflow-hidden bg-slate-800">
         <div className="absolute inset-0 z-0">
@@ -71,14 +71,7 @@ export default function SupportPage() {
             <p className="text-xl text-slate-300 font-light leading-relaxed mb-10 border-l-2 border-orange-500/50 pl-6">
               Empowering your production with 50 years of engineering heritage and a modern, results-driven support ecosystem.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/contact" className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-orange-500/20 hover:-translate-y-0.5">
-                Consult an Expert
-              </Link>
-              <Link href="/about" className="bg-white/5 hover:bg-white/10 backdrop-blur border border-white/10 text-white px-8 py-4 rounded-xl font-bold transition-all">
-                Our Heritage
-              </Link>
-            </div>
+
           </div>
         </div>
 
@@ -157,7 +150,7 @@ export default function SupportPage() {
       <section className="py-24 bg-slate-950 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500 rounded-full blur-[150px] opacity-10" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-[150px] opacity-10" />
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="bg-slate-900/50 backdrop-blur-sm border border-white/5 rounded-[2rem] p-10 md:p-16">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
