@@ -5,38 +5,13 @@ import { notFound } from 'next/navigation'
 import { PortableText, type PortableTextBlock, type PortableTextComponents } from 'next-sanity'
 
 import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
-import { client, urlFor } from '@/app/lib/sanity'
+import { client } from '@/app/lib/sanity'
+import { toImageSrc } from '@/app/lib/sanity-utils'
+import type { SanityAsset, SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 
 interface CaseDetailPageProps {
   params: Promise<{ slug: string }>
-}
-
-type SanityAsset = {
-  _id?: string
-  _ref?: string
-  url?: string
-  metadata?: {
-    lqip?: string
-    dimensions?: {
-      width?: number
-      height?: number
-    }
-  }
-}
-
-type SanityImage = {
-  alt?: string
-  asset?: SanityAsset
-}
-
-type SeoMeta = {
-  title?: string
-  description?: string
-  keywords?: string[]
-  canonicalUrl?: string
-  noIndex?: boolean
-  ogImage?: SanityImage
 }
 
 type CategoryData = {
@@ -140,22 +115,6 @@ const caseBySlugQuery = `*[_type == "caseStudy" && slug.current == $slug][0]{
 
 async function getCaseBySlug(slug: string) {
   return client.fetch<CaseStudyData | null>(caseBySlugQuery, { slug })
-}
-
-function toImageSrc(image?: SanityImage, width = 1400) {
-  if (!image) return undefined
-
-  const directUrl = image.asset?.url?.trim()
-  if (directUrl) return directUrl
-
-  const hasIdentity = Boolean(image.asset?._id || image.asset?._ref)
-  if (!hasIdentity) return undefined
-
-  try {
-    return urlFor(image).width(width).fit('max').url()
-  } catch {
-    return undefined
-  }
 }
 
 function buildPortableTextComponents(): PortableTextComponents {

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+import { urlFor } from '@/app/lib/sanity'
 import {
   getSharedBackgroundTheme,
   type SharedBackgroundVariant,
@@ -12,6 +14,13 @@ type MetricItem = {
   value?: string
   unit?: string
   label?: string
+  image?: {
+    asset?: {
+      _ref?: string
+      _id?: string
+      url?: string
+    }
+  }
   icon?: string
 }
 
@@ -42,29 +51,51 @@ export default function MetricsBlock({ block }: { block: MetricsBlockData }) {
         />
       )}
 
-      <div className="grid grid-cols-2 gap-6 lg:grid-cols-4 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
           {items.map((item, idx) => {
             const iconClass = item.icon?.trim() || 'chart-line'
 
             return (
               <article
                 key={item._key ?? `${item.label}-${idx}`}
-                className={`p-6 md:p-8 text-center ${theme.surfaceElevated}`}
+                className={`group relative flex flex-col items-center p-6 transition-all duration-300 hover:shadow-lg ${theme.surfaceElevated} rounded-xl border border-slate-100 overflow-hidden shadow-xs`}
               >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-md bg-orange-50 text-orange-600 border border-orange-100 flex items-center justify-center">
-                  <Icon icon={iconClass} className="h-5 w-5" />
+                <div className="relative w-36 h-36 mb-4 transition-transform duration-500 ease-out group-hover:scale-105">
+                  <div className="relative w-full h-full overflow-hidden rounded-lg flex items-center justify-center">
+                    {item.image?.asset ? (
+                      <Image
+                        src={urlFor(item.image).width(600).height(600).url()}
+                        alt={item.label || ''}
+                        width={144}
+                        height={144}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-orange-500 bg-orange-50/50 w-full h-full flex items-center justify-center rounded-lg border border-orange-100/30">
+                        <Icon icon={iconClass} className="h-10 w-10" />
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <div className="mb-1 text-3xl font-display font-black text-slate-900 md:text-4xl">
-                  <span className="text-orange-500">{item.value}</span>
-                  {item.unit && <span className="text-xl align-top ms-1">{item.unit}</span>}
-                </div>
+                <div className="text-center w-full">
+                  <div className="mb-0.5 flex items-baseline justify-center font-display font-black tracking-tight">
+                    <span className="text-xl text-slate-900 md:text-2xl transition-colors duration-300 group-hover:text-orange-600">
+                      {item.value}
+                    </span>
+                    {item.unit && (
+                      <span className="ml-0.5 text-[10px] text-slate-400 font-medium">
+                        {item.unit}
+                      </span>
+                    )}
+                  </div>
 
-                {item.label && (
-                  <p className={`text-[11px] uppercase tracking-[0.16em] text-slate-500 md:text-xs ${bodyTextClass}`}>
-                    {item.label}
-                  </p>
-                )}
+                  {item.label && (
+                    <p className={`text-[9px] font-bold uppercase tracking-[0.25em] text-slate-400 group-hover:text-slate-500 transition-colors duration-300 leading-tight ${bodyTextClass}`}>
+                      {item.label}
+                    </p>
+                  )}
+                </div>
               </article>
             )
           })}

@@ -2,28 +2,11 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { client, urlFor } from '@/app/lib/sanity'
+import { client } from '@/app/lib/sanity'
+import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
+import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import LandingCardPager, { type LandingCardItem } from '@/components/ui/LandingCardPager'
-
-type QueryParamValue = string | string[] | undefined
-
-type SeoMeta = {
-  title?: string
-  description?: string
-  keywords?: string[]
-  canonicalUrl?: string
-  noIndex?: boolean
-}
-
-type SanityImage = {
-  alt?: string
-  asset?: {
-    _id?: string
-    _ref?: string
-    url?: string
-  }
-}
 
 type CategoryItem = {
   _id?: string
@@ -128,31 +111,10 @@ const allTagsQuery = `*[_type == "contentTag"] | order(title asc){
   slug{current}
 }`
 
-function firstParam(value: QueryParamValue) {
-  if (Array.isArray(value)) return value[0]
-  return value
-}
-
 function parsePositiveInt(value: string | undefined, fallback = 1) {
   const parsed = Number.parseInt(value ?? '', 10)
   if (!Number.isFinite(parsed) || parsed < 1) return fallback
   return parsed
-}
-
-function toImageSrc(image?: SanityImage, width = 1200) {
-  if (!image) return undefined
-
-  const directUrl = image.asset?.url?.trim()
-  if (directUrl) return directUrl
-
-  const hasIdentity = Boolean(image.asset?._id || image.asset?._ref)
-  if (!hasIdentity) return undefined
-
-  try {
-    return urlFor(image).width(width).fit('max').url()
-  } catch {
-    return undefined
-  }
 }
 
 function buildHref({ tag, page }: { tag?: string; page?: number }) {

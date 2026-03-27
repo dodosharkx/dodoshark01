@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import { client, urlFor } from '@/app/lib/sanity'
+import { client } from '@/app/lib/sanity'
+import { toImageSrc } from '@/app/lib/sanity-utils'
+import type { SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import CardGridBlock, { type CardGridBlockData } from '@/components/page-builder/CardGridBlock'
 import CollectionReferenceBlock, {
   type CollectionReferenceBlockData,
@@ -38,34 +40,6 @@ import { notFound } from 'next/navigation'
 
 interface SolutionPageProps {
   params: Promise<{ slug: string }>
-}
-
-type SanityAsset = {
-  _id?: string
-  _ref?: string
-  url?: string
-  metadata?: {
-    lqip?: string
-    dimensions?: {
-      width?: number
-      height?: number
-    }
-  }
-}
-
-type SanityImage = {
-  _type?: string
-  asset?: SanityAsset
-  alt?: string
-}
-
-type SeoMeta = {
-  title?: string
-  description?: string
-  keywords?: string[]
-  canonicalUrl?: string
-  noIndex?: boolean
-  ogImage?: SanityImage
 }
 
 type CategoryData = {
@@ -340,30 +314,6 @@ async function getSolutionMetadata(slug: string) {
   }`
 
   return client.fetch<SolutionData | null>(query, { slug })
-}
-
-function toImageSrc(
-  image?: SanityImage,
-  width = 1200,
-  options?: { height?: number; fit?: 'crop' | 'max' },
-) {
-  if (!image) return undefined
-
-  const directUrl = image.asset?.url?.trim()
-  if (directUrl) return directUrl
-
-  const hasIdentity = Boolean(image.asset?._ref || image.asset?._id)
-  if (!hasIdentity) return undefined
-
-  try {
-    let imageBuilder = urlFor(image).width(width)
-    if (options?.height) {
-      imageBuilder = imageBuilder.height(options.height)
-    }
-    return imageBuilder.fit(options?.fit ?? 'max').url()
-  } catch {
-    return undefined
-  }
 }
 
 function renderSolutionGroup(group: PageBuilderRenderGroup<SolutionBlock>) {

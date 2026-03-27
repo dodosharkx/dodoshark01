@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
-import { client, urlFor } from '@/app/lib/sanity'
+import { client } from '@/app/lib/sanity'
+import { toImageSrc } from '@/app/lib/sanity-utils'
+import type { SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import CardGridBlock, { type CardGridBlockData } from '@/components/page-builder/CardGridBlock'
 import CollectionReferenceBlock, {
   type CollectionReferenceBlockData,
@@ -40,34 +42,6 @@ import { bodyTextClass, cardTitleClass } from '@/components/page-builder/section
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
-}
-
-type SanityAsset = {
-  _ref?: string
-  _id?: string
-  url?: string
-  metadata?: {
-    lqip?: string
-    dimensions?: {
-      width?: number
-      height?: number
-    }
-  }
-}
-
-type SanityImage = {
-  _type?: string
-  asset?: SanityAsset
-  alt?: string
-}
-
-type SeoMeta = {
-  title?: string
-  description?: string
-  keywords?: string[]
-  canonicalUrl?: string
-  noIndex?: boolean
-  ogImage?: SanityImage
 }
 
 type FeatureGridItem = {
@@ -321,22 +295,6 @@ async function getProduct(slug: string) {
 
 async function getProductMetadata(slug: string) {
   return client.fetch<ProductData | null>(productMetadataQuery, { slug })
-}
-
-function toImageSrc(image?: SanityImage, width = 1200) {
-  if (!image) return undefined
-
-  const directUrl = image?.asset?.url?.trim()
-  if (directUrl) return directUrl
-
-  const hasIdentity = Boolean(image?.asset?._ref || image?.asset?._id)
-  if (!hasIdentity) return undefined
-
-  try {
-    return urlFor(image).width(width).fit('max').url()
-  } catch {
-    return undefined
-  }
 }
 
 function renderLegacyFeatureGrid(block: FeatureGridBlockData, key: string | number) {

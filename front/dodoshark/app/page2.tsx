@@ -1,31 +1,17 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { client, urlFor } from '@/app/lib/sanity'
+import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 
 export const revalidate = 60
 
-type SanityImage = {
-  asset?: {
-    _id?: string
-    _ref?: string
-    url?: string
-  }
-  alt?: string
+type HomeSanityImage = SanityImage & {
   imageUrl?: string
-}
-
-type SeoMeta = {
-  title?: string
-  description?: string
-  keywords?: string[]
-  canonicalUrl?: string
-  noIndex?: boolean
-  ogImage?: SanityImage
 }
 
 type HomePageData = {
   seo?: SeoMeta
-  heroBackgrounds?: SanityImage[]
+  heroBackgrounds?: HomeSanityImage[]
   whyChooseUsVideoUrl?: string
 }
 
@@ -194,7 +180,7 @@ async function getHomePage() {
   return client.fetch<HomePageData | null>(query)
 }
 
-function getSanityImageUrl(image?: SanityImage, options?: { width?: number; height?: number }) {
+function getSanityImageUrl(image?: HomeSanityImage, options?: { width?: number; height?: number }) {
   if (!image) return null
   if (image.imageUrl?.trim()) return image.imageUrl
   if (image.asset?.url?.trim()) return image.asset.url

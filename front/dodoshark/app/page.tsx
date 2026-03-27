@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { client, urlFor } from '@/app/lib/sanity'
+import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import DeferredHeroCarousel from '@/components/home/DeferredHeroCarousel'
 import DeferredLiteYouTube from '@/components/home/DeferredLiteYouTube'
 import DeferredHomeBlogCarousel from '@/components/home/DeferredHomeBlogCarousel'
@@ -10,27 +11,13 @@ import DeferredProjectCasesCarousel from '@/components/home/DeferredProjectCases
 import { type HeroCarouselImage } from '@/components/home/HeroCarousel'
 import ViewDetailsLink from '@/components/ui/ViewDetailsLink'
 
-type SanityImage = {
-  asset?: {
-    _id?: string
-    _ref?: string
-    url?: string
-  }
-  alt?: string
+type HomeSanityImage = SanityImage & {
   imageUrl?: string
-}
-
-type SeoMeta = {
-  title?: string
-  description?: string
-  keywords?: string[]
-  canonicalUrl?: string
-  noIndex?: boolean
 }
 
 type HomePageData = {
   seo?: SeoMeta
-  heroBackgrounds?: SanityImage[]
+  heroBackgrounds?: HomeSanityImage[]
   whyChooseUsVideoUrl?: string
 }
 
@@ -245,7 +232,7 @@ const advantages = [
   },
 ]
 
-function getSanityImageUrl(image?: SanityImage, options?: { width?: number; height?: number }) {
+function getSanityImageUrl(image?: HomeSanityImage, options?: { width?: number; height?: number }) {
   if (!image) return null
 
   if (image.asset?._ref || image.asset?._id) {

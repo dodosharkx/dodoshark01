@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/
+
+# Debug and Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+logs/
+
+# Env files
+.env*
+.dev.vars
+*.local
+
+# Editor and System
+.vscode/
+.idea/
+*.swp
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+*.pem
+
+# Backups and Archives
+/archive/
+*.tar.gz
+*.zip
+*.bak
+
+# Media and large files (Optional/Aggressive - keeping as per previous setup)
+*.mp4
+*.pdf
+# *.txt  # Commented out as it might be too aggressive for instructions/READMEs
+
+# Python specific (if used for scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+/scripts/
+*.py

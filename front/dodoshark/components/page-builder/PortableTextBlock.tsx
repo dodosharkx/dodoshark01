@@ -8,6 +8,7 @@ import {
 
 import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
 import { urlFor } from '@/app/lib/sanity'
+import type { SanityImage } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import {
   getSharedBackgroundTheme,
@@ -16,21 +17,6 @@ import {
 } from './backgroundTheme'
 import SectionShell from './SectionShell'
 import { bodyTextClass, cardTitleClass } from './sectionStyles'
-
-type SanityImage = {
-  alt?: string
-  asset?: {
-    _id?: string
-    url?: string
-    metadata?: {
-      lqip?: string
-      dimensions?: {
-        width?: number
-        height?: number
-      }
-    }
-  }
-}
 
 type ProductReferenceDoc = {
   _id?: string

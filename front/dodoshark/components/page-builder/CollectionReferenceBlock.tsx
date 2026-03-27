@@ -8,6 +8,7 @@ import type {Swiper as SwiperInstance} from 'swiper'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
 import { urlFor } from '@/app/lib/sanity'
+import type { SanityImage } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import {
   defaultSliderControls,
@@ -25,21 +26,6 @@ import SectionShell from './SectionShell'
 import SectionHeader from './SectionHeader'
 import { cardTitleClass, sectionSubtitleClass } from './sectionStyles'
 import 'swiper/css'
-
-type SanityImage = {
-  alt?: string
-  asset?: {
-    _id?: string
-    url?: string
-    metadata?: {
-      lqip?: string
-      dimensions?: {
-        width?: number
-        height?: number
-      }
-    }
-  }
-}
 
 type ReferenceDoc = {
   _id?: string
