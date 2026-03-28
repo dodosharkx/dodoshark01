@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     // 启用现代图片格式，自动优化为 AVIF 和 WebP
     formats: ['image/avif', 'image/webp'],
     qualities: [68, 70, 72, 74, 75],
