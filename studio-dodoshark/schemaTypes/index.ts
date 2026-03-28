@@ -1,5 +1,6 @@
 // Objects
 import seoMeta from './objects/seoMeta'
+import solutionHtmlTemplate from './objects/solutionHtmlTemplate'
 import portableTextContent from './objects/portableTextBlock'
 import caseStudyBlock from './objects/caseStudyBlock'
 import challengeBlock from './objects/challengeBlock'
@@ -50,6 +51,7 @@ import recruitAgentsPage from './singletons/recruitAgentsPage'
 export const schemaTypes = [
     // Objects
     seoMeta,
+    solutionHtmlTemplate,
     portableTextContent,
     caseStudyBlock,
     challengeBlock,
