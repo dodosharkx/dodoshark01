@@ -132,14 +132,11 @@ async function getCaseBySlug(slug: string) {
   return client.fetch<CaseStudyData | null>(caseBySlugQuery, { slug })
 }
 
-function getImageAspectRatio(image?: SanityImage, fallback = 2) {
-  const width = image?.asset?.metadata?.dimensions?.width
-  const height = image?.asset?.metadata?.dimensions?.height
+function toSentenceCase(value: string) {
+  const normalized = value.trim().replace(/\s+/g, ' ').toLowerCase()
+  if (!normalized) return ''
 
-  if (!width || !height) return fallback
-
-  const ratio = width / height
-  return Number.isFinite(ratio) && ratio > 0 ? ratio : fallback
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1)
 }
 
 function buildPortableTextComponents(): PortableTextComponents {
@@ -294,6 +291,8 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   )
   const components = buildPortableTextComponents()
   const caseTags = (caseStudy.tags ?? []).filter((item) => item?.title?.trim() && item?.slug?.current?.trim())
+  const tagMetaClassName =
+    'inline-flex items-center gap-2 rounded-full border border-white/16 bg-white/6 px-3.5 py-1.5 text-[11px] font-medium tracking-[0.08em] text-slate-200 transition sm:text-xs'
 
   return (
     <div className="bg-white text-slate-900">
@@ -341,14 +340,14 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
                 <Link
                   key={tag._id || tag.slug?.current}
                   href={`/cases?${new URLSearchParams({ tag: tag.slug?.current ?? '' }).toString()}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300 transition hover:border-orange-400/40 hover:text-white"
+                  className={`${tagMetaClassName} hover:border-orange-400/35 hover:bg-white/10 hover:text-white`}
                 >
                   <span className="h-2 w-2 rounded-full bg-orange-400" />
-                  <span>{tag.title}</span>
+                  <span>{toSentenceCase(tag.title ?? '')}</span>
                 </Link>
               ))}
               {caseStudy.location && (
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-300">
+                <div className={tagMetaClassName}>
                   <Icon icon="location" className="h-4 w-4 text-orange-400" />
                   <span>{caseStudy.location}</span>
                 </div>

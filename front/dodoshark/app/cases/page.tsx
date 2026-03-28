@@ -151,6 +151,11 @@ function getCoverImageAspectRatio(image?: SanityImage, fallback = 2) {
   return Math.abs(ratio - fallback) < 0.01 ? fallback : ratio
 }
 
+const casesCardTagClassName =
+  'border-orange-200/80 bg-orange-50/80 px-3.5 py-1 text-[11px] font-medium text-orange-600 shadow-[0_6px_18px_rgba(249,115,22,0.06)] sm:text-xs'
+
+const casesCardTagLabelClassName = 'max-w-[220px]'
+
 export async function generateMetadata(): Promise<Metadata> {
   const landing = await client.fetch<CasesLandingData | null>(casesLandingQuery)
   const seo = landing?.seo
@@ -281,6 +286,8 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
               filterParamValue={tag}
               emptyMessage="No case studies found for the current tag."
               imageAspectClassName="aspect-[2/1]"
+              tagClassName={casesCardTagClassName}
+              tagLabelClassName={casesCardTagLabelClassName}
             />
           )}
 

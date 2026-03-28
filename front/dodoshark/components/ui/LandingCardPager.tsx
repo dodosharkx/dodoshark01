@@ -29,6 +29,8 @@ type LandingCardPagerProps = {
   filterParamValue?: string
   emptyMessage: string
   imageAspectClassName?: string
+  tagClassName?: string
+  tagLabelClassName?: string
 }
 
 type ViewportMode = 'mobile' | 'tablet' | 'desktop'
@@ -101,6 +103,13 @@ function CardCta() {
   )
 }
 
+function toSentenceCase(value: string) {
+  const normalized = value.trim().replace(/\s+/g, ' ').toLowerCase()
+  if (!normalized) return ''
+
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1)
+}
+
 export default function LandingCardPager({
   items,
   initialPage,
@@ -109,6 +118,8 @@ export default function LandingCardPager({
   filterParamValue,
   emptyMessage,
   imageAspectClassName = 'aspect-[4/3]',
+  tagClassName,
+  tagLabelClassName,
 }: LandingCardPagerProps) {
   const router = useRouter()
   const [viewportMode, setViewportMode] = useState<ViewportMode>('desktop')
@@ -208,11 +219,15 @@ export default function LandingCardPager({
             <div className="flex flex-1 flex-col p-7">
               <div className="mb-4 flex justify-center">
                 <div
-                  className="inline-flex max-w-full items-center gap-2 whitespace-nowrap rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[13px] font-semibold leading-none text-orange-600 shadow-[0_8px_24px_rgba(249,115,22,0.08)]"
-                  title={item.tag}
+                  className={`inline-flex max-w-full items-center gap-2 whitespace-nowrap rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[13px] font-semibold leading-none text-orange-600 shadow-[0_8px_24px_rgba(249,115,22,0.08)] ${
+                    tagClassName ?? ''
+                  }`}
+                  title={toSentenceCase(item.tag)}
                 >
                   <span className="h-2 w-2 shrink-0 rounded-full bg-orange-400" />
-                  <span className="block max-w-[180px] truncate">{item.tag}</span>
+                  <span className={`block truncate ${tagLabelClassName ?? 'max-w-[180px]'}`}>
+                    {toSentenceCase(item.tag)}
+                  </span>
                 </div>
               </div>
 

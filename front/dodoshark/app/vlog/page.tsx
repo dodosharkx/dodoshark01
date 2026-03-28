@@ -231,7 +231,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
               heroTitle
             ) : (
               <>
-                Industrial <span className="accent-gradient-text">Video Hub</span>
+                DoDoShark <span className="accent-gradient-text">Video Hub</span>
               </>
             )}
           </h1>
