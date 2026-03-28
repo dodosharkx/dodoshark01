@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 
 import { client } from '@/app/lib/sanity'
-import { buildPageMetadata } from '@/app/lib/seo'
 import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
@@ -162,11 +161,15 @@ const casesCardTagLabelClassName = 'max-w-[220px]'
 
 export async function generateMetadata(): Promise<Metadata> {
   const landing = await client.fetch<CasesLandingData | null>(casesLandingQuery)
-  return buildPageMetadata({
-    seo: landing?.seo,
-    fallbackTitle: 'Global Success Stories | DoDoShark',
-    fallbackDescription: 'Explore real industrial project case studies and outcomes.',
-  })
+  const seo = landing?.seo
+
+  return {
+    title: seo?.title || 'Global Success Stories | DoDoShark',
+    description: seo?.description || 'Explore real industrial project case studies and outcomes.',
+    keywords: seo?.keywords,
+    alternates: seo?.canonicalUrl ? { canonical: seo.canonicalUrl } : undefined,
+    robots: { index: false, follow: false },
+  }
 }
 
 export default async function CasesPage({ searchParams }: CasesPageProps) {
@@ -235,8 +238,8 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
             className="object-cover opacity-30"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-800/90 via-slate-800/40 to-slate-800" />
-        <div className="absolute inset-0 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:40px_40px] opacity-20" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-800/90 via-slate-800/40 to-slate-800" />
+        <div className="absolute inset-0 bg-[radial-gradient(#f97316_1px,transparent_1px)] bg-size-[40px_40px] opacity-20" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
             {heroBadge && (
@@ -258,7 +261,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
             {heroStats.length ? (
               <div className="mt-12 flex flex-wrap items-center justify-center gap-8 md:gap-10">
                 {heroStats.slice(0, 3).map((stat, index) => (
-                  <div key={`${stat.label}-${index}`} className="min-w-[120px]">
+                  <div key={`${stat.label}-${index}`} className="min-w-30">
                     <div className="text-3xl font-display font-black text-white">{stat.value}</div>
                     <div className="mt-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
                       {stat.label}

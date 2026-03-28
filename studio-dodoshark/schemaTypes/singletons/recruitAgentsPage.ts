@@ -25,12 +25,19 @@ export default defineType({
   title: 'Recruit Agents Page',
   type: 'document',
   icon: UserIcon,
+  groups: [
+    {name: 'hero', title: 'Hero', default: true},
+    {name: 'content', title: 'Editable Text'},
+    {name: 'images', title: 'Images'},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
-    defineField({name: 'seo', title: 'SEO Settings', type: 'seoMeta'}),
+    defineField({name: 'seo', title: 'SEO Settings', type: 'seoMeta', group: 'seo'}),
     defineField({
       name: 'hero',
       title: 'Hero Content',
       type: 'object',
+      group: 'hero',
       fields: [
         defineField({name: 'title', title: 'Title', type: 'string'}),
         defineField({name: 'eyebrow', title: 'Eyebrow', type: 'string'}),
@@ -48,6 +55,7 @@ export default defineType({
       name: 'scope',
       title: 'Recruitment Scope Intro',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({name: 'title', title: 'Title', type: 'string'}),
         defineField({name: 'description', title: 'Description', type: 'text', rows: 4}),
@@ -57,6 +65,7 @@ export default defineType({
       name: 'cta',
       title: 'Bottom CTA',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({name: 'title', title: 'Title', type: 'string'}),
         defineField({name: 'description', title: 'Description', type: 'text', rows: 4}),
@@ -73,6 +82,7 @@ export default defineType({
       name: 'images',
       title: 'Page Images',
       type: 'object',
+      group: 'images',
       fields: [
         imageField('heroBackground', 'Hero Background Image', 'Top hero background image.'),
         imageField(

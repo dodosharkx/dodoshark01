@@ -20,30 +20,23 @@ function imageField(name: string, title: string, description: string) {
   })
 }
 
-function deprecatedField(config: Parameters<typeof defineField>[0]) {
-  return defineField({
-    ...config,
-    deprecated: {
-      reason:
-        'No longer consumed by the frontend. Kept temporarily to avoid data loss during cleanup.',
-    },
-    readOnly: true,
-    hidden: ({value}) => value === undefined,
-    initialValue: undefined,
-  })
-}
-
 export default defineType({
   name: 'contactPage',
   title: 'Contact Page',
   type: 'document',
   icon: EnvelopeIcon,
+  groups: [
+    {name: 'hero', title: 'Hero', default: true},
+    {name: 'content', title: 'Editable Text'},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
-    defineField({name: 'seo', title: 'SEO Settings', type: 'seoMeta'}),
+    defineField({name: 'seo', title: 'SEO Settings', type: 'seoMeta', group: 'seo'}),
     defineField({
       name: 'hero',
       title: 'Hero Section',
       type: 'object',
+      group: 'hero',
       fields: [
         defineField({
           name: 'title',
@@ -53,17 +46,13 @@ export default defineType({
         }),
         defineField({name: 'subtitle', title: 'Subtitle', type: 'text', rows: 3}),
         imageField('backgroundImage', 'Background Image', 'Hero background image.'),
-        deprecatedField({
-          name: 'tag',
-          title: 'Top Tag (Deprecated)',
-          type: 'string',
-        }),
       ],
     }),
     defineField({
       name: 'showroom',
       title: 'Showroom Card',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({name: 'title', title: 'Title', type: 'string'}),
         defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
@@ -74,40 +63,10 @@ export default defineType({
       name: 'inquiryPanel',
       title: 'Inquiry Panel',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({name: 'title', title: 'Title', type: 'string'}),
         defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
-      ],
-    }),
-    deprecatedField({
-      name: 'stats',
-      title: 'Response Stats (Deprecated)',
-      type: 'object',
-      fields: [
-        defineField({name: 'respTime', title: 'Response Time', type: 'string'}),
-        defineField({name: 'testCycle', title: 'Test Cycle', type: 'string'}),
-      ],
-    }),
-    deprecatedField({
-      name: 'globalOffices',
-      title: 'Global Offices (Deprecated)',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({name: 'region', title: 'Region', type: 'string'}),
-            defineField({name: 'tag', title: 'Status Tag', type: 'string'}),
-            defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
-            defineField({name: 'hours', title: 'Working Hours', type: 'string'}),
-          ],
-          preview: {
-            select: {title: 'region', subtitle: 'tag'},
-            prepare({title, subtitle}) {
-              return {title: title || 'Untitled office', subtitle: subtitle || 'Office item'}
-            },
-          },
-        },
       ],
     }),
   ],

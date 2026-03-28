@@ -19,19 +19,6 @@ function imageField(name: string, title: string, description: string) {
   })
 }
 
-function deprecatedField(config: Parameters<typeof defineField>[0]) {
-  return defineField({
-    ...config,
-    deprecated: {
-      reason:
-        'No longer consumed by the frontend. Kept temporarily to avoid data loss during cleanup.',
-    },
-    readOnly: true,
-    hidden: ({value}) => value === undefined,
-    initialValue: undefined,
-  })
-}
-
 export default defineType({
   name: 'aboutPage',
   title: 'About Page',
@@ -50,25 +37,7 @@ export default defineType({
       title: 'Hero Section',
       type: 'object',
       group: 'hero',
-      fields: [
-        imageField('image', 'Hero Image', 'Used in the page hero and Studio preview.'),
-        deprecatedField({
-          name: 'estYear',
-          title: 'Established Year (Deprecated)',
-          type: 'string',
-        }),
-        deprecatedField({
-          name: 'title',
-          title: 'Hero Title (Deprecated)',
-          type: 'string',
-        }),
-        deprecatedField({
-          name: 'subtitle',
-          title: 'Hero Subtitle (Deprecated)',
-          type: 'text',
-          rows: 3,
-        }),
-      ],
+      fields: [imageField('image', 'Hero Image', 'Used in the page hero and Studio preview.')],
     }),
     defineField({
       name: 'brandStoryVideoUrl',

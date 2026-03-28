@@ -61,11 +61,11 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
   const safeCurrentIndex = Math.min(currentIndex, maxIndex)
 
   return (
-    <div className="group relative mx-auto max-w-7xl">
+    <div className="group/carousel relative mx-auto max-w-7xl">
       <button
         type="button"
         aria-label="Previous videos"
-        className="absolute left-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:h-11 md:w-11 md:-left-3 xl:opacity-0 xl:group-hover:opacity-100"
+        className="absolute left-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:h-11 md:w-11 md:-left-3 xl:opacity-0 xl:group-hover/carousel:opacity-100"
         disabled={safeCurrentIndex === 0}
         onClick={() => setCurrentIndex(Math.max(0, safeCurrentIndex - 1))}
       >
@@ -75,7 +75,7 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
       <button
         type="button"
         aria-label="Next videos"
-        className="absolute right-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:h-11 md:w-11 md:-right-3 xl:opacity-0 xl:group-hover:opacity-100"
+        className="absolute right-2 top-[35%] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-900 shadow-xl transition hover:bg-orange-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-35 md:h-11 md:w-11 md:-right-3 xl:opacity-0 xl:group-hover/carousel:opacity-100"
         disabled={safeCurrentIndex >= maxIndex}
         onClick={() => setCurrentIndex(Math.min(maxIndex, safeCurrentIndex + 1))}
       >
