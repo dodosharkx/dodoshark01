@@ -169,7 +169,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
       title: item.title?.trim() || 'Case Study',
       description:
         item.excerpt?.trim() || 'Detailed case study content is available in the full project report.',
-      imageSrc: toImageSrc(item.coverImage, 900),
+      imageSrc: toImageSrc(item.coverImage, 900, { height: 450, fit: 'crop' }),
       imageAlt: item.coverImage?.alt || item.title || 'Case cover',
       tag: item.tags?.[0]?.title?.trim() || item.industry?.title?.trim() || 'Case Study',
       metaText: item.location?.trim(),
@@ -238,6 +238,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
               filterParamName="tag"
               filterParamValue={tag}
               emptyMessage="No case studies found for the current tag."
+              imageAspectClassName="aspect-[2/1]"
             />
           )}
 

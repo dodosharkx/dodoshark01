@@ -15,9 +15,75 @@ type HomeSanityImage = SanityImage & {
   imageUrl?: string
 }
 
+type HomeSlug = {
+  current?: string
+}
+
+type HomeCategoryItem = {
+  title?: string
+}
+
+type FeaturedHomeProduct = {
+  _id: string
+  title?: string
+  slug?: HomeSlug
+  shortDescription?: string
+  seriesTag?: string
+  mainImage?: HomeSanityImage
+  category?: HomeCategoryItem
+}
+
+type FeaturedHomeSolution = {
+  _id: string
+  title?: string
+  slug?: HomeSlug
+  summary?: string
+  heroImage?: HomeSanityImage
+}
+
+type FeaturedHomeCase = {
+  _id: string
+  title?: string
+  slug?: HomeSlug
+  excerpt?: string
+  coverImage?: HomeSanityImage
+  clientLogo?: HomeSanityImage
+}
+
+type HomeProductCard = {
+  title: string
+  description: string
+  image: string
+  badge?: { label: string; className: string }
+  href?: string
+}
+
+type HomeSolutionCard = {
+  title: string
+  description: string
+  image: string
+  href?: string
+}
+
+type HomeCaseCard = {
+  title: string
+  description: string
+  image: string
+  logo?: string | null
+  href: string
+}
+
 type HomePageData = {
   seo?: SeoMeta
+  heroEyebrow?: string
+  heroTitle?: string
+  heroSubtitle?: string
+  heroDescription?: string
   heroBackgrounds?: HomeSanityImage[]
+  featuredAgriProducts?: FeaturedHomeProduct[]
+  featuredFoodProducts?: FeaturedHomeProduct[]
+  featuredSolutions?: FeaturedHomeSolution[]
+  featuredCases?: FeaturedHomeCase[]
   whyChooseUsVideoUrl?: string
 }
 
@@ -32,10 +98,71 @@ const homeQuery = `coalesce(
     canonicalUrl,
     noIndex
   },
+  heroEyebrow,
+  heroTitle,
+  heroSubtitle,
+  heroDescription,
   heroBackgrounds[] {
     asset,
     alt,
     "imageUrl": asset->url
+  },
+  featuredAgriProducts[]->{
+    _id,
+    title,
+    slug{current},
+    shortDescription,
+    seriesTag,
+    mainImage{
+      asset,
+      alt,
+      "imageUrl": asset->url
+    },
+    category->{
+      title
+    }
+  },
+  featuredFoodProducts[]->{
+    _id,
+    title,
+    slug{current},
+    shortDescription,
+    seriesTag,
+    mainImage{
+      asset,
+      alt,
+      "imageUrl": asset->url
+    },
+    category->{
+      title
+    }
+  },
+  featuredSolutions[]->{
+    _id,
+    title,
+    slug{current},
+    summary,
+    heroImage{
+      asset,
+      alt,
+      "imageUrl": asset->url
+    }
+  },
+  featuredCases[]->{
+    _id,
+    title,
+    slug{current},
+    excerpt,
+    coverImage{
+      asset,
+      alt,
+      "imageUrl": asset->url
+    },
+    clientLogo{
+      asset,
+      alt,
+      "imageUrl": asset->url
+    }
   },
   whyChooseUsVideoUrl
 }`
@@ -291,6 +418,15 @@ function extractYouTubeId(embedUrl: string | null): string | null {
   return match?.[1] ?? null
 }
 
+function buildDetailHref(basePath: '/products' | '/solutions' | '/cases', slug?: HomeSlug) {
+  const current = slug?.current?.trim()
+  return current ? `${basePath}/${current}` : basePath
+}
+
+function isDefined<T>(value: T | null | undefined): value is T {
+  return value != null
+}
+
 function ArrowRightIcon({ className }: { className?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
@@ -312,11 +448,13 @@ function ProductCard({
   description,
   image,
   badge,
+  href,
 }: {
   title: string
   description: string
   image: string
   badge?: { label: string; className: string }
+  href?: string
 }) {
   return (
     <article className="home-product-card overflow-hidden rounded-[1rem] bg-white">
@@ -328,14 +466,14 @@ function ProductCard({
         <h4 className="text-lg font-bold text-slate-900">{title}</h4>
         <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{description}</p>
         <div className="mt-5 flex items-center justify-center">
-          <ViewDetailsLink href="/products" />
+          <ViewDetailsLink href={href || '/products'} />
         </div>
       </div>
     </article>
   )
 }
 
-function SolutionCard({ title, description, image }: { title: string; description: string; image: string }) {
+function SolutionCard({ title, description, image, href }: { title: string; description: string; image: string; href?: string }) {
   return (
     <article className="overflow-hidden rounded-lg border border-slate-100 bg-white transition hover:shadow-lg">
       <div className="relative h-48 overflow-hidden bg-slate-100">
@@ -347,7 +485,7 @@ function SolutionCard({ title, description, image }: { title: string; descriptio
         </h4>
         <p className="mt-4 text-sm leading-6 text-slate-500">{description}</p>
         <div className="mt-5 flex items-center justify-center">
-          <ViewDetailsLink href="/solutions" />
+          <ViewDetailsLink href={href || '/solutions'} />
         </div>
       </div>
     </article>
@@ -397,6 +535,77 @@ export default async function HomePage() {
 
   const videoEmbedUrl = toEmbedVideoUrl(data?.whyChooseUsVideoUrl)
   const youtubeVideoId = extractYouTubeId(videoEmbedUrl)
+  const featuredAgriProducts: HomeProductCard[] =
+    data?.featuredAgriProducts
+      ?.map((product) => {
+        const image = getSanityImageUrl(product.mainImage, { width: 900, height: 720 })
+        if (!image) return null
+
+        return {
+          title: product.title?.trim() || 'Product',
+          description:
+            product.shortDescription?.trim() || 'High performance industrial processing equipment.',
+          image,
+          href: buildDetailHref('/products', product.slug),
+          badge: product.seriesTag?.trim()
+            ? { label: product.seriesTag.trim(), className: 'bg-orange-500' }
+            : undefined,
+        }
+      })
+      .filter(isDefined) ?? []
+  const featuredFoodProducts: HomeProductCard[] =
+    data?.featuredFoodProducts
+      ?.map((product) => {
+        const image = getSanityImageUrl(product.mainImage, { width: 900, height: 720 })
+        if (!image) return null
+
+        return {
+          title: product.title?.trim() || 'Product',
+          description:
+            product.shortDescription?.trim() || 'High performance industrial processing equipment.',
+          image,
+          href: buildDetailHref('/products', product.slug),
+          badge: product.seriesTag?.trim()
+            ? { label: product.seriesTag.trim(), className: 'bg-orange-500' }
+            : undefined,
+        }
+      })
+      .filter(isDefined) ?? []
+  const featuredSolutions: HomeSolutionCard[] =
+    data?.featuredSolutions
+      ?.map((solution) => {
+        const image = getSanityImageUrl(solution.heroImage, { width: 900, height: 640 })
+        if (!image) return null
+
+        return {
+          title: solution.title?.trim() || 'Solution',
+          description:
+            solution.summary?.trim() || 'High-efficiency and stable industrial process design.',
+          image,
+          href: buildDetailHref('/solutions', solution.slug),
+        }
+      })
+      .filter(isDefined) ?? []
+  const featuredCases: HomeCaseCard[] =
+    data?.featuredCases
+      ?.map((caseItem) => {
+        const image = getSanityImageUrl(caseItem.coverImage, { width: 1200, height: 900 })
+        if (!image) return null
+
+        return {
+          title: caseItem.title?.trim() || 'Case Study',
+          description:
+            caseItem.excerpt?.trim() || 'Detailed case study content is available in the full project report.',
+          image,
+          logo: getSanityImageUrl(caseItem.clientLogo, { width: 264 }),
+          href: buildDetailHref('/cases', caseItem.slug),
+        }
+      })
+      .filter(isDefined) ?? []
+  const homeAgriProducts = featuredAgriProducts.length > 0 ? featuredAgriProducts : agriProducts
+  const homeFoodProducts = featuredFoodProducts.length > 0 ? featuredFoodProducts : foodProducts
+  const homeSolutions = featuredSolutions.length > 0 ? featuredSolutions : grindingSolutions
+  const homeCaseItems = featuredCases.length > 0 ? featuredCases : projectCaseItems
 
   return (
     <main className="bg-white text-slate-700">
@@ -409,14 +618,17 @@ export default async function HomePage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-500/20 px-4 py-2 text-sm font-medium text-orange-300">
               <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-              <span>20 Years of Focus in Crushing &amp; Grinding</span>
+              <span>{data?.heroEyebrow ?? '20 Years of Focus in Crushing & Grinding'}</span>
             </div>
             <h1 className="mt-6 font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-              Dual-Engine Business Model
+              {data?.heroTitle ?? 'Dual-Engine Business Model'}
             </h1>
-            <p className="mt-4 text-lg font-medium text-white/85 sm:text-xl">Agri-Processing + Food Processing</p>
+            <p className="mt-4 text-lg font-medium text-white/85 sm:text-xl">
+              {data?.heroSubtitle ?? 'Agri-Processing + Food Processing'}
+            </p>
             <p className="mt-4 max-w-lg text-sm leading-7 text-white/65 sm:text-base">
-              DoDoShark is dedicated to providing professional crushing, grinding, and mixing solutions, boosting efficiency and product quality for enterprises.
+              {data?.heroDescription ??
+                'DoDoShark is dedicated to providing professional crushing, grinding, and mixing solutions, boosting efficiency and product quality for enterprises.'}
             </p>
             <div className="mt-8">
               <Link
@@ -554,7 +766,7 @@ export default async function HomePage() {
             </div>
             <div className="p-6 sm:p-8">
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {agriProducts.map((product) => (
+                {homeAgriProducts.map((product) => (
                   <ProductCard key={product.title} {...product} />
                 ))}
               </div>
@@ -573,7 +785,7 @@ export default async function HomePage() {
             </div>
             <div className="p-6 sm:p-8">
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {foodProducts.map((product) => (
+                {homeFoodProducts.map((product) => (
                   <ProductCard key={product.title} {...product} />
                 ))}
               </div>
@@ -605,7 +817,7 @@ export default async function HomePage() {
             </div>
             <div className="p-6 sm:p-8 md:p-12">
               <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-                {grindingSolutions.map((item) => (
+                {homeSolutions.map((item) => (
                   <SolutionCard key={item.title} {...item} />
                 ))}
               </div>
@@ -653,7 +865,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <DeferredProjectCasesCarousel items={projectCaseItems} />
+          <DeferredProjectCasesCarousel items={homeCaseItems} />
         </div>
       </section>
 

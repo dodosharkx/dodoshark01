@@ -33,6 +33,7 @@ type PortableTextLinkMark = {
 type PortableTextImageNode = {
   _type?: 'image'
   alt?: string
+  caption?: string
   asset?: SanityAsset
 }
 
@@ -203,7 +204,9 @@ function buildPortableTextComponents(): PortableTextComponents {
                 blurDataURL={image.asset.metadata?.lqip}
               />
             </div>
-            {image.alt && <figcaption className="mt-3 text-center text-xs text-slate-500">{image.alt}</figcaption>}
+            {image.caption?.trim() && (
+              <figcaption className="mt-3 text-center text-xs text-slate-500">{image.caption}</figcaption>
+            )}
           </figure>
         )
       },

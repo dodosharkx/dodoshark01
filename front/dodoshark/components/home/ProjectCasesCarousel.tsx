@@ -14,7 +14,7 @@ type ProjectCaseItem = {
   title: string
   description: string
   image: string
-  logo: string
+  logo?: string | null
   href: string
 }
 
@@ -85,7 +85,7 @@ export default function ProjectCasesCarousel({ items }: ProjectCasesCarouselProp
         onResize={syncControls}
       >
         {items.map((item) => (
-          <SwiperSlide key={`${item.title}-${item.logo}`} className={styles.slide}>
+          <SwiperSlide key={`${item.title}-${item.logo ?? 'no-logo'}`} className={styles.slide}>
             <Link href={item.href} className={styles.cardLink}>
               <div className={styles.imageWrap}>
                 <Image
