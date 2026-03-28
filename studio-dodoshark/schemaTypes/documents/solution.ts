@@ -1,6 +1,6 @@
 import {BulbOutlineIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
-import {pickText} from '../shared/studio'
+import {itemCount, joinPreview, pickText} from '../shared/studio'
 
 export default defineType({
   name: 'solution',
@@ -18,6 +18,22 @@ export default defineType({
     defineField({name: 'slug', title: 'URL Slug', type: 'slug', group: 'basic', options: {source: 'title', maxLength: 96}, description: 'Used for the solution detail URL.', validation: (rule) => rule.required()}),
     defineField({name: 'category', title: 'Category', type: 'reference', to: [{type: 'category'}], group: 'basic', description: 'Used in solution filters and cards.'}),
     defineField({
+      name: 'detailRenderMode',
+      title: 'Detail Render Mode',
+      type: 'string',
+      group: 'content',
+      initialValue: 'pageBuilder',
+      options: {
+        list: [
+          {title: 'Page Builder', value: 'pageBuilder'},
+          {title: 'HTML Template', value: 'htmlTemplate'},
+        ],
+        layout: 'radio',
+      },
+      description: 'Choose between structured blocks and a fully custom HTML template.',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
@@ -33,6 +49,7 @@ export default defineType({
       type: 'array',
       group: 'content',
       description: 'Blocks are rendered in this order on the solution page.',
+      hidden: ({document}) => document?.detailRenderMode === 'htmlTemplate',
       of: [
         {type: 'heroBlock'},
         {type: 'richSectionBlock'},
@@ -48,13 +65,33 @@ export default defineType({
         {type: 'showcaseBlock'},
       ],
     }),
+    defineField({
+      name: 'htmlTemplate',
+      title: 'HTML Template',
+      type: 'solutionHtmlTemplate',
+      group: 'content',
+      hidden: ({document}) => document?.detailRenderMode !== 'htmlTemplate',
+    }),
   ],
   preview: {
-    select: {title: 'title', categoryTitle: 'category.title', summary: 'summary', media: 'heroImage'},
-    prepare({title, categoryTitle, summary, media}) {
+    select: {
+      title: 'title',
+      categoryTitle: 'category.title',
+      summary: 'summary',
+      media: 'heroImage',
+      detailRenderMode: 'detailRenderMode',
+      templateImages: 'htmlTemplate.templateImages',
+      contentBlocks: 'contentBlocks',
+    },
+    prepare({title, categoryTitle, summary, media, detailRenderMode, templateImages, contentBlocks}) {
+      const renderModeSummary =
+        detailRenderMode === 'htmlTemplate'
+          ? joinPreview(['HTML Template', itemCount(templateImages) ? `${itemCount(templateImages)} template images` : undefined])
+          : joinPreview(['Page Builder', itemCount(contentBlocks) ? `${itemCount(contentBlocks)} blocks` : undefined])
+
       return {
         title: title || 'Untitled solution',
-        subtitle: pickText(categoryTitle, summary) || 'Solution document',
+        subtitle: joinPreview([pickText(categoryTitle, summary), renderModeSummary]) || 'Solution document',
         media,
       }
     },

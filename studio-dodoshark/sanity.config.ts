@@ -1,6 +1,7 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {codeInput} from '@sanity/code-input'
 import {table} from '@sanity/table'
 import {schemaTypes, singletonTypes} from './schemaTypes'
 import {structure} from './structure'
@@ -12,7 +13,7 @@ export default defineConfig({
   projectId: 'nljl95h9',
   dataset: 'production',
 
-  plugins: [structureTool({structure}), visionTool(), table()],
+  plugins: [structureTool({structure}), visionTool(), table(), codeInput()],
 
   document: {
     actions: (prev, context) =>

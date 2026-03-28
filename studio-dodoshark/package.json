@@ -15,6 +15,7 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/code-input": "^7.0.12",
     "@sanity/icons": "3.7.4",
     "@sanity/table": "^2.0.1",
     "@sanity/vision": "^5.18.0",
