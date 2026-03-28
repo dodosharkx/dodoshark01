@@ -363,16 +363,29 @@ export default function Icon({ icon, className, title }: IconProps) {
   const resolved = resolveIconName(icon)
   const label = title || resolved.replace(/-/g, ' ')
 
+  if (title) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        className={className}
+        role="img"
+        focusable="false"
+      >
+        <title>{label}</title>
+        {getIconSvg(resolved)}
+      </svg>
+    )
+  }
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       className={className}
-      aria-hidden={title ? undefined : true}
-      role={title ? 'img' : 'presentation'}
+      aria-hidden="true"
       focusable="false"
     >
-      {title ? <title>{label}</title> : null}
       {getIconSvg(resolved)}
     </svg>
   )

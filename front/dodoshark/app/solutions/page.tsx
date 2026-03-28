@@ -7,6 +7,8 @@ import { buildPageMetadata } from '@/app/lib/seo'
 import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import LandingCardPager, { type LandingCardItem } from '@/components/ui/LandingCardPager'
+import Icon from '@/components/ui/Icon'
+
 import HeroTitle from '@/components/ui/HeroTitle'
 
 type CategoryItem = {
@@ -160,11 +162,11 @@ export default async function SolutionsPage({ searchParams }: SolutionsPageProps
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-800/90 via-slate-800/40 to-slate-800" />
-        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:40px_40px] opacity-20" />
+        <div className="absolute inset-0 bg-[radial-gradient(#f97316_1px,transparent_1px)] bg-size-[40px_40px] opacity-20" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           {heroBadge && (
-            <div className="mb-8 inline-flex items-center gap-3 rounded-md border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">
-              <i className="fas fa-microchip" aria-hidden />
+            <div className="mb-8 inline-flex items-center gap-3 rounded-md border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-orange-400">
+              <Icon icon="lightbulb" className="h-4 w-4" />
               <span>{heroBadge}</span>
             </div>
           )}
@@ -189,8 +191,8 @@ export default async function SolutionsPage({ searchParams }: SolutionsPageProps
               <Link
                 href={buildHref({})}
                 className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${category
-                    ? 'border-slate-200 text-slate-700 hover:border-slate-300'
-                    : 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                  ? 'border-slate-200 text-slate-700 hover:border-slate-300'
+                  : 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
                   }`}
               >
                 All Solutions
@@ -204,8 +206,8 @@ export default async function SolutionsPage({ searchParams }: SolutionsPageProps
                     key={item._id ?? slug}
                     href={buildHref({ category: slug })}
                     className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${active
-                        ? 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
-                        : 'border-slate-200 text-slate-700 hover:border-slate-300'
+                      ? 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
                       }`}
                   >
                     {item.title || slug}

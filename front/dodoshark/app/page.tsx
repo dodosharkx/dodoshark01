@@ -10,6 +10,7 @@ import DeferredHeroCarousel from '@/components/home/DeferredHeroCarousel'
 import DeferredHomeBlogCarousel from '@/components/home/DeferredHomeBlogCarousel'
 import DeferredProjectCasesCarousel from '@/components/home/DeferredProjectCasesCarousel'
 import { type HeroCarouselImage } from '@/components/home/HeroCarousel'
+import HeroTitle from '@/components/ui/HeroTitle'
 import VideoPreviewTrigger from '@/components/ui/VideoPreviewTrigger'
 import ViewDetailsLink from '@/components/ui/ViewDetailsLink'
 
@@ -629,7 +630,7 @@ export default async function HomePage() {
               <span>{data?.heroEyebrow ?? '20 Years of Focus in Crushing & Grinding'}</span>
             </div>
             <h1 className="mt-6 font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-              {data?.heroTitle ?? 'Dual-Engine Business Model'}
+              <HeroTitle title={data?.heroTitle} fallback="Dual-Engine Business Model" />
             </h1>
             <p className="mt-4 text-lg font-medium text-white/85 sm:text-xl">
               {data?.heroSubtitle ?? 'Agri-Processing + Food Processing'}
