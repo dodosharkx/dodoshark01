@@ -1,5 +1,6 @@
 import {HomeIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {itemCount} from '../shared/studio'
 
 export default defineType({
   name: 'homePage',
@@ -9,7 +10,7 @@ export default defineType({
   groups: [
     {name: 'hero', title: 'Hero', default: true},
     {name: 'featured', title: 'Featured Content'},
-    {name: 'video', title: 'Why Choose Us Video'},
+    {name: 'video', title: 'Videos'},
     {name: 'seo', title: 'SEO'},
   ],
   fields: [
@@ -89,11 +90,35 @@ export default defineType({
       validation: (rule) => rule.unique(),
     }),
     defineField({name: 'whyChooseUsVideoUrl', title: 'Why Choose Us Video URL', type: 'url', group: 'video', description: 'Supports YouTube or Vimeo HTTPS links.', validation: (rule) => rule.required().uri({scheme: ['https']}).error('Please enter a valid HTTPS video URL.')}),
+    defineField({
+      name: 'featuredHomeVideos',
+      title: 'Homepage Featured Videos',
+      type: 'array',
+      group: 'video',
+      description: 'Controls the homepage bottom video carousel content and order.',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'vlogItem'}],
+          options: {
+            filter: 'status == $status',
+            filterParams: {status: 'published'},
+          },
+        },
+      ],
+      validation: (rule) => rule.unique(),
+    }),
   ],
   preview: {
-    select: {media: 'heroBackgrounds.0'},
-    prepare({media}) {
-      return {title: 'Home Page', subtitle: 'Homepage singleton', media}
+    select: {media: 'heroBackgrounds.0', featuredHomeVideos: 'featuredHomeVideos'},
+    prepare({media, featuredHomeVideos}) {
+      const featuredCount = itemCount(featuredHomeVideos)
+
+      return {
+        title: 'Home Page',
+        subtitle: featuredCount > 0 ? `Homepage singleton | ${featuredCount} featured videos` : 'Homepage singleton',
+        media,
+      }
     },
   },
 })

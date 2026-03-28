@@ -329,7 +329,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
         <section className="border-t border-slate-100 bg-slate-50 py-24">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <h3 className="mb-12 text-center text-3xl font-display font-black uppercase tracking-tight text-slate-900">
-              Equipment Deployed in this Project
+              Related products in this Project
             </h3>
 
             <div className="grid gap-8 md:grid-cols-2">

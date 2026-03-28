@@ -23,6 +23,10 @@ type HomeCategoryItem = {
   title?: string
 }
 
+type HomeTagItem = {
+  title?: string
+}
+
 type FeaturedHomeProduct = {
   _id: string
   title?: string
@@ -48,6 +52,16 @@ type FeaturedHomeCase = {
   excerpt?: string
   coverImage?: HomeSanityImage
   clientLogo?: HomeSanityImage
+}
+
+type FeaturedHomeVideo = {
+  _id: string
+  title?: string
+  youtubeUrl?: string
+  publishedAt?: string
+  coverImage?: HomeSanityImage
+  tags?: HomeTagItem[]
+  status?: string
 }
 
 type HomeProductCard = {
@@ -84,6 +98,7 @@ type HomePageData = {
   featuredFoodProducts?: FeaturedHomeProduct[]
   featuredSolutions?: FeaturedHomeSolution[]
   featuredCases?: FeaturedHomeCase[]
+  featuredHomeVideos?: FeaturedHomeVideo[]
   whyChooseUsVideoUrl?: string
 }
 
@@ -162,6 +177,21 @@ const homeQuery = `coalesce(
       asset,
       alt,
       "imageUrl": asset->url
+    }
+  },
+  featuredHomeVideos[]->{
+    _id,
+    title,
+    youtubeUrl,
+    publishedAt,
+    status,
+    coverImage{
+      asset,
+      alt,
+      "imageUrl": asset->url
+    },
+    tags[]->{
+      title
     }
   },
   whyChooseUsVideoUrl
@@ -328,14 +358,6 @@ const projectCaseItems = [
   },
 ]
 
-const blogItems = [
-  { title: 'Hammer Mill Operation Demo', views: '25K Views', image: '/assets/images/技术领先.png' },
-  { title: 'Grinder Maintenance Guide', views: '18K Views', image: '/assets/images/不止单品.png' },
-  { title: 'Rice Mill Working Principles', views: '32K Views', image: '/assets/images/出厂严格.png' },
-  { title: 'Client Field Footage', views: '15K Views', image: '/assets/images/产品灰底图.png' },
-  { title: 'Factory Showroom Tour', views: '10K Views', image: '/assets/images/技术领先.png' },
-]
-
 const advantages = [
   {
     title: 'Smart Mfg. Strength',
@@ -421,6 +443,21 @@ function extractYouTubeId(embedUrl: string | null): string | null {
 function buildDetailHref(basePath: '/products' | '/solutions' | '/cases', slug?: HomeSlug) {
   const current = slug?.current?.trim()
   return current ? `${basePath}/${current}` : basePath
+}
+
+function formatHomeVideoMeta(publishedAt?: string, firstTagTitle?: string) {
+  if (publishedAt) {
+    const date = new Date(publishedAt)
+    if (!Number.isNaN(date.getTime())) {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+      }).format(date)
+    }
+  }
+
+  return firstTagTitle?.trim() || 'Video'
 }
 
 function isDefined<T>(value: T | null | undefined): value is T {
@@ -606,6 +643,23 @@ export default async function HomePage() {
   const homeFoodProducts = featuredFoodProducts.length > 0 ? featuredFoodProducts : foodProducts
   const homeSolutions = featuredSolutions.length > 0 ? featuredSolutions : grindingSolutions
   const homeCaseItems = featuredCases.length > 0 ? featuredCases : projectCaseItems
+  const homeVideoItems =
+    data?.featuredHomeVideos
+      ?.filter((video) => video?.status === 'published')
+      .map((video) => {
+        const youtubeUrl = video.youtubeUrl?.trim()
+        if (!youtubeUrl || !toEmbedVideoUrl(youtubeUrl)) return null
+
+        return {
+          id: video._id,
+          title: video.title?.trim() || 'Video',
+          imageSrc: getSanityImageUrl(video.coverImage, { width: 1200, height: 675 }) || undefined,
+          imageAlt: video.coverImage?.alt || video.title || 'Video cover',
+          youtubeUrl,
+          metaText: formatHomeVideoMeta(video.publishedAt, video.tags?.[0]?.title),
+        }
+      })
+      .filter(isDefined) ?? []
 
   return (
     <main className="bg-white text-slate-700">
@@ -896,23 +950,25 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-      <section className="bg-slate-50 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
-            <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
-          </div>
+      {homeVideoItems.length > 0 ? (
+        <section className="bg-slate-50 py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
+              <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
+            </div>
 
-          <DeferredHomeBlogCarousel items={blogItems} />
+            <DeferredHomeBlogCarousel items={homeVideoItems} />
 
-          <div className="mt-10 text-center">
-            <Link href="/vlog" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">
-              More Videos
-              <ArrowRightIcon className="h-4 w-4" />
-            </Link>
+            <div className="mt-10 text-center">
+              <Link href="/vlog" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-[#fbbf24] px-8 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#f59e0b] sm:w-auto">
+                More Videos
+                <ArrowRightIcon className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </main>
   )
 }

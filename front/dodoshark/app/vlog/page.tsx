@@ -7,6 +7,7 @@ import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-u
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import VlogVideoGrid, { type VlogVideoCardItem } from '@/components/vlog/VlogVideoGrid'
 import Icon from '@/components/ui/Icon'
+import TagCloudPanel, { type TagCloudItem } from '@/components/ui/TagCloudPanel'
 
 type ContentTagItem = {
   _id?: string
@@ -180,6 +181,19 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
     tagLabel: post.tags?.[0]?.title?.trim() || 'Video',
     publishedAtLabel: formatDate(post.publishedAt),
   }))
+  const tagCloudItems: TagCloudItem[] = tags.flatMap((item) => {
+    const slug = item.slug?.current
+    if (!slug) return []
+
+    return [
+      {
+        key: item._id ?? slug,
+        href: buildHref({ tag: slug }),
+        label: item.title || slug,
+        active: slug === tag,
+      },
+    ]
+  })
 
   return (
     <main className="bg-[#fcfdfd] text-slate-900">
@@ -253,45 +267,14 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
             </div>
           )}
 
-          <div className="mt-20 rounded-[2rem] border border-slate-100 bg-slate-50/80 p-8 shadow-sm">
-            <div className="mb-6 text-center">
-              <h2 className="text-2xl font-display font-black text-slate-900">Browse By Tag</h2>
-              <p className="mt-2 text-sm font-light text-slate-500">
-                Filter videos by shared topics managed directly in Sanity.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-3">
-              <Link
-                href={buildHref({})}
-                className={`rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-[0.18em] transition-all ${
-                  tag
-                    ? 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
-                    : 'border-slate-900 bg-slate-800 text-white'
-                }`}
-              >
-                All Videos
-              </Link>
-              {tags.map((item) => {
-                const slug = item.slug?.current
-                if (!slug) return null
-                const active = slug === tag
-
-                return (
-                  <Link
-                    key={item._id ?? slug}
-                    href={buildHref({ tag: slug })}
-                    className={`rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-[0.18em] transition-all ${
-                      active
-                        ? 'border-slate-900 bg-slate-800 text-white'
-                        : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
-                    }`}
-                  >
-                    {item.title || slug}
-                  </Link>
-                )
-              })}
-            </div>
+          <div className="mt-20">
+            <TagCloudPanel
+              title="Browse by tag"
+              allLabel="All videos"
+              allHref={buildHref({})}
+              allActive={!tag}
+              items={tagCloudItems}
+            />
           </div>
         </div>
       </section>

@@ -2,14 +2,10 @@
 
 import dynamic from 'next/dynamic'
 
-type BlogItem = {
-  title: string
-  views: string
-  image: string
-}
+import type { HomeBlogCarouselItem } from '@/components/home/HomeBlogCarousel'
 
 type DeferredHomeBlogCarouselProps = {
-  items: BlogItem[]
+  items: HomeBlogCarouselItem[]
 }
 
 const HomeBlogCarousel = dynamic(() => import('@/components/home/HomeBlogCarousel'), {

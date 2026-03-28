@@ -7,6 +7,7 @@ import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-u
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import LandingCardPager, { type LandingCardItem } from '@/components/ui/LandingCardPager'
+import TagCloudPanel, { type TagCloudItem } from '@/components/ui/TagCloudPanel'
 
 type CategoryItem = {
   _id?: string
@@ -175,6 +176,19 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
       metaText: item.location?.trim(),
     }
   })
+  const tagCloudItems: TagCloudItem[] = tags.flatMap((item) => {
+    const slug = item.slug?.current
+    if (!slug) return []
+
+    return [
+      {
+        key: item._id ?? slug,
+        href: buildHref({ tag: slug }),
+        label: item.title || slug,
+        active: slug === tag,
+      },
+    ]
+  })
 
   return (
     <main className="bg-[#fcfdfd] text-slate-900">
@@ -242,35 +256,14 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
             />
           )}
 
-          <div className="mt-20 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0">
-            <div className="inline-flex min-w-full gap-3 md:flex md:w-full md:flex-wrap md:justify-center">
-              <Link
-                href={buildHref({})}
-                className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${tag
-                    ? 'border-slate-200 text-slate-700 hover:border-slate-300'
-                    : 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
-                  }`}
-              >
-                All Tags
-              </Link>
-              {tags.map((item) => {
-                const slug = item.slug?.current
-                if (!slug) return null
-                const active = slug === tag
-                return (
-                  <Link
-                    key={item._id ?? slug}
-                    href={buildHref({ tag: slug })}
-                    className={`shrink-0 whitespace-nowrap rounded-md border-2 px-5 py-2.5 text-[11px] font-black tracking-widest transition-all md:px-6 ${active
-                        ? 'border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25'
-                        : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                      }`}
-                  >
-                    {item.title || slug}
-                  </Link>
-                )
-              })}
-            </div>
+          <div className="mt-20">
+            <TagCloudPanel
+              title="Browse by tag"
+              allLabel="All cases"
+              allHref={buildHref({})}
+              allActive={!tag}
+              items={tagCloudItems}
+            />
           </div>
         </div>
       </section>
