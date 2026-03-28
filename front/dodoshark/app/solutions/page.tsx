@@ -37,7 +37,10 @@ type SolutionsPageProps = {
   searchParams: Promise<Record<string, QueryParamValue>>
 }
 
-const solutionsLandingQuery = `*[_type == "solutionsPage"][0]{
+const solutionsLandingQuery = `coalesce(
+  *[_id == "solutionsPage"][0],
+  *[_type == "solutionsPage"][0]
+){
   seo,
   hero{
     badge,

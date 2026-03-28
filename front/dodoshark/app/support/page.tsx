@@ -16,7 +16,10 @@ type SupportPageData = {
   }
 }
 
-const SUPPORT_PAGE_QUERY = `*[_type == "supportPage"][0]{
+const SUPPORT_PAGE_QUERY = `coalesce(
+  *[_id == "supportPage"][0],
+  *[_type == "supportPage"][0]
+){
   images{
     heroBackground{
       alt,
@@ -55,16 +58,16 @@ function resolvePageImage(
 
 export const metadata: Metadata = {
   title: 'Service & Support | DoDoShark Machinery',
-  description: 'Experience industry-leading support with DoDoShark. From pre-sales process planning to a 10-year core warranty, we ensure your production never stops.',
+  description: 'We are more than just an equipment supplier—we are your lifelong partner in value co-creation. From tailored pre-sales solutions to a 3-year core warranty, we ensure your production efficiency.',
 }
 
 const SERVICE_STAGES = [
   {
     id: '01',
     phase: 'Pre-Sales',
-    title: 'Consultation & Efficiency Planning',
-    description: 'We don\'t just sell machines; we engineer your success. Our experts analyze your materials, capacity needs, and environmental constraints to design the optimal production workflow.',
-    features: ['Material Sample Testing', 'Custom Process Layout', 'Energy Efficiency Projection', 'ROI Analysis Reports'],
+    title: 'Solution Co-creation & Professional Selection',
+    description: 'Beyond selling equipment, we guarantee results. Through deep research into material properties, capacity requirements, and site conditions, we output precision analysis reports to anchor your efficiency targets.',
+    features: ['Full-Dimensional Deep Research', 'Customized Process Solutions', 'Free Trial Production & Optimization', 'Transparent Efficiency Modeling'],
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
     ),
@@ -74,9 +77,9 @@ const SERVICE_STAGES = [
   {
     id: '02',
     phase: 'Mid-Sales',
-    title: 'Precision Build & Seamless Integration',
-    description: 'Quality is verified at every step. Before leaving our factory, every component undergoes rigorous 12-hour continuous testing to ensure peak performance upon arrival.',
-    features: ['12h Factory Stress Test', 'Smart Modular Packaging', 'Technical Handover Kits', 'On-site Calibration Guides'],
+    title: 'Precise Implementation & Efficiency Delivery',
+    description: 'A seamless transfer of knowledge and technology. All equipment undergoes 12-hour factory stress tests of core components and full-system assembly trails to ensure stability before arrival.',
+    features: ['12h Factory Performance Test', 'Professional Export Packaging', 'Technical Documentation Transfer', '30-Day Priority Response Support'],
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
     ),
@@ -86,9 +89,9 @@ const SERVICE_STAGES = [
   {
     id: '03',
     phase: 'After-Sales',
-    title: 'Lifelong Performance Partnership',
-    description: 'Our commitment begins at delivery. We provide a comprehensive support network including remote diagnostics, rapid parts logistics, and annual health checks.',
-    features: ['10-Year Core Warranty', '24/7 Technical Response', 'Predictive Maintenance', 'Annual Efficiency Reviews'],
+    title: 'Lifelong Service & Continuous Optimization',
+    description: 'Beyond standard maintenance—we safeguard your full lifecycle efficiency. This includes remote guidance for technical challenges, 3-year core warranty, and annual reviews to identify upgrade potential.',
+    features: ['3-Year Core Component Warranty', 'Annual Efficiency Review & Upgrade', 'Ongoing Technical Empowerment', 'Rapid Maintenance Support'],
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
     ),
@@ -137,10 +140,10 @@ export default async function SupportPage() {
             </div>
             <h1 className="text-5xl md:text-7xl font-black text-white mb-8 leading-[1.1] tracking-tight">
               Service That <br />
-              <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">Powers Progress</span>
+              <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">Powers Results</span>
             </h1>
             <p className="text-xl text-slate-300 font-light leading-relaxed mb-10 border-l-2 border-orange-500/50 pl-6">
-              Empowering your production with 50 years of engineering heritage and a modern, results-driven support ecosystem.
+              We are not just an equipment supplier, but your lifelong partner in value co-creation. We deliver measurable, continuously optimized production results.
             </p>
 
           </div>
@@ -155,7 +158,7 @@ export default async function SupportPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'Core Component Warranty', val: '10 Years' },
+              { label: 'Core Component Warranty', val: '3 Years' },
               { label: 'Technical Response Time', val: '24/7' },
               { label: 'Countries Served', val: '100+' },
               { label: 'Spare Parts Availability', val: '99%' },
@@ -173,8 +176,8 @@ export default async function SupportPage() {
       <section className="py-32 bg-[#fcfdfd]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-24">
-            <h2 className="text-sm font-black text-orange-500 uppercase tracking-[0.3em] mb-4">The Lifecycle Promise</h2>
-            <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Full-Spectrum Operational Support</h3>
+            <h2 className="text-sm font-black text-orange-500 uppercase tracking-[0.3em] mb-4">Value Co-Creation</h2>
+            <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Full-Lifecycle Efficiency Empowerment</h3>
           </div>
 
           <div className="space-y-32">
@@ -283,9 +286,9 @@ export default async function SupportPage() {
       {/* CTA Section */}
       <section className="py-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">Ready to Optimize Your <br /> <span className="text-orange-500">Production Result?</span></h2>
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">Ready to Optimize Your <br /> <span className="text-orange-500">Value Partnership?</span></h2>
           <p className="text-slate-500 font-light text-lg mb-12">
-            Experience the DoDoShark difference with a partner that values your efficiency as much as you do.
+            Experience the DoDoShark difference with a partner that accompanies your growth from equipment service to full-lifecycle empowerment.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/contact" className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-full font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-orange-500/20">

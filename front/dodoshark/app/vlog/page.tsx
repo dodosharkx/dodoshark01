@@ -43,7 +43,10 @@ type BlogsPageProps = {
 
 const PAGE_SIZE = 9
 
-const blogsLandingQuery = `*[_type == "blogPage"][0]{
+const blogsLandingQuery = `coalesce(
+  *[_id == "blogPage"][0],
+  *[_type == "blogPage"][0]
+){
   seo,
   hero{
     badge,

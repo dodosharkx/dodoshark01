@@ -15,6 +15,18 @@ import {
 } from '@sanity/icons'
 import {StructureResolver} from 'sanity/structure'
 
+const sitePageSingletons = [
+  {type: 'homePage', title: 'Home Page', icon: HomeIcon},
+  {type: 'aboutPage', title: 'About Page', icon: UserIcon},
+  {type: 'contactPage', title: 'Contact Page', icon: EnvelopeIcon},
+  {type: 'supportPage', title: 'Support Page', icon: BulbOutlineIcon},
+  {type: 'recruitAgentsPage', title: 'Recruit Agents Page', icon: UserIcon},
+  {type: 'blogPage', title: 'Vlog Listing Page', icon: VideoIcon},
+  {type: 'solutionsPage', title: 'Solutions Listing Page', icon: BulbOutlineIcon},
+  {type: 'casesPage', title: 'Case Studies Listing Page', icon: CaseIcon},
+  {type: 'productPage', title: 'Products Listing Page', icon: PackageIcon},
+] as const
+
 export const structure: StructureResolver = (S) =>
   S.list()
     .id('doDoSharkCms')
@@ -28,17 +40,20 @@ export const structure: StructureResolver = (S) =>
           S.list()
             .id('contentManagementList')
             .title('Site Pages')
-            .items([
-              S.documentTypeListItem('homePage').title('Home Page').icon(HomeIcon),
-              S.documentTypeListItem('aboutPage').title('About Page').icon(UserIcon),
-              S.documentTypeListItem('contactPage').title('Contact Page').icon(EnvelopeIcon),
-              S.documentTypeListItem('supportPage').title('Support Page').icon(BulbOutlineIcon),
-              S.documentTypeListItem('recruitAgentsPage').title('Recruit Agents Page').icon(UserIcon),
-              S.documentTypeListItem('blogPage').title('Vlog Listing Page').icon(VideoIcon),
-              S.documentTypeListItem('solutionsPage').title('Solutions Listing Page').icon(BulbOutlineIcon),
-              S.documentTypeListItem('casesPage').title('Case Studies Listing Page').icon(CaseIcon),
-              S.documentTypeListItem('productPage').title('Products Listing Page').icon(PackageIcon),
-            ]),
+            .items(
+              sitePageSingletons.map((item) =>
+                S.listItem()
+                  .id(item.type)
+                  .title(item.title)
+                  .icon(item.icon)
+                  .schemaType(item.type)
+                  .child(
+                    S.document()
+                      .schemaType(item.type)
+                      .documentId(item.type),
+                  ),
+              ),
+            ),
         ),
       S.listItem()
         .id('dynamicContent')

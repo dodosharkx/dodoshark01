@@ -38,7 +38,10 @@ type ProductsPageProps = {
   searchParams: Promise<Record<string, QueryParamValue>>
 }
 
-const productLandingQuery = `*[_type == "productPage"][0]{
+const productLandingQuery = `coalesce(
+  *[_id == "productPage"][0],
+  *[_type == "productPage"][0]
+){
   seo,
   hero{
     badge,

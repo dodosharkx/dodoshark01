@@ -13,7 +13,10 @@ type RecruitAgentsPageData = {
   }
 }
 
-const RECRUIT_AGENTS_PAGE_QUERY = `*[_type == "recruitAgentsPage"][0]{
+const RECRUIT_AGENTS_PAGE_QUERY = `coalesce(
+  *[_id == "recruitAgentsPage"][0],
+  *[_type == "recruitAgentsPage"][0]
+){
   images{
     heroBackground{
       alt,
