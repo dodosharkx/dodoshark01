@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { client, urlFor } from '@/app/lib/sanity'
 import { buildPageMetadata } from '@/app/lib/seo'
-import { normalizeYouTubeEmbedUrl } from '@/app/lib/video'
+import { normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl } from '@/app/lib/video'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import DeferredHeroCarousel from '@/components/home/DeferredHeroCarousel'
 import DeferredHomeBlogCarousel from '@/components/home/DeferredHomeBlogCarousel'
@@ -103,6 +103,7 @@ type HomePageData = {
   featuredCases?: FeaturedHomeCase[]
   featuredHomeVideos?: FeaturedHomeVideo[]
   whyChooseUsVideoUrl?: string
+  whyChooseUsVideoCoverImage?: HomeSanityImage
 }
 
 const homeQuery = `coalesce(
@@ -201,7 +202,12 @@ const homeQuery = `coalesce(
       title
     }
   },
-  whyChooseUsVideoUrl
+  whyChooseUsVideoUrl,
+  whyChooseUsVideoCoverImage{
+    asset,
+    alt,
+    "imageUrl": asset->url
+  }
 }`
 
 const stats = [
@@ -454,15 +460,15 @@ function ProductCard({
   href?: string
 }) {
   return (
-    <article className="home-product-card overflow-hidden rounded-[1rem] bg-white">
+    <article className="home-product-card flex h-full flex-col overflow-hidden rounded-[1rem] bg-white">
       <div className="relative aspect-square overflow-hidden bg-slate-100">
         <Image src={image} alt={title} fill sizes="(max-width: 1023px) 100vw, 33vw" className="object-cover" />
         {badge ? <div className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white ${badge.className}`}>{badge.label}</div> : null}
       </div>
-      <div className="p-6">
+      <div className="flex flex-1 flex-col p-6">
         <h4 className="text-lg font-bold text-slate-900">{title}</h4>
         <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{description}</p>
-        <div className="mt-5 flex items-center justify-center">
+        <div className="mt-auto pt-5 flex items-center justify-center">
           <ViewDetailsLink href={href || '/products'} />
         </div>
       </div>
@@ -472,16 +478,16 @@ function ProductCard({
 
 function SolutionCard({ title, description, image, href }: { title: string; description: string; image: string; href?: string }) {
   return (
-    <article className="overflow-hidden rounded-lg border border-slate-100 bg-white transition hover:shadow-lg">
+    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-slate-100 bg-white transition hover:shadow-lg">
       <div className="relative aspect-square overflow-hidden bg-slate-100">
         <Image src={image} alt={title} fill sizes="(max-width: 1023px) 100vw, 33vw" className="object-cover transition-transform duration-500 hover:scale-105" />
       </div>
-      <div className="p-6">
+      <div className="flex flex-1 flex-col p-6">
         <h4 className="relative inline-block text-lg font-bold text-slate-900">
           {title}
         </h4>
         <p className="mt-4 text-sm leading-6 text-slate-500">{description}</p>
-        <div className="mt-5 flex items-center justify-center">
+        <div className="mt-auto pt-5 flex items-center justify-center">
           <ViewDetailsLink href={href || '/solutions'} />
         </div>
       </div>
@@ -527,6 +533,13 @@ export default async function HomePage() {
       : [{ src: '/assets/images/banner.png', alt: 'DoDoShark factory banner' }]
 
   const heroVideoUrl = data?.whyChooseUsVideoUrl?.trim()
+  const whyChooseUsCoverImageSrc =
+    getSanityImageUrl(data?.whyChooseUsVideoCoverImage, { width: 1200 }) ??
+    resolveYouTubeThumbnailUrl(heroVideoUrl, 'maxresdefault') ??
+    '/assets/images/factory-showcase.png'
+  const whyChooseUsCoverImageAlt = hasSanityImageAsset(data?.whyChooseUsVideoCoverImage)
+    ? data?.whyChooseUsVideoCoverImage?.alt?.trim() || 'DoDoShark Factory Video'
+    : 'DoDoShark Factory Video'
   const featuredAgriProducts: HomeProductCard[] =
     data?.featuredAgriProducts
       ?.map((product) => {
@@ -715,8 +728,8 @@ export default async function HomePage() {
               <VideoPreviewTrigger
                 title="DoDoShark Factory Video"
                 youtubeUrl={heroVideoUrl}
-                imageSrc="/assets/images/factory-showcase.png"
-                imageAlt="DoDoShark Factory Video"
+                imageSrc={whyChooseUsCoverImageSrc}
+                imageAlt={whyChooseUsCoverImageAlt}
                 className="group"
                 mediaClassName="aspect-video rounded-[1rem]"
                 imageSizes="(max-width: 1023px) 100vw, 50vw"
@@ -848,8 +861,6 @@ export default async function HomePage() {
           <DeferredProjectCasesCarousel items={homeCaseItems} />
         </div>
       </section>
-
-
 
       <section className="home-cta-bg relative overflow-hidden py-12 text-white sm:py-16">
         <div className="absolute inset-0 opacity-10">
