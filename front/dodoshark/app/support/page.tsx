@@ -138,11 +138,11 @@ export default async function SupportPage() {
               <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
               <span>World-Class Service Network</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-8 leading-[1.1] tracking-tight">
+            <h1 className="font-display font-extrabold text-5xl md:text-7xl text-white mb-8 leading-[1.1] tracking-[-0.02em]">
               Service That <br />
               <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">Powers Results</span>
             </h1>
-            <p className="text-xl text-slate-300 font-light leading-relaxed mb-10 border-l-2 border-orange-500/50 pl-6">
+            <p className="text-lg md:text-xl text-slate-300 font-normal leading-relaxed mb-10 border-l-2 border-orange-500/50 pl-6">
               We are not just an equipment supplier, but your lifelong partner in value co-creation. We deliver measurable, continuously optimized production results.
             </p>
 
@@ -164,8 +164,8 @@ export default async function SupportPage() {
               { label: 'Spare Parts Availability', val: '99%' },
             ].map((stat) => (
               <div key={stat.label} className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 text-center">
-                <div className="text-2xl font-black text-slate-900 mb-1">{stat.val}</div>
-                <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">{stat.label}</div>
+                <div className="text-2xl font-display font-extrabold text-slate-900 mb-1">{stat.val}</div>
+                <div className="text-[10px] font-display font-semibold uppercase tracking-widest text-slate-400">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -176,8 +176,8 @@ export default async function SupportPage() {
       <section className="py-32 bg-[#fcfdfd]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-24">
-            <h2 className="text-sm font-black text-orange-500 uppercase tracking-[0.3em] mb-4">Value Co-Creation</h2>
-            <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Full-Lifecycle Efficiency Empowerment</h3>
+            <h2 className="text-sm font-display font-semibold text-orange-500 uppercase tracking-[0.3em] mb-4">Value Co-Creation</h2>
+            <h3 className="font-display text-4xl font-extrabold text-slate-900 leading-[1.15] tracking-[-0.02em] md:text-5xl">Full-Lifecycle Efficiency Empowerment</h3>
           </div>
 
           <div className="space-y-32">
@@ -193,10 +193,10 @@ export default async function SupportPage() {
                 <div key={stage.id} className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-24 ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
                   <div className="w-full lg:w-1/2">
                     <div className="flex items-center space-x-4 mb-6">
-                      <span className="text-6xl font-black text-slate-100 leading-none">{stage.id}</span>
+                      <span className="text-6xl font-display font-black text-slate-100 leading-none">{stage.id}</span>
                       <div>
-                        <span className="text-xs font-black text-orange-500 uppercase tracking-widest block mb-1">{stage.phase}</span>
-                        <h4 className="text-3xl font-black text-slate-900 leading-tight">{stage.title}</h4>
+                        <span className="text-xs font-display font-semibold text-orange-500 uppercase tracking-widest block mb-1">{stage.phase}</span>
+                        <h4 className="text-3xl font-display font-extrabold text-slate-900 leading-tight tracking-[-0.02em]">{stage.title}</h4>
                       </div>
                     </div>
                     <p className="text-slate-600 font-light text-lg leading-relaxed mb-8">
@@ -238,7 +238,7 @@ export default async function SupportPage() {
           <div className="bg-slate-900/50 backdrop-blur-sm border border-white/5 rounded-[2rem] p-10 md:p-16">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h2 className="text-4xl font-black text-white mb-6 uppercase tracking-tight">Need Urgent Assistance?</h2>
+                <h2 className="text-3xl md:text-4xl font-display font-extrabold text-white mb-6 uppercase tracking-[-0.02em]">Need Urgent Assistance?</h2>
                 <p className="text-slate-400 font-light text-lg leading-relaxed mb-8">
                   Our global technical response team is on standby to help you resolve equipment issues, order spare parts, or schedule an efficiency audit.
                 </p>
@@ -273,7 +273,7 @@ export default async function SupportPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                   <div className="absolute bottom-8 left-8 right-8">
-                    <p className="text-white font-black text-xl uppercase tracking-tighter">Experts You Can Trust</p>
+                    <p className="text-white font-display font-extrabold text-xl uppercase tracking-tight">Experts You Can Trust</p>
                     <p className="text-slate-400 text-sm font-light">Direct connection to senior engineers.</p>
                   </div>
                 </div>
@@ -286,7 +286,7 @@ export default async function SupportPage() {
       {/* CTA Section */}
       <section className="py-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">Ready to Optimize Your <br /> <span className="text-orange-500">Value Partnership?</span></h2>
+          <h2 className="text-3xl md:text-5xl font-display font-extrabold text-slate-900 mb-8 leading-[1.1] tracking-[-0.02em]">Ready to Optimize Your <br /> <span className="text-orange-500">Value Partnership?</span></h2>
           <p className="text-slate-500 font-light text-lg mb-12">
             Experience the DoDoShark difference with a partner that accompanies your growth from equipment service to full-lifecycle empowerment.
           </p>

@@ -15,7 +15,6 @@ export type VlogVideoCardItem = {
   imageAlt?: string
   youtubeUrl?: string
   tagLabel: string
-  publishedAtLabel?: string
 }
 
 type ActiveVideo = {
@@ -35,6 +34,13 @@ function PlayButton() {
       </svg>
     </div>
   )
+}
+
+function toSentenceCase(value: string) {
+  const normalized = value.trim().replace(/\s+/g, ' ').toLowerCase()
+  if (!normalized) return ''
+
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1)
 }
 
 export default function VlogVideoGrid({ items }: VlogVideoGridProps) {
@@ -95,17 +101,20 @@ export default function VlogVideoGrid({ items }: VlogVideoGridProps) {
                       </div>
                     )}
                   </div>
-                  <div className="absolute left-6 top-6 rounded-md bg-white/90 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-slate-900 shadow-lg backdrop-blur-md">
-                    {item.tagLabel}
-                  </div>
                 </div>
 
                 <div className="flex flex-1 flex-col p-8">
-                  {item.publishedAtLabel ? (
-                    <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                      {item.publishedAtLabel}
+                  <div className="mb-4 flex justify-center">
+                    <div
+                      className="inline-flex max-w-full items-center gap-2 whitespace-nowrap rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[13px] font-semibold leading-none text-orange-600 shadow-[0_8px_24px_rgba(249,115,22,0.08)]"
+                      title={toSentenceCase(item.tagLabel)}
+                    >
+                      <span className="h-2 w-2 shrink-0 rounded-full bg-orange-400" />
+                      <span className="block truncate max-w-[180px]">
+                        {toSentenceCase(item.tagLabel)}
+                      </span>
                     </div>
-                  ) : null}
+                  </div>
 
                   <h3 className="mb-4 line-clamp-2 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500">
                     {item.title}

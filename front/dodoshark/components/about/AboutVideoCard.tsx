@@ -9,6 +9,7 @@ interface AboutVideoCardProps {
   youtubeUrl: string
   title: string
   thumbnailUrl?: string
+  thumbnailAlt?: string
   aspectRatio?: string // e.g., 'aspect-video' or 'aspect-[9/16]'
 }
 
@@ -16,6 +17,7 @@ export default function AboutVideoCard({
   youtubeUrl,
   title,
   thumbnailUrl,
+  thumbnailAlt,
   aspectRatio = 'aspect-video'
 }: AboutVideoCardProps) {
   const [showLightbox, setShowLightbox] = useState(false)
@@ -40,7 +42,7 @@ export default function AboutVideoCard({
       >
         <Image
           src={finalThumbnail}
-          alt={title}
+          alt={thumbnailAlt || title}
           fill
           className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
           sizes="(min-width: 1024px) 50vw, 100vw"

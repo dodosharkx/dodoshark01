@@ -1,22 +1,10 @@
-import { client } from '@/app/lib/sanity'
-
-type GlobalContactData = {
-  contact?: {
-    email?: string
-    whatsapp?: string
-    phone?: string
-  }
-}
+import { getGlobalSettings } from '@/app/lib/global-settings'
 
 export type GlobalContact = {
   email: string
   whatsapp: string
   phone: string
 }
-
-const GLOBAL_CONTACT_QUERY = `*[_type == "globalSettings"][0]{
-  contact{email, whatsapp, phone}
-}`
 
 const FALLBACK_CONTACT: GlobalContact = {
   email: 'service@dodoshark.com',
@@ -32,7 +20,7 @@ function getNormalizedValue(rawValue: string | undefined, fallback: string) {
 }
 
 export async function getGlobalContact(): Promise<GlobalContact> {
-  const global = await client.fetch<GlobalContactData | null>(GLOBAL_CONTACT_QUERY)
+  const global = await getGlobalSettings()
   return {
     email: FIXED_BUSINESS_EMAIL,
     whatsapp: getNormalizedValue(global?.contact?.whatsapp, FALLBACK_CONTACT.whatsapp),

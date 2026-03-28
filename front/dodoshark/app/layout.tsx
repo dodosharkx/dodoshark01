@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getGlobalSettings } from "@/app/lib/global-settings";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,7 +17,9 @@ const outfit = Outfit({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+const FALLBACK_FAVICON_URL = "/favicon-fallback.png";
+
+const defaultMetadata: Metadata = {
   title: "DoDoShark - Industrial Milling Systems",
   description: "Professional Crushing & Grinding Equipment Manufacturer",
   robots: {
@@ -29,6 +32,21 @@ export const metadata: Metadata = {
     },
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const globalSettings = await getGlobalSettings();
+  const faviconUrl =
+    globalSettings?.favicon?.asset?.url?.trim() || FALLBACK_FAVICON_URL;
+
+  return {
+    ...defaultMetadata,
+    icons: {
+      icon: faviconUrl,
+      shortcut: faviconUrl,
+      apple: faviconUrl,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

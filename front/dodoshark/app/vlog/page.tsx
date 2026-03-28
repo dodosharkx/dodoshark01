@@ -182,7 +182,6 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
     imageAlt: post.coverImage?.alt || post.title || 'Video cover',
     youtubeUrl: post.youtubeUrl?.trim(),
     tagLabel: post.tags?.[0]?.title?.trim() || 'Video',
-    publishedAtLabel: formatDate(post.publishedAt),
   }))
   const tagCloudItems: TagCloudItem[] = tags.flatMap((item) => {
     const slug = item.slug?.current

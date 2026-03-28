@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     // 启用现代图片格式，自动优化为 AVIF 和 WebP
     formats: ['image/avif', 'image/webp'],
+    qualities: [68, 70, 72, 74, 75],
     // 设备尺寸断点，用于响应式图片
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     // 图片尺寸变体
