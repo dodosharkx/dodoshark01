@@ -17,14 +17,22 @@ export function firstParam(value: QueryParamValue) {
 }
 
 export function cleanText(value?: string | null) {
-  const cleaned = stegaClean(value)?.trim()
-  return cleaned || undefined
+  if (typeof value !== 'string') return undefined
+  if (value.trim() === '') return undefined
+
+  try {
+    const cleaned = stegaClean(value)?.trim()
+    return cleaned || undefined
+  } catch {
+    const trimmed = value.trim()
+    return trimmed || undefined
+  }
 }
 
 export function renderText(value?: string | null) {
   if (typeof value !== 'string') return undefined
-  const trimmed = value.trim()
-  return trimmed || undefined
+  if (value.trim() === '') return undefined
+  return value
 }
 
 export function cleanSlug(value?: string | { current?: string } | null) {

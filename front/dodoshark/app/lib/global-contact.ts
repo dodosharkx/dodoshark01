@@ -1,5 +1,5 @@
 import { getGlobalSettings } from '@/app/lib/global-settings'
-import { cleanText } from '@/app/lib/sanity-utils'
+import { renderText } from '@/app/lib/sanity-utils'
 
 export type GlobalContact = {
   email: string
@@ -20,12 +20,12 @@ const FALLBACK_CONTACT: GlobalContact = {
 }
 
 function getNormalizedValue(rawValue: string | undefined, fallback: string) {
-  const normalized = cleanText(rawValue)
+  const normalized = renderText(rawValue)
   return normalized || fallback
 }
 
 export async function getGlobalContact(): Promise<GlobalContact> {
-  const global = await getGlobalSettings()
+  const global = await getGlobalSettings(false)
   return {
     email: getNormalizedValue(global?.contact?.email, FALLBACK_CONTACT.email),
     supportEmail: getNormalizedValue(global?.contact?.supportEmail, FALLBACK_CONTACT.supportEmail),

@@ -38,9 +38,7 @@ const HeroTitle: React.FC<HeroTitleProps> = ({ title, fallback }) => {
   // Single line logic: split half words
   const words = cleanTitle.split(/\s+/)
   if (words.length <= 1) {
-    // If only one word, maybe it's a long word or CJK. 
-    // For single word, we just render it plain unless the user wants part of the word colored (not requested here).
-    return <>{title}</>
+    return <>{cleanTitle}</>
   }
 
   const highlightCount = Math.floor(words.length / 2)

@@ -105,10 +105,11 @@ const GLOBAL_SETTINGS_QUERY = `*[_id == "globalSettings"][0]{
   }
 }`
 
-export async function getGlobalSettings(): Promise<GlobalSettingsData | null> {
+export async function getGlobalSettings(stega = false): Promise<GlobalSettingsData | null> {
   try {
     const {data} = await sanityFetch({
       query: GLOBAL_SETTINGS_QUERY,
+      stega,
     })
     return data
   } catch {
