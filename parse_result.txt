@@ -1,0 +1,48 @@
+=== SCORES ===
+Performance: 88
+Accessibility: 90
+Best Practices: 58
+SEO: 69
+
+=== METRICS ===
+- First Contentful Paint: 1.3 s (Score: 0.98)
+- Largest Contentful Paint: 1.4 s (Score: 1)
+- Total Blocking Time: 260 ms (Score: 0.83)
+- Cumulative Layout Shift: 0 (Score: 1)
+- Speed Index: 6.7 s (Score: 0.36)
+- Time to Interactive: 9.7 s (Score: 0.28)
+
+=== OPPORTUNITIES ===
+- Reduce unused JavaScript (unused-javascript): [Bytes: 271378]
+
+=== FAILED AUDITS & DIAGNOSTICS (Score < 0.9) ===
+- Speed Index (speed-index) Score: 0.36
+  Value: 6.7 s
+- Total Blocking Time (total-blocking-time) Score: 0.83
+  Value: 260 ms
+- Max Potential First Input Delay (max-potential-fid) Score: 0.77
+  Value: 170 ms
+- Time to Interactive (interactive) Score: 0.28
+  Value: 9.7 s
+- Uses deprecated APIs (deprecations) Score: 0
+  Value: 3 warnings found
+- Uses third-party cookies (third-party-cookies) Score: 0
+  Value: 8 cookies found
+- Minimize main-thread work (mainthread-work-breakdown) Score: 0
+  Value: 3.2 s
+- Background and foreground colors do not have a sufficient contrast ratio. (color-contrast) Score: 0
+- Heading elements are not in a sequentially-descending order (heading-order) Score: 0
+- Elements with visible text labels do not have matching accessible names. (label-content-name-mismatch) Score: 0
+- Touch targets do not have sufficient size or spacing. (target-size) Score: 0
+- Avoid enormous network payloads (total-byte-weight) Score: 0.5
+  Value: Total size was 4,855 KiB
+- Issues were logged in the `Issues` panel in Chrome Devtools (inspector-issues) Score: 0
+- Page is blocked from indexing (is-crawlable) Score: 0
+- Use efficient cache lifetimes (cache-insight) Score: 0.5
+  Value: Est savings of 65 KiB
+- Improve image delivery (image-delivery-insight) Score: 0.5
+  Value: Est savings of 2,859 KiB
+- Legacy JavaScript (legacy-javascript-insight) Score: 0.5
+  Value: Est savings of 14 KiB
+- Network dependency tree (network-dependency-tree-insight) Score: 0
+- Render blocking requests (render-blocking-insight) Score: 0.5

@@ -92,6 +92,22 @@ export default defineType({
     }),
     defineField({name: 'whyChooseUsVideoUrl', title: 'Why Choose Us Video URL', type: 'url', group: 'video', description: 'Supports YouTube or Vimeo HTTPS links.', validation: (rule) => rule.required().uri({scheme: ['https']}).error('Please enter a valid HTTPS video URL.')}),
     defineField({
+      name: 'whyChooseUsVideoCoverImage',
+      title: 'Why Choose Us Video Cover Image',
+      type: 'image',
+      group: 'video',
+      description: 'Optional custom cover image shown before the video plays. If not set, falls back to the YouTube thumbnail.',
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Describe the image for screen readers and SEO.',
+        }),
+      ],
+    }),
+    defineField({
       name: 'featuredHomeVideos',
       title: 'Homepage Featured Videos',
       type: 'array',
