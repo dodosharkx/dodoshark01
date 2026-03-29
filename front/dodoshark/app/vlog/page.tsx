@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { client } from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient } from '@/app/lib/sanity'
 import { buildPageMetadata } from '@/app/lib/seo'
 import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
@@ -125,7 +126,7 @@ function hasSanityImageAsset(image?: SanityImage) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const landing = await client.fetch<VlogLandingData | null>(blogsLandingQuery)
+  const landing = await getClient().fetch<VlogLandingData | null>(blogsLandingQuery)
   return buildPageMetadata({
     seo: landing?.seo,
     fallbackTitle: 'Industrial Video Insights | DoDoShark',
@@ -134,14 +135,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BlogsPage({ searchParams }: BlogsPageProps) {
+  const draft = await draftMode()
   const params = await searchParams
   const tag = firstParam(params.tag)?.trim() || ''
   const requestedPage = parsePositiveInt(firstParam(params.page), 1)
   const tagParams: Record<string, string> = { tag }
 
-  const landing = await client.fetch<VlogLandingData | null>(blogsLandingQuery)
+  const sanityClient = getClient(draft.isEnabled)
+  const landing = await sanityClient.fetch<VlogLandingData | null>(blogsLandingQuery)
 
-  const total = await client.fetch<number>(blogsCountQuery, {
+  const total = await sanityClient.fetch<number>(blogsCountQuery, {
     ...tagParams,
   })
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
@@ -150,12 +153,12 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   const end = start + PAGE_SIZE
 
   const [posts, fallbackTags] = await Promise.all([
-    client.fetch<VlogItemCard[]>(blogsListQuery, {
+    sanityClient.fetch<VlogItemCard[]>(blogsListQuery, {
       ...tagParams,
       start,
       end,
     }),
-    client.fetch<ContentTagItem[]>(allTagsQuery),
+    sanityClient.fetch<ContentTagItem[]>(allTagsQuery),
   ])
 
   const configuredTags = landing?.tagFilters?.filter((item) => item?.slug?.current) ?? []

@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PortableText, type PortableTextBlock, type PortableTextComponents } from 'next-sanity'
 
+import { draftMode } from 'next/headers'
 import { getSafeHref, isExternalHref } from '@/app/lib/safeHref'
-import { client } from '@/app/lib/sanity'
+import { getClient } from '@/app/lib/sanity'
 import { toImageSrc } from '@/app/lib/sanity-utils'
 import type { SanityAsset, SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
@@ -128,8 +129,13 @@ const caseBySlugQuery = `*[_type == "caseStudy" && slug.current == $slug][0]{
   }
 }`
 
-async function getCaseBySlug(slug: string) {
-  return client.fetch<CaseStudyData | null>(caseBySlugQuery, { slug })
+async function getCaseBySlug(slug: string, preview = false) {
+  try {
+    return await getClient(preview).fetch<CaseStudyData | null>(caseBySlugQuery, { slug })
+  } catch (error) {
+    console.error('Error fetching case study:', error)
+    return null
+  }
 }
 
 function toSentenceCase(value: string) {
@@ -277,8 +283,9 @@ export async function generateMetadata({ params }: CaseDetailPageProps): Promise
 }
 
 export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
+  const draft = await draftMode()
   const { slug } = await params
-  const caseStudy = await getCaseBySlug(slug)
+  const caseStudy = await getCaseBySlug(slug, draft.isEnabled)
 
   if (!caseStudy) {
     notFound()

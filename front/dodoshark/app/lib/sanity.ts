@@ -8,12 +8,14 @@ export const client = createClient({
     useCdn: true,
 })
 
+const token = process.env.SANITY_API_READ_TOKEN?.trim()
+
 export const previewClient = createClient({
     projectId: 'nljl95h9',
     dataset: 'production',
     apiVersion: '2024-01-01',
     useCdn: false,
-    token: process.env.SANITY_API_READ_TOKEN,
+    token: token,
     stega: {
         enabled: true,
         studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || 'https://dodoshark.sanity.studio',
@@ -21,10 +23,7 @@ export const previewClient = createClient({
 })
 
 export function getClient(preview?: boolean) {
-    if (preview) {
-        if (!process.env.SANITY_API_READ_TOKEN) {
-            console.warn('Draft mode enabled but SANITY_API_READ_TOKEN is missing. Content may not draft properly.')
-        }
+    if (preview && token) {
         return previewClient
     }
     return client

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 
-import { client } from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient } from '@/app/lib/sanity'
 import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
@@ -161,7 +162,7 @@ const casesCardTagClassName =
 const casesCardTagLabelClassName = 'max-w-[220px]'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const landing = await client.fetch<CasesLandingData | null>(casesLandingQuery)
+  const landing = await getClient().fetch<CasesLandingData | null>(casesLandingQuery)
   const seo = landing?.seo
 
   return {
@@ -174,16 +175,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CasesPage({ searchParams }: CasesPageProps) {
+  const draft = await draftMode()
   const params = await searchParams
   const tag = firstParam(params.tag)?.trim() || ''
   const initialPage = parsePositiveInt(firstParam(params.page), 1)
   const tagParams: Record<string, string> = { tag }
 
-  const landing = await client.fetch<CasesLandingData | null>(casesLandingQuery)
+  const sanityClient = getClient(draft.isEnabled)
+  const landing = await sanityClient.fetch<CasesLandingData | null>(casesLandingQuery)
 
   const [cases, fallbackTags] = await Promise.all([
-    client.fetch<CaseCard[]>(casesListQuery, tagParams),
-    client.fetch<ContentTagItem[]>(allTagsQuery),
+    sanityClient.fetch<CaseCard[]>(casesListQuery, tagParams),
+    sanityClient.fetch<ContentTagItem[]>(allTagsQuery),
   ])
 
   const configuredTags = landing?.tagFilters?.filter((item) => item?.slug?.current) ?? []
