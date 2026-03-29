@@ -1,4 +1,5 @@
 import {defineConfig} from 'sanity'
+import {presentationTool} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {codeInput} from '@sanity/code-input'
@@ -13,7 +14,19 @@ export default defineConfig({
   projectId: 'nljl95h9',
   dataset: 'production',
 
-  plugins: [structureTool({structure}), visionTool(), table(), codeInput()],
+  plugins: [
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: '/api/draft/enable',
+        },
+      },
+    }),
+    structureTool({structure}),
+    visionTool(),
+    table(),
+    codeInput(),
+  ],
 
   document: {
     actions: (prev, context) =>

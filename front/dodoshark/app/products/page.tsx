@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { client } from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient } from '@/app/lib/sanity'
 import { buildPageMetadata } from '@/app/lib/seo'
 import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
@@ -111,7 +112,7 @@ function buildHref({
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const landing = await client.fetch<ProductLandingData | null>(productLandingQuery)
+  const landing = await getClient().fetch<ProductLandingData | null>(productLandingQuery)
   return buildPageMetadata({
     seo: landing?.seo,
     fallbackTitle: 'Product Catalog | DoDoShark',
@@ -120,15 +121,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+  const draft = await draftMode()
   const params = await searchParams
   const category = firstParam(params.category)?.trim() || ''
   const initialPage = parsePositiveInt(firstParam(params.page), 1)
 
-  const landing = await client.fetch<ProductLandingData | null>(productLandingQuery)
+  const sanityClient = getClient(draft.isEnabled)
+  const landing = await sanityClient.fetch<ProductLandingData | null>(productLandingQuery)
 
   const [products, fallbackCategories] = await Promise.all([
-    client.fetch<ProductCard[]>(productListQuery, { category }),
-    client.fetch<CategoryItem[]>(allCategoriesQuery),
+    sanityClient.fetch<ProductCard[]>(productListQuery, { category }),
+    sanityClient.fetch<CategoryItem[]>(allCategoriesQuery),
   ])
 
   const configuredCategories = landing?.productCategories?.filter((item) => item?.slug?.current) ?? []

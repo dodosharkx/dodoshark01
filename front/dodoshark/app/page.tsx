@@ -3,7 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import dynamic from 'next/dynamic'
-import { client, urlFor } from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient, urlFor } from '@/app/lib/sanity'
 import { buildPageMetadata } from '@/app/lib/seo'
 import { normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl } from '@/app/lib/video'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
@@ -498,9 +499,9 @@ function SolutionCard({ title, description, image, href }: { title: string; desc
   )
 }
 
-async function getHomePageData() {
+async function getHomePageData(preview = false) {
   try {
-    return await client.fetch<HomePageData | null>(homeQuery)
+    return await getClient(preview).fetch<HomePageData | null>(homeQuery)
   } catch {
     return null
   }
@@ -517,7 +518,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const data = await getHomePageData()
+  const draft = await draftMode()
+  const data = await getHomePageData(draft.isEnabled)
 
   const heroSlides: HeroCarouselImage[] = (data?.heroBackgrounds ?? [])
     .map((image, index) => {

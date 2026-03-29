@@ -4,7 +4,8 @@ import Link from 'next/link'
 import {notFound} from 'next/navigation'
 
 import dynamic from 'next/dynamic'
-import {client} from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient } from '@/app/lib/sanity'
 import {toImageSrc} from '@/app/lib/sanity-utils'
 import {
   prepareSolutionTemplate,
@@ -128,7 +129,7 @@ function splitTitle(title?: string) {
   }
 }
 
-async function getSolution(slug: string) {
+async function getSolution(slug: string, preview = false) {
   const query = `*[_type == "solution" && slug.current == $slug][0] {
     _id,
     seo {
@@ -314,7 +315,7 @@ async function getSolution(slug: string) {
     }
   }`
 
-  return client.fetch<SolutionData | null>(query, {slug})
+  return getClient(preview).fetch<SolutionData | null>(query, {slug})
 }
 
 async function getSolutionMetadata(slug: string) {
@@ -340,7 +341,7 @@ async function getSolutionMetadata(slug: string) {
     }
   }`
 
-  return client.fetch<SolutionData | null>(query, {slug})
+  return getClient().fetch<SolutionData | null>(query, {slug})
 }
 
 function renderSolutionGroup(group: PageBuilderRenderGroup<SolutionBlock>) {
@@ -632,8 +633,9 @@ export async function generateMetadata({
 }
 
 export default async function SolutionPage({params}: SolutionPageProps) {
+  const draft = await draftMode()
   const {slug} = await params
-  const solution = await getSolution(slug)
+  const solution = await getSolution(slug, draft.isEnabled)
 
   if (!solution) {
     notFound()

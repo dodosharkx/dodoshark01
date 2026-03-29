@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { client } from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient } from '@/app/lib/sanity'
 import { buildPageMetadata } from '@/app/lib/seo'
 import { firstParam, toImageSrc, type QueryParamValue } from '@/app/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/app/lib/types/sanity'
@@ -109,7 +110,7 @@ function buildHref({
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const landing = await client.fetch<SolutionsLandingData | null>(solutionsLandingQuery)
+  const landing = await getClient().fetch<SolutionsLandingData | null>(solutionsLandingQuery)
   return buildPageMetadata({
     seo: landing?.seo,
     fallbackTitle: 'Industrial Solutions | DoDoShark',
@@ -118,15 +119,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SolutionsPage({ searchParams }: SolutionsPageProps) {
+  const draft = await draftMode()
   const params = await searchParams
   const category = firstParam(params.category)?.trim() || ''
   const initialPage = parsePositiveInt(firstParam(params.page), 1)
 
-  const landing = await client.fetch<SolutionsLandingData | null>(solutionsLandingQuery)
+  const sanityClient = getClient(draft.isEnabled)
+  const landing = await sanityClient.fetch<SolutionsLandingData | null>(solutionsLandingQuery)
 
   const [solutions, fallbackCategories] = await Promise.all([
-    client.fetch<SolutionCard[]>(solutionsListQuery, { category }),
-    client.fetch<CategoryItem[]>(allCategoriesQuery),
+    sanityClient.fetch<SolutionCard[]>(solutionsListQuery, { category }),
+    sanityClient.fetch<CategoryItem[]>(allCategoriesQuery),
   ])
 
   const configuredCategories = landing?.solutionCategories?.filter((item) => item?.slug?.current) ?? []

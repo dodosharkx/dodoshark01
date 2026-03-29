@@ -3,7 +3,8 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import dynamic from 'next/dynamic'
 
-import { client } from '@/app/lib/sanity'
+import { draftMode } from 'next/headers'
+import { getClient } from '@/app/lib/sanity'
 import { toImageSrc } from '@/app/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 
@@ -291,12 +292,12 @@ const productMetadataQuery = `*[_type == "product" && slug.current == $slug][0] 
   }
 }`
 
-async function getProduct(slug: string) {
-  return client.fetch<ProductData | null>(productQuery, { slug })
+async function getProduct(slug: string, preview = false) {
+  return getClient(preview).fetch<ProductData | null>(productQuery, { slug })
 }
 
 async function getProductMetadata(slug: string) {
-  return client.fetch<ProductData | null>(productMetadataQuery, { slug })
+  return getClient().fetch<ProductData | null>(productMetadataQuery, { slug })
 }
 
 function renderLegacyFeatureGrid(block: FeatureGridBlockData, key: string | number) {
@@ -430,6 +431,7 @@ function renderPageBuilderGroup(group: PageBuilderRenderGroup<ProductBlock>) {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+
   const { slug } = await params
   const product = await getProductMetadata(slug)
 
@@ -473,8 +475,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  const draft = await draftMode()
   const { slug } = await params
-  const product = await getProduct(slug)
+  const product = await getProduct(slug, draft.isEnabled)
 
   if (!product) {
     notFound()
@@ -527,3 +530,4 @@ export default async function ProductPage({ params }: ProductPageProps) {
     </div>
   )
 }
+
