@@ -333,189 +333,8 @@ const homeQuery = `coalesce(
   }
 }`
 
-const stats = [
-  { value: '55', suffix: 'Years', label: 'Industry History' },
-  { value: '10,000', suffix: 'sqm', label: 'Factory Area' },
-  { value: '1,000', suffix: '+', label: 'Export Regions' },
-  { value: '10,000', suffix: '+', label: 'Annual Yield' },
-]
-
-const aboutFeatures = [
-  {
-    title: 'Est. 1970',
-    description:
-      'Formerly a state-owned mill factory, DoDoShark was established in 2019 after restructuring. Anchored by the mission of "Empowering Productivity," we began a new brand journey.',
-    image: '/assets/images/icon-since-1970.png',
-  },
-  {
-    title: 'Three Production Bases',
-    description:
-      'A modern production network delivers stable output, standardized manufacturing, and the flexibility required for custom industrial projects.',
-    image: '/assets/images/icon-three-production-bases.png',
-  },
-  {
-    title: 'Two Product Lines',
-    description:
-      'Agri-processing and food-processing machinery operate as dual growth engines, covering crushing, grinding, mixing, and integrated line solutions.',
-    image: '/assets/images/icon-two-product-lines.png',
-  },
-]
-
-const confidenceCards = [
-  {
-    title: 'Technical Lead',
-    subtitle: 'Continuous Innovation as Industry Model',
-    points: ['Grain grinding fineness up to 150 mesh', 'Uniform mixing of dozens of powders in 15 min', 'Dust suppression ratio up to 99.99%'],
-    image: '/assets/images/technology-leadership.png',
-  },
-  {
-    title: 'Rigorous Delivery',
-    subtitle: 'Factory Inspection on Every Critical Detail',
-    points: ['Strict process inspection before shipment', 'Stable structure for long-cycle operation', 'Delivery quality controlled by full-line checks'],
-    image: '/assets/images/rigorous-factory-inspection.png',
-  },
-  {
-    title: 'Beyond Single Products',
-    subtitle: 'Integrated Equipment for Complete Workflows',
-    points: ['Single-machine and line integration available', 'Flexible matching for powders and granules', 'One supplier for equipment and process support'],
-    image: '/assets/images/beyond-single-products.png',
-  },
-]
-
-const agriProducts = [
-  {
-    title: 'Iron Hammer Mill',
-    description: 'Suitable for grain, corn, and tuber crops, with fineness reaching 10-150 mesh.',
-    image: '/assets/images/grinding-category.png',
-    badge: { label: 'Hot', className: 'bg-orange-500' },
-  },
-  {
-    title: 'Wheat Grinder',
-    description: 'Handles wheat, corn, and sorghum with efficiency, fineness up to 40-100 mesh.',
-    image: '/assets/images/corn-materials.png',
-    badge: { label: 'New', className: 'bg-green-500' },
-  },
-  {
-    title: 'Mixer Machine',
-    description: 'For feed, chemical, and building materials. High uniformity with variation coefficient under 5.',
-    image: '/assets/images/machinery-category.png',
-  },
-]
-
-const foodProducts = [
-  {
-    title: 'SUS304 Grinder',
-    description: 'For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.',
-    image: '/assets/images/corn-materials.png',
-  },
-  {
-    title: 'SUS304 Mixer',
-    description: 'Highly uniform mixing for powders and fine particles in food and chemical sectors.',
-    image: '/assets/images/manual-model-50.png',
-  },
-  {
-    title: 'Dough Mixer',
-    description: 'Fast and durable for large batches, ideal for eateries and food factories.',
-    image: '/assets/images/rigorous-factory-inspection.png',
-  },
-]
-
-const grindingSolutions = [
-  {
-    title: 'Corn Milling Solution',
-    description: 'Efficient corn crushing and milling for individuals to large factories.',
-    image: '/assets/images/grinding-category.png',
-  },
-  {
-    title: 'Grain Milling Solution',
-    description: 'Dust-free grain processing for agricultural and industrial sectors.',
-    image: '/assets/images/grinding-category.png',
-  },
-  {
-    title: 'Salt & Sugar Milling',
-    description: 'Precise milling for spice, salt, and sugar with dust control.',
-    image: '/assets/images/machinery-category.png',
-  },
-]
-
-const mixingSolutions = [
-  {
-    title: 'Powder Mixing Solution',
-    description: 'High-uniformity mixing for fine powders in industrial sectors.',
-    image: '/assets/images/grain-processing.png',
-  },
-  {
-    title: 'Granule Mixing Solution',
-    description: 'Stable mixing performance for diverse granular materials.',
-    image: '/assets/images/manual-model-50.png',
-  },
-  {
-    title: 'Fertilizer Mixing',
-    description: 'Massive throughput for agricultural compound fertilizer production.',
-    image: '/assets/images/mixing-equipment.png',
-  },
-]
-
-const projectCaseItems = [
-  {
-    title: 'New Hope Group',
-    description: 'Complete 100-mesh dust-free corn processing line for international export standard.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-new-hope.png',
-    href: '#',
-  },
-  {
-    title: 'Uni-President Milling Upgrade',
-    description: 'Integrated grinding workflow designed for stable output and cleaner industrial processing conditions.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-uni-president.png',
-    href: '#'
-  },
-  {
-    title: 'Angel Yeast Powder System',
-    description: 'Customized stainless processing solution balancing food-grade standards with long-cycle plant operation.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-angel-yeast.png',
-    href: '#',
-  },
-  {
-    title: 'Changming Pharma Material Line',
-    description: 'Precision handling and low-dust conveying for fine pharmaceutical material preparation workflows.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-changming-pharma.png',
-    href: '#',
-  },
-  {
-    title: 'New Hope Overseas Delivery',
-    description: 'Benchmark export project built around dependable commissioning, throughput stability, and after-sales support.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-new-hope.png',
-    href: '#',
-  },
-]
-
-const advantages = [
-  {
-    title: 'Smart Mfg. Strength',
-    description: 'Scale efficiency balanced with bespoke innovation.',
-    image: '/assets/images/icon-professional-technology.png',
-  },
-  {
-    title: 'Total Range Strategy',
-    description: 'One-stop solutions reducing costs and boosting speed.',
-    image: '/assets/images/icon-craftsmanship.png',
-  },
-  {
-    title: 'Full-Life Service',
-    description: 'From process design to training, we navigate with you.',
-    image: '/assets/images/icon-custom-solutions.png',
-  },
-  {
-    title: 'Extended Warranty',
-    description: '10-year core component warranty for total peace of mind.',
-    image: '/assets/images/icon-one-choice.png',
-  },
-]
+// Removed hardcoded contents (stats, aboutFeatures, confidenceCards, agriProducts, foodProducts, grindingSolutions, mixingSolutions, projectCaseItems, advantages) 
+// as they are now fully managed by Sanity CMS.
 
 function getSanityImageUrl(image?: HomeSanityImage, options?: { width?: number; height?: number }) {
   if (!image) return null
@@ -719,27 +538,28 @@ export default async function HomePage() {
       }
     })
     .filter(isDefined) ?? []
-  const homeStats = (parsedStats && parsedStats.length > 0) ? parsedStats : stats
-  const parsedAboutFeatures = data?.aboutFeatures
-    ?.map((item, index) => {
+  const homeStats = parsedStats
+  const homeAboutFeatures: HomeAboutFeature[] = data?.aboutFeatures
+    ?.map((item) => {
       const title = renderText(item?.title)
       const description = renderText(item?.description)
-      const image = getSanityImageUrl(item?.image, { width: 256 }) || aboutFeatures[index]?.image
+      const image = getSanityImageUrl(item?.image, { width: 256 })
       if (!title || !description || !image) return null
       return { title, description, image, sanityImage: item.image }
     })
     .filter(isDefined) ?? []
-  const homeAboutFeatures: HomeAboutFeature[] = (parsedAboutFeatures && parsedAboutFeatures.length > 0) ? parsedAboutFeatures : aboutFeatures
+
   const confidenceTitleLineOne = renderText(data?.confidenceSection?.titleLineOne) || 'Choose DodoShark'
   const confidenceTitleLineTwo = renderText(data?.confidenceSection?.titleLineTwo) || 'Choose Confidence'
   const confidenceDescription =
     renderText(data?.confidenceSection?.description) ||
     'DoDoShark practices "Carefree Production, Joyful Harvest" through innovation and high quality.'
-  const parsedConfidenceCards = data?.confidenceSection?.cards
-    ?.map((card, index) => {
+
+  const homeConfidenceCards: HomeConfidenceCard[] = data?.confidenceSection?.cards
+    ?.map((card) => {
       const title = renderText(card?.title)
       const subtitle = renderText(card?.subtitle)
-      const image = getSanityImageUrl(card?.image, { width: 1200 }) || confidenceCards[index]?.image
+      const image = getSanityImageUrl(card?.image, { width: 1200 })
       if (!title || !subtitle || !image) return null
       return {
         title,
@@ -750,7 +570,7 @@ export default async function HomePage() {
       }
     })
     .filter(isDefined) ?? []
-  const homeConfidenceCards: HomeConfidenceCard[] = (parsedConfidenceCards && parsedConfidenceCards.length > 0) ? parsedConfidenceCards : confidenceCards
+
   const featuredAgriProducts: HomeProductCard[] =
     data?.featuredAgriProducts
       ?.map((product) => {
@@ -807,7 +627,7 @@ export default async function HomePage() {
       .filter(isDefined) ?? []
   const featuredCases: HomeCaseCard[] =
     data?.featuredCases
-      ?.map((caseItem, index) => {
+      ?.map((caseItem) => {
         const image = getSanityImageUrl(caseItem.coverImage, { width: 1200, height: 600 })
         if (!image) return null
 
@@ -817,26 +637,28 @@ export default async function HomePage() {
             renderText(caseItem.excerpt) || 'Detailed case study content is available in the full project report.',
           image,
           sanityImage: caseItem.coverImage,
-          logo: getSanityImageUrl(caseItem.clientLogo, { width: 264 }) || projectCaseItems[index]?.logo,
+          logo: getSanityImageUrl(caseItem.clientLogo, { width: 264 }),
           logoImage: caseItem.clientLogo,
           href: buildDetailHref('/cases', caseItem.slug),
         }
       })
       .filter(isDefined) ?? []
-  const homeAgriProducts = featuredAgriProducts.length > 0 ? featuredAgriProducts : agriProducts
-  const homeFoodProducts = featuredFoodProducts.length > 0 ? featuredFoodProducts : foodProducts
-  const homeSolutions = featuredSolutions.length > 0 ? featuredSolutions : grindingSolutions
-  const homeCaseItems = featuredCases.length > 0 ? featuredCases : projectCaseItems
+
   const parsedAdvantages = data?.advantagesSection?.items
-    ?.map((item, index) => {
+    ?.map((item) => {
       const title = renderText(item?.title)
       const description = renderText(item?.description)
-      const image = getSanityImageUrl(item?.image, { width: 256 }) || advantages[index]?.image
+      const image = getSanityImageUrl(item?.image, { width: 256 })
       if (!title || !description || !image) return null
       return { title, description, image, sanityImage: item.image }
     })
     .filter(isDefined) ?? []
-  const homeAdvantages: HomeAdvantage[] = (parsedAdvantages && parsedAdvantages.length > 0) ? parsedAdvantages : advantages
+
+  const homeAgriProducts = featuredAgriProducts
+  const homeFoodProducts = featuredFoodProducts
+  const homeSolutions = featuredSolutions
+  const homeCaseItems = featuredCases
+  const homeAdvantages: HomeAdvantage[] = parsedAdvantages
   const homeVideoItems =
     data?.featuredHomeVideos
       ?.filter((video) => cleanText(video?.status) === 'published')
