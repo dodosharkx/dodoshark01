@@ -2,13 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import { createClient } from '@sanity/client'
 
-// Manual parsing for reliability
-const envStr = fs.readFileSync('front/dodoshark/.env.local', 'utf8')
+// Robust environment loading
+const envPath = path.resolve(process.cwd(), 'front/dodoshark/.env.local')
+const envStr = fs.readFileSync(envPath, 'utf8')
 const projectId = envStr.match(/NEXT_PUBLIC_SANITY_PROJECT_ID=["']?([^"'\s]+)/)?.[1]
 const token = envStr.match(/SANITY_API_EDITOR_TOKEN=["']?([^"'\s]+)/)?.[1]
 
 if (!projectId || !token) {
-  console.error('Missing Project ID or Token')
+  console.error('Missing Project ID or Token in', envPath)
   process.exit(1)
 }
 
@@ -66,10 +67,10 @@ async function run() {
       description: 'We are not just an equipment supplier, but your lifelong partner in value co-creation. We deliver measurable, continuously optimized production results.'
     },
     stats: [
-      { label: 'Core Component Warranty', value: '3 Years' },
-      { label: 'Technical Response Time', value: '24/7' },
-      { label: 'Countries Served', value: '100+' },
-      { label: 'Spare Parts Availability', value: '99%' }
+      { _key: 'stat-warranty', label: 'Core Component Warranty', value: '3 Years' },
+      { _key: 'stat-response', label: 'Technical Response Time', value: '24/7' },
+      { _key: 'stat-countries', label: 'Countries Served', value: '100+' },
+      { _key: 'stat-availability', label: 'Spare Parts Availability', value: '99%' }
     ],
     serviceIntro: {
       eyebrow: 'Value Co-Creation',
@@ -144,7 +145,8 @@ async function run() {
   }
 
   await client.createOrReplace(supportPageData)
-  console.log('[SUCCESS] Support page content migrated successfully.')
+  await client.createOrReplace({ ...supportPageData, _id: 'drafts.supportPage' })
+  console.log('[SUCCESS] Support page content migrated (with keys and draft) successfully.')
 }
 
 run().catch(err => {

@@ -1,25 +1,33 @@
 import { createClient } from '@sanity/client';
-import { basename, join } from 'path';
-import { readFileSync } from 'fs';
-import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
-dotenv.config({ path: '../front/dodoshark/.env.local' });
+// Robust environment loading
+const envPath = path.resolve(process.cwd(), 'front/dodoshark/.env.local');
+const envStr = fs.readFileSync(envPath, 'utf8');
+const projectId = envStr.match(/NEXT_PUBLIC_SANITY_PROJECT_ID=["']?([^"'\s]+)/)?.[1];
+const token = envStr.match(/SANITY_API_EDITOR_TOKEN=["']?([^"'\s]+)/)?.[1];
+
+if (!projectId || !token) {
+  console.error('Missing Project ID or Token in', envPath);
+  process.exit(1);
+}
 
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  projectId,
   dataset: 'production',
   useCdn: false,
-  token: process.env.SANITY_API_EDITOR_TOKEN,
-  apiVersion: '2023-01-01',
+  token,
+  apiVersion: '2023-10-25',
 });
 
 async function uploadImage(filePath) {
   try {
-    const fullPath = join(process.cwd(), '../front/dodoshark/public', filePath);
+    const fullPath = path.join(process.cwd(), 'front/dodoshark/public', filePath);
     console.log(`Uploading ${fullPath}...`);
-    const buffer = readFileSync(fullPath);
+    const buffer = fs.readFileSync(fullPath);
     const asset = await client.assets.upload('image', buffer, {
-      filename: basename(fullPath),
+      filename: path.basename(fullPath),
     });
     return {
       _type: 'image',
@@ -67,15 +75,18 @@ async function runMigration() {
     },
     storyCards: [
       {
+        _key: 'card-slogan',
         title: 'Our slogan',
         subtitle: '"Work with Confidence, Reap in Joy"',
         description: 'We aim to build partnerships that transcend equipment, serving every workshop globally with the philosophy of "Work with Confidence, Reap in Joy".',
       },
       {
+        _key: 'card-dna',
         title: 'Corporate DNA',
         description: 'With a heritage stemming from a state-owned factory founded in 1970, we carry half a century of engineering depth. DoDoShark Machinery was established in Nanjing in 2019, anchoring our core mission as "Empowering Productivity."',
       },
       {
+        _key: 'card-tech',
         title: 'Technical Strength',
         description: 'Our products significantly outperform peers. For instance, our stainless steel crushers were the first to achieve 150-mesh fineness at 1 ton/hour, supporting 12 hours continuous operation, multiplying standard industry efficiency.',
       },
@@ -91,12 +102,14 @@ async function runMigration() {
     },
     productSystems: [
       {
+        _key: 'system-agri',
         title: 'Agricultural Processing Machinery',
         description: 'Designed for durability and precision in large-scale agricultural scenarios. Covering cast iron crushers, roller crushers, rice millers, and wheat flour mills.',
         tags: ['Cast Iron Crushers', 'Roller Crushers', 'Rice Millers', 'Wheat Mills'],
         image: productSystemAgricultureImage,
       },
       {
+        _key: 'system-food',
         title: 'Food Processing Machinery',
         description: 'Meeting rigorous food production standards with premium materials and precision craftsmanship. Solutions for high-end processing and commercial kitchens.',
         tags: ['Stainless Crushers', 'Industrial Mixers', 'Dough Mixers', 'Juicers'],
@@ -109,10 +122,10 @@ async function runMigration() {
       descriptionOne: 'Integrating foundational physics, mechanical automation, and IT technology to produce intellectual property. We operate 3 major production bases in Shandong (Jinan, Liaocheng, Weifang) with advanced laser cutting and static pressure casting technologies.',
       descriptionTwo: 'From serving every major city in China to expanding into over a dozen countries globally. DoDoShark stands as a new name card for Intelligent Manufacturing in China.',
       stats: [
-        { value: '10+', label: 'Senior Engineers' },
-        { value: '3', label: 'Production Bases' },
-        { value: '60+', label: 'Skilled Technicians' },
-        { value: '100+', label: 'Global Clients' },
+        { _key: 'stat-engineers', value: '10+', label: 'Senior Engineers' },
+        { _key: 'stat-bases', value: '3', label: 'Production Bases' },
+        { _key: 'stat-techs', value: '60+', label: 'Skilled Technicians' },
+        { _key: 'stat-clients', value: '100+', label: 'Global Clients' },
       ],
     },
     timelineIntro: {
@@ -122,6 +135,7 @@ async function runMigration() {
     },
     timeline: [
       {
+        _key: 'time-foundation',
         year: '1970 - 2019',
         phase: 'State-Owned Heritage',
         title: 'A Foundation of Engineering',
@@ -129,6 +143,7 @@ async function runMigration() {
         image: history1,
       },
       {
+        _key: 'time-start',
         year: '2019',
         phase: 'Brand Foundation',
         title: 'The DoDoShark Era Begins',
@@ -136,6 +151,7 @@ async function runMigration() {
         image: history2,
       },
       {
+        _key: 'time-iterative',
         year: '2020 - 2021',
         phase: 'Market Roots & Reputation',
         title: 'Iterative Excellence',
@@ -143,6 +159,7 @@ async function runMigration() {
         image: history3,
       },
       {
+        _key: 'time-expansion',
         year: '2022 - 2023',
         phase: 'Track Expansion',
         title: 'Dual-Track Business Model',
@@ -150,6 +167,7 @@ async function runMigration() {
         image: history4,
       },
       {
+        _key: 'time-automation',
         year: '2024 - 2025',
         phase: 'Innovation & Lean Manufacturing',
         title: 'Smart Automation Upgrades',
@@ -157,6 +175,7 @@ async function runMigration() {
         image: history5,
       },
       {
+        _key: 'time-future',
         year: '2026+',
         phase: 'Brand Elevation & Future Outlook',
         title: 'Industry Solution Provider',
@@ -187,7 +206,8 @@ async function runMigration() {
   };
 
   await client.createOrReplace(aboutPageData);
-  console.log('About Page migration completed successfully!');
+  await client.createOrReplace({ ...aboutPageData, _id: 'drafts.aboutPage' });
+  console.log('About Page migration completed successfully (with keys and draft)!');
 }
 
 runMigration().catch(err => {
