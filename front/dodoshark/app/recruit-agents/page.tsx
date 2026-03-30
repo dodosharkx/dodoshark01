@@ -50,6 +50,29 @@ type RecruitAgentsPageData = {
   }
 }
 
+type WhyChooseUsItem = {
+  title: string
+  description: string
+  icon: ReactNode
+}
+
+type ScopeRegion = {
+  region: string
+  countries: string[]
+  color: string
+}
+
+type RequirementSection = {
+  title: string
+  items: string[]
+  borderClass: string
+}
+
+type SupportSection = {
+  title: string
+  items: string[]
+}
+
 const RECRUIT_AGENTS_PAGE_QUERY = `coalesce(
   *[_id == "recruitAgentsPage"][0],
   *[_type == "recruitAgentsPage"][0]
@@ -105,7 +128,7 @@ function resolvePageImage(
   }
 }
 
-const WHY_CHOOSE_US = [
+const WHY_CHOOSE_US: WhyChooseUsItem[] = [
   {
     title: 'Continuous Innovation',
     description:
@@ -168,7 +191,7 @@ const WHY_CHOOSE_US = [
   },
 ]
 
-const SCOPE = [
+const SCOPE: ScopeRegion[] = [
   {
     region: 'Africa',
     countries: ['Nigeria', 'Ghana', 'Benin', 'Kenya', 'Ethiopia', 'Senegal'],
@@ -191,7 +214,7 @@ const SCOPE = [
   },
 ]
 
-const SUPPORT = [
+const SUPPORT: SupportSection[] = [
   {
     title: 'Product & Supply Chain',
     items: [
@@ -251,7 +274,7 @@ export default async function RecruitAgentsPage() {
   const scopeDescription =
     renderText(pageData?.scope?.description) ||
     'We are actively expanding our global presence, focusing on regions with high agricultural and industrial potential.'
-  const whyChooseUs =
+  const whyChooseUs: WhyChooseUsItem[] =
     pageData?.whyChooseUs
       ?.map((item, index) => {
         const title = renderText(item?.title)
@@ -263,8 +286,8 @@ export default async function RecruitAgentsPage() {
           icon: WHY_CHOOSE_US[index]?.icon ?? WHY_CHOOSE_US[0].icon,
         }
       })
-      .filter((item): item is {title: string; description: string; icon: ReactNode} => Boolean(item)) ?? WHY_CHOOSE_US
-  const scopeRegions =
+      .filter((item): item is WhyChooseUsItem => Boolean(item)) ?? WHY_CHOOSE_US
+  const scopeRegions: ScopeRegion[] =
     pageData?.scopeRegions
       ?.map((item, index) => {
         const region = renderText(item?.region)
@@ -275,8 +298,8 @@ export default async function RecruitAgentsPage() {
           color: SCOPE[index]?.color ?? 'from-orange-500/10 to-transparent',
         }
       })
-      .filter(Boolean) ?? SCOPE
-  const requirements =
+      .filter((item): item is ScopeRegion => Boolean(item)) ?? SCOPE
+  const requirements: RequirementSection[] =
     pageData?.requirements
       ?.map((item, index) => {
         const title = renderText(item?.title)
@@ -287,12 +310,12 @@ export default async function RecruitAgentsPage() {
           borderClass: index % 2 === 1 ? 'border-slate-900' : 'border-orange-500',
         }
       })
-      .filter(Boolean) ?? [
+      .filter((item): item is RequirementSection => Boolean(item)) ?? [
       { title: 'Qualifications', items: ['Legal operating status & qualifications', 'Familiarity with local market & laws', 'Strong local customer resources'], borderClass: 'border-orange-500' },
       { title: 'Capabilities', items: ['3+ years mechanical sales experience', 'Professional tech & sales team', 'Full lifecycle service capability'], borderClass: 'border-slate-900' },
       { title: 'Compliance', items: ['Adherence to market rules & integrity', 'Solid financial & credit standing', 'Adequate capital for operations'], borderClass: 'border-orange-500' },
     ]
-  const supportSections =
+  const supportSections: SupportSection[] =
     pageData?.supportSections
       ?.map((section) => {
         const title = renderText(section?.title)
@@ -302,7 +325,7 @@ export default async function RecruitAgentsPage() {
           items: (section?.items ?? []).map((entry) => renderText(entry)).filter((entry): entry is string => Boolean(entry)),
         }
       })
-      .filter(Boolean) ?? SUPPORT
+      .filter((section): section is SupportSection => Boolean(section)) ?? SUPPORT
   const ctaTitle = renderText(pageData?.cta?.title) || 'Act Now and Share the Dividends'
   const ctaDescription =
     renderText(pageData?.cta?.description) ||

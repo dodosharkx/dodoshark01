@@ -91,8 +91,15 @@ type ProductSystem = {
   description: string
   icon: ReactNode
   tags: string[]
+  image?: SanityImage
   imageKey: ProductSystemImageKey
   fallbackImageSrc: string
+}
+
+type StoryCard = {
+  title: string
+  subtitle?: string
+  description: string
 }
 
 type TimelineItem = {
@@ -100,6 +107,7 @@ type TimelineItem = {
   phase: string
   title: string
   desc: string
+  image?: SanityImage
   imageKey: TimelineImageKey
   fallbackImageSrc: string
 }
@@ -238,6 +246,10 @@ function resolvePageImage(
     src: toImageSrc(image, width) || fallbackSrc,
     alt: cleanText(image?.alt) || fallbackAlt,
   }
+}
+
+function isNonNullable<T>(value: T): value is NonNullable<T> {
+  return value != null
 }
 
 const PRODUCT_SYSTEMS: ProductSystem[] = [
@@ -385,7 +397,7 @@ export default async function AboutPage() {
   const heroTitleLineThree = renderText(pageData?.hero?.titleLineThree) || 'Empowering the World'
   const heroDescription =
     renderText(pageData?.hero?.description) || 'We provide stable, efficient, and worry-free DoDoShark machinery.'
-  const storyCards =
+  const storyCards: StoryCard[] =
     pageData?.storyCards
       ?.map((card) => {
         const title = renderText(card?.title)
@@ -397,7 +409,7 @@ export default async function AboutPage() {
           description,
         }
       })
-      .filter((item): item is { title: string; subtitle?: string; description: string } => Boolean(item)) ?? []
+      .filter(isNonNullable) ?? []
   const resolvedStoryCards = storyCards.length > 0 ? storyCards : [
     {
       title: 'Our slogan',
@@ -416,7 +428,7 @@ export default async function AboutPage() {
         'Our products significantly outperform peers. For instance, our stainless steel crushers were the first to achieve 150-mesh fineness at 1 ton/hour, supporting 12 hours continuous operation, multiplying standard industry efficiency.',
     },
   ]
-  const cmsProductSystems =
+  const cmsProductSystems: ProductSystem[] =
     pageData?.productSystems
       ?.map((sys, index) => {
         const title = renderText(sys?.title)
@@ -425,13 +437,14 @@ export default async function AboutPage() {
         return {
           title,
           description,
-          tags: (sys?.tags ?? []).map((tag) => renderText(tag)).filter(Boolean) as string[],
+          tags: (sys?.tags ?? []).map((tag) => renderText(tag)).filter((tag): tag is string => Boolean(tag)),
           icon: PRODUCT_SYSTEMS[index]?.icon ?? PRODUCT_SYSTEMS[0].icon,
           image: sys?.image,
+          imageKey: PRODUCT_SYSTEMS[index]?.imageKey ?? PRODUCT_SYSTEMS[0].imageKey,
           fallbackImageSrc: PRODUCT_SYSTEMS[index]?.fallbackImageSrc ?? '/assets/images/about/dual-track-agri.jpg',
         }
       })
-      .filter((item) => Boolean(item)) ?? []
+      .filter(isNonNullable) ?? []
   const aboutProductSystems = cmsProductSystems.length > 0 ? cmsProductSystems : PRODUCT_SYSTEMS
   const globalLayoutTitle = renderText(pageData?.globalLayout?.title) || 'High-End Talent & Global Layout'
   const globalLayoutBadge = renderText(pageData?.globalLayout?.badge) || 'Our Elite Engineering Team'
@@ -455,7 +468,7 @@ export default async function AboutPage() {
       { value: '60+', label: 'Skilled Technicians' },
       { value: '10+', label: 'Countries Served' },
     ]
-  const cmsTimeline =
+  const cmsTimeline: TimelineItem[] =
     pageData?.timeline
       ?.map((item, index) => {
         const title = renderText(item?.title)
@@ -471,7 +484,7 @@ export default async function AboutPage() {
           fallbackImageSrc: TIMELINE[index]?.fallbackImageSrc ?? '/assets/images/about/history-1.jpg',
         }
       })
-      .filter(Boolean) ?? []
+      .filter(isNonNullable) ?? []
   const resolvedTimeline = cmsTimeline.length > 0 ? cmsTimeline : TIMELINE
   const timelineClosingTitle =
     renderText(pageData?.timelineClosing?.title) || 'Settling in Reliability, Innovating in Evolution.'
@@ -580,7 +593,7 @@ export default async function AboutPage() {
           <div className="grid gap-8 md:grid-cols-2">
             {aboutProductSystems.map((sys) => {
               const systemImage = resolvePageImage(
-                'image' in sys ? sys.image : pageData?.images?.[sys.imageKey],
+                sys.image ?? pageData?.images?.[sys.imageKey],
                 sys.fallbackImageSrc,
                 sys.title,
                 1400,
@@ -686,7 +699,7 @@ export default async function AboutPage() {
           <div className="relative mx-auto max-w-5xl space-y-24 before:absolute before:inset-y-0 before:left-[24px] before:w-0.5 before:bg-slate-200 md:before:left-1/2 md:before:-translate-x-1/2">
             {resolvedTimeline.map((item, idx) => {
               const timelineImage = resolvePageImage(
-                'image' in item ? item.image : pageData?.images?.[item.imageKey],
+                item.image ?? pageData?.images?.[item.imageKey],
                 item.fallbackImageSrc,
                 item.title,
                 1200,

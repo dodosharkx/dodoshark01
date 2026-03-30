@@ -388,7 +388,7 @@ function renderLegacyVideoGallery(block: VideoGalleryBlockData, key: string | nu
 function wrapBlockForPresentation(
   documentId: string,
   blockKey: string | undefined,
-  renderKey: string,
+  renderKey: string | number,
   element: ReactNode
 ) {
   if (!blockKey) return element

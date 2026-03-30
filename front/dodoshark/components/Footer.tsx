@@ -2,11 +2,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {createDataAttribute} from 'next-sanity'
 
-import type {GlobalSettingsData, GlobalSocialLink} from '@/app/lib/global-settings'
+import type {GlobalSettingsData} from '@/app/lib/global-settings'
 import {cleanText, renderText, toImageSrc} from '@/app/lib/sanity-utils'
 
 type FooterProps = {
   settings?: GlobalSettingsData | null
+}
+
+type ResolvedSocialLink = {
+  label: string
+  icon?: string
+  href: string
+}
+
+function isNonNullable<T>(value: T): value is NonNullable<T> {
+  return value != null
 }
 
 function PhoneIcon() {
@@ -80,7 +90,7 @@ function SocialIcon({icon}: {icon?: string}) {
   }
 }
 
-function getSocialLinks(settings?: GlobalSettingsData | null): GlobalSocialLink[] {
+function getSocialLinks(settings?: GlobalSettingsData | null): ResolvedSocialLink[] {
   const items =
     settings?.footer?.socialLinks
       ?.map((item) => {
@@ -89,7 +99,7 @@ function getSocialLinks(settings?: GlobalSettingsData | null): GlobalSocialLink[
         if (!label || !href) return null
         return {label, icon: cleanText(item?.icon), href}
       })
-      .filter((item): item is GlobalSocialLink => Boolean(item)) ?? []
+      .filter(isNonNullable) ?? []
 
   if (items.length > 0) return items
 

@@ -7,6 +7,7 @@ type SlugDocument = {
 
 function singletonLocation(title: string, href: string) {
   return defineLocations({
+    select: {},
     resolve: () => ({
       locations: [{title, href}],
     }),
@@ -19,7 +20,7 @@ function documentWithSlug(basePath: string, listTitle: string) {
       title: 'title',
       slug: 'slug',
     },
-    resolve: (doc: SlugDocument) => {
+    resolve: (doc: SlugDocument | null) => {
       const slug = doc?.slug?.current?.trim()
       const title = doc?.title?.trim() || 'Untitled'
       const locations = [{title: listTitle, href: basePath}]

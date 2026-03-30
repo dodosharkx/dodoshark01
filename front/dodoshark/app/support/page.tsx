@@ -1,12 +1,30 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
 import { fetchSanityData } from '@/app/lib/sanity.live'
 import { buildPageMetadata } from '@/app/lib/seo'
 import { cleanText, renderText, toImageSrc } from '@/app/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import HeroTitle from '@/components/ui/HeroTitle'
+
+type ServiceStageImageKey =
+  | 'preSalesStageImage'
+  | 'midSalesStageImage'
+  | 'afterSalesStageImage'
+
+type ServiceStage = {
+  id: string
+  phase: string
+  title: string
+  description: string
+  features: string[]
+  image?: SanityImage
+  imageKey: ServiceStageImageKey
+  fallbackImageSrc: string
+  icon: ReactNode
+}
 
 type SupportPageData = {
   seo?: SeoMeta
@@ -125,7 +143,7 @@ function resolvePageImage(
   }
 }
 
-const SERVICE_STAGES = [
+const SERVICE_STAGES: ServiceStage[] = [
   {
     id: '01',
     phase: 'Pre-Sales',
@@ -245,17 +263,20 @@ export default async function SupportPage() {
   ]
   const serviceEyebrow = renderText(pageData?.serviceIntro?.eyebrow) || 'Value Co-Creation'
   const serviceTitle = renderText(pageData?.serviceIntro?.title) || 'Full-Lifecycle Efficiency Empowerment'
-  const serviceStages = pageData?.serviceStages?.map((stage, index) => ({
-    id: renderText(stage?.id) || SERVICE_STAGES[index]?.id || `0${index + 1}`,
-    phase: renderText(stage?.phase) || SERVICE_STAGES[index]?.phase || 'Stage',
-    title: renderText(stage?.title) || SERVICE_STAGES[index]?.title || 'Service stage',
-    description: renderText(stage?.description) || SERVICE_STAGES[index]?.description || '',
-    features: (stage?.features ?? SERVICE_STAGES[index]?.features ?? []).map((feature) => renderText(feature)).filter((item): item is string => Boolean(item)),
-    image: stage?.image,
-    imageKey: SERVICE_STAGES[index]?.imageKey ?? 'preSalesStageImage',
-    fallbackImageSrc: SERVICE_STAGES[index]?.fallbackImageSrc ?? '/assets/images/about/support-hero.jpg',
-    icon: SERVICE_STAGES[index]?.icon ?? SERVICE_STAGES[0].icon,
-  })).filter(Boolean) ?? SERVICE_STAGES
+  const serviceStages: ServiceStage[] =
+    pageData?.serviceStages?.map((stage, index) => ({
+      id: renderText(stage?.id) || SERVICE_STAGES[index]?.id || `0${index + 1}`,
+      phase: renderText(stage?.phase) || SERVICE_STAGES[index]?.phase || 'Stage',
+      title: renderText(stage?.title) || SERVICE_STAGES[index]?.title || 'Service stage',
+      description: renderText(stage?.description) || SERVICE_STAGES[index]?.description || '',
+      features: (stage?.features ?? SERVICE_STAGES[index]?.features ?? [])
+        .map((feature) => renderText(feature))
+        .filter((item): item is string => Boolean(item)),
+      image: stage?.image,
+      imageKey: SERVICE_STAGES[index]?.imageKey ?? 'preSalesStageImage',
+      fallbackImageSrc: SERVICE_STAGES[index]?.fallbackImageSrc ?? '/assets/images/about/support-hero.jpg',
+      icon: SERVICE_STAGES[index]?.icon ?? SERVICE_STAGES[0].icon,
+    })) ?? SERVICE_STAGES
   const hotlineLabel = renderText(pageData?.urgentAssistance?.hotlineLabel) || '24/7 Hotline'
   const hotlineValue = renderText(pageData?.urgentAssistance?.hotlineValue) || '+86 19941519694'
   const salesLabel = renderText(pageData?.urgentAssistance?.salesLabel) || 'Sales'

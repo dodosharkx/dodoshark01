@@ -168,7 +168,7 @@ const cardPreview = {
     return {
       title: resolvedTitle || (isReference ? 'Reference Item' : 'Inline Card'),
       subtitle: isReference ? description || `Reference | ${refType || 'unknown'}` : description || 'Inline card',
-      media,
+      media: media as never,
     }
   },
 }
@@ -249,7 +249,7 @@ const rowPreview = {
         refMediaCover2,
         refMediaHero2,
         referenceMediaFallback,
-      ),
+      ) as never,
     }
   },
 }
@@ -467,7 +467,7 @@ export default defineType({
           firstRowRefCover2,
           firstRowRefHero2,
           referenceMediaFallback,
-        ),
+        ) as never,
       }
     },
   },
