@@ -13,7 +13,6 @@
     "check:no-font-awesome": "bash ./scripts/check-no-font-awesome.sh"
   },
   "dependencies": {
-    "@opennextjs/cloudflare": "1.17.1",
     "@sanity/image-url": "^2.0.3",
     "next": "16.1.6",
     "next-sanity": "^12.1.0",
