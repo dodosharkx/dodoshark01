@@ -198,13 +198,13 @@ export default function Footer({settings}: FooterProps) {
                   label: phoneLabel,
                   values: [{label: phone, href: `tel:${phone.replace(/\s+/g, '')}`}],
                   icon: <PhoneIcon />,
-                  sanityPath: 'phoneLabel'
+                  sanityPath: 'phoneLabel',
                 },
                 {
                   label: websiteLabelTitle,
                   values: [{label: websiteLabelValue, href: websiteUrl}],
                   icon: <WebsiteIcon />,
-                  sanityPath: 'websiteLabelTitle'
+                  sanityPath: 'websiteLabelTitle',
                 },
                 {
                   label: emailLabel,
@@ -213,7 +213,7 @@ export default function Footer({settings}: FooterProps) {
                     {label: supportEmail, href: `mailto:${supportEmail}`},
                   ],
                   icon: <EmailIcon />,
-                  sanityPath: 'emailLabel'
+                  sanityPath: 'emailLabel',
                 },
               ].map((item) => (
                 <li key={item.label} className="footer-contact-item">
@@ -227,7 +227,13 @@ export default function Footer({settings}: FooterProps) {
                             href={value.href}
                             target={value.href.startsWith('https') ? '_blank' : undefined}
                             rel={value.href.startsWith('https') ? 'noreferrer' : undefined}
-                            data-sanity={getSanityDataAttr(`contact.${item.sanityPath.replace('Label', '')}`)}
+                            data-sanity={getSanityDataAttr(
+                              `contact.${
+                                item.sanityPath === 'websiteLabelTitle'
+                                  ? 'websiteLabel'
+                                  : item.sanityPath.replace('Label', '')
+                              }`
+                            )}
                           >
                             {value.label}
                           </a>
@@ -285,7 +291,7 @@ export default function Footer({settings}: FooterProps) {
 
             <div className="footer-social-grid">
               {socialLinks.map((item, index) => (
-                <Link key={item.label} className="footer-social-link" href={item.href || '/'} aria-label={item.label} data-sanity={getSanityDataAttr(`footer.socialLinks[${index}]`)}>
+                <Link key={item.label} className="footer-social-link" href={item.href || '/'} aria-label={item.label} data-sanity={getSanityDataAttr(`footer.socialLinks[${index}]`)} >
                   <span className="footer-social-badge">
                     <SocialIcon icon={item.icon} />
                   </span>
