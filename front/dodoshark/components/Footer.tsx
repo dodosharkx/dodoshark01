@@ -4,6 +4,8 @@ import {createDataAttribute} from 'next-sanity'
 
 import type {GlobalSettingsData} from '@/app/lib/global-settings'
 import {cleanText, renderText, toImageSrc} from '@/app/lib/sanity-utils'
+import CMSImage from '@/components/ui/CMSImage'
+import {studioUrl} from '@/app/lib/sanity'
 
 type FooterProps = {
   settings?: GlobalSettingsData | null
@@ -112,13 +114,21 @@ function getSocialLinks(settings?: GlobalSettingsData | null): ResolvedSocialLin
 }
 
 export default function Footer({settings}: FooterProps) {
+  const phoneLabel = renderText(settings?.footer?.phoneLabel) || 'Phone'
+  const emailLabel = renderText(settings?.footer?.emailLabel) || 'Email'
+  const websiteLabelTitle = renderText(settings?.footer?.websiteLabelTitle) || 'Website'
+  const networkKicker = renderText(settings?.footer?.networkKicker) || 'Regional Coverage'
+  const networkTitle = renderText(settings?.footer?.networkTitle) || 'Our Network'
+  const socialKicker = renderText(settings?.footer?.socialKicker) || 'Stay Connected'
+  const socialTitle = renderText(settings?.footer?.socialTitle) || 'Follow Us'
+
   const phone = renderText(settings?.contact?.phone) || '+86 19941519694'
   const email = renderText(settings?.contact?.email) || 'sales@dodoshark.com'
   const supportEmail = renderText(settings?.contact?.supportEmail) || 'support@dodoshark.com'
-  const websiteLabel = renderText(settings?.contact?.websiteLabel) || 'www.dodoshark.com'
+  const websiteLabelValue = renderText(settings?.contact?.websiteLabel) || 'www.dodoshark.com'
   const websiteUrl = cleanText(settings?.contact?.websiteUrl) || 'https://www.dodoshark.com'
   const headquartersKicker = renderText(settings?.footer?.headquartersKicker) || 'Headquarters'
-  const headquartersTitle = renderText(settings?.siteName) || 'DoDoShark'
+  const headquartersTitle = renderText(settings?.footer?.headquartersTitle) || renderText(settings?.siteName) || 'DoDoShark'
   const logoSrc = toImageSrc(settings?.logo, 360)
   const headquartersBody =
     renderText(settings?.footer?.headquartersBody) ||
@@ -152,64 +162,65 @@ export default function Footer({settings}: FooterProps) {
           {label: 'Privacy Policy', href: '/privacy'},
         ]
   const copyrightText = renderText(settings?.footer?.copyrightText) || '© 2026 DoDoShark. All rights reserved.'
-  const contactDataAttribute = settings?._id
-    ? createDataAttribute({id: settings._id, type: 'globalSettings', path: 'contact'}).toString()
-    : undefined
-  const footerDataAttribute = settings?._id
-    ? createDataAttribute({id: settings._id, type: 'globalSettings', path: 'footer'}).toString()
-    : undefined
-  const footerLinksDataAttribute = settings?._id
-    ? createDataAttribute({id: settings._id, type: 'globalSettings', path: 'footer.footerLinks'}).toString()
-    : undefined
+
+  const footerMap = settings?.footer?.footerMap
+  const footerMapImage = footerMap?.image
+  const footerMapAria = renderText(footerMap?.ariaLabel) || 'Worldwide customer distribution map'
+
+  const getSanityDataAttr = (path: string) => {
+    if (!settings?._id) return undefined
+    return createDataAttribute({
+      id: settings._id.replace('drafts.', ''), // Ensure clean ID for the intent
+      type: 'globalSettings',
+      path,
+      projectId: 'nljl95h9',
+      dataset: 'production',
+    }).toString()
+  }
+
+  const footerDataAttribute = getSanityDataAttr('footer')
+  const footerLinksDataAttribute = getSanityDataAttr('footer.footerLinks')
 
   return (
     <footer className="industrial-footer" data-sanity={footerDataAttribute}>
       <div className="industrial-footer__inner">
         <div className="industrial-footer__grid">
           <section className="footer-block" aria-labelledby="footer-company-title">
-            <p className="footer-kicker">{headquartersKicker}</p>
-            <h2 className="footer-title" id="footer-company-title">
+            <p className="footer-kicker" data-sanity={getSanityDataAttr('footer.headquartersKicker')}>{headquartersKicker}</p>
+            <h2 className="footer-title" id="footer-company-title" data-sanity={getSanityDataAttr('footer.headquartersTitle')}>
               {headquartersTitle}
             </h2>
-            {logoSrc ? (
-              <div className="mb-4">
-                <Image
-                  src={logoSrc}
-                  alt={renderText(settings?.logo?.alt) || headquartersTitle}
-                  width={220}
-                  height={64}
-                  className="h-12 w-auto object-contain"
-                />
-              </div>
-            ) : null}
             <div className="footer-rule" />
-            <p className="footer-copy whitespace-pre-line">{headquartersBody}</p>
+            <p className="footer-copy whitespace-pre-line" data-sanity={getSanityDataAttr('footer.headquartersBody')}>{headquartersBody}</p>
 
-            <ul className="footer-contact-list" data-sanity={contactDataAttribute}>
+            <ul className="footer-contact-list" data-sanity={getSanityDataAttr('contact')}>
               {[
                 {
-                  label: 'Phone',
+                  label: phoneLabel,
                   values: [{label: phone, href: `tel:${phone.replace(/\s+/g, '')}`}],
                   icon: <PhoneIcon />,
+                  sanityPath: 'phoneLabel',
                 },
                 {
-                  label: 'Website',
-                  values: [{label: websiteLabel, href: websiteUrl}],
+                  label: websiteLabelTitle,
+                  values: [{label: websiteLabelValue, href: websiteUrl}],
                   icon: <WebsiteIcon />,
+                  sanityPath: 'websiteLabelTitle',
                 },
                 {
-                  label: 'Email',
+                  label: emailLabel,
                   values: [
                     {label: email, href: `mailto:${email}`},
                     {label: supportEmail, href: `mailto:${supportEmail}`},
                   ],
                   icon: <EmailIcon />,
+                  sanityPath: 'emailLabel',
                 },
               ].map((item) => (
                 <li key={item.label} className="footer-contact-item">
                   <span className="footer-icon-chip">{item.icon}</span>
                   <div>
-                    <span className="footer-meta-label">{item.label}</span>
+                    <span className="footer-meta-label" data-sanity={getSanityDataAttr(`footer.${item.sanityPath}`)}>{item.label}</span>
                     <div className="flex flex-col">
                       {item.values.map((value) => (
                         <span key={value.label} className="footer-meta-value">
@@ -217,6 +228,13 @@ export default function Footer({settings}: FooterProps) {
                             href={value.href}
                             target={value.href.startsWith('https') ? '_blank' : undefined}
                             rel={value.href.startsWith('https') ? 'noreferrer' : undefined}
+                            data-sanity={getSanityDataAttr(
+                              `contact.${
+                                item.sanityPath === 'websiteLabelTitle'
+                                  ? 'websiteLabel'
+                                  : item.sanityPath.replace('Label', '')
+                              }`
+                            )}
                           >
                             {value.label}
                           </a>
@@ -230,14 +248,14 @@ export default function Footer({settings}: FooterProps) {
           </section>
 
           <section className="footer-block" aria-labelledby="footer-network-title">
-            <p className="footer-kicker">Regional Coverage</p>
-            <h2 className="footer-title" id="footer-network-title">
-              Our Network
+            <p className="footer-kicker" data-sanity={getSanityDataAttr('footer.networkKicker')}>{networkKicker}</p>
+            <h2 className="footer-title" id="footer-network-title" data-sanity={getSanityDataAttr('footer.networkTitle')}>
+              {networkTitle}
             </h2>
             <div className="footer-rule" />
 
             <ul className="footer-network-list">
-              {resolvedNetworkItems.map((item) => (
+              {resolvedNetworkItems.map((item, index) => (
                 <li key={item} className="footer-network-item">
                   <span className="footer-icon-chip">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -258,7 +276,7 @@ export default function Footer({settings}: FooterProps) {
                     </svg>
                   </span>
                   <div>
-                    <p className="footer-network-title">{item}</p>
+                    <p className="footer-network-title" data-sanity={getSanityDataAttr(`footer.networkItems[${index}]`)}>{item}</p>
                   </div>
                 </li>
               ))}
@@ -266,36 +284,46 @@ export default function Footer({settings}: FooterProps) {
           </section>
 
           <section className="footer-block" aria-labelledby="footer-social-title">
-            <p className="footer-kicker">Stay Connected</p>
-            <h2 className="footer-title" id="footer-social-title">
-              Follow Us
+            <p className="footer-kicker" data-sanity={getSanityDataAttr('footer.socialKicker')}>{socialKicker}</p>
+            <h2 className="footer-title" id="footer-social-title" data-sanity={getSanityDataAttr('footer.socialTitle')}>
+              {socialTitle}
             </h2>
             <div className="footer-rule" />
 
             <div className="footer-social-grid">
-              {socialLinks.map((item) => (
-                <Link key={item.label} className="footer-social-link" href={item.href || '/'} aria-label={item.label}>
+              {socialLinks.map((item, index) => (
+                <Link key={item.label} className="footer-social-link" href={item.href || '/'} aria-label={item.label} data-sanity={getSanityDataAttr(`footer.socialLinks[${index}]`)} >
                   <span className="footer-social-badge">
                     <SocialIcon icon={item.icon} />
                   </span>
                 </Link>
               ))}
             </div>
-            <div className="footer-map-wrap" aria-label="Worldwide customer distribution map">
-              <Image
-                src="/assets/images/background/footer-map-image.png"
-                alt="World map showing DoDoShark global presence"
-                width={320}
-                height={156}
-                className="footer-map-image"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-              />
+            <div className="footer-map-wrap" aria-label={footerMapAria} data-sanity={getSanityDataAttr('footer.footerMap')}>
+              {footerMapImage?.asset ? (
+                <CMSImage
+                  image={footerMapImage}
+                  width={320}
+                  height={156}
+                  className="footer-map-image"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                />
+              ) : (
+                <Image
+                  src="/assets/images/background/footer-map-image.png"
+                  alt="World map showing DoDoShark global presence"
+                  width={320}
+                  height={156}
+                  className="footer-map-image"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                />
+              )}
             </div>
           </section>
         </div>
 
         <div className="footer-bottom">
-          <div className="footer-copyright">{copyrightText}</div>
+          <div className="footer-copyright" data-sanity={getSanityDataAttr('footer.copyrightText')}>{copyrightText}</div>
           <div className="footer-legal" data-sanity={footerLinksDataAttribute}>
             {resolvedFooterLinks.map((item, index) => (
               <span key={`${item.label}-${item.href}`} className="contents">

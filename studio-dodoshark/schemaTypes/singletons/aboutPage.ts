@@ -56,11 +56,31 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'brandStoryTitle',
+      title: 'Brand Story Title',
+      type: 'string',
+      group: 'content',
+      description: 'Used in the brand story video card card.',
+    }),
+    defineField({
       name: 'brandStoryVideoUrl',
       title: 'Brand Story Video URL',
       type: 'url',
       group: 'content',
       validation: (rule) => rule.uri({scheme: ['https']}).warning('Use a valid HTTPS video URL.'),
+    }),
+    defineField({
+      name: 'productSystemIntro',
+      title: 'Product System Intro',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({name: 'titleLineOne', title: 'Title Line One', type: 'string'}),
+        defineField({name: 'titleLineTwo', title: 'Title Line Two', type: 'string'}),
+        defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
+        defineField({name: 'buttonLabel', title: 'Button Label', type: 'string'}),
+        defineField({name: 'buttonHref', title: 'Button Link', type: 'string'}),
+      ],
     }),
     defineField({
       name: 'productSystems',
@@ -113,6 +133,17 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'timelineIntro',
+      title: 'Timeline Intro',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({name: 'titleLineOne', title: 'Title Line One', type: 'string'}),
+        defineField({name: 'titleLineTwo', title: 'Title Line Two', type: 'string'}),
+        defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
+      ],
+    }),
+    defineField({
       name: 'timeline',
       title: 'Timeline Items',
       type: 'array',
@@ -152,6 +183,8 @@ export default defineType({
         defineField({name: 'description', title: 'Description', type: 'text', rows: 4}),
         defineField({name: 'buttonLabel', title: 'Button Label', type: 'string'}),
         defineField({name: 'buttonHref', title: 'Button Link', type: 'string'}),
+        defineField({name: 'joinUsTitle', title: 'Join Us Title', type: 'string'}),
+        defineField({name: 'joinUsDescription', title: 'Join Us Description', type: 'text', rows: 3}),
       ],
     }),
     defineField({

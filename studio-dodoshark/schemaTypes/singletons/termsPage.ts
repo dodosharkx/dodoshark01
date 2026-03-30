@@ -47,12 +47,12 @@ export default defineType({
       group: 'hero',
     }),
     defineField({
-      name: 'sections',
-      title: 'Terms Sections',
+      name: 'content',
+      title: 'Terms Content',
       type: 'array',
       group: 'content',
-      of: [defineArrayMember({type: 'object', fields: sectionFields})],
-      validation: (rule) => rule.min(1),
+      of: [defineArrayMember({type: 'block'})],
+      description: 'The main rich text content of the terms of service.',
     }),
     defineField({
       name: 'bottomCta',
@@ -71,14 +71,11 @@ export default defineType({
     select: {
       title: 'heroTitle',
       lastUpdated: 'lastUpdated',
-      sections: 'sections',
     },
-    prepare({title, lastUpdated, sections}) {
+    prepare({title, lastUpdated}) {
       return {
         title: title || 'Terms Page',
-        subtitle:
-          pickText(lastUpdated, itemCount(sections) ? `${itemCount(sections)} sections` : undefined) ||
-          'Terms page singleton',
+        subtitle: lastUpdated ? `Last updated: ${lastUpdated}` : 'Terms page singleton',
       }
     },
   },

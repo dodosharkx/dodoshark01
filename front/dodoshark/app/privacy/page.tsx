@@ -1,22 +1,19 @@
 import type {Metadata} from 'next'
 import Link from 'next/link'
 
+import {PortableText, type PortableTextBlock} from 'next-sanity'
+
 import {fetchSanityData} from '@/app/lib/sanity.live'
 import {buildPageMetadata} from '@/app/lib/seo'
 import {cleanText, renderText} from '@/app/lib/sanity-utils'
 import type {SeoMeta} from '@/app/lib/types/sanity'
-
-type LegalSection = {
-  title?: string
-  body?: string[]
-}
 
 type PrivacyPageData = {
   seo?: SeoMeta
   lastUpdated?: string
   heroTitle?: string
   heroDescription?: string
-  sections?: LegalSection[]
+  content?: PortableTextBlock[]
   bottomCta?: {
     title?: string
     description?: string
@@ -33,10 +30,7 @@ const PRIVACY_PAGE_QUERY = `coalesce(
   lastUpdated,
   heroTitle,
   heroDescription,
-  sections[]{
-    title,
-    body
-  },
+  content,
   bottomCta{
     title,
     description,
@@ -45,61 +39,7 @@ const PRIVACY_PAGE_QUERY = `coalesce(
   }
 }`
 
-const FALLBACK_SECTIONS: LegalSection[] = [
-  {
-    title: '1. Information We Collect',
-    body: [
-      'We may collect business contact data such as name, company, email, phone number, country, and inquiry details when you submit forms or communicate with us.',
-      'We may also collect device and usage information for analytics, website security, and service improvement.',
-    ],
-  },
-  {
-    title: '2. How We Use Information',
-    body: [
-      'We use collected information to provide quotations, respond to inquiries, prepare technical proposals, fulfill contracts, and improve our products and services.',
-      'We do not sell personal data to third parties.',
-    ],
-  },
-  {
-    title: '3. Legal Basis and International Transfers',
-    body: [
-      'Where required by applicable law, we process information based on consent, contract performance, legitimate interests, or legal obligations.',
-      'Your data may be processed in regions where DoDoShark or its service providers operate, with reasonable safeguards in place.',
-    ],
-  },
-  {
-    title: '4. Data Sharing',
-    body: [
-      'We may share information with logistics partners, payment providers, technical service providers, and legal advisors when necessary to deliver products and services.',
-      'All service providers are expected to handle data securely and only for authorized purposes.',
-    ],
-  },
-  {
-    title: '5. Cookies and Tracking',
-    body: [
-      'We use cookies and similar technologies to remember preferences, measure traffic, and optimize website performance.',
-      'You can control cookies through your browser settings, but some website functions may be affected.',
-    ],
-  },
-  {
-    title: '6. Data Retention and Security',
-    body: [
-      'We retain data only as long as needed for the purposes described in this policy or as required by law.',
-      'We apply reasonable technical and organizational measures to protect data against unauthorized access, disclosure, or loss.',
-    ],
-  },
-  {
-    title: '7. Your Rights',
-    body: [
-      'Depending on your jurisdiction, you may have rights to access, correct, delete, restrict, or object to certain processing activities.',
-      'To exercise your rights, contact us through the details below.',
-    ],
-  },
-  {
-    title: '8. Contact',
-    body: ['For privacy questions or data requests, email privacy@dodoshark.com.'],
-  },
-]
+// Hardcoded fallback removed after CMS migration
 
 async function getPrivacyPageData(stega?: boolean) {
   return fetchSanityData<PrivacyPageData | null>({
@@ -124,7 +64,7 @@ export default async function PrivacyPage() {
   const heroDescription =
     renderText(pageData?.heroDescription) ||
     'How we protect your data across industrial sales, technical support, and website operations.'
-  const sections = (pageData?.sections ?? FALLBACK_SECTIONS).filter((section) => renderText(section?.title))
+
   const ctaTitle = renderText(pageData?.bottomCta?.title) || 'Need Data Compliance Support?'
   const ctaDescription =
     renderText(pageData?.bottomCta?.description) ||
@@ -154,20 +94,25 @@ export default async function PrivacyPage() {
 
       <section className="py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {sections.map((section) => (
-            <section key={section.title} className="mb-12">
-              <h2 className="mb-5 text-2xl font-display font-black uppercase tracking-wide text-slate-900">
-                {section.title}
-              </h2>
-              <div className="space-y-4">
-                {(section.body ?? []).map((paragraph) => (
-                  <p key={paragraph} className="leading-8 text-slate-600">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </section>
-          ))}
+          <div className="portable-text-content">
+            {pageData?.content ? (
+              <PortableText
+                value={pageData.content}
+                components={{
+                  block: {
+                    h2: ({children}) => (
+                      <h2 className="mb-5 mt-12 text-2xl font-display font-black uppercase tracking-wide text-slate-900 first:mt-0">
+                        {children}
+                      </h2>
+                    ),
+                    normal: ({children}) => <p className="mb-6 leading-8 text-slate-600 last:mb-0">{children}</p>,
+                  },
+                }}
+              />
+            ) : (
+              <p className="text-slate-500 italic">Policy content coming soon...</p>
+            )}
+          </div>
 
           <div className="mt-20 rounded-lg bg-slate-800 p-10 text-white">
             <h2 className="mb-4 text-xl font-display font-black uppercase tracking-tight">{ctaTitle}</h2>

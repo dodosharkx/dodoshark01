@@ -1,8 +1,10 @@
 'use client'
 
 import Image from 'next/image'
+
 import Link from 'next/link'
 import { useState } from 'react'
+import CMSImage from '@/components/ui/CMSImage'
 import { A11y, Keyboard } from 'swiper/modules'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -14,7 +16,9 @@ type ProjectCaseItem = {
   title: string
   description: string
   image: string
+  sanityImage?: any
   logo?: string | null
+  logoImage?: any
   href: string
 }
 
@@ -88,15 +92,29 @@ export default function ProjectCasesCarousel({ items }: ProjectCasesCarouselProp
           <SwiperSlide key={`${item.title}-${item.logo ?? 'no-logo'}`} className={styles.slide}>
             <Link href={item.href} className={styles.cardLink}>
               <div className={styles.imageWrap}>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
-                  className={styles.image}
-                  priority={false}
-                />
-                {item.logo ? (
+                {item.sanityImage?.asset ? (
+                  <CMSImage
+                    image={item.sanityImage}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+                    className={styles.image}
+                  />
+                ) : (
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+                    className={styles.image}
+                    priority={false}
+                  />
+                )}
+                {item.logoImage?.asset ? (
+                  <div className={styles.logoBadge}>
+                    <CMSImage image={item.logoImage} width={132} height={40} className={styles.logoImage} />
+                  </div>
+                ) : item.logo ? (
                   <div className={styles.logoBadge}>
                     <Image src={item.logo} alt={`${item.title} logo`} width={132} height={40} className={styles.logoImage} />
                   </div>

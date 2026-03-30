@@ -67,6 +67,22 @@
   - check mobile and desktop behavior
   - verify hidden fields are ignored safely when stale content exists
 
+## Data Handling & Fallbacks (CRITICAL)
+- **Array Fallbacks**: When mapping Sanity arrays to frontend lists, NEVER use the `??` (nullish coalescing) operator alone (e.g., `parsedData ?? fallbackData`). In JavaScript, an empty array `[]` is truthy, so the fallback will not trigger if Sanity returns an empty or filtered list.
+  - **Correct Pattern**: `const homeStats = (parsedStats && parsedStats.length > 0) ? parsedStats : stats`
+- **Image Fallbacks**: When migrating hardcoded assets to Sanity, always preserve the hardcoded `<Image />` as a fallback in the JSX until the CMS data is 100% verified.
+  - **Component**: `front/dodoshark/components/ui/CMSImage.tsx` is the preferred component for Sanity images. It automatically resolves `src` (Next.js optimized) and `alt` text from the Sanity asset.
+  - **Correct Pattern (Standalone)**: `{sanityImage?.asset ? <CMSImage image={sanityImage} width={800} height={600} /> : <Image src="/path.png" width={800} height={600} alt="Fallback" />}`
+  - **Correct Pattern (Mapping)**:
+    ```tsx
+    const homeFeatures = data?.features?.map((item, index) => ({
+      title: renderText(item.title),
+      image: getSanityImageUrl(item.image) || fallbackData[index].image,
+      sanityImage: item.image // Pass the original object for CMSImage
+    })) ?? []
+    ```
+- **Field Rendering**: Use `renderText()` helper for all Sanity fields to ensure proper handling of PortableText and plain strings.
+
 ## Notes
 - There is no root workspace runner configured here; treat frontend and Studio as separate apps.
 - Default READMEs are not authoritative for project-specific behavior. Prefer the page builder and schema source files as the source of truth.

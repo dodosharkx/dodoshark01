@@ -1,7 +1,10 @@
 'use client'
 
 import Image from 'next/image'
+
 import { useState, type ReactNode } from 'react'
+import CMSImage from '@/components/ui/CMSImage'
+import type { SanityImage } from '@/app/lib/types/sanity'
 
 import { getVideoOrientation, normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl, type VideoOrientation } from '@/app/lib/video'
 import VideoLightbox from '@/components/page-builder/VideoLightbox'
@@ -11,6 +14,7 @@ type VideoPreviewTriggerProps = {
   title: string
   youtubeUrl?: string
   imageSrc?: string
+  sanityImage?: SanityImage
   imageAlt?: string
   mediaClassName?: string
   imageClassName?: string
@@ -43,6 +47,7 @@ export default function VideoPreviewTrigger({
   ariaLabel,
   orientation,
   children,
+  sanityImage,
 }: VideoPreviewTriggerProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -68,7 +73,18 @@ export default function VideoPreviewTrigger({
         aria-label={ariaLabel || (canPlay ? `Play ${title}` : `${title} video is unavailable`)}
       >
         <div className={joinClasses('relative overflow-hidden bg-slate-100', mediaClassName)}>
-          {resolvedPosterSrc ? (
+          {sanityImage?.asset ? (
+            <CMSImage
+              image={sanityImage}
+              alt={imageAlt || title || 'Video cover'}
+              fill
+              sizes={imageSizes}
+              className={joinClasses(
+                'object-cover transition-transform duration-700 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]',
+                imageClassName,
+              )}
+            />
+          ) : resolvedPosterSrc ? (
             <Image
               src={resolvedPosterSrc}
               alt={imageAlt || title || 'Video cover'}

@@ -56,16 +56,33 @@ export default defineType({
       type: 'object',
       group: 'header',
       fields: [
+        defineField({
+          name: 'topBar',
+          title: 'Top Bar Styles',
+          type: 'object',
+          fields: [
+            defineField({name: 'backgroundColor', title: 'Background Color', type: 'string', description: 'Hex or CSS color (e.g. #f5f5f0).'}),
+            defineField({name: 'borderColor', title: 'Border Color', type: 'string', description: 'Hex or CSS color (e.g. #e8e7de).'}),
+            defineField({name: 'sloganIcon', title: 'Slogan Icon', type: 'image'}),
+            defineField({name: 'workingHoursIcon', title: 'Working Hours Icon', type: 'image'}),
+          ],
+        }),
         defineField({name: 'sloganLabel', title: 'Slogan Label', type: 'string'}),
         defineField({name: 'sloganText', title: 'Slogan Text', type: 'string'}),
         defineField({name: 'workingHoursLabel', title: 'Working Hours Label', type: 'string'}),
         defineField({name: 'workingHoursText', title: 'Working Hours Text', type: 'string'}),
         defineField({
-          name: 'navigation',
-          title: 'Navigation Items',
-          type: 'array',
-          of: [defineArrayMember({type: 'object', fields: linkFields})],
-          validation: (rule) => rule.min(1),
+          name: 'navBackground',
+          title: 'Navigation Background Image',
+          type: 'image',
+          description: 'Background used for navigation area (e.g. footer-background.png texture).',
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Alt Text',
+            }),
+          ],
         }),
         defineField({name: 'desktopCtaLabel', title: 'Desktop CTA Label', type: 'string'}),
         defineField({name: 'desktopCtaHref', title: 'Desktop CTA Link', type: 'string'}),
@@ -115,12 +132,50 @@ export default defineType({
       group: 'footer',
       fields: [
         defineField({name: 'headquartersKicker', title: 'Headquarters Kicker', type: 'string'}),
+        defineField({
+          name: 'headquartersTitle',
+          title: 'Headquarters Title',
+          type: 'string',
+          description: 'Override site name in footer.',
+        }),
         defineField({name: 'headquartersBody', title: 'Headquarters Body', type: 'text', rows: 4}),
+        defineField({name: 'phoneLabel', title: 'Phone Label', type: 'string'}),
+        defineField({name: 'websiteLabelTitle', title: 'Website Label Title', type: 'string', description: 'Label for the website field in footer (Default: Website)'}),
+        defineField({name: 'emailLabel', title: 'Email Label', type: 'string'}),
+        defineField({name: 'networkKicker', title: 'Network Kicker', type: 'string'}),
+        defineField({name: 'networkTitle', title: 'Network Title', type: 'string'}),
         defineField({
           name: 'networkItems',
           title: 'Network Items',
           type: 'array',
           of: [defineArrayMember({type: 'string'})],
+        }),
+        defineField({name: 'socialKicker', title: 'Social Kicker', type: 'string'}),
+        defineField({name: 'socialTitle', title: 'Social Title', type: 'string'}),
+        defineField({
+          name: 'footerMap',
+          title: 'Footer Map',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'image',
+              type: 'image',
+              title: 'Map Image',
+              fields: [
+                defineField({
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alt Text',
+                }),
+              ],
+            }),
+            defineField({
+              name: 'ariaLabel',
+              type: 'string',
+              title: 'Aria Label',
+              description: 'Accessibility label for the map container.',
+            }),
+          ],
         }),
         defineField({
           name: 'socialLinks',

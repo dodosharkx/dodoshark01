@@ -12,7 +12,7 @@ const defaultStudioUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://dodoshark.sanity.studio'
     : 'http://localhost:3333'
-const studioUrl =
+export const studioUrl =
   normalizeUrl(process.env.NEXT_PUBLIC_SANITY_STUDIO_URL) || defaultStudioUrl
 
 export const client = createClient({

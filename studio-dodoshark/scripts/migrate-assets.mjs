@@ -4,7 +4,8 @@ import { createClient } from '@sanity/client'
 import dotenv from 'dotenv'
 
 // Load environment variables from frontend directory
-dotenv.config({ path: '../front/dodoshark/.env.local' })
+const envPath = path.resolve(process.cwd(), 'front/dodoshark/.env.local')
+dotenv.config({ path: envPath })
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
@@ -23,7 +24,7 @@ const client = createClient({
   apiVersion: '2025-09-25'
 })
 
-const BASE_PATH = '../front/dodoshark'
+const BASE_PATH = path.resolve(process.cwd(), 'front/dodoshark')
 
 const MAPPING = [
   // Home Page

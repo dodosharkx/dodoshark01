@@ -1,22 +1,19 @@
 import type {Metadata} from 'next'
 import Link from 'next/link'
 
+import {PortableText, type PortableTextBlock} from 'next-sanity'
+
 import {fetchSanityData} from '@/app/lib/sanity.live'
 import {buildPageMetadata} from '@/app/lib/seo'
 import {cleanText, renderText} from '@/app/lib/sanity-utils'
 import type {SeoMeta} from '@/app/lib/types/sanity'
-
-type LegalSection = {
-  title?: string
-  body?: string[]
-}
 
 type TermsPageData = {
   seo?: SeoMeta
   lastUpdated?: string
   heroTitle?: string
   heroDescription?: string
-  sections?: LegalSection[]
+  content?: PortableTextBlock[]
   bottomCta?: {
     title?: string
     description?: string
@@ -33,10 +30,7 @@ const TERMS_PAGE_QUERY = `coalesce(
   lastUpdated,
   heroTitle,
   heroDescription,
-  sections[]{
-    title,
-    body
-  },
+  content,
   bottomCta{
     title,
     description,
@@ -45,59 +39,7 @@ const TERMS_PAGE_QUERY = `coalesce(
   }
 }`
 
-const FALLBACK_SECTIONS: LegalSection[] = [
-  {
-    title: '1. Acceptance of Terms',
-    body: [
-      'By accessing or using DoDoShark websites, documents, quotations, products, or technical services, you agree to these Terms of Service.',
-      'If you are acting on behalf of a company, you confirm that you have authority to bind that company to this agreement.',
-    ],
-  },
-  {
-    title: '2. Product and Technical Information',
-    body: [
-      'All product descriptions, capacities, dimensions, and performance values are provided for reference and may vary by model, raw material, and operation environment.',
-      'Final technical scope is defined by the signed quotation, contract, and confirmed technical annexes.',
-    ],
-  },
-  {
-    title: '3. Quotations, Orders, and Payment',
-    body: [
-      'Quotations are valid only within the stated validity period and are subject to confirmation of stock, production schedule, and engineering requirements.',
-      'Prices, payment milestones, and delivery terms follow the executed contract or proforma invoice.',
-    ],
-  },
-  {
-    title: '4. Delivery, Installation, and Risk',
-    body: [
-      'Delivery terms are interpreted according to the latest Incoterms edition unless otherwise specified in writing.',
-      'Customer is responsible for site readiness, utilities, local permits, and operator safety training before commissioning.',
-    ],
-  },
-  {
-    title: '5. Warranty and Limitation of Liability',
-    body: [
-      'Warranty scope and period follow the signed sales agreement. Wear parts, misuse, unauthorized modifications, and force majeure are excluded unless agreed otherwise.',
-      'To the extent permitted by law, DoDoShark is not liable for indirect, incidental, or consequential damages, including production downtime or profit loss.',
-    ],
-  },
-  {
-    title: '6. Intellectual Property',
-    body: [
-      'All technical drawings, manuals, media assets, and website content are owned by DoDoShark or its licensors and may not be copied or redistributed without written consent.',
-    ],
-  },
-  {
-    title: '7. Governing Law and Dispute Resolution',
-    body: [
-      'Unless a contract states otherwise, disputes shall first be resolved through friendly negotiation. If unresolved, disputes may be submitted to competent arbitration or court under the governing law specified in the relevant agreement.',
-    ],
-  },
-  {
-    title: '8. Contact',
-    body: ['For contract, legal, or compliance questions, contact our team at legal@dodoshark.com.'],
-  },
-]
+// Hardcoded fallback removed after CMS migration
 
 async function getTermsPageData(stega?: boolean) {
   return fetchSanityData<TermsPageData | null>({
@@ -122,7 +64,7 @@ export default async function TermsPage() {
   const heroDescription =
     renderText(pageData?.heroDescription) ||
     'Legal terms for accessing and using DoDoShark products, website, and related services.'
-  const sections = (pageData?.sections ?? FALLBACK_SECTIONS).filter((section) => renderText(section?.title))
+
   const ctaTitle = renderText(pageData?.bottomCta?.title) || 'Need Contract Clarification?'
   const ctaDescription =
     renderText(pageData?.bottomCta?.description) ||
@@ -152,20 +94,25 @@ export default async function TermsPage() {
 
       <section className="py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {sections.map((section) => (
-            <section key={section.title} className="mb-12">
-              <h2 className="mb-5 text-2xl font-display font-black uppercase tracking-wide text-slate-900">
-                {section.title}
-              </h2>
-              <div className="space-y-4">
-                {(section.body ?? []).map((paragraph) => (
-                  <p key={paragraph} className="leading-8 text-slate-600">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </section>
-          ))}
+          <div className="portable-text-content">
+            {pageData?.content ? (
+              <PortableText
+                value={pageData.content}
+                components={{
+                  block: {
+                    h2: ({children}) => (
+                      <h2 className="mb-5 mt-12 text-2xl font-display font-black uppercase tracking-wide text-slate-900 first:mt-0">
+                        {children}
+                      </h2>
+                    ),
+                    normal: ({children}) => <p className="mb-6 leading-8 text-slate-600 last:mb-0">{children}</p>,
+                  },
+                }}
+              />
+            ) : (
+              <p className="text-slate-500 italic">Terms content coming soon...</p>
+            )}
+          </div>
 
           <div className="premium-card mt-20 border-orange-500/30 bg-white p-10 shadow-2xl">
             <h2 className="mb-4 text-xl font-display font-black uppercase tracking-tight text-slate-900">

@@ -48,18 +48,8 @@ function ClockIcon() {
 }
 
 function toNavItems(settings?: GlobalSettingsData | null) {
-  const items =
-    settings?.header?.navigation
-      ?.map((item) => {
-        const label = renderText(item?.label)
-        const href = cleanText(item?.href)
-
-        if (!label || !href) return null
-        return {label, href}
-      })
-      .filter((item): item is NavItem => Boolean(item)) ?? []
-
-  return items.length > 0 ? items : defaultNavItems
+  // Navigation items are now strictly hardcoded per user request for stability
+  return defaultNavItems
 }
 
 export default function Header({settings}: HeaderProps) {
@@ -71,11 +61,14 @@ export default function Header({settings}: HeaderProps) {
   const navItems = toNavItems(settings)
   const logoSrc = toImageSrc(settings?.logo, 400) || '/assets/images/brand/dodoshark-logo.png'
   const logoAlt = renderText(settings?.logo?.alt) || renderText(settings?.siteName) || 'DoDoShark'
+  
+  // Header content with hardcoded fallbacks per user request
   const sloganLabel = renderText(settings?.header?.sloganLabel) || 'Our Slogan'
   const sloganText = renderText(settings?.header?.sloganText) || 'Work with Confidence, Reap in Joy'
-  const workingHoursLabel =
-    renderText(settings?.header?.workingHoursLabel) || 'Working Hours (Beijing Time)'
+  
+  const workingHoursLabel = renderText(settings?.header?.workingHoursLabel) || 'Working Hours (Beijing Time)'
   const workingHoursText = renderText(settings?.header?.workingHoursText) || 'Mon - Sun: 9:00 - 22:00'
+  
   const desktopCta = {
     label: renderText(settings?.header?.desktopCtaLabel) || 'Request Quote',
     href: cleanText(settings?.header?.desktopCtaHref) || '/contact',
@@ -84,11 +77,12 @@ export default function Header({settings}: HeaderProps) {
     label: renderText(settings?.header?.mobileCtaLabel) || 'Quote',
     href: cleanText(settings?.header?.mobileCtaHref) || '/contact',
   }
+
+  // Dynamic background image with fallback
+  const navBackgroundSrc = toImageSrc(settings?.header?.navBackground, 1600) || '/assets/images/background/footer-background.png'
+
   const headerDataAttribute = settings?._id
     ? createDataAttribute({id: settings._id, type: 'globalSettings', path: 'header'}).toString()
-    : undefined
-  const navigationDataAttribute = settings?._id
-    ? createDataAttribute({id: settings._id, type: 'globalSettings', path: 'header.navigation'}).toString()
     : undefined
 
   const syncScrolled = useEffectEvent(() => {
@@ -122,7 +116,7 @@ export default function Header({settings}: HeaderProps) {
       ? {
           backgroundColor: '#17346e',
           backgroundImage:
-            "linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('/assets/images/background/footer-background.png')",
+            `linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('${navBackgroundSrc}')`,
           backgroundPosition: 'center, center, 66% 24%',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover, cover, 138% auto',
@@ -134,7 +128,14 @@ export default function Header({settings}: HeaderProps) {
 
   return (
     <>
-      <div className="hidden border-b border-[#e8e7de] bg-[#f5f5f0]/96 xl:block" data-sanity={headerDataAttribute}>
+      <div
+        className="hidden border-b xl:block"
+        style={{
+          backgroundColor: settings?.header?.topBar?.backgroundColor || '#f5f5f0f5', // fallback to ~96% opacity f5f5f0
+          borderColor: settings?.header?.topBar?.borderColor || '#e8e7de',
+        }}
+        data-sanity={headerDataAttribute}
+      >
         <div className="mx-auto flex min-h-[76px] max-w-[1280px] items-center justify-between px-4">
           <Link href="/" className="flex shrink-0 items-center">
             <Image
@@ -150,20 +151,44 @@ export default function Header({settings}: HeaderProps) {
           <div className="flex items-center gap-7">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#1e3a5f]">
-                <PromiseIcon />
+                {settings?.header?.topBar?.sloganIcon?.asset ? (
+                  <Image
+                    src={toImageSrc(settings.header.topBar.sloganIcon, 40) || ''}
+                    alt={renderText(settings.header.topBar.sloganIcon.alt) || 'Icon'}
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 object-contain"
+                  />
+                ) : (
+                  <PromiseIcon />
+                )}
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.05em] text-slate-500">{sloganLabel}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.05em] text-slate-500">
+                  {sloganLabel}
+                </p>
                 <p className="text-[13px] font-bold text-[#1e3a5f]">{sloganText}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#1e3a5f]">
-                <ClockIcon />
+                {settings?.header?.topBar?.workingHoursIcon?.asset ? (
+                  <Image
+                    src={toImageSrc(settings.header.topBar.workingHoursIcon, 40) || ''}
+                    alt={renderText(settings.header.topBar.workingHoursIcon.alt) || 'Icon'}
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 object-contain"
+                  />
+                ) : (
+                  <ClockIcon />
+                )}
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.05em] text-slate-500">{workingHoursLabel}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.05em] text-slate-500">
+                  {workingHoursLabel}
+                </p>
                 <p className="text-[13px] font-bold text-[#1e3a5f]">{workingHoursText}</p>
               </div>
             </div>
@@ -190,7 +215,7 @@ export default function Header({settings}: HeaderProps) {
               </Link>
             </div>
 
-            <nav className="hidden h-full items-center gap-3 overflow-x-auto [scrollbar-width:none] xl:flex" data-sanity={navigationDataAttribute}>
+            <nav className="hidden h-full items-center gap-3 overflow-x-auto [scrollbar-width:none] xl:flex">
               {navItems.map((item) => {
                 const isActive = isNavItemActive(pathname, item.href)
                 const itemClass = desktopFloating

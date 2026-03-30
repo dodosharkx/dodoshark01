@@ -2,10 +2,12 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import CMSImage from '@/components/ui/CMSImage'
 
 export type HeroCarouselImage = {
   src: string
   alt: string
+  sanityImage?: any
 }
 
 export type HeroCarouselProps = {
@@ -72,18 +74,33 @@ export default function HeroCarousel({
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#64748b_0,#475569_45%,#334155_100%)]" />
         {!failedMap[0] && (
-          <Image
-            src={slides[0].src}
-            alt={slides[0].alt}
-            fill
-            preload
-            fetchPriority="high"
-            sizes="100vw"
-            loading="eager"
-            quality={74}
-            className="object-cover"
-            onError={() => setFailedMap((prev) => ({ ...prev, 0: true }))}
-          />
+          slides[0].sanityImage?.asset ? (
+            <CMSImage
+              image={slides[0].sanityImage}
+              alt={slides[0].alt}
+              fill
+              priority
+              fetchPriority="high"
+              sizes="100vw"
+              loading="eager"
+              quality={74}
+              className="object-cover"
+              onError={() => setFailedMap((prev) => ({ ...prev, 0: true }))}
+            />
+          ) : (
+            <Image
+              src={slides[0].src}
+              alt={slides[0].alt}
+              fill
+              priority
+              fetchPriority="high"
+              sizes="100vw"
+              loading="eager"
+              quality={74}
+              className="object-cover"
+              onError={() => setFailedMap((prev) => ({ ...prev, 0: true }))}
+            />
+          )
         )}
       </div>
     )
@@ -110,18 +127,33 @@ export default function HeroCarousel({
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#64748b_0,#475569_45%,#334155_100%)]" />
             {!failedMap[index] && (
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                fill
-                preload={index === 0}
-                fetchPriority={index === 0 ? 'high' : 'auto'}
-                sizes="100vw"
-                loading={index === 0 ? 'eager' : 'lazy'}
-                quality={isActive ? 74 : 68}
-                className="object-cover"
-                onError={() => setFailedMap((prev) => ({ ...prev, [index]: true }))}
-              />
+              slide.sanityImage?.asset ? (
+                <CMSImage
+                  image={slide.sanityImage}
+                  alt={slide.alt}
+                  fill
+                  priority={index === 0}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  sizes="100vw"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  quality={isActive ? 74 : 68}
+                  className="object-cover"
+                  onError={() => setFailedMap((prev) => ({ ...prev, [index]: true }))}
+                />
+              ) : (
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={index === 0}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  sizes="100vw"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  quality={isActive ? 74 : 68}
+                  className="object-cover"
+                  onError={() => setFailedMap((prev) => ({ ...prev, [index]: true }))}
+                />
+              )
             )}
           </div>
         )

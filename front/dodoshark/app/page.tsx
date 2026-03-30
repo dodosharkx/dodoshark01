@@ -18,6 +18,7 @@ const VideoPreviewTrigger = dynamic(() => import('@/components/ui/VideoPreviewTr
 import { type HeroCarouselImage } from '@/components/home/HeroCarousel'
 import HeroTitle from '@/components/ui/HeroTitle'
 import ViewDetailsLink from '@/components/ui/ViewDetailsLink'
+import CMSImage from '@/components/ui/CMSImage'
 
 type HomeSanityImage = SanityImage & {
   imageUrl?: string
@@ -76,6 +77,7 @@ type HomeProductCard = {
   title: string
   description: string
   image: string
+  sanityImage?: HomeSanityImage
   badge?: { label: string; className: string }
   href?: string
 }
@@ -84,6 +86,7 @@ type HomeSolutionCard = {
   title: string
   description: string
   image: string
+  sanityImage?: HomeSanityImage
   href?: string
 }
 
@@ -91,7 +94,9 @@ type HomeCaseCard = {
   title: string
   description: string
   image: string
+  sanityImage?: HomeSanityImage
   logo?: string | null
+  logoImage?: HomeSanityImage
   href: string
 }
 
@@ -111,6 +116,7 @@ type HomePageData = {
     title?: string
     description?: string
     image?: HomeSanityImage
+    sanityImage?: HomeSanityImage
   }>
   confidenceSection?: {
     titleLineOne?: string
@@ -121,6 +127,7 @@ type HomePageData = {
       subtitle?: string
       points?: string[]
       image?: HomeSanityImage
+      sanityImage?: HomeSanityImage
     }>
   }
   featuredAgriProducts?: FeaturedHomeProduct[]
@@ -133,11 +140,37 @@ type HomePageData = {
       title?: string
       description?: string
       image?: HomeSanityImage
+      sanityImage?: HomeSanityImage
     }>
   }
   featuredHomeVideos?: FeaturedHomeVideo[]
   whyChooseUsVideoUrl?: string
   whyChooseUsVideoCoverImage?: HomeSanityImage
+  productsBannerImage?: HomeSanityImage
+  solutionsBackgroundImage?: HomeSanityImage
+  aboutUsLogoImage?: HomeSanityImage
+}
+
+type HomeAboutFeature = {
+  title: string
+  description: string
+  image: string
+  sanityImage?: HomeSanityImage
+}
+
+type HomeConfidenceCard = {
+  title: string
+  subtitle: string
+  points: string[]
+  image: string
+  sanityImage?: HomeSanityImage
+}
+
+type HomeAdvantage = {
+  title: string
+  description: string
+  image: string
+  sanityImage?: HomeSanityImage
 }
 
 const homeQuery = `coalesce(
@@ -282,192 +315,26 @@ const homeQuery = `coalesce(
     asset,
     alt,
     "imageUrl": asset->url
+  },
+  productsBannerImage {
+    asset,
+    alt,
+    "imageUrl": asset->url
+  },
+  solutionsBackgroundImage {
+    asset,
+    alt,
+    "imageUrl": asset->url
+  },
+  aboutUsLogoImage {
+    asset,
+    alt,
+    "imageUrl": asset->url
   }
 }`
 
-const stats = [
-  { value: '55', suffix: 'Years', label: 'Industry History' },
-  { value: '10,000', suffix: 'sqm', label: 'Factory Area' },
-  { value: '1,000', suffix: '+', label: 'Export Regions' },
-  { value: '10,000', suffix: '+', label: 'Annual Yield' },
-]
-
-const aboutFeatures = [
-  {
-    title: 'Est. 1970',
-    description:
-      'Formerly a state-owned mill factory, DoDoShark was established in 2019 after restructuring. Anchored by the mission of "Empowering Productivity," we began a new brand journey.',
-    image: '/assets/images/icon-since-1970.png',
-  },
-  {
-    title: 'Three Production Bases',
-    description:
-      'A modern production network delivers stable output, standardized manufacturing, and the flexibility required for custom industrial projects.',
-    image: '/assets/images/icon-three-production-bases.png',
-  },
-  {
-    title: 'Two Product Lines',
-    description:
-      'Agri-processing and food-processing machinery operate as dual growth engines, covering crushing, grinding, mixing, and integrated line solutions.',
-    image: '/assets/images/icon-two-product-lines.png',
-  },
-]
-
-const confidenceCards = [
-  {
-    title: 'Technical Lead',
-    subtitle: 'Continuous Innovation as Industry Model',
-    points: ['Grain grinding fineness up to 150 mesh', 'Uniform mixing of dozens of powders in 15 min', 'Dust suppression ratio up to 99.99%'],
-    image: '/assets/images/technology-leadership.png',
-  },
-  {
-    title: 'Rigorous Delivery',
-    subtitle: 'Factory Inspection on Every Critical Detail',
-    points: ['Strict process inspection before shipment', 'Stable structure for long-cycle operation', 'Delivery quality controlled by full-line checks'],
-    image: '/assets/images/rigorous-factory-inspection.png',
-  },
-  {
-    title: 'Beyond Single Products',
-    subtitle: 'Integrated Equipment for Complete Workflows',
-    points: ['Single-machine and line integration available', 'Flexible matching for powders and granules', 'One supplier for equipment and process support'],
-    image: '/assets/images/beyond-single-products.png',
-  },
-]
-
-const agriProducts = [
-  {
-    title: 'Iron Hammer Mill',
-    description: 'Suitable for grain, corn, and tuber crops, with fineness reaching 10-150 mesh.',
-    image: '/assets/images/grinding-category.png',
-    badge: { label: 'Hot', className: 'bg-orange-500' },
-  },
-  {
-    title: 'Wheat Grinder',
-    description: 'Handles wheat, corn, and sorghum with efficiency, fineness up to 40-100 mesh.',
-    image: '/assets/images/corn-materials.png',
-    badge: { label: 'New', className: 'bg-green-500' },
-  },
-  {
-    title: 'Mixer Machine',
-    description: 'For feed, chemical, and building materials. High uniformity with variation coefficient under 5.',
-    image: '/assets/images/machinery-category.png',
-  },
-]
-
-const foodProducts = [
-  {
-    title: 'SUS304 Grinder',
-    description: 'For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.',
-    image: '/assets/images/corn-materials.png',
-  },
-  {
-    title: 'SUS304 Mixer',
-    description: 'Highly uniform mixing for powders and fine particles in food and chemical sectors.',
-    image: '/assets/images/manual-model-50.png',
-  },
-  {
-    title: 'Dough Mixer',
-    description: 'Fast and durable for large batches, ideal for eateries and food factories.',
-    image: '/assets/images/rigorous-factory-inspection.png',
-  },
-]
-
-const grindingSolutions = [
-  {
-    title: 'Corn Milling Solution',
-    description: 'Efficient corn crushing and milling for individuals to large factories.',
-    image: '/assets/images/grinding-category.png',
-  },
-  {
-    title: 'Grain Milling Solution',
-    description: 'Dust-free grain processing for agricultural and industrial sectors.',
-    image: '/assets/images/grinding-category.png',
-  },
-  {
-    title: 'Salt & Sugar Milling',
-    description: 'Precise milling for spice, salt, and sugar with dust control.',
-    image: '/assets/images/machinery-category.png',
-  },
-]
-
-const mixingSolutions = [
-  {
-    title: 'Powder Mixing Solution',
-    description: 'High-uniformity mixing for fine powders in industrial sectors.',
-    image: '/assets/images/grain-processing.png',
-  },
-  {
-    title: 'Granule Mixing Solution',
-    description: 'Stable mixing performance for diverse granular materials.',
-    image: '/assets/images/manual-model-50.png',
-  },
-  {
-    title: 'Fertilizer Mixing',
-    description: 'Massive throughput for agricultural compound fertilizer production.',
-    image: '/assets/images/mixing-equipment.png',
-  },
-]
-
-const projectCaseItems = [
-  {
-    title: 'New Hope Group',
-    description: 'Complete 100-mesh dust-free corn processing line for international export standard.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-new-hope.png',
-    href: '#',
-  },
-  {
-    title: 'Uni-President Milling Upgrade',
-    description: 'Integrated grinding workflow designed for stable output and cleaner industrial processing conditions.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-uni-president.png',
-    href: '#'
-  },
-  {
-    title: 'Angel Yeast Powder System',
-    description: 'Customized stainless processing solution balancing food-grade standards with long-cycle plant operation.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-angel-yeast.png',
-    href: '#',
-  },
-  {
-    title: 'Changming Pharma Material Line',
-    description: 'Precision handling and low-dust conveying for fine pharmaceutical material preparation workflows.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-changming-pharma.png',
-    href: '#',
-  },
-  {
-    title: 'New Hope Overseas Delivery',
-    description: 'Benchmark export project built around dependable commissioning, throughput stability, and after-sales support.',
-    image: '/assets/images/showroom-1.jpg',
-    logo: '/assets/images/featured-project-logo-new-hope.png',
-    href: '#',
-  },
-]
-
-const advantages = [
-  {
-    title: 'Smart Mfg. Strength',
-    description: 'Scale efficiency balanced with bespoke innovation.',
-    image: '/assets/images/icon-professional-technology.png',
-  },
-  {
-    title: 'Total Range Strategy',
-    description: 'One-stop solutions reducing costs and boosting speed.',
-    image: '/assets/images/icon-craftsmanship.png',
-  },
-  {
-    title: 'Full-Life Service',
-    description: 'From process design to training, we navigate with you.',
-    image: '/assets/images/icon-custom-solutions.png',
-  },
-  {
-    title: 'Extended Warranty',
-    description: '10-year core component warranty for total peace of mind.',
-    image: '/assets/images/icon-one-choice.png',
-  },
-]
+// Removed hardcoded contents (stats, aboutFeatures, confidenceCards, agriProducts, foodProducts, grindingSolutions, mixingSolutions, projectCaseItems, advantages) 
+// as they are now fully managed by Sanity CMS.
 
 function getSanityImageUrl(image?: HomeSanityImage, options?: { width?: number; height?: number }) {
   if (!image) return null
@@ -525,19 +392,31 @@ function ProductCard({
   title,
   description,
   image,
+  sanityImage,
   badge,
   href,
 }: {
   title: string
   description: string
   image: string
+  sanityImage?: HomeSanityImage
   badge?: { label: string; className: string }
   href?: string
 }) {
   return (
     <article className="home-product-card flex h-full flex-col overflow-hidden rounded-[1rem] bg-white">
       <div className="relative aspect-square overflow-hidden bg-slate-100">
-        <Image src={image} alt={title} fill sizes="(max-width: 1023px) 100vw, 33vw" className="object-cover" />
+        {sanityImage?.asset ? (
+          <CMSImage
+            image={sanityImage}
+            alt={title}
+            fill
+            sizes="(max-width: 1023px) 100vw, 33vw"
+            className="object-cover"
+          />
+        ) : (
+          <Image src={image} alt={title} fill sizes="(max-width: 1023px) 100vw, 33vw" className="object-cover" />
+        )}
         {badge ? <div className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white ${badge.className}`}>{badge.label}</div> : null}
       </div>
       <div className="flex flex-1 flex-col p-6">
@@ -551,11 +430,39 @@ function ProductCard({
   )
 }
 
-function SolutionCard({ title, description, image, href }: { title: string; description: string; image: string; href?: string }) {
+function SolutionCard({
+  title,
+  description,
+  image,
+  sanityImage,
+  href
+}: {
+  title: string
+  description: string
+  image: string
+  sanityImage?: HomeSanityImage
+  href?: string
+}) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-lg border border-slate-100 bg-white transition hover:shadow-lg">
       <div className="relative aspect-square overflow-hidden bg-slate-100">
-        <Image src={image} alt={title} fill sizes="(max-width: 1023px) 100vw, 33vw" className="object-cover transition-transform duration-500 hover:scale-105" />
+        {sanityImage?.asset ? (
+          <CMSImage
+            image={sanityImage}
+            alt={title}
+            fill
+            sizes="(max-width: 1023px) 100vw, 33vw"
+            className="object-cover transition-transform duration-500 hover:scale-105"
+          />
+        ) : (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(max-width: 1023px) 100vw, 33vw"
+            className="object-cover transition-transform duration-500 hover:scale-105"
+          />
+        )}
       </div>
       <div className="flex flex-1 flex-col p-6">
         <h4 className="relative inline-block text-lg font-bold text-slate-900">
@@ -595,15 +502,16 @@ export default async function HomePage() {
   const data = await getHomePageData(true)
 
   const heroSlides: HeroCarouselImage[] = (data?.heroBackgrounds ?? [])
-    .map((image, index) => {
+    .map((image, index): HeroCarouselImage | null => {
       const src = getSanityImageUrl(image, { width: 1920 })
       if (!src) return null
       return {
         src,
         alt: image.alt || `DoDoShark hero ${index + 1}`,
-      }
+        sanityImage: image,
+      } as HeroCarouselImage
     })
-    .filter((item): item is HeroCarouselImage => Boolean(item))
+    .filter((item): item is HeroCarouselImage => item !== null)
 
   const fallbackHeroSlides =
     heroSlides.length > 0
@@ -629,41 +537,39 @@ export default async function HomePage() {
         suffix: renderText(item?.suffix) || '',
       }
     })
-    .filter(isDefined)
-  const homeStats = parsedStats && parsedStats.length > 0 ? parsedStats : stats
-  
-  const parsedAboutFeatures = data?.aboutFeatures
-      ?.map((item, index) => {
-        const title = renderText(item?.title)
-        const description = renderText(item?.description)
-        const image = getSanityImageUrl(item?.image, { width: 256 }) || aboutFeatures[index]?.image
-        if (!title || !description || !image) return null
-        return { title, description, image }
-      })
-      .filter(isDefined)
-  const homeAboutFeatures = parsedAboutFeatures && parsedAboutFeatures.length > 0 ? parsedAboutFeatures : aboutFeatures
+    .filter(isDefined) ?? []
+  const homeStats = parsedStats
+  const homeAboutFeatures: HomeAboutFeature[] = data?.aboutFeatures
+    ?.map((item) => {
+      const title = renderText(item?.title)
+      const description = renderText(item?.description)
+      const image = getSanityImageUrl(item?.image, { width: 256 })
+      if (!title || !description || !image) return null
+      return { title, description, image, sanityImage: item.image }
+    })
+    .filter(isDefined) ?? []
 
   const confidenceTitleLineOne = renderText(data?.confidenceSection?.titleLineOne) || 'Choose DodoShark'
   const confidenceTitleLineTwo = renderText(data?.confidenceSection?.titleLineTwo) || 'Choose Confidence'
   const confidenceDescription =
     renderText(data?.confidenceSection?.description) ||
     'DoDoShark practices "Carefree Production, Joyful Harvest" through innovation and high quality.'
-  const parsedConfidenceCards =
-    data?.confidenceSection?.cards
-      ?.map((card, index) => {
-        const title = renderText(card?.title)
-        const subtitle = renderText(card?.subtitle)
-        const image = getSanityImageUrl(card?.image, { width: 1200 }) || confidenceCards[index]?.image
-        if (!title || !subtitle || !image) return null
-        return {
-          title,
-          subtitle,
-          points: (card?.points ?? []).map((point) => renderText(point)).filter(isDefined),
-          image,
-        }
-      })
-      .filter(isDefined)
-  const homeConfidenceCards = parsedConfidenceCards && parsedConfidenceCards.length > 0 ? parsedConfidenceCards : confidenceCards
+
+  const homeConfidenceCards: HomeConfidenceCard[] = data?.confidenceSection?.cards
+    ?.map((card) => {
+      const title = renderText(card?.title)
+      const subtitle = renderText(card?.subtitle)
+      const image = getSanityImageUrl(card?.image, { width: 1200 })
+      if (!title || !subtitle || !image) return null
+      return {
+        title,
+        subtitle,
+        points: (card?.points ?? []).map((point) => renderText(point)).filter(isDefined),
+        image,
+        sanityImage: card.image,
+      }
+    })
+    .filter(isDefined) ?? []
 
   const featuredAgriProducts: HomeProductCard[] =
     data?.featuredAgriProducts
@@ -676,6 +582,7 @@ export default async function HomePage() {
           description:
             renderText(product.shortDescription) || 'High performance industrial processing equipment.',
           image,
+          sanityImage: product.mainImage,
           href: buildDetailHref('/products', product.slug),
           badge: renderText(product.seriesTag)
             ? { label: renderText(product.seriesTag)!, className: 'bg-orange-500' }
@@ -694,6 +601,7 @@ export default async function HomePage() {
           description:
             renderText(product.shortDescription) || 'High performance industrial processing equipment.',
           image,
+          sanityImage: product.mainImage,
           href: buildDetailHref('/products', product.slug),
           badge: renderText(product.seriesTag)
             ? { label: renderText(product.seriesTag)!, className: 'bg-orange-500' }
@@ -712,6 +620,7 @@ export default async function HomePage() {
           description:
             renderText(solution.summary) || 'High-efficiency and stable industrial process design.',
           image,
+          sanityImage: solution.heroImage,
           href: buildDetailHref('/solutions', solution.slug),
         }
       })
@@ -727,26 +636,29 @@ export default async function HomePage() {
           description:
             renderText(caseItem.excerpt) || 'Detailed case study content is available in the full project report.',
           image,
+          sanityImage: caseItem.coverImage,
           logo: getSanityImageUrl(caseItem.clientLogo, { width: 264 }),
+          logoImage: caseItem.clientLogo,
           href: buildDetailHref('/cases', caseItem.slug),
         }
       })
       .filter(isDefined) ?? []
-  const homeAgriProducts = featuredAgriProducts.length > 0 ? featuredAgriProducts : agriProducts
-  const homeFoodProducts = featuredFoodProducts.length > 0 ? featuredFoodProducts : foodProducts
-  const homeSolutions = featuredSolutions.length > 0 ? featuredSolutions : grindingSolutions
-  const homeCaseItems = featuredCases.length > 0 ? featuredCases : projectCaseItems
-  const parsedAdvantages =
-    data?.advantagesSection?.items
-      ?.map((item, index) => {
-        const title = renderText(item?.title)
-        const description = renderText(item?.description)
-        const image = getSanityImageUrl(item?.image, { width: 256 }) || advantages[index]?.image
-        if (!title || !description || !image) return null
-        return { title, description, image }
-      })
-      .filter(isDefined)
-  const homeAdvantages = parsedAdvantages && parsedAdvantages.length > 0 ? parsedAdvantages : advantages
+
+  const parsedAdvantages = data?.advantagesSection?.items
+    ?.map((item) => {
+      const title = renderText(item?.title)
+      const description = renderText(item?.description)
+      const image = getSanityImageUrl(item?.image, { width: 256 })
+      if (!title || !description || !image) return null
+      return { title, description, image, sanityImage: item.image }
+    })
+    .filter(isDefined) ?? []
+
+  const homeAgriProducts = featuredAgriProducts
+  const homeFoodProducts = featuredFoodProducts
+  const homeSolutions = featuredSolutions
+  const homeCaseItems = featuredCases
+  const homeAdvantages: HomeAdvantage[] = parsedAdvantages
   const homeVideoItems =
     data?.featuredHomeVideos
       ?.filter((video) => cleanText(video?.status) === 'published')
@@ -833,7 +745,11 @@ export default async function HomePage() {
             {homeAboutFeatures.map((item) => (
               <article key={item.title} className="text-center">
                 <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <Image src={item.image} alt={item.title} width={48} height={48} className="h-12 w-12 object-contain" />
+                  {item.sanityImage?.asset ? (
+                    <CMSImage image={item.sanityImage} width={48} height={48} className="h-12 w-12 object-contain" />
+                  ) : (
+                    <Image src={item.image} alt={item.title} width={48} height={48} className="h-12 w-12 object-contain" />
+                  )}
                 </div>
                 <h3 className="text-xl font-bold text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-white/60">{item.description}</p>
@@ -842,7 +758,11 @@ export default async function HomePage() {
           </div>
           <div className="text-center">
             <div className="mx-auto mb-4 inline-flex h-40 w-60 items-center justify-center backdrop-blur-sm">
-              <Image src="/assets/images/dodoshark-logo-04.png" alt="DoDoShark" width={160} height={110} className="h-60 w-auto object-contain brightness-110" />
+              {data?.aboutUsLogoImage?.asset ? (
+                <CMSImage image={data.aboutUsLogoImage} width={160} height={110} className="h-60 w-auto object-contain brightness-110" />
+              ) : (
+                <Image src="/assets/images/dodoshark-logo-04.png" alt="DoDoShark" width={160} height={110} className="h-60 w-auto object-contain brightness-110" />
+              )}
             </div>
 
           </div>
@@ -865,6 +785,7 @@ export default async function HomePage() {
                 title="DoDoShark Factory Video"
                 youtubeUrl={heroVideoUrl}
                 imageSrc={whyChooseUsCoverImageSrc}
+                sanityImage={data?.whyChooseUsVideoCoverImage}
                 imageAlt={whyChooseUsCoverImageAlt}
                 className="group"
                 mediaClassName="aspect-video rounded-[1rem]"
@@ -889,7 +810,11 @@ export default async function HomePage() {
                   </div>
                 </div>
                 <div className="relative h-56 overflow-hidden">
-                  <Image src={card.image} alt={card.title} fill sizes="(max-width: 1279px) 100vw, 33vw" className="object-cover transition-transform duration-500 hover:scale-105" />
+                  {card.sanityImage?.asset ? (
+                    <CMSImage image={card.sanityImage} fill sizes="(max-width: 1279px) 100vw, 33vw" className="object-cover transition-transform duration-500 hover:scale-105" />
+                  ) : (
+                    <Image src={card.image} alt={card.title} fill sizes="(max-width: 1279px) 100vw, 33vw" className="object-cover transition-transform duration-500 hover:scale-105" />
+                  )}
                 </div>
               </article>
             ))}
@@ -899,7 +824,11 @@ export default async function HomePage() {
 
       <section id="products" className="bg-slate-100 pb-16 sm:pb-20">
         <div className="relative h-[300px] overflow-hidden sm:h-[360px] lg:h-[420px]">
-          <Image src="/assets/images/banner.png" alt="Industrial Background" fill sizes="100vw" className="object-cover" />
+          {data?.productsBannerImage?.asset ? (
+            <CMSImage image={data.productsBannerImage} fill sizes="100vw" className="object-cover" />
+          ) : (
+            <Image src="/assets/images/banner.png" alt="Industrial Background" fill sizes="100vw" className="object-cover" />
+          )}
           <div className="relative z-10 mx-auto px-4 pt-16 text-center sm:px-6 sm:pt-20 lg:max-w-7xl lg:px-8">
             <h2 className="font-display text-3xl font-bold tracking-wide text-white sm:text-4xl md:text-5xl">Wonderful Products</h2>
             <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
@@ -949,7 +878,11 @@ export default async function HomePage() {
 
       <section className="bg-slate-100">
         <div className="relative h-[300px] overflow-hidden sm:h-[360px] lg:h-[420px]">
-          <Image src="/assets/images/factory.jpg" alt="Factory Solution Background" fill sizes="100vw" className="object-cover" />
+          {data?.solutionsBackgroundImage?.asset ? (
+            <CMSImage image={data.solutionsBackgroundImage} fill sizes="100vw" className="object-cover" />
+          ) : (
+            <Image src="/assets/images/factory.jpg" alt="Factory Solution Background" fill sizes="100vw" className="object-cover" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-950/70 via-blue-900/60 to-blue-950/70" />
           <div className="relative z-10 mx-auto px-4 pt-16 text-center sm:px-6 sm:pt-20 lg:max-w-7xl lg:px-8">
             <h2 className="font-display text-3xl font-bold tracking-wide text-white sm:text-4xl md:text-5xl">Efficient Solutions</h2>
@@ -1006,14 +939,22 @@ export default async function HomePage() {
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="mx-auto mb-6 inline-flex h-24 w-40 items-center justify-center backdrop-blur-sm">
-              <Image src="/assets/images/dodoshark-logo-04.png" alt="DoDoShark" width={160} height={110} className="h-40 w-auto object-contain brightness-110" />
+              {data?.aboutUsLogoImage?.asset ? (
+                <CMSImage image={data.aboutUsLogoImage} width={160} height={110} className="h-40 w-auto object-contain brightness-110" />
+              ) : (
+                <Image src="/assets/images/dodoshark-logo-04.png" alt="DoDoShark" width={160} height={110} className="h-40 w-auto object-contain brightness-110" />
+              )}
             </div>
             <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">Right Choice, Lifelong Performance</h2>
             <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
               {homeAdvantages.map((item) => (
                 <article key={item.title} className="home-advantage-item rounded-[1rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
                   <div className="home-advantage-icon">
-                    <Image src={item.image} alt={item.title} width={56} height={56} className="h-14 w-14 object-contain" />
+                    {item.sanityImage?.asset ? (
+                      <CMSImage image={item.sanityImage} width={56} height={56} className="h-14 w-14 object-contain" />
+                    ) : (
+                      <Image src={item.image} alt={item.title} width={56} height={56} className="h-14 w-14 object-contain" />
+                    )}
                   </div>
                   <h3 className="text-lg font-bold text-white">{item.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-white/60">{item.description}</p>

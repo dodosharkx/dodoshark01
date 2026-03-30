@@ -61,6 +61,47 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'headquarters',
+      title: 'Headquarters Card',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({name: 'title', title: 'Title', type: 'string'}),
+        defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
+        defineField({name: 'note', title: 'Additional Note', type: 'text', rows: 2}),
+      ],
+    }),
+    defineField({
+      name: 'productionBases',
+      title: 'Production Bases Card',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({name: 'title', title: 'Title', type: 'string'}),
+        defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
+        defineField({
+          name: 'cities',
+          title: 'Cities',
+          type: 'array',
+          of: [{type: 'string'}],
+          options: {layout: 'tags'},
+        }),
+      ],
+    }),
+    defineField({
+      name: 'directContact',
+      title: 'Direct Contact Card',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({name: 'title', title: 'Title', type: 'string'}),
+        defineField({name: 'phone', title: 'Phone Number', type: 'string'}),
+        defineField({name: 'email', title: 'Email Address', type: 'string'}),
+        defineField({name: 'websiteLabel', title: 'Website Label', type: 'string'}),
+        defineField({name: 'websiteUrl', title: 'Website URL', type: 'string'}),
+      ],
+    }),
+    defineField({
       name: 'inquiryPanel',
       title: 'Inquiry Panel',
       type: 'object',

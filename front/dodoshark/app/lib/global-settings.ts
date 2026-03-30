@@ -18,11 +18,17 @@ export type GlobalSettingsData = {
   favicon?: SanityImage
   logo?: SanityImage
   header?: {
+    topBar?: {
+      backgroundColor?: string
+      borderColor?: string
+      sloganIcon?: SanityImage
+      workingHoursIcon?: SanityImage
+    }
     sloganLabel?: string
     sloganText?: string
     workingHoursLabel?: string
     workingHoursText?: string
-    navigation?: GlobalNavItem[]
+    navBackground?: SanityImage
     desktopCtaLabel?: string
     desktopCtaHref?: string
     mobileCtaLabel?: string
@@ -38,8 +44,20 @@ export type GlobalSettingsData = {
   }
   footer?: {
     headquartersKicker?: string
+    headquartersTitle?: string
     headquartersBody?: string
+    phoneLabel?: string
+    websiteLabelTitle?: string
+    emailLabel?: string
+    networkKicker?: string
+    networkTitle?: string
     networkItems?: string[]
+    socialKicker?: string
+    socialTitle?: string
+    footerMap?: {
+      image?: SanityImage
+      ariaLabel?: string
+    }
     socialLinks?: GlobalSocialLink[]
     footerLinks?: GlobalNavItem[]
     copyrightText?: string
@@ -67,13 +85,25 @@ const GLOBAL_SETTINGS_QUERY = `*[_id == "globalSettings"][0]{
     asset
   },
   header{
+    topBar{
+      backgroundColor,
+      borderColor,
+      sloganIcon{
+        alt,
+        asset
+      },
+      workingHoursIcon{
+        alt,
+        asset
+      }
+    },
     sloganLabel,
     sloganText,
     workingHoursLabel,
     workingHoursText,
-    navigation[]{
-      label,
-      href
+    navBackground{
+      alt,
+      asset
     },
     desktopCtaLabel,
     desktopCtaHref,
@@ -90,8 +120,23 @@ const GLOBAL_SETTINGS_QUERY = `*[_id == "globalSettings"][0]{
   },
   footer{
     headquartersKicker,
+    headquartersTitle,
     headquartersBody,
+    phoneLabel,
+    websiteLabelTitle,
+    emailLabel,
+    networkKicker,
+    networkTitle,
     networkItems,
+    socialKicker,
+    socialTitle,
+    footerMap{
+      image{
+        alt,
+        asset
+      },
+      ariaLabel
+    },
     socialLinks[]{
       label,
       icon,

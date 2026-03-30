@@ -47,12 +47,12 @@ export default defineType({
       group: 'hero',
     }),
     defineField({
-      name: 'sections',
-      title: 'Policy Sections',
+      name: 'content',
+      title: 'Policy Content',
       type: 'array',
       group: 'content',
-      of: [defineArrayMember({type: 'object', fields: sectionFields})],
-      validation: (rule) => rule.min(1),
+      of: [defineArrayMember({type: 'block'})],
+      description: 'The main rich text content of the privacy policy.',
     }),
     defineField({
       name: 'bottomCta',
@@ -71,14 +71,11 @@ export default defineType({
     select: {
       title: 'heroTitle',
       lastUpdated: 'lastUpdated',
-      sections: 'sections',
     },
-    prepare({title, lastUpdated, sections}) {
+    prepare({title, lastUpdated}) {
       return {
         title: title || 'Privacy Page',
-        subtitle:
-          pickText(lastUpdated, itemCount(sections) ? `${itemCount(sections)} sections` : undefined) ||
-          'Privacy policy singleton',
+        subtitle: lastUpdated ? `Last updated: ${lastUpdated}` : 'Privacy policy singleton',
       }
     },
   },
