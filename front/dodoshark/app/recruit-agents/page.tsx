@@ -8,6 +8,7 @@ import { buildPageMetadata } from '@/app/lib/seo'
 import { cleanText, renderText, toImageSrc } from '@/app/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import HeroTitle from '@/components/ui/HeroTitle'
+import CMSImage from '@/components/ui/CMSImage'
 
 type RecruitAgentsPageData = {
   seo?: SeoMeta
@@ -116,17 +117,6 @@ async function getRecruitAgentsPageData(stega?: boolean) {
   })
 }
 
-function resolvePageImage(
-  image: SanityImage | undefined,
-  fallbackSrc: string,
-  fallbackAlt: string,
-  width: number,
-) {
-  return {
-    src: toImageSrc(image, width) || fallbackSrc,
-    alt: cleanText(image?.alt) || fallbackAlt,
-  }
-}
 
 const WHY_CHOOSE_US: WhyChooseUsItem[] = [
   {
@@ -249,18 +239,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RecruitAgentsPage() {
   const pageData = await getRecruitAgentsPageData()
-  const heroImage = resolvePageImage(
-    pageData?.images?.heroBackground,
-    '/assets/images/about/join-us.jpg',
-    'DoDoShark Global Partnership',
-    1800,
-  )
-  const scopeImage = resolvePageImage(
-    pageData?.images?.recruitmentScopeImage,
-    '/assets/images/about/global-layout.jpg',
-    'DoDoShark Global Layout',
-    1400,
-  )
   const heroTitle =
     renderText(pageData?.hero?.title) || 'Partner with DoDoShark Explore Global Blue Oceans'
   const heroEyebrow =
@@ -274,58 +252,55 @@ export default async function RecruitAgentsPage() {
   const scopeDescription =
     renderText(pageData?.scope?.description) ||
     'We are actively expanding our global presence, focusing on regions with high agricultural and industrial potential.'
-  const whyChooseUs: WhyChooseUsItem[] =
-    pageData?.whyChooseUs
-      ?.map((item, index) => {
-        const title = renderText(item?.title)
-        const description = renderText(item?.description)
-        if (!title || !description) return null
-        return {
-          title,
-          description,
-          icon: WHY_CHOOSE_US[index]?.icon ?? WHY_CHOOSE_US[0].icon,
-        }
-      })
-      .filter((item): item is WhyChooseUsItem => Boolean(item)) ?? WHY_CHOOSE_US
-  const scopeRegions: ScopeRegion[] =
-    pageData?.scopeRegions
-      ?.map((item, index) => {
-        const region = renderText(item?.region)
-        if (!region) return null
-        return {
-          region,
-          countries: (item?.countries ?? []).map((country) => renderText(country)).filter((country): country is string => Boolean(country)),
-          color: SCOPE[index]?.color ?? 'from-orange-500/10 to-transparent',
-        }
-      })
-      .filter((item): item is ScopeRegion => Boolean(item)) ?? SCOPE
-  const requirements: RequirementSection[] =
-    pageData?.requirements
-      ?.map((item, index) => {
-        const title = renderText(item?.title)
-        if (!title) return null
-        return {
-          title,
-          items: (item?.items ?? []).map((entry) => renderText(entry)).filter((entry): entry is string => Boolean(entry)),
-          borderClass: index % 2 === 1 ? 'border-slate-900' : 'border-orange-500',
-        }
-      })
-      .filter((item): item is RequirementSection => Boolean(item)) ?? [
-      { title: 'Qualifications', items: ['Legal operating status & qualifications', 'Familiarity with local market & laws', 'Strong local customer resources'], borderClass: 'border-orange-500' },
-      { title: 'Capabilities', items: ['3+ years mechanical sales experience', 'Professional tech & sales team', 'Full lifecycle service capability'], borderClass: 'border-slate-900' },
-      { title: 'Compliance', items: ['Adherence to market rules & integrity', 'Solid financial & credit standing', 'Adequate capital for operations'], borderClass: 'border-orange-500' },
-    ]
-  const supportSections: SupportSection[] =
-    pageData?.supportSections
-      ?.map((section) => {
-        const title = renderText(section?.title)
-        if (!title) return null
-        return {
-          title,
-          items: (section?.items ?? []).map((entry) => renderText(entry)).filter((entry): entry is string => Boolean(entry)),
-        }
-      })
-      .filter((section): section is SupportSection => Boolean(section)) ?? SUPPORT
+  const whyChooseUs: WhyChooseUsItem[] = WHY_CHOOSE_US.map((fallback, index) => {
+    const cmsItem = pageData?.whyChooseUs?.[index]
+    if (!cmsItem) return fallback
+    return {
+      ...fallback,
+      title: renderText(cmsItem.title) || fallback.title,
+      description: renderText(cmsItem.description) || fallback.description,
+    }
+  })
+
+  const scopeRegions: ScopeRegion[] = SCOPE.map((fallback, index) => {
+    const cmsItem = pageData?.scopeRegions?.[index]
+    if (!cmsItem) return fallback
+    return {
+      ...fallback,
+      region: renderText(cmsItem.region) || fallback.region,
+      countries: (cmsItem.countries && cmsItem.countries.length > 0)
+        ? cmsItem.countries.map(c => renderText(c)).filter((c): c is string => Boolean(c))
+        : fallback.countries
+    }
+  })
+
+  const requirements: RequirementSection[] = [
+    { title: 'Qualifications', items: ['Legal operating status & qualifications', 'Familiarity with local market & laws', 'Strong local customer resources'], borderClass: 'border-orange-500' },
+    { title: 'Capabilities', items: ['3+ years mechanical sales experience', 'Professional tech & sales team', 'Full lifecycle service capability'], borderClass: 'border-slate-900' },
+    { title: 'Compliance', items: ['Adherence to market rules & integrity', 'Solid financial & credit standing', 'Adequate capital for operations'], borderClass: 'border-orange-500' },
+  ].map((fallback, index) => {
+    const cmsItem = pageData?.requirements?.[index]
+    if (!cmsItem) return fallback
+    return {
+      ...fallback,
+      title: renderText(cmsItem.title) || fallback.title,
+      items: (cmsItem.items && cmsItem.items.length > 0)
+        ? cmsItem.items.map(i => renderText(i)).filter((i): i is string => Boolean(i))
+        : fallback.items
+    }
+  })
+
+  const supportSections: SupportSection[] = SUPPORT.map((fallback, index) => {
+    const cmsItem = pageData?.supportSections?.[index]
+    if (!cmsItem) return fallback
+    return {
+      ...fallback,
+      title: renderText(cmsItem.title) || fallback.title,
+      items: (cmsItem.items && cmsItem.items.length > 0)
+        ? cmsItem.items.map(i => renderText(i)).filter((i): i is string => Boolean(i))
+        : fallback.items
+    }
+  })
   const ctaTitle = renderText(pageData?.cta?.title) || 'Act Now and Share the Dividends'
   const ctaDescription =
     renderText(pageData?.cta?.description) ||
@@ -337,14 +312,23 @@ export default async function RecruitAgentsPage() {
     <main className="bg-[#fcfdfd] text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-900">
       <section className="relative overflow-hidden bg-slate-800 pb-48 pt-32">
         <div className="absolute inset-0 opacity-30">
-          <Image
-            src={heroImage.src}
-            alt={heroImage.alt}
-            fill
-            sizes="100vw"
-            className="object-cover"
-            priority
-          />
+          {pageData?.images?.heroBackground?.asset ? (
+            <CMSImage
+              image={pageData.images.heroBackground}
+              fill
+              priority
+              className="object-cover"
+            />
+          ) : (
+            <Image
+              src="/assets/images/about/join-us.jpg"
+              alt="DoDoShark Global Partnership"
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-b from-slate-800/90 via-slate-800/40 to-slate-800" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/30 to-slate-900" />
         </div>
@@ -429,7 +413,20 @@ export default async function RecruitAgentsPage() {
               </div>
             </div>
             <div className="relative w-full overflow-hidden rounded-xl shadow-2xl md:aspect-video lg:w-1/2 lg:aspect-square">
-              <Image src={scopeImage.src} alt={scopeImage.alt} fill className="object-cover" />
+              {pageData?.images?.recruitmentScopeImage?.asset ? (
+                <CMSImage
+                  image={pageData.images.recruitmentScopeImage}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <Image
+                  src="/assets/images/about/global-layout.jpg"
+                  alt="DoDoShark Global Layout"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
         </div>
