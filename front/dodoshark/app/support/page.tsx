@@ -250,12 +250,13 @@ export default async function SupportPage() {
   const urgentAssistanceDescription =
     renderText(pageData?.urgentAssistance?.description) ||
     'Our global technical response team is on standby to help you resolve equipment issues, order spare parts, or schedule an efficiency audit.'
-  const stats = pageData?.stats?.map((stat) => {
+  const parsedStats = pageData?.stats?.map((stat) => {
     const label = renderText(stat?.label)
     const value = renderText(stat?.value)
     if (!label || !value) return null
     return { label, val: value }
-  }).filter((item): item is {label: string; val: string} => Boolean(item)) ?? [
+  }).filter((item): item is {label: string; val: string} => Boolean(item))
+  const stats = parsedStats && parsedStats.length > 0 ? parsedStats : [
     { label: 'Core Component Warranty', val: '3 Years' },
     { label: 'Technical Response Time', val: '24/7' },
     { label: 'Countries Served', val: '100+' },
@@ -263,20 +264,25 @@ export default async function SupportPage() {
   ]
   const serviceEyebrow = renderText(pageData?.serviceIntro?.eyebrow) || 'Value Co-Creation'
   const serviceTitle = renderText(pageData?.serviceIntro?.title) || 'Full-Lifecycle Efficiency Empowerment'
-  const serviceStages: ServiceStage[] =
-    pageData?.serviceStages?.map((stage, index) => ({
-      id: renderText(stage?.id) || SERVICE_STAGES[index]?.id || `0${index + 1}`,
-      phase: renderText(stage?.phase) || SERVICE_STAGES[index]?.phase || 'Stage',
-      title: renderText(stage?.title) || SERVICE_STAGES[index]?.title || 'Service stage',
-      description: renderText(stage?.description) || SERVICE_STAGES[index]?.description || '',
-      features: (stage?.features ?? SERVICE_STAGES[index]?.features ?? [])
-        .map((feature) => renderText(feature))
-        .filter((item): item is string => Boolean(item)),
+  const serviceStages: ServiceStage[] = SERVICE_STAGES.map((defaultStage, index) => {
+    const stage = pageData?.serviceStages?.[index]
+    if (!stage || (!renderText(stage?.phase) && !renderText(stage?.title) && !renderText(stage?.id))) {
+      return defaultStage
+    }
+    return {
+      id: renderText(stage?.id) || defaultStage.id,
+      phase: renderText(stage?.phase) || defaultStage.phase,
+      title: renderText(stage?.title) || defaultStage.title,
+      description: renderText(stage?.description) || defaultStage.description,
+      features: stage?.features && stage.features.length > 0
+        ? stage.features.map(f => renderText(f)).filter((f): f is string => Boolean(f))
+        : defaultStage.features,
       image: stage?.image,
-      imageKey: SERVICE_STAGES[index]?.imageKey ?? 'preSalesStageImage',
-      fallbackImageSrc: SERVICE_STAGES[index]?.fallbackImageSrc ?? '/assets/images/about/support-hero.jpg',
-      icon: SERVICE_STAGES[index]?.icon ?? SERVICE_STAGES[0].icon,
-    })) ?? SERVICE_STAGES
+      imageKey: defaultStage.imageKey,
+      fallbackImageSrc: defaultStage.fallbackImageSrc,
+      icon: defaultStage.icon,
+    }
+  })
   const hotlineLabel = renderText(pageData?.urgentAssistance?.hotlineLabel) || '24/7 Hotline'
   const hotlineValue = renderText(pageData?.urgentAssistance?.hotlineValue) || '+86 19941519694'
   const salesLabel = renderText(pageData?.urgentAssistance?.salesLabel) || 'Sales'

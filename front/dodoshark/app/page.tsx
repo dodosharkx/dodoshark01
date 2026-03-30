@@ -618,21 +618,21 @@ export default async function HomePage() {
   const whyChooseUsCoverImageAlt = hasSanityImageAsset(data?.whyChooseUsVideoCoverImage)
     ? renderText(data?.whyChooseUsVideoCoverImage?.alt) || 'DoDoShark Factory Video'
     : 'DoDoShark Factory Video'
-  const homeStats =
-    data?.stats
-      ?.map((item) => {
-        const label = renderText(item?.label)
-        const value = renderText(item?.value)
-        if (!label || !value) return null
-        return {
-          label,
-          value,
-          suffix: renderText(item?.suffix) || '',
-        }
-      })
-      .filter(isDefined) ?? stats
-  const homeAboutFeatures =
-    data?.aboutFeatures
+  const parsedStats = data?.stats
+    ?.map((item) => {
+      const label = renderText(item?.label)
+      const value = renderText(item?.value)
+      if (!label || !value) return null
+      return {
+        label,
+        value,
+        suffix: renderText(item?.suffix) || '',
+      }
+    })
+    .filter(isDefined)
+  const homeStats = parsedStats && parsedStats.length > 0 ? parsedStats : stats
+  
+  const parsedAboutFeatures = data?.aboutFeatures
       ?.map((item, index) => {
         const title = renderText(item?.title)
         const description = renderText(item?.description)
@@ -640,13 +640,15 @@ export default async function HomePage() {
         if (!title || !description || !image) return null
         return { title, description, image }
       })
-      .filter(isDefined) ?? aboutFeatures
+      .filter(isDefined)
+  const homeAboutFeatures = parsedAboutFeatures && parsedAboutFeatures.length > 0 ? parsedAboutFeatures : aboutFeatures
+
   const confidenceTitleLineOne = renderText(data?.confidenceSection?.titleLineOne) || 'Choose DodoShark'
   const confidenceTitleLineTwo = renderText(data?.confidenceSection?.titleLineTwo) || 'Choose Confidence'
   const confidenceDescription =
     renderText(data?.confidenceSection?.description) ||
     'DoDoShark practices "Carefree Production, Joyful Harvest" through innovation and high quality.'
-  const homeConfidenceCards =
+  const parsedConfidenceCards =
     data?.confidenceSection?.cards
       ?.map((card, index) => {
         const title = renderText(card?.title)
@@ -660,7 +662,9 @@ export default async function HomePage() {
           image,
         }
       })
-      .filter(isDefined) ?? confidenceCards
+      .filter(isDefined)
+  const homeConfidenceCards = parsedConfidenceCards && parsedConfidenceCards.length > 0 ? parsedConfidenceCards : confidenceCards
+
   const featuredAgriProducts: HomeProductCard[] =
     data?.featuredAgriProducts
       ?.map((product) => {
@@ -732,7 +736,7 @@ export default async function HomePage() {
   const homeFoodProducts = featuredFoodProducts.length > 0 ? featuredFoodProducts : foodProducts
   const homeSolutions = featuredSolutions.length > 0 ? featuredSolutions : grindingSolutions
   const homeCaseItems = featuredCases.length > 0 ? featuredCases : projectCaseItems
-  const homeAdvantages =
+  const parsedAdvantages =
     data?.advantagesSection?.items
       ?.map((item, index) => {
         const title = renderText(item?.title)
@@ -741,7 +745,8 @@ export default async function HomePage() {
         if (!title || !description || !image) return null
         return { title, description, image }
       })
-      .filter(isDefined) ?? advantages
+      .filter(isDefined)
+  const homeAdvantages = parsedAdvantages && parsedAdvantages.length > 0 ? parsedAdvantages : advantages
   const homeVideoItems =
     data?.featuredHomeVideos
       ?.filter((video) => cleanText(video?.status) === 'published')

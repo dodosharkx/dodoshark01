@@ -454,7 +454,7 @@ export default async function AboutPage() {
   const globalLayoutDescriptionTwo =
     renderText(pageData?.globalLayout?.descriptionTwo) ||
     'From serving every major city in China to expanding into over a dozen countries globally. DoDoShark stands as a new name card for Intelligent Manufacturing in China.'
-  const globalLayoutStats =
+  const parsedGlobalStats =
     pageData?.globalLayout?.stats
       ?.map((stat) => {
         const label = renderText(stat?.label)
@@ -462,7 +462,8 @@ export default async function AboutPage() {
         if (!label || !value) return null
         return { label, value }
       })
-      .filter((item): item is {label: string; value: string} => Boolean(item)) ?? [
+      .filter((item): item is {label: string; value: string} => Boolean(item))
+  const globalLayoutStats = parsedGlobalStats && parsedGlobalStats.length > 0 ? parsedGlobalStats : [
       { value: '10+', label: 'Senior Engineers' },
       { value: '3', label: 'Production Bases' },
       { value: '60+', label: 'Skilled Technicians' },
