@@ -25,7 +25,8 @@ export const client = createClient({
   },
 })
 
-const token = process.env['SANITY_API_READ_TOKEN']?.trim()
+const envKey = 'SANITY_API_READ_TOKEN' as string
+const token = process.env[envKey]?.trim()
 
 export const previewClient = createClient({
   projectId,

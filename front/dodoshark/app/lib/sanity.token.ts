@@ -1,5 +1,6 @@
-// Use bracket notation to prevent Webpack statically inlining undefined at build time
-export const sanityReadToken = process.env['SANITY_API_READ_TOKEN']?.trim()
+// Use dynamic property access to fully bypass Next.js Webpack static compilation
+const envKey = 'SANITY_API_READ_TOKEN' as string
+export const sanityReadToken = process.env[envKey]?.trim()
 
 export function getSanityReadToken() {
   if (!sanityReadToken) {
