@@ -8,8 +8,17 @@ import {schemaTypes, singletonTypes} from './schemaTypes'
 import {structure} from './structure'
 import {presentationResolve} from './presentation/resolve'
 
+function normalizeOrigin(value?: string) {
+  return value?.trim().replace(/\/+$/, '')
+}
+
+const defaultPreviewOrigin =
+  process.env.NODE_ENV === 'production'
+    ? 'https://www.dodoshark.com'
+    : 'http://localhost:3000'
+
 const previewOrigin =
-  process.env.SANITY_STUDIO_PREVIEW_ORIGIN?.trim() || 'http://localhost:3000'
+  normalizeOrigin(process.env.SANITY_STUDIO_PREVIEW_ORIGIN) || defaultPreviewOrigin
 
 export default defineConfig({
   name: 'default',
