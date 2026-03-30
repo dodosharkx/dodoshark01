@@ -8,6 +8,7 @@ import { renderText, toImageSrc } from '@/app/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/app/lib/types/sanity'
 import LeadInquiryForm from '@/components/forms/LeadInquiryForm'
 import HeroTitle from '@/components/ui/HeroTitle'
+import CMSImage from '@/components/ui/CMSImage'
 
 type ContactPageData = {
   seo?: SeoMeta
@@ -20,6 +21,16 @@ type ContactPageData = {
     title?: string
     description?: string
     image?: SanityImage
+  }
+  headquarters?: {
+    title?: string
+    description?: string
+    note?: string
+  }
+  productionBases?: {
+    title?: string
+    description?: string
+    cities?: string[]
   }
   inquiryPanel?: {
     title?: string
@@ -48,6 +59,16 @@ const CONTACT_PAGE_QUERY = `coalesce(
       asset
     }
   },
+  headquarters{
+    title,
+    description,
+    note
+  },
+  productionBases{
+    title,
+    description,
+    cities
+  },
   inquiryPanel{
     title,
     description
@@ -62,23 +83,29 @@ async function getContactPageData(stega?: boolean) {
 }
 
 export default async function ContactPage() {
-  const [contact, pageData] = await Promise.all([getGlobalContact(), getContactPageData()])
+  const [contact, pageData] = await Promise.all([getGlobalContact(), getContactPageData(true)])
+  
   const heroTitle = pageData?.hero?.title
-  const heroSubtitle =
-    renderText(pageData?.hero?.subtitle) ||
-    'Reach out to our expert team for recommendations, quotations, and global technical support.'
+  const heroSubtitle = renderText(pageData?.hero?.subtitle) || 'Reach out to our expert team for recommendations, quotations, and global technical support.'
   const heroImageSrc = toImageSrc(pageData?.hero?.backgroundImage, 1800) || '/assets/images/about/contact-hero.jpg'
   const heroImageAlt = renderText(pageData?.hero?.backgroundImage?.alt) || 'DoDoShark Contact Center'
+
+  const hqTitle = renderText(pageData?.headquarters?.title) || 'Headquarters'
+  const hqDesc = renderText(pageData?.headquarters?.description) || 'Located in Nanjing, Jiangsu Province, China.'
+  const hqNote = renderText(pageData?.headquarters?.note) || 'DoDoShark is proudly a brand of Nanjing Heici Machinery Co., Ltd.'
+
+  const pbTitle = renderText(pageData?.productionBases?.title) || 'Production Bases'
+  const pbDesc = renderText(pageData?.productionBases?.description) || 'Three major manufacturing facilities located in Shandong Province.'
+  const pbCities = (pageData?.productionBases?.cities && pageData.productionBases.cities.length > 0) 
+    ? pageData.productionBases.cities 
+    : ['Jinan', 'Liaocheng', 'Weifang']
+
   const showroomTitle = renderText(pageData?.showroom?.title) || 'Our Showroom'
-  const showroomDescription =
-    renderText(pageData?.showroom?.description) ||
-    'Visit our facility in Nanjing to see our high-precision machinery in action and discuss your production needs with our experts.'
-  const showroomImageSrc = toImageSrc(pageData?.showroom?.image, 1400) || '/assets/images/showroom-1.jpg'
-  const showroomImageAlt = renderText(pageData?.showroom?.image?.alt) || 'DoDoShark Showroom'
+  const showroomDescription = renderText(pageData?.showroom?.description) || 'Visit our facility in Nanjing to see our high-precision machinery in action and discuss your production needs with our experts.'
+  const showroomImage = pageData?.showroom?.image
+
   const inquiryTitle = renderText(pageData?.inquiryPanel?.title) || 'Send Inquiry'
-  const inquiryDescription =
-    renderText(pageData?.inquiryPanel?.description) ||
-    'Leave your contact details and city. Our team will respond shortly.'
+  const inquiryDescription = renderText(pageData?.inquiryPanel?.description) || 'Leave your contact details and city. Our team will respond shortly.'
 
   return (
     <main className="bg-[#fcfdfd] text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-900">
@@ -126,12 +153,12 @@ export default async function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-display font-extrabold text-slate-900 mb-4 uppercase tracking-tight">Headquarters</h2>
+              <h2 className="text-2xl font-display font-extrabold text-slate-900 mb-4 uppercase tracking-tight">{hqTitle}</h2>
               <p className="text-slate-600 font-light leading-relaxed mb-4">
-                Located in Nanjing, Jiangsu Province, China.
+                {hqDesc}
               </p>
               <p className="text-sm text-slate-500 font-medium">
-                DoDoShark is proudly a brand of Nanjing Heici Machinery Co., Ltd.
+                {hqNote}
               </p>
             </div>
 
@@ -142,12 +169,12 @@ export default async function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-display font-extrabold text-slate-900 mb-4 uppercase tracking-tight">Production Bases</h2>
+              <h2 className="text-2xl font-display font-extrabold text-slate-900 mb-4 uppercase tracking-tight">{pbTitle}</h2>
               <p className="text-slate-600 font-light leading-relaxed mb-4">
-                Three major manufacturing facilities located in Shandong Province.
+                {pbDesc}
               </p>
               <div className="flex flex-wrap gap-2 mt-auto">
-                {['Jinan', 'Liaocheng', 'Weifang'].map((city) => (
+                {pbCities.map((city) => (
                   <span key={city} className="px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-xs font-semibold text-slate-700">
                     {city}
                   </span>
@@ -194,12 +221,12 @@ export default async function ContactPage() {
 
               {/* Left Column: Image */}
               <div className="lg:col-span-2 relative h-full min-h-[450px] md:min-h-[600px] rounded-2xl overflow-hidden shadow-2xl border border-slate-800 group">
-                <Image
-                  src={showroomImageSrc}
-                  alt={showroomImageAlt}
+                <CMSImage
+                  image={showroomImage}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 40vw"
+                  fallbackAlt={showroomTitle}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent opacity-80" />
                 <div className="absolute bottom-8 left-8 right-8">
