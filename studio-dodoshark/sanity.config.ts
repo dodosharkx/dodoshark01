@@ -14,7 +14,7 @@ function normalizeOrigin(value?: string) {
 
 const defaultPreviewOrigin =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.dodoshark.com'
+    ? 'https://www.dodoshark.vip'
     : 'http://localhost:3000'
 
 const previewOrigin =
