@@ -6,7 +6,7 @@ import {sanityReadToken} from '@/app/lib/sanity.token'
 export const GET = async (request: Request) => {
   if (!sanityReadToken) {
     return new Response(
-      'Visual editing is disabled: Missing SANITY_API_READ_TOKEN environment variable in production.',
+      'Visual editing is disabled: Missing SANITY_API_READ_TOKEN environment variable in production. Configure it on the deployed frontend as a Cloudflare Worker secret.',
       {status: 401}
     )
   }

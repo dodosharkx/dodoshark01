@@ -36,13 +36,25 @@ Notes:
 Set this in the deployed Studio:
 
 ```bash
-SANITY_STUDIO_PREVIEW_ORIGIN=https://www.dodoshark.com
+SANITY_STUDIO_PREVIEW_ORIGIN=https://www.dodoshark.vip
 ```
 
 Notes:
 
 - This must be the public frontend origin loaded inside Presentation Tool.
 - Do not leave it pointing at `http://localhost:3000` in cloud deployments.
+
+## Cloudflare Worker Secret
+
+The frontend in this repo is deployed through Cloudflare Workers (`front/dodoshark/wrangler.jsonc`).
+
+`SANITY_API_READ_TOKEN` must be configured in the production Worker as a secret. If it is missing, `GET /api/draft/enable` returns:
+
+```text
+Visual editing is disabled: Missing SANITY_API_READ_TOKEN environment variable in production.
+```
+
+That `401` blocks the Presentation Tool handshake before Sanity can validate the preview secret.
 
 ## Sanity Project Settings
 
@@ -66,6 +78,6 @@ At minimum, verify the public frontend domain is configured consistently with yo
   - production: `https://dodoshark.sanity.studio`
 - Studio default preview origin:
   - development: `http://localhost:3000`
-  - production: `https://www.dodoshark.com`
+  - production: `https://www.dodoshark.vip`
 
 Override either default with environment variables when previewing a different environment.
