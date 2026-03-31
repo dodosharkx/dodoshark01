@@ -276,7 +276,7 @@ export default async function AboutPage() {
   const heroTitleLineThree = renderText(pageData?.hero?.titleLineThree) || 'Empowering the World'
   const heroDescription =
     renderText(pageData?.hero?.description) || 'We provide stable, efficient, and worry-free DoDoShark machinery.'
-  
+
   const storyCards = (pageData?.storyCards && pageData.storyCards.length > 0) ? pageData.storyCards : []
   const brandStoryTitle = renderText(pageData?.brandStoryTitle) || 'DoDoShark Brand Story'
   const brandStoryThumbnail = pageData?.images?.brandStoryThumbnail
@@ -290,7 +290,7 @@ export default async function AboutPage() {
   const productSystemButtonHref = cleanText(productSystemIntro?.buttonHref) || '/products'
 
   const aboutProductSystems = (pageData?.productSystems && pageData.productSystems.length > 0) ? pageData.productSystems : []
-  
+
   const globalLayout = pageData?.globalLayout
   const globalLayoutTitle = renderText(globalLayout?.title) || 'High-End Talent & Global Layout'
   const globalLayoutBadge = renderText(globalLayout?.badge) || 'Our Elite Engineering Team'
@@ -317,7 +317,7 @@ export default async function AboutPage() {
   const ctaButtonHref = cleanText(cta?.buttonHref) || '/contact'
   const joinUsTitle = renderText(cta?.joinUsTitle) || 'Join Our Journey'
   const joinUsDescription = renderText(cta?.joinUsDescription) || 'Become part of the global DoDoShark ecosystem.'
-  
+
   const valuePropositionBackgroundImage = pageData?.images?.valuePropositionBackgroundImage
   const joinUsImage = pageData?.images?.joinUsImage
 
@@ -432,7 +432,7 @@ export default async function AboutPage() {
                     <h3 className="mb-2 font-display text-2xl font-extrabold uppercase tracking-tight">{renderText(sys.title)}</h3>
                   </div>
                 </div>
-                <div className="p-8 pt-4">
+                <div className="p-8 pt-2">
                   <p className="mb-6 font-light leading-relaxed text-slate-300">{renderText(sys.description)}</p>
                   <div className="flex flex-wrap gap-2">
                     {sys.tags?.map((tag) => (
@@ -452,7 +452,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Global Assets & Team (Stats) */}
-      <section className="relative overflow-hidden bg-orange-600 py-24 text-white">
+      <section className="relative overflow-hidden bg-orange-900 py-24 text-white">
         <div className="absolute inset-0 opacity-20">
           <Image
             src={toImageSrc(globalLayoutBackgroundImage, 1800) || '/assets/images/about/global-layout.jpg'}

@@ -20,7 +20,7 @@ export default defineType({
       title: 'Image Zoom (%)',
       type: 'number',
       description: 'Adjust the machine image scale. 100 is original, >100 zooms in.',
-      initialValue: 108,
+      initialValue: 115,
       validation: (Rule) => Rule.min(50).max(180),
     }),
     defineField({name: 'footerText', title: 'Footer Text', type: 'string', description: 'Optional note shown below the selector.'}),

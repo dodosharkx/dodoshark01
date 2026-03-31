@@ -164,7 +164,7 @@ function MachineCard({
   item,
   theme,
   shouldShowModelDescription,
-  imageZoom = 108,
+  imageZoom = 115,
 }: {
   item: MachineItem
   theme: SharedBackgroundTheme
@@ -193,7 +193,7 @@ function MachineCard({
             width={image?.asset?.metadata?.dimensions?.width ?? 1000}
             height={image?.asset?.metadata?.dimensions?.height ?? 1000}
             style={{ transform: `scale(${zoomScale})` }}
-            className="h-full w-full object-contain transition-transform duration-500 group-hover/card:scale-[1.12]"
+            className="h-full w-full object-contain transition-transform duration-500"
             placeholder={image?.asset?.metadata?.lqip ? 'blur' : 'empty'}
             blurDataURL={image?.asset?.metadata?.lqip}
           />
