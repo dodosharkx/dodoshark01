@@ -15,6 +15,14 @@ export default defineType({
     defineField({name: 'defaultGroupIndex', title: 'Default Group Index', type: 'number', description: 'Starts from 0. Leave empty to default to the first group.', validation: (rule) => rule.min(0).integer()}),
     defineField({name: 'maxItemsPerRow', title: 'Max Items Per Row (Desktop)', type: 'number', description: 'Desktop slider shows 1-4 items per view.', options: {list: [1, 2, 3, 4]}, initialValue: 4, validation: (rule) => rule.required().min(1).max(4)}),
     defineField({name: 'showModelDescription', title: 'Show Model Description', type: 'boolean', description: 'Uses productVariant.shortDescription in cards.', initialValue: true}),
+    defineField({
+      name: 'imageZoom',
+      title: 'Image Zoom (%)',
+      type: 'number',
+      description: 'Adjust the machine image scale. 100 is original, >100 zooms in.',
+      initialValue: 108,
+      validation: (Rule) => Rule.min(50).max(180),
+    }),
     defineField({name: 'footerText', title: 'Footer Text', type: 'string', description: 'Optional note shown below the selector.'}),
   ],
   preview: {
