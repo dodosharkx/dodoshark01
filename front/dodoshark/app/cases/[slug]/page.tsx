@@ -290,11 +290,15 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
 
   const coverImageSrc = toImageSrc(caseStudy.coverImage, 1800)
   const clientLogoSrc = toImageSrc(caseStudy.clientLogo, 420)
-  const usedEquipment = (caseStudy.usedEquipment ?? []).filter(
-    (item) => item?._id && (item?.title || item?.modelName),
-  )
+  const usedEquipment = (caseStudy.usedEquipment && caseStudy.usedEquipment.length > 0)
+    ? caseStudy.usedEquipment.filter(
+        (item) => item?._id && (item?.title || item?.modelName),
+      )
+    : []
   const components = buildPortableTextComponents()
-  const caseTags = (caseStudy.tags ?? []).filter((item) => cleanText(item?.title) && cleanSlug(item?.slug))
+  const caseTags = (caseStudy.tags && caseStudy.tags.length > 0)
+    ? caseStudy.tags.filter((item) => cleanText(item?.title) && cleanSlug(item?.slug))
+    : []
   const tagMetaClassName =
     'inline-flex items-center gap-2 rounded-full border border-white/16 bg-white/6 px-3.5 py-1.5 text-[11px] font-medium tracking-[0.08em] text-slate-200 transition sm:text-xs'
 
@@ -365,7 +369,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
 
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="portable-text">
-            <PortableText value={caseStudy.body ?? []} components={components} />
+            <PortableText value={(caseStudy.body && caseStudy.body.length > 0) ? caseStudy.body : []} components={components} />
           </div>
         </div>
       </article>

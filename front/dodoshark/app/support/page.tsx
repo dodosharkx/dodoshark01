@@ -228,12 +228,13 @@ export default async function SupportPage() {
   const urgentAssistanceDescription =
     renderText(pageData?.urgentAssistance?.description) ||
     'Our global technical response team is on standby to help you resolve equipment issues, order spare parts, or schedule an efficiency audit.'
-  const parsedStats = pageData?.stats?.map((stat) => {
+  const rawStats = (pageData?.stats && pageData.stats.length > 0) ? pageData.stats : []
+  const parsedStats = rawStats.map((stat) => {
     const label = renderText(stat?.label)
     const value = renderText(stat?.value)
     if (!label || !value) return null
     return { label, val: value }
-  }).filter((item): item is { label: string; val: string } => Boolean(item)) ?? []
+  }).filter((item): item is { label: string; val: string } => Boolean(item))
   const stats = (parsedStats && parsedStats.length > 0) ? parsedStats : [
     { label: 'Core Component Warranty', val: '3 Years' },
     { label: 'Technical Response Time', val: '24/7' },

@@ -7,6 +7,7 @@ import type { SanityImage } from '@/app/lib/types/sanity'
 type CMSImageProps = Omit<ComponentProps<typeof Image>, 'src' | 'alt'> & {
   image?: SanityImage
   alt?: string
+  fallbackSrc?: string
   fallbackAlt?: string
   width?: number
   height?: number
@@ -15,10 +16,11 @@ type CMSImageProps = Omit<ComponentProps<typeof Image>, 'src' | 'alt'> & {
 
 /**
  * A dedicated component for rendering Sanity images with automatic alt text resolution.
- * Per user request, it does not support hardcoded fallback src/alt attributes.
+ * Supports hardcoded fallback src/alt attributes when Sanity image resolution fails.
  */
 export default function CMSImage({
   image,
+  fallbackSrc,
   fallbackAlt = 'DoDoShark Image',
   width,
   height,
@@ -30,6 +32,22 @@ export default function CMSImage({
   const src = toImageSrc(image, width || 1200)
   const alt = altOverride || renderText(image?.alt) || fallbackAlt
 
+  // If Sanity resolution fails but we have a fallback source, use it
+  if (!src && fallbackSrc) {
+    return (
+      <Image
+        src={fallbackSrc}
+        alt={alt}
+        width={!fill ? width : undefined}
+        height={!fill ? height : undefined}
+        fill={fill}
+        className={className}
+        {...props}
+      />
+    )
+  }
+
+  // If no source at all, return null
   if (!src) return null
 
   return (

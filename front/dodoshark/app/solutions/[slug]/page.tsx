@@ -669,7 +669,9 @@ export default async function SolutionPage({params}: SolutionPageProps) {
     notFound()
   }
 
-  const contentBlocks = (solution.contentBlocks ?? []).filter(Boolean)
+  const contentBlocks = (solution.contentBlocks && solution.contentBlocks.length > 0)
+    ? solution.contentBlocks.filter((block) => Boolean(block))
+    : []
   const renderGroups = groupPageBuilderBlocks(contentBlocks)
   const hasBuilderHero = solution.contentBlocks?.some((block) => block?._type === 'heroBlock')
   const preparedTemplate =

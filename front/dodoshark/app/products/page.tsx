@@ -131,7 +131,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     query: productLandingQuery,
   })
 
-  const [products, fallbackCategories] = await Promise.all([
+  const [productsData, fallbackCategories] = await Promise.all([
     fetchSanityData<ProductCard[]>({
       query: productListQuery,
       params: { category },
@@ -141,8 +141,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     }),
   ])
 
-  const configuredCategories = landing?.productCategories?.filter((item) => cleanSlug(item?.slug)) ?? []
-  const categories = configuredCategories.length > 0 ? configuredCategories : fallbackCategories
+  const products = (productsData && productsData.length > 0) ? productsData : []
+  const configuredCategories = (landing?.productCategories && landing.productCategories.length > 0) ? landing.productCategories.filter((item) => cleanSlug(item?.slug)) : []
+  const categories = configuredCategories.length > 0 ? configuredCategories : (fallbackCategories && fallbackCategories.length > 0 ? fallbackCategories : [])
   const heroImageSrc = toImageSrc(landing?.hero?.image, 1800)
   const heroBadge = renderText(landing?.hero?.badge)
   const heroTitle = renderText(landing?.hero?.title)
