@@ -86,6 +86,7 @@ export type MachineSelectorBlockData = {
   defaultGroupIndex?: number
   maxItemsPerRow?: 1 | 2 | 3 | 4
   showModelDescription?: boolean
+  imageZoom?: number
   footerText?: string
 }
 
@@ -163,10 +164,12 @@ function MachineCard({
   item,
   theme,
   shouldShowModelDescription,
+  imageZoom = 115,
 }: {
   item: MachineItem
   theme: SharedBackgroundTheme
   shouldShowModelDescription: boolean
+  imageZoom?: number
 }) {
   const variantItem = item.productVariant
   const title = renderText(item.modelLabel) || renderText(variantItem?.modelName) || 'Unnamed Model'
@@ -174,20 +177,23 @@ function MachineCard({
   const image = variantItem?.image
   const src = resolveImageSrc(image)
 
+  const zoomScale = imageZoom / 100
+
   return (
     <article
-      className={`h-full rounded-[0.75rem] p-5 ${
-        item.isFeatured ? `ring-2 ring-orange-400 ${theme.surfaceElevated}` : theme.surface
+      className={`group/card h-full overflow-hidden rounded-[0.75rem] transition-all duration-300 ${
+        item.isFeatured ? `ring-2 ring-orange-400 ${theme.surfaceElevated}` : `${theme.surface} hover:shadow-xl`
       }`}
     >
-      <div className="mb-5 flex aspect-[4/3] items-center justify-center overflow-hidden rounded-sm">
+      <div className="flex aspect-square items-center justify-center overflow-hidden bg-white/50 p-4">
         {src ? (
           <Image
             src={src}
             alt={image?.alt || title}
             width={image?.asset?.metadata?.dimensions?.width ?? 1000}
-            height={image?.asset?.metadata?.dimensions?.height ?? 750}
-            className="h-full w-full object-contain"
+            height={image?.asset?.metadata?.dimensions?.height ?? 1000}
+            style={{ transform: `scale(${zoomScale})` }}
+            className="h-full w-full object-contain transition-transform duration-500"
             placeholder={image?.asset?.metadata?.lqip ? 'blur' : 'empty'}
             blurDataURL={image?.asset?.metadata?.lqip}
           />
@@ -196,15 +202,17 @@ function MachineCard({
         )}
       </div>
 
-      <h3 className={`mb-2 text-center ${cardTitleClass} text-slate-900`}>
-        {title}
-      </h3>
+      <div className="p-6 text-center">
+        <h3 className={`mb-2 ${cardTitleClass} text-slate-900`}>
+          {title}
+        </h3>
 
-      {shouldShowModelDescription && description && (
-        <p className={`text-center ${bodyTextClass} text-slate-600`}>
-          {description}
-        </p>
-      )}
+        {shouldShowModelDescription && description && (
+          <p className={`${bodyTextClass} text-slate-600`}>
+            {description}
+          </p>
+        )}
+      </div>
     </article>
   )
 }
@@ -325,7 +333,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                       <button
                         type="button"
                         onClick={() => setActiveIndex(idx)}
-                        aria-pressed={active}
+                        aria-pressed={active ? 'true' : 'false'}
                         className={`min-w-[132px] rounded-sm px-4 py-2 text-xs font-black tracking-wider transition-colors md:min-w-[180px] md:px-6 md:py-3 md:text-base ${active ? tabActiveClass : tabInactiveClass}`}
                       >
                         {group.label}
@@ -408,6 +416,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                         item={item}
                         theme={theme}
                         shouldShowModelDescription={shouldShowModelDescription}
+                        imageZoom={block.imageZoom}
                       />
                     </SwiperSlide>
                   )
@@ -425,7 +434,7 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                       key={`machine-page-${idx}`}
                       type="button"
                       aria-label={`Go to machine page ${idx + 1}`}
-                      aria-pressed={active}
+                      aria-pressed={active ? 'true' : 'false'}
                       onClick={() => {
                         if (!machineSwiper || machineSwiper.destroyed) return
                         machineSwiper.slideTo(idx * getSlidesPerGroup(machineSwiper))

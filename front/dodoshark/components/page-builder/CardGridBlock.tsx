@@ -150,7 +150,6 @@ function getReferenceHref(reference?: CardReference) {
   if (reference?._type === 'product') return `/products/${slug}`
   if (reference?._type === 'solution') return `/solutions/${slug}`
   if (reference?._type === 'caseStudy') return `/cases/${slug}`
-  if (reference?._type === 'post') return `/vlog/${slug}`
 
   return ''
 }

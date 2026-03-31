@@ -8,6 +8,8 @@ import {createDataAttribute} from 'next-sanity'
 
 import MobileNavToggle from '@/components/header/MobileNavToggle'
 import {isNavItemActive, type NavItem} from '@/components/header/nav-utils'
+import {SANITY_DATASET, SANITY_PROJECT_ID} from '@/app/lib/env'
+import {studioUrl} from '@/app/lib/sanity'
 import type {GlobalSettingsData} from '@/app/lib/global-settings'
 import {cleanText, renderText, toImageSrc} from '@/app/lib/sanity-utils'
 
@@ -82,7 +84,14 @@ export default function Header({settings}: HeaderProps) {
   const navBackgroundSrc = toImageSrc(settings?.header?.navBackground, 1600) || '/assets/images/background/footer-background.png'
 
   const headerDataAttribute = settings?._id
-    ? createDataAttribute({id: settings._id, type: 'globalSettings', path: 'header'}).toString()
+    ? createDataAttribute({
+        id: settings._id.replace('drafts.', ''),
+        type: 'globalSettings',
+        path: 'header',
+        baseUrl: studioUrl,
+        projectId: SANITY_PROJECT_ID,
+        dataset: SANITY_DATASET,
+      }).toString()
     : undefined
 
   const syncScrolled = useEffectEvent(() => {

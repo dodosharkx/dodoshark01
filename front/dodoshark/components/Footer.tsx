@@ -5,6 +5,7 @@ import {createDataAttribute} from 'next-sanity'
 import type {GlobalSettingsData} from '@/app/lib/global-settings'
 import {cleanText, renderText, toImageSrc} from '@/app/lib/sanity-utils'
 import CMSImage from '@/components/ui/CMSImage'
+import {SANITY_DATASET, SANITY_PROJECT_ID} from '@/app/lib/env'
 import {studioUrl} from '@/app/lib/sanity'
 
 type FooterProps = {
@@ -170,11 +171,12 @@ export default function Footer({settings}: FooterProps) {
   const getSanityDataAttr = (path: string) => {
     if (!settings?._id) return undefined
     return createDataAttribute({
-      id: settings._id.replace('drafts.', ''), // Ensure clean ID for the intent
+      id: settings._id.replace('drafts.', ''),
       type: 'globalSettings',
       path,
-      projectId: 'nljl95h9',
-      dataset: 'production',
+      baseUrl: studioUrl,
+      projectId: SANITY_PROJECT_ID,
+      dataset: SANITY_DATASET,
     }).toString()
   }
 

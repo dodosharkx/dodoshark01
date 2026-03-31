@@ -350,7 +350,14 @@ function LegacyHero({
             className="object-cover"
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-white" />
+          <Image
+            src="/assets/images/banner.png"
+            alt={block.title || 'DoDoShark industrial powerhouse'}
+            fill
+            sizes="100vw"
+            className="object-cover brightness-[0.85]"
+            priority
+          />
         )}
 
         <div className="absolute inset-0 bg-gradient-to-r from-slate-800/60 via-slate-800/35 to-slate-800/10" />
@@ -436,7 +443,14 @@ function SplitHero({
             blurDataURL={backgroundImage?.asset?.metadata?.lqip}
           />
         ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.95),_rgba(241,245,249,0.96)_36%,_rgba(226,232,240,0.98)_100%)]" />
+          <Image
+            src="/assets/images/factory.jpg"
+            alt={block.title || 'DoDoShark factory'}
+            fill
+            sizes="100vw"
+            className="object-cover opacity-60"
+            priority
+          />
         )}
 
         <div className="absolute inset-0 bg-white/38" />
@@ -515,10 +529,16 @@ function SplitHero({
 }
 
 export default function HeroBlock({ block }: { block: HeroBlockData }) {
-  const images = useMemo(
-    () => (block.images ?? []).filter((image) => hasImageIdentity(image)),
+  const imagesParsed = useMemo(
+    () => (block.images && block.images.length > 0)
+      ? block.images.filter((image) => hasImageIdentity(image))
+      : [],
     [block.images]
   )
+
+  const images = imagesParsed.length > 0
+    ? imagesParsed
+    : [{ _key: 'fallback', alt: 'DoDoShark industrial equipment' }] // Local fallback identity
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
   useEffect(() => {

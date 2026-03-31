@@ -1,0 +1,238 @@
+DoDoShark Powder’s High-Efficiency Blending Solutions
+ Abstract
+ [Powder Diagram]
+This solution provides a systematic, high-efficiency, uniform and dust-free solution for the mixing of powders, granules and solid-liquid mixtures. DoDoShark leverages its three main machine types—the double-cone drum mixer, the drum agitator and the double-screw ribbon mixer—to cover all mixing requirements, from small-batch laboratory applications to large-scale industrial production.The solution achieves a mixing uniformity (CV) of &lt;5%, reduces mixing time by 30%–50%, and lowers energy consumption by 20%–40%, making it widely applicable in the food, pharmaceutical, chemical, and feed industries. Through modular design and customised configurations, it helps clients improve product consistency, reduce operational costs, and achieve clean production.
+DoDoShark High-Efficiency Powder Mixing Solution Delivers:
+ [Image]
+ High Efficiency and Energy Saving
+ Mixing time reduced by 30%–50%
+ Electricity consumption per tonne reduced by 20%–40%
+ [Image]
+ Dust-free Sealing
+ Fully enclosed structure throughout the process, with zero dust leakage
+ Raw material recovery rate of 99.5%
+ [Image]
+ Leading Uniformity
+ CV &lt; 5%
+ Uniform dispersion of trace components at a 1:10,000 ratio
+ [Image]
+ Dead-Space-Free Design
+ Complete discharge with minimal residue
+ Easy to clean when changing product types, eliminating cross-contamination
+ [Image]
+ High Adaptability
+ Capable of mixing powder-powder, powder-liquid and granule-granule
+ Optional heating, drying and spray-drying functions
+ [Image]
+ Intelligent Control
+ Can be fitted with a PLC touchscreen and variable-frequency speed control
+ One-touch operation, recipe memory
+ Powder Characterisation
+ Classified by Density
+ Powder Type
+ Characteristics
+ Typical materials
+ Challenges in Blending
+Powders of equal density
+ Similar specific gravity
+ Blending of similar materials
+ Relatively easy to blend
+High-density powders
+ Extremely high specific gravity
+ Iron powder, alloy powders
+ High load
+ Very high torque requirements
+ Powders with vastly differing densities
+ Density difference &gt; 2 times
+ Metal powders + resin
+ Vitamins + carrier
+ Heavier particles sink, lighter ones float
+ Prone to segregation
+ Classified by flowability
+ Powder Type
+ Characteristics
+ Typical Materials
+ Challenges in Mixing
+ Free-flowing powders
+ Larger particles
+ High sphericity
+ Good flowability
+ Feed pellets
+ Plastic pellets
+ Fertiliser granules
+ Prone to segregation and stratification
+ Separation following vibration or transport
+ Sticky powders
+ High proportion of fine particles, prone to agglomeration
+ Poor flowability
+ Starch, milk powder
+ Premix additives
+ Prone to sticking to walls and caking
+ Material accumulation in mixing dead zones
+ Ultra-fine powders
+ Particle size &lt; 50 μm
+ High specific surface area
+ Pigments, nanomaterials
+ Ultrafine powders of traditional Chinese medicine
+ Prone to agglomeration
+ Electrostatic adsorption
+ Problems with Conventional Mixing Methods
+ Problem Dimensions
+ Pain Points of Traditional Solutions
+ Impact on Customers
+ Poor mixing uniformity
+ Inappropriate equipment selection; materials with significant differences in specific gravity are prone to separation
+ Inconsistent batch quality, leading to quality complaints
+ Long mixing times
+ Low efficiency; 30–60 minutes per batch
+ Limited production capacity and high energy consumption
+ Significant residual material in the discharge
+ Unsuitable structural design, material accumulation in dead corners
+ Cross-contamination during product changeovers, difficult to clean
+ Dust contamination
+ Inadequate sealing, resulting in dust leakage during the mixing process
+ Failure to meet environmental standards, resulting in 3–5% raw material wastage
+ Excessive temperature rise
+ Vigorous agitation causing material to heat up
+ Degradation of heat-sensitive components, resulting in reduced product quality
+ High equipment failure rate
+ Bearing dust leakage, motor overload, gearbox overload
+ Frequent shutdowns for maintenance, affecting production
+ Product Selection Recommended by DoDoShark
+ [Image]
+ DoDoShark Double Cone Drum Mixer
+ (Laboratory version)
+ Mixing principle: Gravity dispersion mixing
+ Optimal Mixing Uniformity: CV &lt; 1%
+ Mixing Time: 10–60 min
+ Total Sealing: 100%
+ Batch Capacity: 1–50 kg/batch
+ Maximum filling factor: 50%
+View Product Details→
+ [Image]
+ DoDoShark Double Cone Drum Mixer
+ (Medium to Large Models)
+ Mixing principle: Gravity dispersion mixing
+ Optimal mixing uniformity: CV &lt; 1%
+ Mixing Time: 10–60 min
+ Total Sealing: 100%
+ Batch Capacity: 10 kg–5 t/batch
+ Maximum loading factor: 50%
+ View Product Details →
+ [Image]
+ DoDoShark Drum Mixer
+ (Stainless steel)
+ Mixing principle: Tumbling and tossing
+ Optimal mixing uniformity: CV &lt; 2%
+ Mixing time: 10–60 minutes
+ Sealing Efficiency: 95%
+ Batch capacity: 60 kg–5 t
+ Maximum filling factor: 35%
+ [Image]
+ DoDoShark Double Screw Mixer
+ (Stainless steel)
+ Mixing principle: Convective shearing
+ Optimal mixing uniformity: CV &lt; 3%
+ Mixing time: 5–30 minutes
+ Fully Sealed: 100%
+ Batch capacity: 100 kg–5 t
+ Maximum loading factor: 70%
+ Comparison criteria
+ Twin-cone Drum Mixer
+ Drum Mixer
+Double Screw Mixer
+ Mixing Principle
+ Gravity diffusion
+ Tumbling and Sprinkling
+ Convective Shearing
+ Mixing Speed
+ Medium
+ Medium
+ Fast
+ Homogeneity
+ High
+ Medium
+ High
+ Mildness
+ Very mild
+ Mild
+ Medium
+ Load Factor
+ 20%–50%
+ 10%–30%
+ 60%–80%
+ Liquid Addition and Mixing
+ Optional
+ Optional
+ Optional
+ Residue on Discharge
+ &lt;0.1%
+ &lt;1%
+ &lt;5%
+ Cleaning Difficulty
+ Easy
+ Medium
+ Medium
+ Advantages of Large Capacity
+ Medium
+ Excellent
+ Excellent
+ High-Viscosity Materials
+ Not suitable
+ Not suitable
+ Suitable
+ Main
+ Application Scenarios
+Food: meal replacement powders, seasoning powders, infant rice cereals
+Pharmaceuticals: Traditional Chinese medicine powders, excipients for Western medicines, granules
+Chemicals: Pigments, dyes, catalysts
+Animal feed: premixes, additives
+Food: Grain processing
+Chemicals: Plastics, pigments, resins, additives
+Animal Feed: Pelleted feed, fertiliser pellets, premixes
+Food: Meal replacement powders, seasonings, sauces
+Pharmaceuticals: Traditional Chinese medicine granules, powder blending
+Chemicals: Coatings, adhesives, plastic additives
+Building materials: dry-mix mortar, skim coat powder, insulation materials
+ Challenges in Mixing and DoDoShark Solutions
+ Mixing Challenges
+ Recommended DoDoShark Models
+ Technical Solutions
+ Significant difference in specific gravity leading to segregation
+ Twin-cone drum mixer
+ Gravity diffusion mixing, no mechanical shearing, no segregation
+ Significant difference in proportions
+ (1:10,000)
+ Twin-screw mixer
+ Powerful convective shearing, uniform dispersion of trace components
+ Powder-liquid mixing prone to agglomeration
+ Tumbler mixer (with liquid spraying)
+ Atomised spraying + tumbling mixing, uniform dispersion of liquids
+ Viscous powders tend to stick to the walls
+ Twin-screw mixer
+ Screw blades designed to scrape the walls, reducing material accumulation in dead corners
+ Heat-sensitive materials
+ Twin-cone drum mixer
+ Gentle mixing, with optional jacket cooling
+ Electrostatic adsorption
+ Grounding available across the entire range
+ Anti-static design, with optional anti-static coating
+ High cleanliness requirements
+Full range of SUS304/316L
+ Mirror-polished, seamless design, easy to clean
+ End-to-End Delivery
+ From design and manufacturing to installation and commissioning, Dousha takes sole responsibility to ensure the system is perfectly integrated and operates efficiently.
+ Sustainable Upgrades
+ Modular design allows for flexible expansion of capacity or the addition of functional modules as your business grows.
+ Success Stories
+ A Food Processing Enterprise in Bozhou, Anhui
+ Address: Bozhou, Anhui
+ Client Requirements: Production of a blended nutritional meal replacement powder, requiring the thorough and uniform mixing of various whole grain and cereal powders with certain additives, in batches of 150kg.
+ DoDoShark Solution:
+ DoDoShark High-Capacity Twin-Cone Drum Mixer, 400L model
+ Batch capacity: 150kg
+ Uniform mixing within 15 minutes
+ The client has subsequently purchased five mixers for use with different formulations.
+ Summary:
+ DoDoShark customised a high-capacity mixer for a food enterprise in Bozhou, Anhui. It can mix 150kg of meal replacement powder uniformly in 15 minutes, offering high efficiency and stability. The client has purchased a further five units to meet production demands for multiple formulations.
+ View More Cases→

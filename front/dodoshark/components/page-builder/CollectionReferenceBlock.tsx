@@ -95,7 +95,6 @@ function resolveHref(doc?: ReferenceDoc) {
 
   if (doc?._type === 'product') return `/products/${slug}`
   if (doc?._type === 'solution') return `/solutions/${slug}`
-  if (doc?._type === 'post') return `/vlog/${slug}`
   if (doc?._type === 'caseStudy') return `/cases/${slug}`
   return undefined
 }

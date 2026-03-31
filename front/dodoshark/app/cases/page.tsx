@@ -196,16 +196,19 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
     }),
   ])
 
-  const configuredTags = landing?.tagFilters?.filter((item) => cleanSlug(item?.slug)) ?? []
-  const tags = configuredTags.length > 0 ? configuredTags : fallbackTags
+  const configuredTags = (landing?.tagFilters && landing.tagFilters.length > 0)
+    ? landing.tagFilters.filter((item) => cleanSlug(item?.slug))
+    : []
+  const tags = configuredTags.length > 0 ? configuredTags : (fallbackTags && fallbackTags.length > 0 ? fallbackTags : [])
   const heroImageSrc = toImageSrc(landing?.hero?.image, 1800)
   const heroBadge = renderText(landing?.hero?.badge)
   const heroTitle = renderText(landing?.hero?.title)
   const heroSubtitle =
     renderText(landing?.hero?.subtitle) ||
     'Discover how DoDoShark help customers improve throughput and efficiency with real deployments.'
-  const heroStats = landing?.hero?.stats ?? []
-  const caseItems: LandingCardItem[] = cases.map((item) => {
+  const heroStats = (landing?.hero?.stats && landing.hero.stats.length > 0) ? landing.hero.stats : []
+  const casesArray = (cases && cases.length > 0) ? cases : []
+  const caseItems: LandingCardItem[] = casesArray.map((item) => {
     const slug = cleanSlug(item.slug)
 
     return {

@@ -521,7 +521,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound()
   }
 
-  const blocks = (product.contentBlocks ?? []).filter(Boolean)
+  const blocks = (product.contentBlocks && product.contentBlocks.length > 0)
+    ? product.contentBlocks.filter(Boolean)
+    : []
   const renderGroups = groupPageBuilderBlocks(blocks)
   const hasBuilderHero = blocks.some((block) => block._type === 'heroBlock')
   const mainImageSrc = toImageSrc(product.mainImage, 1200)

@@ -1,0 +1,434 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e31] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e32]: Solutions
+        - link "Cases" [ref=e33] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e34]: Cases
+        - link "Vlog" [ref=e35] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e36]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - generic [ref=e48]:
+    - generic [ref=e51]:
+      - img "background" [ref=e52]
+      - generic [ref=e54]:
+        - generic [ref=e56]:
+          - generic [ref=e59]:
+            - button "Previous hero image" [ref=e60]:
+              - img [ref=e61]
+            - button "Next hero image" [ref=e63]:
+              - img [ref=e64]
+            - img "11" [ref=e66]
+          - generic [ref=e67]:
+            - button "Switch hero image 1" [ref=e68]
+            - button "Switch hero image 2" [ref=e70]
+            - button "Switch hero image 3" [ref=e72]
+            - button "Switch hero image 4" [ref=e74]
+        - generic [ref=e77]:
+          - heading "DoDoShark Cast Iron Hammer Mill Grinder" [level=1] [ref=e78]
+          - paragraph [ref=e81]: DoDoShark Hammer Mill Grinder is a mechanical grinding device composed of a high-strength carbon steel housing, alloy hammer blades, wear-resistant liners, and a dynamically balanced rotor, specially designed for the dry Grinding of brittle materials and fibrous materials with medium to low hardness. It is suitable for coarse and fine Grinding of materials such as corn stalks, corn cobs, forage, wood chips, feed pellets, and traditional Chinese medicine raw materials. The particle size can be controlled by changing the screen, typically ranging from 5 to 80 mesh. It is widely used in agriculture, livestock farming, and specific industrial applications. The crusher achieves efficient size reduction through the strong impact, shearing, and grinding action between the high-speed rotating hammer blades and the materials, liners, and screens.
+    - generic [ref=e85]:
+      - heading "DoDoShark Grinder Innovation and Evolution" [level=2] [ref=e88]
+      - generic [ref=e90]:
+        - generic [ref=e92]:
+          - paragraph [ref=e93]: The roller crusher driven by a steam engine first appeared in 1806, with a history of approximately 200 years.
+          - paragraph [ref=e94]: DoDoShark grinder products have undergone over 20 years of development.
+          - paragraph [ref=e95]: DoDoShark’s engineering team includes several experienced engineers with decades of expertise in the grinder industry.
+          - paragraph [ref=e96]: Through continuous innovation, we are revitalizing this traditional industry.
+          - paragraph [ref=e97]: DoDoShark has carried out dozens of product optimizations, particularly in the areas of overall equipment sealing performance, durability, extended service life of screen mesh consumables, gas pipeline sealing reliability, and dust-free workshop processing solutions.
+        - article [ref=e100]:
+          - img "11" [ref=e102]
+    - generic [ref=e106]:
+      - heading "Core advantage of Dodoshark" [level=2] [ref=e109]
+      - generic [ref=e115]:
+        - article [ref=e117]:
+          - img "11" [ref=e119]
+          - generic [ref=e120]:
+            - heading "Ultra-High Production Capacity" [level=3] [ref=e121]
+            - paragraph [ref=e122]: The largest model (60-110) can achieve a capacity of up to 8 tons per hour.
+        - article [ref=e124]:
+          - img "11" [ref=e126]
+          - generic [ref=e127]:
+            - heading "High Performance" [level=3] [ref=e128]
+            - paragraph [ref=e129]: Equipped with high-durability high-speed bearings, supporting continuous operation for up to 12 hours (at ambient temperatures below 25°C)
+        - article [ref=e131]:
+          - img "1" [ref=e133]
+          - generic [ref=e134]:
+            - heading "Premium Structural Materials" [level=3] [ref=e135]
+            - paragraph [ref=e136]: The reinforced Grinding chamber is made of 8–10 mm thick steel plates and comes with a 5-year warranty.
+        - article [ref=e138]:
+          - img "1" [ref=e140]
+          - generic [ref=e141]:
+            - heading "Stable Operation with Reduced Noise" [level=3] [ref=e142]
+            - paragraph [ref=e143]: The hammer frame, hammer blades, and fan impeller are dynamically balanced, reducing operating noise by approximately 30%.
+        - article [ref=e145]:
+          - img "1" [ref=e147]
+          - generic [ref=e148]:
+            - heading "Exceptional Durability" [level=3] [ref=e149]
+            - paragraph [ref=e150]: Carburized hammer blades increase durability by up to three times.
+        - article [ref=e152]:
+          - img "1" [ref=e154]
+          - generic [ref=e155]:
+            - heading "Faster Discharge" [level=3] [ref=e156]
+            - paragraph [ref=e157]: All models are equipped with enlarged fans to provide higher air pressure and greater airflow, enabling faster material discharge.
+    - generic [ref=e160]:
+      - generic [ref=e161]:
+        - heading "Suitable Materials for Grinding" [level=2] [ref=e164]
+        - generic [ref=e168]:
+          - generic [ref=e169]:
+            - heading "Suitable Materials" [level=3] [ref=e170]
+            - generic [ref=e171]:
+              - generic [ref=e172]:
+                - generic [ref=e175]: Short materials
+                - paragraph [ref=e176]: corn, soybean meal, small bones, etc.
+              - generic [ref=e177]:
+                - generic [ref=e180]: Long materials
+                - paragraph [ref=e181]: forage, corn stalks, corn cobs, wood chips, wooden boards, foam plastics, etc.
+              - generic [ref=e182]:
+                - generic [ref=e185]: Wet materials
+                - paragraph [ref=e186]: fresh grass, green stalks, mango pits, kitchen waste, etc.
+          - generic [ref=e187]:
+            - heading "Grinding Options" [level=3] [ref=e188]
+            - generic [ref=e189]:
+              - generic [ref=e190]:
+                - generic [ref=e193]: Raw Material Particle Size Range
+                - paragraph [ref=e194]: 0–10 cm
+              - generic [ref=e195]:
+                - generic [ref=e198]: Optional Screen Mesh Aperture
+                - paragraph [ref=e199]: from 1 mm(finest) to 20 mm(coarsest)
+              - generic [ref=e200]:
+                - generic [ref=e203]: Grinding Fineness
+                - paragraph [ref=e204]: 5–60 mesh (depending on the material)
+      - generic [ref=e206]:
+        - paragraph [ref=e209]: Grinding Results
+        - generic [ref=e214]:
+          - article [ref=e216]:
+            - img "11" [ref=e218]
+            - heading "Corn Stalks/fragment" [level=3] [ref=e220]
+          - article [ref=e222]:
+            - img "11" [ref=e224]
+            - heading "Corn cobs/Crushed Pieces" [level=3] [ref=e226]
+          - article [ref=e228]:
+            - img "11" [ref=e230]
+            - heading "Sweet Potato Vines/Crushed Residue" [level=3] [ref=e232]
+          - article [ref=e234]:
+            - img "11" [ref=e236]
+            - heading "Fresh Grass/Shredded Fragments" [level=3] [ref=e238]
+          - article [ref=e240]:
+            - img "11" [ref=e242]
+            - heading "Foamed Plastic/Small Crushed Pieces" [level=3] [ref=e244]
+          - article [ref=e246]:
+            - img "11" [ref=e248]
+            - heading "Kitchen Waste/Slurry" [level=3] [ref=e250]
+    - generic [ref=e252]:
+      - generic [ref=e253]:
+        - img "111" [ref=e254]
+        - heading "The Types and Features of DoDoShark SUS304 Grinder" [level=2] [ref=e260]
+      - generic [ref=e264]:
+        - heading "Type" [level=3] [ref=e267]
+        - generic [ref=e273]:
+          - article [ref=e275]:
+            - img "1" [ref=e277]
+            - generic [ref=e278]:
+              - heading "Single Grinding Type（with fan）" [level=3] [ref=e279]
+              - paragraph [ref=e280]: Materials Suitable for Grinding:Dry materials,dry granules、 dry forage Number of Inlets:1
+          - article [ref=e282]:
+            - img "Cutting + Grinding Combination Type(with fan)" [ref=e284]
+            - generic [ref=e285]:
+              - heading "Cutting + Grinding Combination Type(with fan)" [level=3] [ref=e286]
+              - paragraph [ref=e287]: Materials Suitable for Grinding:dry and wet materials:Dry granular materials, dry forage, long-stem dry materials; wet grass, wet stalks. Number of Inlets:2
+              - link "View Details" [ref=e288] [cursor=pointer]:
+                - /url: /vlog/Cutting + Grinding Combination Type(with fan)
+                - text: View Details
+                - img [ref=e289]
+          - article [ref=e292]:
+            - img "Single-Grinding Direct Discharge Type(without fan)" [ref=e294]
+            - generic [ref=e295]:
+              - heading "Single-Grinding Direct Discharge Type(without fan)" [level=3] [ref=e296]
+              - paragraph [ref=e297]: "Materials Suitable for Grinding:dry and wet materials,materials with high oil or moisture contenT,wet materials and high-density materials For example: mango pits, kitchen waste, shrimp shells, etc Number of Inlets:1"
+          - article [ref=e299]:
+            - img "1" [ref=e301]
+            - generic [ref=e302]:
+              - heading "Single Grinding High Hopper Type(with fan)" [level=3] [ref=e303]
+              - paragraph [ref=e304]: "Materials Suitable for Grinding:dry materials,loose and fluffy dry forage materials For example: straw, peanut vines, sweet potato vines, garlic leaves, etc. Number of Inlets:1"
+    - generic [ref=e307]:
+      - heading "Configuration Options" [level=2] [ref=e310]
+      - table [ref=e314]:
+        - rowgroup [ref=e315]:
+          - row "Model Corn Capacity(kg/h) Motor Power (kW) Main Shaft Speed (rpm) Number of Hammers Grinding Chamber Wall Thickness (mm)" [ref=e316]:
+            - columnheader "Model" [ref=e317]
+            - columnheader "Corn Capacity(kg/h)" [ref=e318]
+            - columnheader "Motor Power (kW)" [ref=e319]
+            - columnheader "Main Shaft Speed (rpm)" [ref=e320]
+            - columnheader "Number of Hammers" [ref=e321]
+            - columnheader "Grinding Chamber Wall Thickness (mm)" [ref=e322]
+        - rowgroup [ref=e323]:
+          - row "M30-20 400 3 4000 16 3" [ref=e324]:
+            - cell "M30-20" [ref=e325]
+            - cell "400" [ref=e326]
+            - cell "3" [ref=e327]
+            - cell "4000" [ref=e328]
+            - cell "16" [ref=e329]
+            - cell "3" [ref=e330]
+          - row "M40-20 700 7.5 4000 16 4" [ref=e331]:
+            - cell "M40-20" [ref=e332]
+            - cell "700" [ref=e333]
+            - cell "7.5" [ref=e334]
+            - cell "4000" [ref=e335]
+            - cell "16" [ref=e336]
+            - cell "4" [ref=e337]
+          - row "M40-28 1000 11 4000 24 4" [ref=e338]:
+            - cell "M40-28" [ref=e339]
+            - cell "1000" [ref=e340]
+            - cell "11" [ref=e341]
+            - cell "4000" [ref=e342]
+            - cell "24" [ref=e343]
+            - cell "4" [ref=e344]
+          - row "M40-35 1500 15 4000 24 5/8" [ref=e345]:
+            - cell "M40-35" [ref=e346]
+            - cell "1500" [ref=e347]
+            - cell "15" [ref=e348]
+            - cell "4000" [ref=e349]
+            - cell "24" [ref=e350]
+            - cell "5/8" [ref=e351]
+          - row "M50-40 2500 22 3440 24 8" [ref=e352]:
+            - cell "M50-40" [ref=e353]
+            - cell "2500" [ref=e354]
+            - cell "22" [ref=e355]
+            - cell "3440" [ref=e356]
+            - cell "24" [ref=e357]
+            - cell "8" [ref=e358]
+          - row "M50-60 3500 30 3440 32 8" [ref=e359]:
+            - cell "M50-60" [ref=e360]
+            - cell "3500" [ref=e361]
+            - cell "30" [ref=e362]
+            - cell "3440" [ref=e363]
+            - cell "32" [ref=e364]
+            - cell "8" [ref=e365]
+          - row "M50-80 5000 45 2900 48 10" [ref=e366]:
+            - cell "M50-80" [ref=e367]
+            - cell "5000" [ref=e368]
+            - cell "45" [ref=e369]
+            - cell "2900" [ref=e370]
+            - cell "48" [ref=e371]
+            - cell "10" [ref=e372]
+          - row "M60-60 5000 45 2900 36 10" [ref=e373]:
+            - cell "M60-60" [ref=e374]
+            - cell "5000" [ref=e375]
+            - cell "45" [ref=e376]
+            - cell "2900" [ref=e377]
+            - cell "36" [ref=e378]
+            - cell "10" [ref=e379]
+          - row "M60-80 6000 55 2900 56 10" [ref=e380]:
+            - cell "M60-80" [ref=e381]
+            - cell "6000" [ref=e382]
+            - cell "55" [ref=e383]
+            - cell "2900" [ref=e384]
+            - cell "56" [ref=e385]
+            - cell "10" [ref=e386]
+          - row "M60-110 800 75 2900 80 10" [ref=e387]:
+            - cell "M60-110" [ref=e388]
+            - cell "800" [ref=e389]
+            - cell "75" [ref=e390]
+            - cell "2900" [ref=e391]
+            - cell "80" [ref=e392]
+            - cell "10" [ref=e393]
+      - paragraph [ref=e394]: "Model Name Explanation Model Example: Model 50-60 Rotor Outer Diameter D Grinding Chamber Width W. The larger the rotor outer diameter. The wider the Grinding chamber width . A larger Grinding chamber provides more internal space, resulting in higher Grinding efficiency and faster processing speed."
+    - generic [ref=e397]:
+      - heading "Model Reference Diagram" [level=2] [ref=e400]
+      - generic [ref=e406]:
+        - 'button "Type 1: Classic Single-Grinding Model" [pressed] [ref=e408]'
+        - 'button "Type 2: Cutting & Grinding Combination Model" [ref=e410]'
+        - 'button "Type 3: Single-Grinding Direct Discharge Model" [ref=e412]'
+        - 'button "Type 4: Single-Grinding High Hopper Model" [ref=e414]'
+      - generic [ref=e418]:
+        - article [ref=e420]:
+          - img "Model 30-20(铁锤片）" [ref=e422]
+          - heading "Model 30-20" [level=3] [ref=e423]
+        - article [ref=e425]:
+          - img "Model 40-20" [ref=e427]
+          - heading "Model 40-20" [level=3] [ref=e428]
+        - article [ref=e430]:
+          - img "Model 40-28" [ref=e432]
+          - heading "Model 40-28" [level=3] [ref=e433]
+        - article [ref=e435]:
+          - img "1" [ref=e437]
+          - heading "Model 40-35" [level=3] [ref=e438]
+        - article [ref=e440]:
+          - img "Model 50-40" [ref=e442]
+          - heading "Model 50-40" [level=3] [ref=e443]
+        - article [ref=e445]:
+          - img "Model 50-60" [ref=e447]
+          - heading "Model 50-60" [level=3] [ref=e448]
+        - article [ref=e450]:
+          - img "Model 50-80" [ref=e452]
+          - heading "Model 50-80" [level=3] [ref=e453]
+        - article [ref=e455]:
+          - img "Model 60-80" [ref=e457]
+          - heading "Model 60-80" [level=3] [ref=e458]
+        - article [ref=e460]:
+          - img "Model 60-110" [ref=e462]
+          - heading "Model 60-110" [level=3] [ref=e463]
+      - paragraph [ref=e464]: Larger models can be customized according to customer requirements.
+    - generic [ref=e467]:
+      - heading "Dust-Free Production Solutions" [level=2] [ref=e470]
+      - generic [ref=e472]:
+        - generic [ref=e475]:
+          - article [ref=e477]:
+            - img "11" [ref=e479]
+            - heading "Low-Cost Dual Bag Dust Collection Solution" [level=3] [ref=e481]
+          - article [ref=e483]:
+            - img "11" [ref=e485]
+            - heading "Airlock Valve + Multi-Bag Dust Collection System" [level=3] [ref=e487]
+          - article [ref=e489]:
+            - img "11" [ref=e491]
+            - heading "Pulse dust collector + rotary airlock discharge (high-end solution)" [level=3] [ref=e493]
+        - generic [ref=e494]:
+          - generic [ref=e496]:
+            - button "Previous showcase" [disabled] [ref=e497]:
+              - img [ref=e498]
+            - button "Next showcase" [ref=e500]:
+              - img [ref=e501]
+          - link "Just to see more" [ref=e503] [cursor=pointer]:
+            - /url: https://www.youtube.com/watch?v=dlpIpUD6Y60
+            - text: Just to see more
+            - img [ref=e504]
+    - generic [ref=e508]:
+      - heading "Videos to Learn About the Product" [level=2] [ref=e511]
+      - generic [ref=e514]:
+        - button "Previous videos" [disabled] [ref=e515]:
+          - img [ref=e516]
+        - button "Next videos" [ref=e518]:
+          - img [ref=e519]
+        - generic [ref=e522]:
+          - article [ref=e524]:
+            - img "11" [ref=e526]
+            - heading "DoDoShark Production Base" [level=3] [ref=e528]
+          - article [ref=e530]:
+            - img "11" [ref=e532]
+            - heading "Hammer Frame, Hammer Blades, and Liners" [level=3] [ref=e534]
+          - article [ref=e536]:
+            - img "11" [ref=e538]
+            - heading "Dust Collection Production Line" [level=3] [ref=e540]
+          - article [ref=e542]:
+            - img "11" [ref=e544]
+            - heading "Grinding Corn Cobs" [level=3] [ref=e546]
+          - article [ref=e548]:
+            - img "11" [ref=e550]
+            - heading "Grinding Corn Stalks" [level=3] [ref=e552]
+          - article [ref=e554]:
+            - img "11" [ref=e556]
+            - heading "Grinding Rapeseed Stalks" [level=3] [ref=e558]
+      - link "View More" [ref=e560] [cursor=pointer]:
+        - /url: "#"
+        - text: View More
+        - img [ref=e561]
+  - contentinfo [ref=e563]:
+    - generic [ref=e564]:
+      - generic [ref=e565]:
+        - region "DoDoShark" [ref=e566]:
+          - paragraph [ref=e567]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e568]
+          - paragraph [ref=e570]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e571]:
+            - listitem [ref=e572]:
+              - img [ref=e574]
+              - generic [ref=e576]:
+                - generic [ref=e577]: Phone
+                - link "+86 19941519694" [ref=e580] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e581]:
+              - img [ref=e583]
+              - generic [ref=e585]:
+                - generic [ref=e586]: Website
+                - link "www.dodoshark.com" [ref=e589] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e590]:
+              - img [ref=e592]
+              - generic [ref=e594]:
+                - generic [ref=e595]: Email
+                - generic [ref=e596]:
+                  - link "sales@dodoshark.com" [ref=e598] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e600] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e601]:
+          - paragraph [ref=e602]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e603]
+          - list [ref=e605]:
+            - listitem [ref=e606]:
+              - img [ref=e608]
+              - paragraph [ref=e612]: Customers cover 1,000+ cities across China
+            - listitem [ref=e613]:
+              - img [ref=e615]
+              - paragraph [ref=e619]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e620]:
+              - img [ref=e622]
+              - paragraph [ref=e626]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e627]:
+          - paragraph [ref=e628]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e629]
+          - generic [ref=e631]:
+            - link "Facebook" [ref=e632] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e634]
+            - link "X" [ref=e636] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e638]
+            - link "TikTok" [ref=e640] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e642]
+            - link "YouTube" [ref=e644] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e646]
+          - generic "Worldwide customer distribution map" [ref=e648]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e649]:
+        - generic [ref=e650]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e651]:
+          - link "Terms of Service" [ref=e653] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e654]:
+            - generic [ref=e655]: "|"
+            - link "Privacy Policy" [ref=e656] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e662] [cursor=pointer]:
+    - img [ref=e663]

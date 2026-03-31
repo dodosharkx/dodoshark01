@@ -132,80 +132,6 @@ async function getSupportPageData(stega?: boolean) {
   })
 }
 
-
-const SERVICE_STAGES: ServiceStage[] = [
-  {
-    id: '01',
-    phase: 'Pre-Sales',
-    title: 'Solution Co-creation & Professional Selection',
-    description:
-      'Beyond selling equipment, we guarantee results. Through deep research into material properties, capacity requirements, and site conditions, we output precision analysis reports to anchor your efficiency targets.',
-    features: [
-      'Full-Dimensional Deep Research',
-      'Customized Process Solutions',
-      'Free Trial Production & Optimization',
-      'Transparent Efficiency Modeling',
-    ],
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-        />
-      </svg>
-    ),
-    imageKey: 'preSalesStageImage' as const,
-    fallbackImageSrc: '/assets/images/about/support-hero.jpg',
-  },
-  {
-    id: '02',
-    phase: 'Mid-Sales',
-    title: 'Precise Implementation & Efficiency Delivery',
-    description:
-      'A seamless transfer of knowledge and technology. All equipment undergoes 12-hour factory stress tests of core components and full-system assembly trails to ensure stability before arrival.',
-    features: [
-      '12h Factory Performance Test',
-      'Professional Export Packaging',
-      'Technical Documentation Transfer',
-      '30-Day Priority Response Support',
-    ],
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-        />
-      </svg>
-    ),
-    imageKey: 'midSalesStageImage' as const,
-    fallbackImageSrc: '/assets/images/about/dust-control.png',
-  },
-  {
-    id: '03',
-    phase: 'After-Sales',
-    title: 'Lifelong Service & Continuous Optimization',
-    description:
-      'Beyond standard maintenance, we safeguard your full lifecycle efficiency. This includes remote guidance for technical challenges, 3-year core warranty, and annual reviews to identify upgrade potential.',
-    features: [
-      '3-Year Core Component Warranty',
-      'Annual Efficiency Review & Upgrade',
-      'Ongoing Technical Empowerment',
-      'Rapid Maintenance Support',
-    ],
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-    imageKey: 'afterSalesStageImage' as const,
-    fallbackImageSrc: '/assets/images/about/join-us.jpg',
-  },
-]
-
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getSupportPageData(false)
   return buildPageMetadata({
@@ -228,12 +154,13 @@ export default async function SupportPage() {
   const urgentAssistanceDescription =
     renderText(pageData?.urgentAssistance?.description) ||
     'Our global technical response team is on standby to help you resolve equipment issues, order spare parts, or schedule an efficiency audit.'
-  const parsedStats = pageData?.stats?.map((stat) => {
+  const rawStats = (pageData?.stats && pageData.stats.length > 0) ? pageData.stats : []
+  const parsedStats = rawStats.map((stat) => {
     const label = renderText(stat?.label)
     const value = renderText(stat?.value)
     if (!label || !value) return null
     return { label, val: value }
-  }).filter((item): item is { label: string; val: string } => Boolean(item)) ?? []
+  }).filter((item): item is { label: string; val: string } => Boolean(item))
   const stats = (parsedStats && parsedStats.length > 0) ? parsedStats : [
     { label: 'Core Component Warranty', val: '3 Years' },
     { label: 'Technical Response Time', val: '24/7' },
@@ -242,22 +169,43 @@ export default async function SupportPage() {
   ]
   const serviceEyebrow = renderText(pageData?.serviceIntro?.eyebrow) || 'Value Co-Creation'
   const serviceTitle = renderText(pageData?.serviceIntro?.title) || 'Full-Lifecycle Efficiency Empowerment'
-  const serviceStages: ServiceStage[] = SERVICE_STAGES.map((fallback, index) => {
-    const cmsStage = pageData?.serviceStages?.[index]
-    if (!cmsStage) return fallback
 
-    return {
-      ...fallback,
-      id: renderText(cmsStage.id) || fallback.id,
-      phase: renderText(cmsStage.phase) || fallback.phase,
-      title: renderText(cmsStage.title) || fallback.title,
-      description: renderText(cmsStage.description) || fallback.description,
-      features: (cmsStage.features && cmsStage.features.length > 0)
-        ? cmsStage.features.map(f => renderText(f)).filter((f): f is string => Boolean(f))
-        : fallback.features,
-      image: cmsStage.image
-    }
-  })
+  const serviceStages = (pageData?.serviceStages && pageData.serviceStages.length > 0)
+    ? pageData.serviceStages.map((stage, index) => {
+        const icons = [
+          (
+            <svg key="01" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          ),
+          (
+            <svg key="02" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+          ),
+          (
+            <svg key="03" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          )
+        ]
+
+        return {
+          id: renderText(stage.id) || `0${index + 1}`,
+          phase: renderText(stage.phase) || 'Service Stage',
+          title: renderText(stage.title) || 'Service Details',
+          description: renderText(stage.description) || '',
+          features: (stage.features && stage.features.length > 0)
+            ? stage.features.map(f => renderText(f)).filter((f): f is string => Boolean(f))
+            : [],
+          image: stage.image,
+          imageKey: 'preSalesStageImage' as const,
+          fallbackImageSrc: '/assets/images/about/support-hero.jpg',
+          icon: icons[index] || icons[0]
+        }
+      })
+    : []
+
   const hotlineLabel = renderText(pageData?.urgentAssistance?.hotlineLabel) || '24/7 Hotline'
   const hotlineValue = renderText(pageData?.urgentAssistance?.hotlineValue) || '+86 19941519694'
   const salesLabel = renderText(pageData?.urgentAssistance?.salesLabel) || 'Sales'

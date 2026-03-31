@@ -139,14 +139,18 @@ export default async function SolutionsPage({ searchParams }: SolutionsPageProps
     }),
   ])
 
-  const configuredCategories = landing?.solutionCategories?.filter((item) => cleanSlug(item?.slug)) ?? []
-  const categories = configuredCategories.length > 0 ? configuredCategories : fallbackCategories
+  const configuredCategories = (landing?.solutionCategories && landing.solutionCategories.length > 0)
+    ? landing.solutionCategories.filter((item) => cleanSlug(item?.slug))
+    : []
+  const categories = configuredCategories.length > 0 ? configuredCategories : (fallbackCategories && fallbackCategories.length > 0 ? fallbackCategories : [])
   const heroImageSrc = toImageSrc(landing?.hero?.image, 1800)
   const heroBadge = renderText(landing?.hero?.badge)
   const heroTitle = renderText(landing?.hero?.title)
   const heroSubtitle =
     renderText(landing?.hero?.subtitle) || 'Discover proven process flows for different materials and industries.'
-  const solutionItems: LandingCardItem[] = solutions.map((item) => {
+
+  const solutionsArray = (solutions && solutions.length > 0) ? solutions : []
+  const solutionItems: LandingCardItem[] = solutionsArray.map((item) => {
     const slug = cleanSlug(item.slug)
 
     return {

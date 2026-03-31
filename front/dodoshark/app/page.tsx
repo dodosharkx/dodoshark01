@@ -19,6 +19,12 @@ import { type HeroCarouselImage } from '@/components/home/HeroCarousel'
 import HeroTitle from '@/components/ui/HeroTitle'
 import ViewDetailsLink from '@/components/ui/ViewDetailsLink'
 import CMSImage from '@/components/ui/CMSImage'
+import {
+  TRUST_METRICS,
+  ABOUT_FEATURES,
+  CHOOSE_CONFIDENCE_CARDS,
+  MVP_CATEGORIES,
+} from '@/app/lib/mvp-data'
 
 type HomeSanityImage = SanityImage & {
   imageUrl?: string
@@ -501,21 +507,23 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const data = await getHomePageData(true)
 
-  const heroSlides: HeroCarouselImage[] = (data?.heroBackgrounds ?? [])
-    .map((image, index): HeroCarouselImage | null => {
-      const src = getSanityImageUrl(image, { width: 1920 })
-      if (!src) return null
-      return {
-        src,
-        alt: image.alt || `DoDoShark hero ${index + 1}`,
-        sanityImage: image,
-      } as HeroCarouselImage
-    })
-    .filter((item): item is HeroCarouselImage => item !== null)
+  const heroSlidesParsed: HeroCarouselImage[] = (data?.heroBackgrounds && data.heroBackgrounds.length > 0)
+    ? data.heroBackgrounds
+        .map((image, index): HeroCarouselImage | null => {
+          const src = getSanityImageUrl(image, { width: 1920 })
+          if (!src) return null
+          return {
+            src,
+            alt: image.alt || `DoDoShark hero ${index + 1}`,
+            sanityImage: image,
+          } as HeroCarouselImage
+        })
+        .filter((item): item is HeroCarouselImage => item !== null)
+    : []
 
-  const fallbackHeroSlides =
-    heroSlides.length > 0
-      ? heroSlides
+  const heroSlides =
+    heroSlidesParsed.length > 0
+      ? heroSlidesParsed
       : [{ src: '/assets/images/banner.png', alt: 'DoDoShark factory banner' }]
 
   const heroVideoUrl = cleanText(data?.whyChooseUsVideoUrl)
@@ -526,28 +534,46 @@ export default async function HomePage() {
   const whyChooseUsCoverImageAlt = hasSanityImageAsset(data?.whyChooseUsVideoCoverImage)
     ? renderText(data?.whyChooseUsVideoCoverImage?.alt) || 'DoDoShark Factory Video'
     : 'DoDoShark Factory Video'
-  const parsedStats = data?.stats
-    ?.map((item) => {
-      const label = renderText(item?.label)
-      const value = renderText(item?.value)
-      if (!label || !value) return null
-      return {
-        label,
-        value,
-        suffix: renderText(item?.suffix) || '',
-      }
-    })
-    .filter(isDefined) ?? []
-  const homeStats = parsedStats
-  const homeAboutFeatures: HomeAboutFeature[] = data?.aboutFeatures
-    ?.map((item) => {
-      const title = renderText(item?.title)
-      const description = renderText(item?.description)
-      const image = getSanityImageUrl(item?.image, { width: 256 })
-      if (!title || !description || !image) return null
-      return { title, description, image, sanityImage: item.image }
-    })
-    .filter(isDefined) ?? []
+
+  const parsedStats = (data?.stats && data.stats.length > 0)
+    ? data.stats
+        .map((item) => {
+          const label = renderText(item?.label)
+          const value = renderText(item?.value)
+          if (!label || !value) return null
+          return {
+            label,
+            value,
+            suffix: renderText(item?.suffix) || '',
+          }
+        })
+        .filter(isDefined)
+    : []
+
+  const homeStats = parsedStats.length > 0
+    ? parsedStats
+    : TRUST_METRICS.map(m => ({ ...m, suffix: '' }))
+
+  const parsedAboutFeatures: HomeAboutFeature[] = (data?.aboutFeatures && data.aboutFeatures.length > 0)
+    ? data.aboutFeatures
+        .map((item) => {
+          const title = renderText(item?.title)
+          const description = renderText(item?.description)
+          const image = getSanityImageUrl(item?.image, { width: 256 })
+          if (!title || !description || !image) return null
+          return { title, description, image, sanityImage: item.image }
+        })
+        .filter(isDefined)
+    : []
+
+  const homeAboutFeatures = parsedAboutFeatures.length > 0
+    ? parsedAboutFeatures
+    : ABOUT_FEATURES.map(f => ({
+        title: f.title,
+        description: f.description,
+        image: '/assets/images/factory-showcase.png', // Fallback icon/image
+        sanityImage: undefined,
+      }))
 
   const confidenceTitleLineOne = renderText(data?.confidenceSection?.titleLineOne) || 'Choose DodoShark'
   const confidenceTitleLineTwo = renderText(data?.confidenceSection?.titleLineTwo) || 'Choose Confidence'
@@ -555,41 +581,61 @@ export default async function HomePage() {
     renderText(data?.confidenceSection?.description) ||
     'DoDoShark practices "Carefree Production, Joyful Harvest" through innovation and high quality.'
 
-  const homeConfidenceCards: HomeConfidenceCard[] = data?.confidenceSection?.cards
-    ?.map((card) => {
-      const title = renderText(card?.title)
-      const subtitle = renderText(card?.subtitle)
-      const image = getSanityImageUrl(card?.image, { width: 1200 })
-      if (!title || !subtitle || !image) return null
-      return {
-        title,
-        subtitle,
-        points: (card?.points ?? []).map((point) => renderText(point)).filter(isDefined),
-        image,
-        sanityImage: card.image,
-      }
-    })
-    .filter(isDefined) ?? []
+  const parsedConfidenceCards: HomeConfidenceCard[] = (data?.confidenceSection?.cards && data.confidenceSection.cards.length > 0)
+    ? data.confidenceSection.cards
+        .map((card) => {
+          const title = renderText(card?.title)
+          const subtitle = renderText(card?.subtitle)
+          const image = getSanityImageUrl(card?.image, { width: 1200 })
+          if (!title || !subtitle || !image) return null
+          return {
+            title,
+            subtitle,
+            points: (card?.points && card.points.length > 0)
+              ? card.points.map((point) => renderText(point)).filter(isDefined)
+              : [],
+            image,
+            sanityImage: card.image,
+          }
+        })
+        .filter(isDefined)
+    : []
 
-  const featuredAgriProducts: HomeProductCard[] =
-    data?.featuredAgriProducts
-      ?.map((product) => {
-        const image = getSanityImageUrl(product.mainImage, { width: 800, height: 800 })
-        if (!image) return null
+  const homeConfidenceCards = parsedConfidenceCards.length > 0
+    ? parsedConfidenceCards
+    : CHOOSE_CONFIDENCE_CARDS.map(c => ({
+        title: c.title,
+        subtitle: c.subtitle,
+        points: c.points,
+        image: c.imagePath,
+        sanityImage: undefined,
+      }))
 
-        return {
-          title: renderText(product.title) || 'Product',
-          description:
-            renderText(product.shortDescription) || 'High performance industrial processing equipment.',
-          image,
-          sanityImage: product.mainImage,
-          href: buildDetailHref('/products', product.slug),
-          badge: renderText(product.seriesTag)
-            ? { label: renderText(product.seriesTag)!, className: 'bg-orange-500' }
-            : undefined,
-        }
-      })
-      .filter(isDefined) ?? []
+  const featuredAgriProducts: HomeProductCard[] = (data?.featuredAgriProducts && data.featuredAgriProducts.length > 0)
+    ? data.featuredAgriProducts
+        .map((product) => {
+          const image = getSanityImageUrl(product.mainImage, { width: 800, height: 800 })
+          if (!image) return null
+
+          return {
+            title: renderText(product.title) || 'Product',
+            description:
+              renderText(product.shortDescription) || 'High performance industrial processing equipment.',
+            image,
+            sanityImage: product.mainImage,
+            href: buildDetailHref('/products', product.slug),
+            badge: renderText(product.seriesTag)
+              ? { label: renderText(product.seriesTag)!, className: 'bg-orange-500' }
+              : undefined,
+          }
+        })
+        .filter(isDefined)
+    : MVP_CATEGORIES.slice(0, 3).map(cat => ({
+        title: cat.name,
+        description: cat.description,
+        image: cat.mainImage.src,
+        href: `/products/${cat.slug}`,
+      }))
   const featuredFoodProducts: HomeProductCard[] =
     data?.featuredFoodProducts
       ?.map((product) => {
@@ -680,7 +726,7 @@ export default async function HomePage() {
   return (
     <main className="bg-white text-slate-700">
       <section className="relative flex min-h-[620px] items-center overflow-hidden md:min-h-[700px] xl:-mt-[72px] xl:pt-[72px]">
-        <DeferredHeroCarousel images={fallbackHeroSlides} autoplayMs={5500} pauseOnHover showDots showArrows />
+        <DeferredHeroCarousel images={heroSlides} autoplayMs={5500} pauseOnHover showDots showArrows />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] hidden h-[220px] bg-gradient-to-b from-slate-950/68 via-slate-950/34 to-transparent xl:block" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/35 to-transparent" />
 

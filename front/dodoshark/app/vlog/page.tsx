@@ -169,14 +169,18 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
     }),
   ])
 
-  const configuredTags = landing?.tagFilters?.filter((item) => cleanSlug(item?.slug)) ?? []
-  const tags = configuredTags.length > 0 ? configuredTags : fallbackTags
+  const configuredTags = (landing?.tagFilters && landing.tagFilters.length > 0)
+    ? landing.tagFilters.filter((item) => cleanSlug(item?.slug))
+    : []
+  const tags = configuredTags.length > 0 ? configuredTags : (fallbackTags && fallbackTags.length > 0 ? fallbackTags : [])
   const heroImageSrc = toImageSrc(landing?.hero?.image, 1800)
   const heroBadge = renderText(landing?.hero?.badge)
   const heroTitle = renderText(landing?.hero?.title)
   const heroSubtitle =
     renderText(landing?.hero?.subtitle) || 'Product demonstrations, processing materials, integrated solutions, customer usage scenarios, etc.'
-  const videoItems: VlogVideoCardItem[] = posts.map((post) => ({
+
+  const postsArray = (posts && posts.length > 0) ? posts : []
+  const videoItems: VlogVideoCardItem[] = postsArray.map((post) => ({
     id: post._id,
     title: renderText(post.title) || 'Video',
     excerpt: renderText(post.excerpt) || 'Watch the full video for equipment demos and process highlights.',

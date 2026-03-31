@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show *)",
+      "Bash(pip install *)",
+      "Bash(python *)",
+      "Bash(d:\\python312\\python.exe *)",
+      "Bash(dir *)"
+    ]
+  },
+  "$version": 3
+}

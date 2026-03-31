@@ -1,0 +1,280 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e31] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e32]: Solutions
+        - link "Cases" [ref=e33] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e34]: Cases
+        - link "Vlog" [ref=e35] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e36]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - img "Products Hero" [ref=e50]
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - img [ref=e55]
+          - generic [ref=e58]: Product Catalog
+        - heading "Product Center" [level=1] [ref=e59]
+        - paragraph [ref=e60]: Find the right processing machine line for your production needs.
+    - generic [ref=e62]:
+      - generic [ref=e64]:
+        - link "All Machines" [ref=e65] [cursor=pointer]:
+          - /url: /products
+        - link "Agri Processing Machinery" [ref=e66] [cursor=pointer]:
+          - /url: /products?category=agri-processing-machinery
+        - link "Food Processing Machinery" [ref=e67] [cursor=pointer]:
+          - /url: /products?category=food-processing-machinery
+      - generic [ref=e68]:
+        - article [ref=e69]:
+          - link "View Details - Commercial Fully Enclosed Silent Dough Mixer" [ref=e70] [cursor=pointer]:
+            - /url: /products/Commercial-Dough-Mixer-Fully-Enclosed-Model
+            - generic [ref=e71]: View Details - Commercial Fully Enclosed Silent Dough Mixer
+          - img "Commercial Fully Enclosed Silent Dough Mixer" [ref=e73]
+          - generic [ref=e74]:
+            - generic "Food processing machinery" [ref=e76]:
+              - generic [ref=e78]: Food processing machinery
+            - heading "Commercial Fully Enclosed Silent Dough Mixer" [level=3] [ref=e79]
+            - paragraph [ref=e80]: Commercial Fully Enclosed Silent Dough Mixer is a food processing appliance featuring a high-toughness stainless steel dough chamber, solid stainless steel auger, and sealed silent transmission structure
+            - generic [ref=e82]:
+              - text: View Details
+              - img [ref=e83]
+        - article [ref=e85]:
+          - link "View Details - DoDoShark Small SUS304 Grinder" [ref=e86] [cursor=pointer]:
+            - /url: /products/Compact-SUS304-Grinder-150Mesh
+            - generic [ref=e87]: View Details - DoDoShark Small SUS304 Grinder
+          - img "SUS304 Small Grinder" [ref=e89]
+          - generic [ref=e90]:
+            - generic "Food processing machinery" [ref=e92]:
+              - generic [ref=e94]: Food processing machinery
+            - heading "DoDoShark Small SUS304 Grinder" [level=3] [ref=e95]
+            - paragraph [ref=e96]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e98]:
+              - text: View Details
+              - img [ref=e99]
+        - article [ref=e101]:
+          - link "View Details - Home Fresh Rice Mill" [ref=e102] [cursor=pointer]:
+            - /url: /products/Home-Use-Rice-Mill
+            - generic [ref=e103]: View Details - Home Fresh Rice Mill
+          - img "Home Fresh Rice Mill" [ref=e105]
+          - generic [ref=e106]:
+            - generic "Food processing machinery" [ref=e108]:
+              - generic [ref=e110]: Food processing machinery
+            - heading "Home Fresh Rice Mill" [level=3] [ref=e111]
+            - paragraph [ref=e112]: Home Fresh Rice Mill is a grain processing appliance featuring wear-resistant stainless steel rollers, a sealed milling chamber and a screening and separation mechanism.
+            - generic [ref=e114]:
+              - text: View Details
+              - img [ref=e115]
+        - article [ref=e117]:
+          - link "View Details - Agricultural Double Roller Crusher" [ref=e118] [cursor=pointer]:
+            - /url: /products/Iron-Dual-Roller-Crusher
+            - generic [ref=e119]: View Details - Agricultural Double Roller Crusher
+          - img "SUS304 Grinder" [ref=e121]
+          - generic [ref=e122]:
+            - generic "Agri processing machinery" [ref=e124]:
+              - generic [ref=e126]: Agri processing machinery
+            - heading "Agricultural Double Roller Crusher" [level=3] [ref=e127]
+            - paragraph [ref=e128]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e130]:
+              - text: View Details
+              - img [ref=e131]
+        - article [ref=e133]:
+          - link "View Details - SUS304Tooth-Claw Grinder Bottom-Box Type" [ref=e134] [cursor=pointer]:
+            - /url: /products/SUS304-Claw-Type-Grinder-Box-Type-Model
+            - generic [ref=e135]: View Details - SUS304Tooth-Claw Grinder Bottom-Box Type
+          - img "SUS304 Grinder" [ref=e137]
+          - generic [ref=e138]:
+            - generic "Agri processing machinery" [ref=e140]:
+              - generic [ref=e142]: Agri processing machinery
+            - heading "SUS304Tooth-Claw Grinder Bottom-Box Type" [level=3] [ref=e143]
+            - paragraph [ref=e144]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e146]:
+              - text: View Details
+              - img [ref=e147]
+        - article [ref=e149]:
+          - link "View Details - Large Stainless Steel Drum Mixer" [ref=e150] [cursor=pointer]:
+            - /url: /products/Stainless-Steel-Tumbling-Mixer
+            - generic [ref=e151]: View Details - Large Stainless Steel Drum Mixer
+          - img "SUS304 Mixer" [ref=e153]
+          - generic [ref=e154]:
+            - generic "Agri processing machinery" [ref=e156]:
+              - generic [ref=e158]: Agri processing machinery
+            - heading "Large Stainless Steel Drum Mixer" [level=3] [ref=e159]
+            - paragraph [ref=e160]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e162]:
+              - text: View Details
+              - img [ref=e163]
+        - article [ref=e165]:
+          - link "View Details - Commercial Silent Dough Mixer" [ref=e166] [cursor=pointer]:
+            - /url: /products/commercial-silent-dough-mixer
+            - generic [ref=e167]: View Details - Commercial Silent Dough Mixer
+          - img "Commercial Silent Dough Mixer" [ref=e169]
+          - generic [ref=e170]:
+            - generic "Machine" [ref=e172]:
+              - generic [ref=e174]: Machine
+            - heading "Commercial Silent Dough Mixer" [level=3] [ref=e175]
+            - paragraph [ref=e176]: High performance industrial processing equipment.
+            - generic [ref=e178]:
+              - text: View Details
+              - img [ref=e179]
+        - article [ref=e181]:
+          - link "View Details - DoDoShark Commercial Sugarcane Juicer" [ref=e182] [cursor=pointer]:
+            - /url: /products/Commercial-Sugarcane-Juicer
+            - generic [ref=e183]: View Details - DoDoShark Commercial Sugarcane Juicer
+          - img "Dodoshark Commercial Sugarcane Juicer - Premium Industrial Model" [ref=e185]
+          - generic [ref=e186]:
+            - generic "Food processing machinery" [ref=e188]:
+              - generic [ref=e190]: Food processing machinery
+            - heading "DoDoShark Commercial Sugarcane Juicer" [level=3] [ref=e191]
+            - paragraph [ref=e192]: Daoshark commercial sugarcane juicer product page rebuilt strictly from the outline with 7 one-to-one product sections.
+            - generic [ref=e194]:
+              - text: View Details
+              - img [ref=e195]
+        - article [ref=e197]:
+          - link "View Details - Cast Iron Hammer Mill Grinder" [ref=e198] [cursor=pointer]:
+            - /url: /products/Iron-Hammer-Mill-Crusher
+            - generic [ref=e199]: View Details - Cast Iron Hammer Mill Grinder
+          - img "SUS304 Grinder" [ref=e201]
+          - generic [ref=e202]:
+            - generic "Agri processing machinery" [ref=e204]:
+              - generic [ref=e206]: Agri processing machinery
+            - heading "Cast Iron Hammer Mill Grinder" [level=3] [ref=e207]
+            - paragraph [ref=e208]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e210]:
+              - text: View Details
+              - img [ref=e211]
+        - article [ref=e213]:
+          - link "View Details - SUS304 Grinder (Stand-mounted Models and Production Lines)" [ref=e214] [cursor=pointer]:
+            - /url: /products/SUS304-Claw-Type-Grinder-Stand-Type-Model
+            - generic [ref=e215]: View Details - SUS304 Grinder (Stand-mounted Models and Production Lines)
+          - img "SUS304 Grinder" [ref=e217]
+          - generic [ref=e218]:
+            - generic "Agri processing machinery" [ref=e220]:
+              - generic [ref=e222]: Agri processing machinery
+            - heading "SUS304 Grinder (Stand-mounted Models and Production Lines)" [level=3] [ref=e223]
+            - paragraph [ref=e224]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e226]:
+              - text: View Details
+              - img [ref=e227]
+        - article [ref=e229]:
+          - link "View Details - Cast Iron Tooth-Claw Grinder" [ref=e230] [cursor=pointer]:
+            - /url: /products/Cast-Iron-Claw-Type-Grinder
+            - generic [ref=e231]: View Details - Cast Iron Tooth-Claw Grinder
+          - img "SUS304 Grinder" [ref=e233]
+          - generic [ref=e234]:
+            - generic "Agri processing machinery" [ref=e236]:
+              - generic [ref=e238]: Agri processing machinery
+            - heading "Cast Iron Tooth-Claw Grinder" [level=3] [ref=e239]
+            - paragraph [ref=e240]: For food, herbs, and corrosive materials. Dust-free, fineness up to 10-150 mesh.
+            - generic [ref=e242]:
+              - text: View Details
+              - img [ref=e243]
+  - contentinfo [ref=e245]:
+    - generic [ref=e246]:
+      - generic [ref=e247]:
+        - region "DoDoShark" [ref=e248]:
+          - paragraph [ref=e249]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e250]
+          - paragraph [ref=e252]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e253]:
+            - listitem [ref=e254]:
+              - img [ref=e256]
+              - generic [ref=e258]:
+                - generic [ref=e259]: Phone
+                - link "+86 19941519694" [ref=e262] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e263]:
+              - img [ref=e265]
+              - generic [ref=e267]:
+                - generic [ref=e268]: Website
+                - link "www.dodoshark.com" [ref=e271] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e272]:
+              - img [ref=e274]
+              - generic [ref=e276]:
+                - generic [ref=e277]: Email
+                - generic [ref=e278]:
+                  - link "sales@dodoshark.com" [ref=e280] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e282] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e283]:
+          - paragraph [ref=e284]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e285]
+          - list [ref=e287]:
+            - listitem [ref=e288]:
+              - img [ref=e290]
+              - paragraph [ref=e294]: Customers cover 1,000+ cities across China
+            - listitem [ref=e295]:
+              - img [ref=e297]
+              - paragraph [ref=e301]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e302]:
+              - img [ref=e304]
+              - paragraph [ref=e308]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e309]:
+          - paragraph [ref=e310]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e311]
+          - generic [ref=e313]:
+            - link "Facebook" [ref=e314] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e316]
+            - link "X" [ref=e318] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e320]
+            - link "TikTok" [ref=e322] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e324]
+            - link "YouTube" [ref=e326] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e328]
+          - generic "Worldwide customer distribution map" [ref=e330]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e331]:
+        - generic [ref=e332]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e333]:
+          - link "Terms of Service" [ref=e335] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e336]:
+            - generic [ref=e337]: "|"
+            - link "Privacy Policy" [ref=e338] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e344] [cursor=pointer]:
+    - img [ref=e345]
