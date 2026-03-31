@@ -1,41 +1,37 @@
 import {createImageUrlBuilder} from '@sanity/image-url'
 import {createClient} from 'next-sanity'
 
-function normalizeUrl(value?: string) {
-  return value?.trim().replace(/\/+$/, '')
-}
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim() || 'nljl95h9'
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET?.trim() || 'production'
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION?.trim() || '2024-01-01'
-const defaultStudioUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://dodoshark.sanity.studio'
-    : 'http://localhost:3333'
-export const studioUrl =
-  normalizeUrl(process.env.NEXT_PUBLIC_SANITY_STUDIO_URL) || defaultStudioUrl
+import {
+  SANITY_PROJECT_ID,
+  SANITY_DATASET,
+  SANITY_API_VERSION,
+  SANITY_STUDIO_URL,
+  SANITY_API_READ_TOKEN,
+} from '@/app/lib/env'
+
+export const studioUrl = SANITY_STUDIO_URL
 
 export const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
+  projectId: SANITY_PROJECT_ID,
+  dataset: SANITY_DATASET,
+  apiVersion: SANITY_API_VERSION,
   useCdn: true,
   stega: {
     studioUrl,
   },
 })
 
-const envKey = 'SANITY_API_READ_TOKEN' as string
-const token = process.env[envKey]?.trim()
+const token = SANITY_API_READ_TOKEN
 
 export const previewClient = createClient({
-  projectId,
-  dataset,
-  apiVersion,
+  projectId: SANITY_PROJECT_ID,
+  dataset: SANITY_DATASET,
+  apiVersion: SANITY_API_VERSION,
   useCdn: false,
   token,
   stega: {
-    enabled: true,
+    enabled: true, // Explicitly enable stega for the preview client
     studioUrl,
   },
 })

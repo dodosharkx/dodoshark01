@@ -1,6 +1,6 @@
-// Use dynamic property access to fully bypass Next.js Webpack static compilation
-const envKey = 'SANITY_API_READ_TOKEN' as string
-export const sanityReadToken = process.env[envKey]?.trim()
+import { SANITY_API_READ_TOKEN } from '@/app/lib/env'
+
+export const sanityReadToken = SANITY_API_READ_TOKEN
 
 export function getSanityReadToken() {
   if (!sanityReadToken) {

@@ -344,7 +344,7 @@ export default async function RecruitAgentsPage() {
           <div className="mt-12">
             <Link
               href={heroCtaHref}
-              className="inline-block rounded-full bg-orange-500 px-10 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-xl shadow-orange-500/30 transition-all hover:bg-orange-600"
+              className="inline-block rounded-full bg-orange-500 px-10 py-4 text-sm font-bold tracking-widest text-white shadow-xl shadow-orange-500/30 transition-all hover:bg-orange-600"
             >
               {heroCtaLabel}
             </Link>
@@ -355,7 +355,7 @@ export default async function RecruitAgentsPage() {
       <section className="relative z-20 -mt-16 bg-white py-24 md:rounded-t-[1rem]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-20 text-center">
-            <h2 className="text-3xl font-black uppercase tracking-tight text-slate-900 md:text-4xl">
+            <h2 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
               Choice is Greater Than <span className="text-orange-500">Effort</span>
             </h2>
             <div className="mx-auto mt-4 h-1.5 w-24 rounded-full bg-orange-500" />
@@ -364,12 +364,12 @@ export default async function RecruitAgentsPage() {
             {whyChooseUs.map((item) => (
               <div
                 key={item.title}
-                className="group rounded-xl border border-slate-200 bg-slate-50 p-8 shadow-xl transition-all duration-300 hover:border-orange-500"
+                className="group flex flex-col items-center text-center rounded-xl border border-slate-200 bg-slate-50 p-8 shadow-xl transition-all duration-300 hover:border-orange-500"
               >
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg transition-colors group-hover:bg-orange-500">
                   {item.icon}
                 </div>
-                <h3 className="mb-4 text-xl font-black uppercase tracking-tight text-slate-900">
+                <h3 className="mb-4 text-xl font-black tracking-tight text-slate-900">
                   {item.title}
                 </h3>
                 <p className="text-sm font-light leading-relaxed text-slate-600">
@@ -385,7 +385,7 @@ export default async function RecruitAgentsPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-16 lg:flex-row">
             <div className="w-full lg:w-1/2">
-              <h2 className="mb-6 text-3xl font-black uppercase tracking-tight">{scopeTitle}</h2>
+              <h2 className="mb-6 text-3xl font-black tracking-tight">{scopeTitle}</h2>
               <p className="mb-10 text-lg font-light leading-relaxed text-slate-600">
                 {scopeDescription}
               </p>
@@ -395,14 +395,14 @@ export default async function RecruitAgentsPage() {
                     key={item.region}
                     className={`rounded-xl border border-slate-200 bg-gradient-to-br p-6 ${item.color}`}
                   >
-                    <h4 className="mb-3 font-black uppercase tracking-tight text-slate-900">
+                    <h4 className="mb-3 font-black tracking-tight text-slate-900">
                       {item.region}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {item.countries.map((country) => (
                         <span
                           key={country}
-                          className="rounded-full border border-slate-200 bg-white/50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-500"
+                          className="rounded-full border border-slate-200 bg-white/50 px-2 py-0.5 text-[10px] font-bold tracking-wider text-slate-500"
                         >
                           {country}
                         </span>
@@ -434,7 +434,7 @@ export default async function RecruitAgentsPage() {
 
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="mb-4 text-3xl font-black uppercase tracking-tight">
+          <h2 className="mb-4 text-3xl font-black tracking-tight">
             One Mind, <span className="text-orange-500">One Journey</span>
           </h2>
           <p className="mx-auto mb-16 max-w-2xl font-light text-slate-500">
@@ -444,7 +444,7 @@ export default async function RecruitAgentsPage() {
           <div className="grid gap-8 text-left md:grid-cols-3">
             {requirements.map((section) => (
               <div key={section.title} className={`rounded-b-xl border-t-4 ${section.borderClass} bg-white p-8 shadow-xl`}>
-                <h3 className="mb-6 text-xl font-black uppercase tracking-tight">{section.title}</h3>
+                <h3 className="mb-6 text-xl font-black tracking-tight">{section.title}</h3>
                 <ul className="space-y-4 font-light text-slate-600">
                   {section.items.map((item) => (
                     <li key={item} className="flex gap-3"><span className="shrink-0 font-bold text-orange-500">+</span>{item}</li>
@@ -464,7 +464,7 @@ export default async function RecruitAgentsPage() {
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-20 text-center">
-            <h2 className="text-3xl font-black uppercase tracking-tight md:text-4xl">
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               Your Success, <span className="text-orange-500">Our Promise</span>
             </h2>
             <p className="mt-4 font-light text-slate-400">
@@ -477,7 +477,7 @@ export default async function RecruitAgentsPage() {
                 key={section.title}
                 className="rounded-xl border border-white/10 bg-white/5 p-8 transition-colors hover:bg-white/10"
               >
-                <h3 className="mb-6 text-lg font-black uppercase tracking-tight text-orange-500">
+                <h3 className="mb-6 text-lg font-black tracking-tight text-orange-500">
                   {section.title}
                 </h3>
                 <ul className="space-y-4">
@@ -498,7 +498,7 @@ export default async function RecruitAgentsPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-[1rem] border border-slate-200 bg-slate-50 p-12 text-center shadow-2xl lg:p-16">
             <div className="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-orange-500/10 blur-[100px]" />
-            <h2 className="mb-8 text-3xl font-black uppercase tracking-tight text-slate-900">
+            <h2 className="mb-8 text-3xl font-black tracking-tight text-slate-900">
               {ctaTitle}
             </h2>
             <p className="mx-auto mb-10 max-w-3xl text-lg font-light leading-relaxed text-slate-600">
@@ -507,7 +507,7 @@ export default async function RecruitAgentsPage() {
 
             <Link
               href={ctaButtonHref}
-              className="inline-block rounded-full bg-slate-900 px-10 py-4 text-sm font-black uppercase tracking-widest text-white shadow-xl shadow-slate-900/20 transition-all hover:bg-orange-500"
+              className="inline-block rounded-full bg-slate-900 px-10 py-4 text-sm font-black tracking-widest text-white shadow-xl shadow-slate-900/20 transition-all hover:bg-orange-500"
             >
               {ctaButtonLabel}
             </Link>
