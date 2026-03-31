@@ -373,7 +373,7 @@ export default async function AboutPage() {
             <div className="w-full space-y-8 lg:w-7/12">
               {storyCards.map((card, index) => (
                 <div key={`${renderText(card.title)}-${index}`} className="group rounded-xl border border-slate-200 bg-white p-10 shadow-xl transition-all duration-300 hover:border-orange-500 hover:shadow-2xl md:p-12">
-                  <h2 className="mb-6 font-display text-3xl font-extrabold uppercase tracking-tight text-slate-900 transition-colors group-hover:text-orange-500">
+                  <h2 className="mb-6 font-display text-3xl font-extrabold capitalize tracking-tight text-slate-900 transition-colors group-hover:text-orange-500">
                     {renderText(card.title)}
                     {renderText(card.title) === 'Corporate DNA' ? <span className="text-orange-500"> DNA</span> : null}
                     {renderText(card.title) === 'Technical Strength' ? <span className="text-orange-500"> Strength</span> : null}
@@ -397,7 +397,7 @@ export default async function AboutPage() {
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
-            <h2 className="font-display text-3xl font-extrabold uppercase tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+            <h2 className="font-display text-3xl font-extrabold capitalize tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
               {productSystemTitleLineOne} <br />
               <span className="text-orange-500">{productSystemTitleLineTwo}</span>
             </h2>
@@ -407,7 +407,7 @@ export default async function AboutPage() {
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
                 href={productSystemButtonHref}
-                className="rounded-full bg-orange-500 px-8 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-colors hover:bg-orange-600"
+                className="rounded-full bg-orange-500 px-8 py-3 text-sm font-bold capitalize tracking-wider text-white shadow-lg shadow-orange-500/30 transition-colors hover:bg-orange-600"
               >
                 {productSystemButtonLabel}
               </Link>
@@ -429,7 +429,7 @@ export default async function AboutPage() {
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-lg shadow-orange-500/30">
                       {PRODUCT_SYSTEMS_ICONS[index] || PRODUCT_SYSTEMS_ICONS[0]}
                     </div>
-                    <h3 className="mb-2 font-display text-2xl font-extrabold uppercase tracking-tight">{renderText(sys.title)}</h3>
+                    <h3 className="mb-2 font-display text-2xl font-extrabold capitalize tracking-tight">{renderText(sys.title)}</h3>
                   </div>
                 </div>
                 <div className="p-8 pt-2">
@@ -465,7 +465,7 @@ export default async function AboutPage() {
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
-              <h2 className="mb-6 font-display text-3xl font-extrabold uppercase tracking-tight md:text-4xl">
+              <h2 className="mb-6 font-display text-3xl font-extrabold capitalize tracking-tight md:text-4xl">
                 {globalLayoutTitle}
               </h2>
               <p className="mb-4 inline-block rounded bg-white/90 px-3 py-1 text-sm font-bold text-orange-500">
@@ -491,7 +491,7 @@ export default async function AboutPage() {
               {globalLayoutStats.map((stat) => (
                 <div key={`${renderText(stat.label)}-${renderText(stat.value)}`} className="rounded-xl border border-white/20 bg-white/10 p-6 text-center backdrop-blur transition-colors hover:bg-white/20">
                   <div className="mb-2 text-4xl font-black">{renderText(stat.value)}</div>
-                  <div className="text-xs uppercase tracking-widest text-orange-200">{renderText(stat.label)}</div>
+                  <div className="text-xs capitalize tracking-widest text-orange-200">{renderText(stat.label)}</div>
                 </div>
               ))}
             </div>
@@ -503,7 +503,7 @@ export default async function AboutPage() {
       <section className="overflow-hidden bg-slate-50 py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-24 text-center">
-            <h2 className="font-display text-4xl font-extrabold uppercase tracking-tight text-slate-900 md:text-5xl">
+            <h2 className="font-display text-4xl font-extrabold capitalize tracking-tight text-slate-900 md:text-5xl">
               {timelineTitleLineOne} <span className="text-orange-500">{timelineTitleLineTwo}</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg font-light text-slate-500">
@@ -566,7 +566,7 @@ export default async function AboutPage() {
           </div>
 
           <div className="mx-auto mt-24 max-w-3xl border-t border-slate-200 pt-16 text-center">
-            <p className="mb-4 text-2xl font-black uppercase tracking-tighter text-slate-900">{timelineClosingTitle}</p>
+            <p className="mb-4 text-2xl font-black capitalize tracking-tighter text-slate-900">{timelineClosingTitle}</p>
             <p className="font-light text-slate-500">{timelineClosingDescription}</p>
           </div>
         </div>
@@ -589,10 +589,10 @@ export default async function AboutPage() {
 
             <div className="relative z-10 flex flex-col items-center gap-12 lg:flex-row">
               <div className="text-center lg:w-7/12 lg:text-left">
-                <h2 className="mb-4 font-display font-semibold uppercase tracking-[0.2em] text-orange-500 text-xs text-center lg:text-left">
+                <h2 className="mb-4 font-display font-semibold capitalize tracking-[0.2em] text-orange-500 text-xs text-center lg:text-left">
                   {ctaEyebrow}
                 </h2>
-                <h3 className="mb-8 font-display text-4xl font-extrabold uppercase tracking-tight text-white md:text-5xl">
+                <h3 className="mb-8 font-display text-4xl font-extrabold capitalize tracking-tight text-white md:text-5xl">
                   {ctaTitle}
                 </h3>
                 <p className="mb-10 text-lg leading-relaxed font-light text-slate-300">
@@ -601,7 +601,7 @@ export default async function AboutPage() {
                 <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
                   <Link
                     href={ctaButtonHref}
-                    className="inline-block rounded-full bg-orange-500 px-10 py-4 text-sm font-black uppercase tracking-widest text-white shadow-xl shadow-orange-500/20 transition-all hover:bg-orange-600"
+                    className="inline-block rounded-full bg-orange-500 px-10 py-4 text-sm font-black capitalize tracking-widest text-white shadow-xl shadow-orange-500/20 transition-all hover:bg-orange-600"
                   >
                     {ctaButtonLabel}
                   </Link>
@@ -617,7 +617,7 @@ export default async function AboutPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6">
-                    <p className="mb-2 text-sm font-black uppercase tracking-widest text-white">
+                    <p className="mb-2 text-sm font-black capitalize tracking-widest text-white">
                       {joinUsTitle}
                     </p>
                     <p className="text-xs font-light text-slate-300">

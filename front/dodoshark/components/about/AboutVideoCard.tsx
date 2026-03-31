@@ -45,12 +45,12 @@ export default function AboutVideoCard({
         
         {/* Overlay with Title */}
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent p-8 md:p-10 pt-20">
-          <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-3 group-hover:text-orange-400 transition-colors drop-shadow-lg">
+          <h3 className="text-2xl md:text-3xl font-black text-white capitalize tracking-tight mb-3 group-hover:text-orange-400 transition-colors drop-shadow-lg">
             {title}
           </h3>
           <div className="flex items-center gap-3">
              <span className="w-10 h-[2px] bg-orange-500 rounded-full"></span>
-             <p className="text-orange-200 text-sm font-black uppercase tracking-widest animate-pulse">
+             <p className="text-orange-200 text-sm font-black capitalize tracking-widest animate-pulse">
                Watch Brand Story
              </p>
           </div>

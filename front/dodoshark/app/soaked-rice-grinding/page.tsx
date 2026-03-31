@@ -142,27 +142,27 @@ export default function SoakedRiceSolutionPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center mb-12">
           <SectionHeader title="Industry Pain Points" subtitle="How Dodoshark solves the challenges of wet processing." />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-            <PainPointCard 
-              title="产能低下 (Low Capacity)" 
-              desc="Frequent clogging leading to low throughput and high labor costs." 
+            <PainPointCard
+              title="产能低下 (Low Capacity)"
+              desc="Frequent clogging leading to low throughput and high labor costs."
               solution="Widened chamber + High-pressure air-cooling."
-              img="/assets/images/solutions/temp/low-production-capacity.jpg"
+              img="/assets/images/solutions/temp/low-capacity.jpg"
             />
-            <PainPointCard 
-              title="筛网易堵塞 (Screen Clogging)" 
-              desc="Wet rice powder sticks to the mesh, blocking discharge." 
+            <PainPointCard
+              title="筛网易堵塞 (Screen Clogging)"
+              desc="Wet rice powder sticks to the mesh, blocking discharge."
               solution="Self-cleaning vortex airflow design."
               img="/assets/images/solutions/temp/screen-clogging.jpg"
             />
-            <PainPointCard 
-              title="淀粉糊化 (Gelatinization)" 
-              desc="Overheating during milling ruins the rice flour quality." 
+            <PainPointCard
+              title="淀粉糊化 (Gelatinization)"
+              desc="Overheating during milling ruins the rice flour quality."
               solution="Active cooling modules keep temp < 40°C."
               img="/assets/images/solutions/temp/starch-gelatinization.jpg"
             />
-            <PainPointCard 
-              title="Serious Dust Pollution" 
-              desc="Workshop hygiene issues due to leaking steam and powder." 
+            <PainPointCard
+              title="Serious Dust Pollution"
+              desc="Workshop hygiene issues due to leaking steam and powder."
               solution="Fully enclosed dust-free collection system."
               img="/assets/images/solutions/temp/serious-dust-pollution.jpg"
             />
