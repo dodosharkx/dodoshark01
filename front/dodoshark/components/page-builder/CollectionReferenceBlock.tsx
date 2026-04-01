@@ -257,7 +257,7 @@ function CollectionReferenceCarousel({
                 key={`collection-reference-page-${index}`}
                 type="button"
                 aria-label={`Go to collection reference page ${index + 1}`}
-                aria-pressed={active}
+                aria-pressed={active ? 'true' : 'false'}
                 onClick={() => {
                   if (!swiper || swiper.destroyed) return
                   swiper.slideTo(index * getSlidesPerGroup(swiper))

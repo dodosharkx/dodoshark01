@@ -426,6 +426,7 @@ function ThumbnailGalleryStage({
           type="button"
           onClick={() => onOpenVideo(item.videoUrl, item.caption)}
           className="group relative block aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-left shadow-[0_24px_80px_-28px_rgba(15,23,42,0.55)] sm:aspect-[16/10]"
+          aria-label={item.caption ? `Play video: ${item.caption}` : 'Play video'}
         >
           <div className="absolute inset-0 flex items-center justify-center text-slate-300">
             <Icon icon="film" className="h-14 w-14 sm:h-16 sm:w-16" />
@@ -477,6 +478,7 @@ function ThumbnailGalleryStage({
         type="button"
         onClick={() => onOpenVideo(item.videoUrl, item.caption)}
         className="group relative block aspect-[4/3] w-full overflow-hidden bg-slate-900 text-left shadow-[0_24px_80px_-28px_rgba(15,23,42,0.55)] sm:aspect-[16/10]"
+        aria-label={item.caption ? `Play video: ${item.caption}` : 'Play video'}
       >
         {media}
       </button>
@@ -520,7 +522,7 @@ const ThumbnailGalleryThumb = forwardRef<HTMLButtonElement, {
         onClick={onSelect}
         className={`group relative block w-full overflow-hidden border transition-all duration-300 ${isActive ? activeBorder : idleBorder}`}
         aria-label={getGalleryItemLabel(item, index)}
-        aria-pressed={isActive}
+        aria-pressed={isActive ? 'true' : 'false'}
       >
         <div className="relative aspect-[5/4] bg-slate-900">
           {previewSrc ? (

@@ -118,7 +118,7 @@ export default function FeatureListBlockCarousel({
                 key={`feature-list-page-${index}`}
                 type="button"
                 aria-label={`Go to feature card page ${index + 1}`}
-                aria-pressed={active}
+                aria-pressed={active ? 'true' : 'false'}
                 onClick={() => {
                   if (!swiper || swiper.destroyed) return
                   swiper.slideTo(index * getSlidesPerGroup(swiper))

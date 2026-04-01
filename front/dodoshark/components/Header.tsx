@@ -122,14 +122,14 @@ export default function Header({settings}: HeaderProps) {
   const desktopFloating = isHome && !isScrolled
   const desktopHeaderBackgroundStyle =
     !desktopFloating && isDesktopViewport
-      ? {
+      ? ({
           backgroundColor: '#17346e',
-          backgroundImage:
-            `linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('${navBackgroundSrc}')`,
+          '--nav-bg-img': `linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('${navBackgroundSrc}')`,
+          backgroundImage: 'var(--nav-bg-img)',
           backgroundPosition: 'center, center, 66% 24%',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover, cover, 138% auto',
-        }
+        } as React.CSSProperties)
       : undefined
   const desktopHeaderClass = desktopFloating
     ? 'xl:border-white/10 xl:shadow-none'
@@ -140,9 +140,11 @@ export default function Header({settings}: HeaderProps) {
       <div
         className="hidden border-b xl:block"
         style={{
-          backgroundColor: settings?.header?.topBar?.backgroundColor || '#f5f5f0f5', // fallback to ~96% opacity f5f5f0
-          borderColor: settings?.header?.topBar?.borderColor || '#e8e7de',
-        }}
+          '--top-bar-bg': settings?.header?.topBar?.backgroundColor || '#f5f5f0f5',
+          '--top-bar-border': settings?.header?.topBar?.borderColor || '#e8e7de',
+          backgroundColor: 'var(--top-bar-bg)',
+          borderColor: 'var(--top-bar-border)',
+        } as React.CSSProperties}
         data-sanity={headerDataAttribute}
       >
         <div className="mx-auto flex min-h-[76px] max-w-[1280px] items-center justify-between px-4">

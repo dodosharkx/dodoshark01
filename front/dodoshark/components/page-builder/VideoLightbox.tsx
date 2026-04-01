@@ -54,7 +54,7 @@ export default function VideoLightbox({ src, title, orientation = 'landscape', o
       <div className="mx-auto flex h-full w-full items-center justify-center">
         <div 
           className="w-full mx-auto" 
-          style={{ maxWidth: containerMaxWidth }}
+          style={{ '--max-w': containerMaxWidth, maxWidth: 'var(--max-w)' } as React.CSSProperties}
           onClick={(event) => event.stopPropagation()}
         >
           <div className="mb-3 flex items-center justify-between text-white">
@@ -67,7 +67,7 @@ export default function VideoLightbox({ src, title, orientation = 'landscape', o
               Close
             </button>
           </div>
-          <div className={`relative w-full overflow-hidden rounded-lg bg-black shadow-2xl ${frameClassName}`} style={frameStyle}>
+          <div className={`relative w-full overflow-hidden rounded-lg bg-black shadow-2xl ${frameClassName}`} style={{ ...frameStyle, maxHeight: 'var(--max-h)' } as React.CSSProperties}>
             <iframe
               src={src}
               title={title}

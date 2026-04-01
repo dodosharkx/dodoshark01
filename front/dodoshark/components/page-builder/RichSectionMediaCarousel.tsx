@@ -121,7 +121,7 @@ export default function RichSectionMediaCarousel({
               key={item._key ?? `rich-section-media-dot-${index}`}
               type="button"
               aria-label={`Go to media item ${index + 1}`}
-              aria-pressed={active}
+              aria-pressed={active ? 'true' : 'false'}
               onClick={() => swiper?.slideTo(index)}
               className={`h-2.5 rounded-full transition-all ${
                 active ? `w-8 ${dotsActiveClass}` : `w-2.5 ${dotsBaseClass}`

@@ -180,7 +180,7 @@ export default function LandingCardPager({
             </Link>
             <div
               className={`relative overflow-hidden bg-slate-100 ${imageAspectClassName}`}
-              style={item.imageAspectRatio ? { aspectRatio: item.imageAspectRatio } : undefined}
+              style={item.imageAspectRatio ? ({ '--aspect': item.imageAspectRatio, aspectRatio: 'var(--aspect)' } as React.CSSProperties) : undefined}
             >
               {item.imageSrc ? (
                 <Image
