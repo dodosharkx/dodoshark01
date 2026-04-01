@@ -99,8 +99,9 @@ function getSocialLinks(settings?: GlobalSettingsData | null): ResolvedSocialLin
       ?.map((item) => {
         const label = renderText(item?.label)
         const href = cleanText(item?.href)
-        if (!label || !href) return null
-        return {label, icon: cleanText(item?.icon), href}
+        const icon = cleanText(item?.icon)
+        if (!href) return null
+        return {label: label || icon || 'Social Link', icon, href}
       })
       .filter(isNonNullable) ?? []
 

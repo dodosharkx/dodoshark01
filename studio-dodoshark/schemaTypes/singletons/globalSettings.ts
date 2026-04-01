@@ -185,7 +185,7 @@ export default defineType({
             defineArrayMember({
               type: 'object',
               fields: [
-                defineField({name: 'label', title: 'Label', type: 'string', validation: (rule) => rule.required()}),
+                defineField({name: 'label', title: 'Label', type: 'string'}),
                 defineField({
                   name: 'icon',
                   title: 'Icon',
@@ -202,7 +202,13 @@ export default defineType({
                 defineField({name: 'href', title: 'Link', type: 'string', validation: (rule) => rule.required()}),
               ],
               preview: {
-                select: {title: 'label', subtitle: 'href'},
+                select: {label: 'label', icon: 'icon', href: 'href'},
+                prepare({label, icon, href}) {
+                  return {
+                    title: label || icon || 'Social Link',
+                    subtitle: href,
+                  }
+                },
               },
             }),
           ],
