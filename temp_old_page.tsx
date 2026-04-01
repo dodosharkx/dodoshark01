@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
@@ -146,74 +146,74 @@ export default async function RecruitDistributorPage() {
 
   const whyChooseUs: WhyChooseUsItem[] = (pageData?.whyChooseUs && pageData.whyChooseUs.length > 0)
     ? pageData.whyChooseUs.map((item, index) => {
-      const icons = [
-        (
-          <svg key="innovation" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0012 18.75c-1.03 0-1.9-.4-2.593-1.02l-.547-.548z" />
-          </svg>
-        ),
-        (
-          <svg key="quality" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
-          </svg>
-        ),
-        (
-          <svg key="portfolio" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-          </svg>
-        ),
-        (
-          <svg key="supply" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-        ),
-      ]
-      return {
-        title: renderText(item.title) || 'Continuity',
-        description: renderText(item.description) || '',
-        icon: icons[index % icons.length]
-      }
-    })
+        const icons = [
+          (
+            <svg key="innovation" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0012 18.75c-1.03 0-1.9-.4-2.593-1.02l-.547-.548z" />
+            </svg>
+          ),
+          (
+            <svg key="quality" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
+            </svg>
+          ),
+          (
+            <svg key="portfolio" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          ),
+          (
+            <svg key="supply" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          ),
+        ]
+        return {
+          title: renderText(item.title) || 'Continuity',
+          description: renderText(item.description) || '',
+          icon: icons[index % icons.length]
+        }
+      })
     : []
 
   const scopeRegions: ScopeRegion[] = (pageData?.scopeRegions && pageData.scopeRegions.length > 0)
     ? pageData.scopeRegions.map((item, index) => {
-      const colors = [
-        'from-orange-500/10 to-transparent',
-        'from-blue-500/10 to-transparent',
-        'from-green-500/10 to-transparent',
-        'from-purple-500/10 to-transparent'
-      ]
-      return {
-        region: renderText(item.region) || 'Global',
-        countries: (item.countries && item.countries.length > 0)
-          ? item.countries.map(c => renderText(c)).filter((c): c is string => Boolean(c))
-          : [],
-        color: colors[index % colors.length],
-      }
-    })
+        const colors = [
+          'from-orange-500/10 to-transparent',
+          'from-blue-500/10 to-transparent',
+          'from-green-500/10 to-transparent',
+          'from-purple-500/10 to-transparent'
+        ]
+        return {
+          region: renderText(item.region) || 'Global',
+          countries: (item.countries && item.countries.length > 0)
+            ? item.countries.map(c => renderText(c)).filter((c): c is string => Boolean(c))
+            : [],
+          color: colors[index % colors.length],
+        }
+      })
     : []
 
   const requirements: RequirementSection[] = (pageData?.requirements && pageData.requirements.length > 0)
     ? pageData.requirements.map((section, index) => {
-      const borderClasses = ['border-orange-500', 'border-slate-900', 'border-orange-500']
-      return {
-        title: renderText(section.title) || 'Requirement',
-        items: (section.items && section.items.length > 0)
-          ? section.items.map(i => renderText(i)).filter((i): i is string => Boolean(i))
-          : [],
-        borderClass: borderClasses[index % borderClasses.length]
-      }
-    })
+        const borderClasses = ['border-orange-500', 'border-slate-900', 'border-orange-500']
+        return {
+          title: renderText(section.title) || 'Requirement',
+          items: (section.items && section.items.length > 0)
+            ? section.items.map(i => renderText(i)).filter((i): i is string => Boolean(i))
+            : [],
+          borderClass: borderClasses[index % borderClasses.length]
+        }
+      })
     : []
 
   const supportSections: SupportSection[] = (pageData?.supportSections && pageData.supportSections.length > 0)
     ? pageData.supportSections.map((section) => ({
-      title: renderText(section.title) || 'Support',
-      items: (section.items && section.items.length > 0)
-        ? section.items.map(i => renderText(i)).filter((i): i is string => Boolean(i))
-        : []
-    }))
+        title: renderText(section.title) || 'Support',
+        items: (section.items && section.items.length > 0)
+          ? section.items.map(i => renderText(i)).filter((i): i is string => Boolean(i))
+          : []
+      }))
     : []
   const ctaTitle = renderText(pageData?.cta?.title) || 'Act Now and Share the Dividends'
   const ctaDescription =
@@ -418,6 +418,13 @@ export default async function RecruitDistributorPage() {
             <p className="mx-auto mb-10 max-w-3xl text-lg font-light leading-relaxed text-slate-600">
               {ctaDescription}
             </p>
+
+            <Link
+              href={ctaButtonHref}
+              className="inline-block rounded-full bg-slate-900 px-10 py-4 text-sm font-black tracking-widest text-white shadow-xl shadow-slate-900/20 transition-all hover:bg-orange-500"
+            >
+              {ctaButtonLabel}
+            </Link>
           </div>
         </div>
       </section>
