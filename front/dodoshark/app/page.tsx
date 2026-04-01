@@ -509,16 +509,16 @@ export default async function HomePage() {
 
   const heroSlidesParsed: HeroCarouselImage[] = (data?.heroBackgrounds && data.heroBackgrounds.length > 0)
     ? data.heroBackgrounds
-        .map((image, index): HeroCarouselImage | null => {
-          const src = getSanityImageUrl(image, { width: 1920 })
-          if (!src) return null
-          return {
-            src,
-            alt: sanitizeAltText(image.alt) || `DoDoShark hero ${index + 1}`,
-            sanityImage: image,
-          } as HeroCarouselImage
-        })
-        .filter((item): item is HeroCarouselImage => item !== null)
+      .map((image, index): HeroCarouselImage | null => {
+        const src = getSanityImageUrl(image, { width: 1920 })
+        if (!src) return null
+        return {
+          src,
+          alt: sanitizeAltText(image.alt) || `DoDoShark hero ${index + 1}`,
+          sanityImage: image,
+        } as HeroCarouselImage
+      })
+      .filter((item): item is HeroCarouselImage => item !== null)
     : []
 
   const heroSlides =
@@ -537,17 +537,17 @@ export default async function HomePage() {
 
   const parsedStats = (data?.stats && data.stats.length > 0)
     ? data.stats
-        .map((item) => {
-          const label = renderText(item?.label)
-          const value = renderText(item?.value)
-          if (!label || !value) return null
-          return {
-            label,
-            value,
-            suffix: renderText(item?.suffix) || '',
-          }
-        })
-        .filter(isDefined)
+      .map((item) => {
+        const label = renderText(item?.label)
+        const value = renderText(item?.value)
+        if (!label || !value) return null
+        return {
+          label,
+          value,
+          suffix: renderText(item?.suffix) || '',
+        }
+      })
+      .filter(isDefined)
     : []
 
   const homeStats = parsedStats.length > 0
@@ -556,24 +556,24 @@ export default async function HomePage() {
 
   const parsedAboutFeatures: HomeAboutFeature[] = (data?.aboutFeatures && data.aboutFeatures.length > 0)
     ? data.aboutFeatures
-        .map((item) => {
-          const title = renderText(item?.title)
-          const description = renderText(item?.description)
-          const image = getSanityImageUrl(item?.image, { width: 256 })
-          if (!title || !description || !image) return null
-          return { title, description, image, sanityImage: item.image }
-        })
-        .filter(isDefined)
+      .map((item) => {
+        const title = renderText(item?.title)
+        const description = renderText(item?.description)
+        const image = getSanityImageUrl(item?.image, { width: 256 })
+        if (!title || !description || !image) return null
+        return { title, description, image, sanityImage: item.image }
+      })
+      .filter(isDefined)
     : []
 
   const homeAboutFeatures = parsedAboutFeatures.length > 0
     ? parsedAboutFeatures
     : ABOUT_FEATURES.map(f => ({
-        title: f.title,
-        description: f.description,
-        image: '/assets/images/factory-showcase.png', // Fallback icon/image
-        sanityImage: undefined,
-      }))
+      title: f.title,
+      description: f.description,
+      image: '/assets/images/factory-showcase.png', // Fallback icon/image
+      sanityImage: undefined,
+    }))
 
   const confidenceTitleLineOne = renderText(data?.confidenceSection?.titleLineOne) || 'Choose DodoShark'
   const confidenceTitleLineTwo = renderText(data?.confidenceSection?.titleLineTwo) || 'Choose Confidence'
@@ -583,59 +583,59 @@ export default async function HomePage() {
 
   const parsedConfidenceCards: HomeConfidenceCard[] = (data?.confidenceSection?.cards && data.confidenceSection.cards.length > 0)
     ? data.confidenceSection.cards
-        .map((card) => {
-          const title = renderText(card?.title)
-          const subtitle = renderText(card?.subtitle)
-          const image = getSanityImageUrl(card?.image, { width: 1200 })
-          if (!title || !subtitle || !image) return null
-          return {
-            title,
-            subtitle,
-            points: (card?.points && card.points.length > 0)
-              ? card.points.map((point) => renderText(point)).filter(isDefined)
-              : [],
-            image,
-            sanityImage: card.image,
-          }
-        })
-        .filter(isDefined)
+      .map((card) => {
+        const title = renderText(card?.title)
+        const subtitle = renderText(card?.subtitle)
+        const image = getSanityImageUrl(card?.image, { width: 1200 })
+        if (!title || !subtitle || !image) return null
+        return {
+          title,
+          subtitle,
+          points: (card?.points && card.points.length > 0)
+            ? card.points.map((point) => renderText(point)).filter(isDefined)
+            : [],
+          image,
+          sanityImage: card.image,
+        }
+      })
+      .filter(isDefined)
     : []
 
   const homeConfidenceCards = parsedConfidenceCards.length > 0
     ? parsedConfidenceCards
     : CHOOSE_CONFIDENCE_CARDS.map(c => ({
-        title: c.title,
-        subtitle: c.subtitle,
-        points: c.points,
-        image: c.imagePath,
-        sanityImage: undefined,
-      }))
+      title: c.title,
+      subtitle: c.subtitle,
+      points: c.points,
+      image: c.imagePath,
+      sanityImage: undefined,
+    }))
 
   const featuredAgriProducts: HomeProductCard[] = (data?.featuredAgriProducts && data.featuredAgriProducts.length > 0)
     ? data.featuredAgriProducts
-        .map((product) => {
-          const image = getSanityImageUrl(product.mainImage, { width: 800, height: 800 })
-          if (!image) return null
+      .map((product) => {
+        const image = getSanityImageUrl(product.mainImage, { width: 800, height: 800 })
+        if (!image) return null
 
-          return {
-            title: renderText(product.title) || 'Product',
-            description:
-              renderText(product.shortDescription) || 'High performance industrial processing equipment.',
-            image,
-            sanityImage: product.mainImage,
-            href: buildDetailHref('/products', product.slug),
-            badge: renderText(product.seriesTag)
-              ? { label: renderText(product.seriesTag)!, className: 'bg-orange-500' }
-              : undefined,
-          }
-        })
-        .filter(isDefined)
+        return {
+          title: renderText(product.title) || 'Product',
+          description:
+            renderText(product.shortDescription) || 'High performance industrial processing equipment.',
+          image,
+          sanityImage: product.mainImage,
+          href: buildDetailHref('/products', product.slug),
+          badge: renderText(product.seriesTag)
+            ? { label: renderText(product.seriesTag)!, className: 'bg-orange-500' }
+            : undefined,
+        }
+      })
+      .filter(isDefined)
     : MVP_CATEGORIES.slice(0, 3).map(cat => ({
-        title: cat.name,
-        description: cat.description,
-        image: cat.mainImage.src,
-        href: `/products/${cat.slug}`,
-      }))
+      title: cat.name,
+      description: cat.description,
+      image: cat.mainImage.src,
+      href: `/products/${cat.slug}`,
+    }))
   const featuredFoodProducts: HomeProductCard[] =
     data?.featuredFoodProducts
       ?.map((product) => {
@@ -978,7 +978,6 @@ export default async function HomePage() {
           <DeferredProjectCasesCarousel items={homeCaseItems} />
         </div>
       </section>
-
       <section className="home-cta-bg relative overflow-hidden py-12 text-white sm:py-16">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute left-1/4 top-0 h-72 w-72 rounded-full bg-orange-500 blur-3xl sm:h-96 sm:w-96" />
@@ -1016,7 +1015,7 @@ export default async function HomePage() {
         <section className="bg-slate-50 py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">
-              <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">BLOG - Explore the Real DoDoShark</h2>
+              <h2 className="font-display text-3xl font-bold text-slate-900 sm:text-4xl">VLOG - Explore the Real DoDoShark</h2>
               <div className="mx-auto mt-4 h-1.5 w-20 rounded-full bg-orange-500" />
             </div>
 

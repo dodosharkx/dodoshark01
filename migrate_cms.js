@@ -63,24 +63,6 @@ const solutions = [
       pain_temp: 'high-temp-rise.jpg',
       pain_residue: 'high-residue.jpg'
     }
-  },
-  {
-    slug: 'soaked-rice-solution',
-    localId: 'soaked-rice-grinding',
-    title: 'Soaked Rice Grinding',
-    images: {
-      banner: 'soaked-rice.jpg',
-      icon_efficiency: 'efficiency-improvement.png',
-      icon_quality: 'excellent-quality.png',
-      icon_hygiene: 'dust-free-sealing.png',
-      icon_cost: 'low-cost-high-roi.png',
-      icon_smart: 'intelligent-worry-free.png',
-      icon_support: 'long-term-guarantee.png',
-      pain_residue: 'high-residue.jpg',
-      pain_cleaning: 'serious-dust-pollution.jpg',
-      pain_texture: 'sub-standard-fineness.jpg',
-      pain_maintenance: 'high-temp-rise.jpg'
-    }
   }
 ];
 
@@ -152,30 +134,26 @@ async function run() {
     const allContent = fs.readFileSync(artifactPath, 'utf8');
 
     console.log('Fetching solution documents...');
-    const query = '*[_type == "solution"]{_id, "slug": slug.current, title}';
+    const query = '*[_type == "solution"]{ _id, "slug": slug.current, title }';
     const res = await apiRequest('GET', `/data/query/${config.dataset}?query=${encodeURIComponent(query)}`);
     const docMap = {};
-    res.result.forEach(doc => { docMap[doc.slug] = doc._id; });
+    res.result.forEach(doc => { 
+      // If there are duplicates (drafts), preferring non-draft if possible
+      if (!docMap[doc.slug] || !doc._id.startsWith('drafts.')) {
+        docMap[doc.slug] = doc._id; 
+      }
+    });
 
     for (const sol of solutions) {
-      // Try exact slug or title match if slug differs
       let docId = docMap[sol.slug];
       if (!docId) {
-        // Fallback search for documents matching the local ID or title
-        const searchSlug = sol.localId;
-        docId = docMap[searchSlug];
-      }
-
-      if (!docId) {
-        console.warn(`[WARN] Skipping ${sol.title} - Document not found by slug ${sol.slug} or ${sol.localId}`);
+        console.warn(`[WARN] Skipping ${sol.title} - Document not found by slug ${sol.slug}`);
         continue;
       }
 
       console.log(`\n--- Migrating ${sol.title} ---`);
-      
-      const html = extractHtml(allContent, sol.localId === 'corn-grinding' ? 'Corn Grinding' : 
-                                sol.localId === 'grains-and-beans' ? 'Grains and Beans' :
-                                sol.localId === 'powder-mixing' ? 'Powder Mixing' : 'Soaked Rice Grinding');
+      const htmlContent = extractHtml(allContent, sol.localId === 'corn-grinding' ? 'Corn Grinding' : 
+                                sol.localId === 'grains-and-beans' ? 'Grains and Beans' : 'Powder Mixing');
 
       const templateImages = [];
       for (const [key, fileName] of Object.entries(sol.images)) {
@@ -186,48 +164,51 @@ async function run() {
         }
 
         console.log(`  Uploading ${key} (${fileName})...`);
-        const asset = await uploadImage(filePath);
-        templateImages.push({
-          _key: `key_${key}_${Math.random().toString(36).substr(2, 9)}`,
-          key: key,
-          image: {
-            _type: 'image',
-            asset: { _type: 'reference', _ref: asset.document._id }
-          }
-        });
+        try {
+          const asset = await uploadImage(filePath);
+          templateImages.push({
+            _key: `key_${key}_${Math.random().toString(36).substr(2, 9)}`,
+            key: key,
+            image: {
+              _type: 'image',
+              asset: { _type: 'reference', _ref: asset.document._id }
+            }
+          });
+        } catch (uploadErr) {
+          console.error(`  [ERROR] Upload failed for ${fileName}:`, uploadErr);
+        }
       }
 
-      const patch = {
+      console.log(`  Patching document ${docId}...`);
+      const setFields = {
+        detailRenderMode: 'htmlTemplate',
+        'htmlTemplate.html.code': htmlContent,
+        'htmlTemplate.templateImages': templateImages
+      };
+
+      const mutation = {
         mutations: [
           {
             patch: {
-              id: docId,
-              set: {
-                detailRenderMode: 'htmlTemplate',
-                'htmlTemplate.html.code': html,
-                'htmlTemplate.templateImages': templateImages
-              }
+              id: docId.replace('drafts.', ''),
+              set: setFields
+            }
+          },
+          {
+            patch: {
+              id: `drafts.${docId.replace('drafts.', '')}`,
+              set: setFields
             }
           }
         ]
       };
 
-      // Also update draft
-      if (!docId.startsWith('drafts.')) {
-        patch.mutations.push({
-          patch: {
-            id: `drafts.${docId}`,
-            set: {
-              detailRenderMode: 'htmlTemplate',
-              'htmlTemplate.html.code': html,
-              'htmlTemplate.templateImages': templateImages
-            }
-          }
-        });
+      try {
+        await apiRequest('POST', `/data/mutate/${config.dataset}`, mutation);
+        console.log(`  SUCCESS: Updated document ${sol.slug}`);
+      } catch (mutErr) {
+        console.error(`  [ERROR] Mutation failed for ${sol.slug}:`, mutErr);
       }
-
-      await apiRequest('POST', `/data/mutate/${config.dataset}`, patch);
-      console.log(`  SUCCESS: Updated document ${sol.slug}`);
     }
   } catch (err) {
     console.error('Migration failed:', err.message || err);
