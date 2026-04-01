@@ -53,21 +53,30 @@ export default function VideoLightbox({ src, title, orientation = 'landscape', o
     >
       <div className="mx-auto flex h-full w-full items-center justify-center">
         <div 
-          className="w-full mx-auto" 
-          style={{ '--max-w': containerMaxWidth, maxWidth: 'var(--max-w)' } as React.CSSProperties}
+          className="mx-auto w-full" 
+          id="video-lightbox-container"
           onClick={(event) => event.stopPropagation()}
         >
+          <style>
+            {`
+              #video-lightbox-container { max-width: ${containerMaxWidth}; }
+              #video-lightbox-frame { max-height: ${frameStyle.maxHeight}; }
+            `}
+          </style>
           <div className="mb-3 flex items-center justify-between text-white">
-            <h3 className="text-sm font-semibold tracking-wide md:text-base line-clamp-1 mr-4">{title}</h3>
+            <h3 className="mr-4 line-clamp-1 text-sm font-semibold tracking-wide md:text-base">{title}</h3>
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md border border-white/30 px-4 py-1.5 text-xs transition-colors hover:bg-white/15 md:text-sm whitespace-nowrap"
+              className="whitespace-nowrap rounded-md border border-white/30 px-4 py-1.5 text-xs transition-colors hover:bg-white/15 md:text-sm"
             >
               Close
             </button>
           </div>
-          <div className={`relative w-full overflow-hidden rounded-lg bg-black shadow-2xl ${frameClassName}`} style={{ ...frameStyle, maxHeight: 'var(--max-h)' } as React.CSSProperties}>
+          <div 
+            className={`relative w-full overflow-hidden rounded-lg bg-black shadow-2xl ${frameClassName}`} 
+            id="video-lightbox-frame"
+          >
             <iframe
               src={src}
               title={title}

@@ -63,7 +63,7 @@ export default function MobileNavToggle({ navItems, ctaHref, ctaLabel }: MobileN
         type="button"
         className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#cfc7b7] bg-[#f5f5f0] text-[#1e3a5f] shadow-[0_10px_24px_-18px_rgba(15,23,42,0.3)] transition hover:border-[#bfb5a2] hover:bg-[#efede6]"
         aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={mobileOpen}
+        {...(mobileOpen ? { 'aria-expanded': 'true' } : { 'aria-expanded': 'false' })}
         onClick={() => setMobileOpen((prev) => !prev)}
       >
         {mobileOpen ? <CloseIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}

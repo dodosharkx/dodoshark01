@@ -521,8 +521,8 @@ const ThumbnailGalleryThumb = forwardRef<HTMLButtonElement, {
         type="button"
         onClick={onSelect}
         className={`group relative block w-full overflow-hidden border transition-all duration-300 ${isActive ? activeBorder : idleBorder}`}
-        aria-label={getGalleryItemLabel(item, index)}
-        aria-pressed={isActive ? 'true' : 'false'}
+        aria-label={isActive ? `Currently viewing item ${index + 1}` : getGalleryItemLabel(item, index)}
+        {...(isActive ? { 'aria-current': 'true' } : {})}
       >
         <div className="relative aspect-[5/4] bg-slate-900">
           {previewSrc ? (

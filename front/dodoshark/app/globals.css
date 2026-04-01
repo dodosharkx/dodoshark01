@@ -11,9 +11,6 @@
   --radius-container: 0.75rem;
   --radius-card: 0.75rem;
   --radius-control: 0.5rem;
-}
-
-@theme inline {
   --font-sans: var(--font-inter), sans-serif;
   --font-display: var(--font-outfit), sans-serif;
 }
@@ -60,8 +57,13 @@ body {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+@supports (scrollbar-width: none) {
+  .no-scrollbar {
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -317,6 +319,7 @@ body {
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.24));
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
 }

@@ -123,7 +123,7 @@ export default function HeroCarousel({
             className={`absolute inset-0 transition-all duration-700 ease-out ${
               isActive ? 'scale-100 opacity-100' : 'scale-[1.03] opacity-0'
             }`}
-            aria-hidden={!isActive}
+            {...(!isActive ? { 'aria-hidden': 'true' } : { 'aria-hidden': 'false' })}
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#64748b_0,#475569_45%,#334155_100%)]" />
             {!failedMap[index] && (

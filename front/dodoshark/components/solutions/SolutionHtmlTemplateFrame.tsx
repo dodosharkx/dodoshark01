@@ -86,14 +86,17 @@ export default function SolutionHtmlTemplateFrame({
 
   return (
     <div className="bg-white">
+      <style>
+        {`#solution-frame { height: ${height}px; }`}
+      </style>
       <iframe
         ref={iframeRef}
+        id="solution-frame"
         title={title || 'Solution template'}
         srcDoc={srcDoc}
         sandbox="allow-same-origin"
         scrolling="no"
         className="block w-full border-0 bg-white"
-        style={{height}}
       />
     </div>
   )

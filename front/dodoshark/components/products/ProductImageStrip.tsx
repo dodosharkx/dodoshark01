@@ -55,8 +55,8 @@ export default function ProductImageStrip({ images, productName }: ProductImageS
                 key={`${image.src}-${index}`}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                aria-label={`Show image ${index + 1} for ${productName}`}
-                aria-pressed={isActive}
+                aria-label={isActive ? `Currently viewing image ${index + 1}` : `Show image ${index + 1} for ${productName}`}
+                {...(isActive ? { 'aria-current': 'true' } : {})}
                 className={`relative block h-16 w-16 shrink-0 snap-start overflow-hidden rounded-md border bg-slate-50 transition sm:h-20 sm:w-20 ${
                   isActive
                     ? 'border-orange-400 shadow-[0_10px_20px_-16px_rgba(249,115,22,0.9)]'

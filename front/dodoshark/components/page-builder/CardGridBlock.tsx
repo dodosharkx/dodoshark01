@@ -364,8 +364,8 @@ function MobileCarouselCard({
                 <button
                   key={`card-page-${index}`}
                   type="button"
-                  aria-label={`Go to card page ${index + 1}`}
-                  aria-pressed={active ? 'true' : 'false'}
+                  aria-label={active ? `Currently at slide ${index + 1}` : `Go to slide ${index + 1}`}
+                  {...(active ? { 'aria-current': 'step' } : {})}
                   onClick={() => onSelectPage(index)}
                   className={`h-2.5 rounded-full transition-all ${
                     active ? `w-8 ${dotsActiveClass}` : `w-2.5 ${dotsBaseClass}`
@@ -508,8 +508,8 @@ function DesktopCarousel({
               <button
                 key={`desktop-card-page-${index}`}
                 type="button"
-                aria-label={`Go to card page ${index + 1}`}
-                aria-pressed={active ? 'true' : 'false'}
+                aria-label={active ? `Currently at slide ${index + 1}` : `Go to slide ${index + 1}`}
+                {...(active ? { 'aria-current': 'step' } : {})}
                 onClick={() => {
                   if (!desktopSwiper || desktopSwiper.destroyed) return
                   desktopSwiper.slideTo(index * getSlidesPerGroup(desktopSwiper))
@@ -689,7 +689,14 @@ export default function CardGridBlock({block}: {block: CardGridBlockData}) {
           ) : (
             <div className="absolute inset-0 bg-slate-800" />
           )}
-          <div className="absolute inset-0 bg-[var(--banner-overlay)]" style={{'--banner-overlay': bannerOverlayColor} as React.CSSProperties} />
+          <div 
+            className="absolute inset-0"
+            id={`overlay-${block._key || 'default'}`}
+          >
+            <style>
+              {`#overlay-${block._key || 'default'} { background-color: ${bannerOverlayColor}; }`}
+            </style>
+          </div>
 
           <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 text-center sm:px-6 lg:px-8">
             <div className="w-full">

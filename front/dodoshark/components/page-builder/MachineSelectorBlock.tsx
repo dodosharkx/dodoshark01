@@ -333,7 +333,8 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                       <button
                         type="button"
                         onClick={() => setActiveIndex(idx)}
-                        aria-pressed={active ? 'true' : 'false'}
+                        aria-label={active ? `Currently viewing ${group.label}` : `Show ${group.label}`}
+                        {...(active ? { 'aria-current': 'true' } : {})}
                         className={`min-w-[132px] rounded-sm px-4 py-2 text-xs font-black tracking-wider transition-colors md:min-w-[180px] md:px-6 md:py-3 md:text-base ${active ? tabActiveClass : tabInactiveClass}`}
                       >
                         {group.label}
@@ -433,8 +434,8 @@ export default function MachineSelectorBlock({ block }: { block: MachineSelector
                     <button
                       key={`machine-page-${idx}`}
                       type="button"
-                      aria-label={`Go to machine page ${idx + 1}`}
-                      aria-pressed={active ? 'true' : 'false'}
+                      aria-label={active ? `Currently at slide ${idx + 1}` : `Go to slide ${idx + 1}`}
+                      {...(active ? { 'aria-current': 'step' } : {})}
                       onClick={() => {
                         if (!machineSwiper || machineSwiper.destroyed) return
                         machineSwiper.slideTo(idx * getSlidesPerGroup(machineSwiper))

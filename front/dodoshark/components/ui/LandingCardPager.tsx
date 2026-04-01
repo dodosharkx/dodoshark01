@@ -179,9 +179,14 @@ export default function LandingCardPager({
               <span className="sr-only">View Details - {item.title}</span>
             </Link>
             <div
-              className={`relative overflow-hidden bg-slate-100 ${imageAspectClassName}`}
-              style={item.imageAspectRatio ? ({ '--aspect': item.imageAspectRatio, aspectRatio: 'var(--aspect)' } as React.CSSProperties) : undefined}
+              className={`relative overflow-hidden bg-slate-100 ${imageAspectClassName} card-image-container`}
+              id={`card-image-${item.id}`}
             >
+              {item.imageAspectRatio && (
+                <style>
+                  {`#card-image-${item.id} { aspect-ratio: ${item.imageAspectRatio}; }`}
+                </style>
+              )}
               {item.imageSrc ? (
                 <Image
                   src={item.imageSrc}

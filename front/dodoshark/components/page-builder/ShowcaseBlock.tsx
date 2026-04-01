@@ -303,8 +303,8 @@ function SplitCarousel({
               <button
                 key={item._key ?? `split-showcase-dot-${index}`}
                 type="button"
-                aria-label={`Go to showcase slide ${index + 1}`}
-                aria-pressed={active ? 'true' : 'false'}
+                aria-label={active ? `Currently at slide ${index + 1}` : `Go to slide ${index + 1}`}
+                {...(active ? { 'aria-current': 'step' } : {})}
                 onClick={() => {
                   if (!swiper || swiper.destroyed) return
                   if (items.length > 1) {
@@ -391,7 +391,20 @@ export default function ShowcaseBlock({ block }: { block: ShowcaseBlockData }) {
         layout === 'splitCarousel' ? (
           <SplitCarousel items={items} theme={theme} footerCta={block.footerCta} />
         ) : (
-          <div className={`${styles.shell} ${styles.cardCarouselShell}`} style={cardCarouselVars as React.CSSProperties}>
+          <div 
+            className={`${styles.shell} ${styles.cardCarouselShell}`} 
+            id={`showcase-${block._key || 'default'}`}
+          >
+            <style>
+              {`
+                #showcase-${block._key || 'default'} {
+                  --showcase-card-bg: #ffffff;
+                --showcase-media-bg: #ffffff;
+                --showcase-card-shadow: 0 10px 24px -18px rgb(15 23 42 / 0.12);
+                ${theme.showcaseVars ? Object.entries(theme.showcaseVars).map(([k, v]) => `${k}: ${v};`).join('\n') : ''}
+                }
+              `}
+            </style>
             <div className={styles.carouselViewport}>
               <Swiper
                 modules={[Keyboard, A11y]}

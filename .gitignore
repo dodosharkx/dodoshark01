@@ -3,6 +3,7 @@ node_modules/
 .pnp
 .pnp.*
 .yarn/
+.pnpm-store/
 
 # Debug and Logs
 npm-debug.log*

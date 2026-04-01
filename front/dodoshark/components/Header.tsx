@@ -120,17 +120,7 @@ export default function Header({settings}: HeaderProps) {
 
   const isScrolled = !isHome || homeIsScrolled
   const desktopFloating = isHome && !isScrolled
-  const desktopHeaderBackgroundStyle =
-    !desktopFloating && isDesktopViewport
-      ? ({
-          backgroundColor: '#17346e',
-          '--nav-bg-img': `linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('${navBackgroundSrc}')`,
-          backgroundImage: 'var(--nav-bg-img)',
-          backgroundPosition: 'center, center, 66% 24%',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover, cover, 138% auto',
-        } as React.CSSProperties)
-      : undefined
+  const headerBgId = `header-bg-${isHome ? 'home' : 'page'}`
   const desktopHeaderClass = desktopFloating
     ? 'xl:border-white/10 xl:shadow-none'
     : 'shadow-[0_10px_30px_-24px_rgba(15,23,42,0.92)] backdrop-blur-xl xl:border-white/16 xl:shadow-[0_10px_30px_-24px_rgba(15,23,42,0.92)] xl:backdrop-blur-0'
@@ -139,14 +129,17 @@ export default function Header({settings}: HeaderProps) {
     <>
       <div
         className="hidden border-b xl:block"
-        style={{
-          '--top-bar-bg': settings?.header?.topBar?.backgroundColor || '#f5f5f0f5',
-          '--top-bar-border': settings?.header?.topBar?.borderColor || '#e8e7de',
-          backgroundColor: 'var(--top-bar-bg)',
-          borderColor: 'var(--top-bar-border)',
-        } as React.CSSProperties}
+        id="header-top-bar"
         data-sanity={headerDataAttribute}
       >
+        <style>
+          {`
+            #header-top-bar {
+              background-color: ${settings?.header?.topBar?.backgroundColor || '#f5f5f0f5'};
+              border-color: ${settings?.header?.topBar?.borderColor || '#e8e7de'};
+            }
+          `}
+        </style>
         <div className="mx-auto flex min-h-[76px] max-w-[1280px] items-center justify-between px-4">
           <Link href="/" className="flex shrink-0 items-center">
             <Image
@@ -209,8 +202,21 @@ export default function Header({settings}: HeaderProps) {
 
       <header
         className={`sticky top-0 z-50 border-b border-[#e8e7de] bg-[#f5f5f0] transition-[border-color,box-shadow,backdrop-filter] duration-300 xl:bg-transparent ${desktopHeaderClass}`}
-        style={desktopHeaderBackgroundStyle}
+        id={headerBgId}
       >
+        {!desktopFloating && isDesktopViewport && (
+          <style>
+            {`
+              #${headerBgId} {
+                background-color: #17346e;
+                background-image: linear-gradient(90deg, rgba(7, 26, 58, 0.72) 0%, rgba(7, 26, 58, 0.18) 42%, rgba(7, 26, 58, 0.28) 64%, rgba(7, 26, 58, 0.76) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(5, 18, 44, 0.08) 38%, rgba(5, 18, 44, 0.3) 100%), url('${navBackgroundSrc}');
+                background-position: center, center, 66% 24%;
+                background-repeat: no-repeat;
+                background-size: cover, cover, 138% auto;
+              }
+            `}
+          </style>
+        )}
         <div className="mx-auto max-w-[1280px] px-4">
           <div className="flex h-14 items-center justify-between gap-3 xl:h-[72px]">
             <div className="xl:hidden">

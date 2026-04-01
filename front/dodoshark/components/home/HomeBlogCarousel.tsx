@@ -85,15 +85,22 @@ export default function HomeBlogCarousel({ items }: HomeBlogCarouselProps) {
       <div className="overflow-hidden">
         <div
           className="flex gap-6 transition-transform duration-500 ease-out"
-          style={{
-            transform: `translateX(-${safeCurrentIndex * (100 / itemsVisible)}%)`,
-          }}
+          id="home-blog-carousel-track"
         >
+          <style>
+            {`
+              #home-blog-carousel-track {
+                transform: translateX(-${safeCurrentIndex * (100 / itemsVisible)}%);
+              }
+              .home-blog-card {
+                width: calc(${100 / itemsVisible}% - ${(itemsVisible - 1) * 24 / itemsVisible}px);
+              }
+            `}
+          </style>
           {items.map((item) => (
             <article
               key={item.id}
               className="home-blog-card box-border flex-shrink-0 rounded-[1rem] border border-slate-200 bg-white shadow-sm"
-              style={{ width: `calc(${100 / itemsVisible}% - ${(itemsVisible - 1) * 24 / itemsVisible}px)` }}
             >
               <VideoPreviewTrigger
                 title={item.title}
