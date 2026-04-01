@@ -3,8 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'High-Efficiency Powder Blending Solutions | DoDoShark',
-  description: 'Industrial mixing for powders, granules, and solid-liquids. Uniformity (CV) < 5%, 50% faster cycles. Double cone, drum, and ribbon mixers.',
+  title: 'DoDoShark High-Efficiency Powder Mixing Solution | DoDoShark',
+  description: 'Systematic, high-efficiency, uniform and dust-free powder mixing solutions. CV <5%, 30-50% reduced mixing time, 20-40% lower energy consumption.',
 }
 
 function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
@@ -22,303 +22,472 @@ export default function PowderMixingSolutionPage() {
   return (
     <main className="bg-[#fcfdfd] text-slate-900">
       {/* 1. Hero / Overview Section */}
-      <section className="relative overflow-hidden bg-slate-900 pb-24 pt-32 lg:pt-40 lg:pb-32 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:40px_40px] opacity-10" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-16">
+      <section className="relative overflow-hidden bg-slate-800 pb-20 pt-16 lg:pt-24 lg:pb-24">
+        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:40px_40px] opacity-20" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2 text-center lg:text-left">
             <div className="mb-8 inline-flex items-center gap-3 rounded-md border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-orange-400">
-              <i className="fas fa-blender" />
-              <span>Blending Innovation</span>
+              <i className="fas fa-blender" aria-hidden />
+              <span>Complete Mixing Solution</span>
             </div>
-            <h1 className="mb-6 text-4xl font-display font-black leading-tight tracking-tight md:text-7xl italic">
-              Dodoshark <span className="text-orange-500 not-italic uppercase">Powder</span> Blending
+            <h1 className="mb-6 text-4xl font-display font-black leading-tight tracking-tight text-white md:text-6xl">
+              DoDoShark <span className="text-orange-500">Powder Mixing</span> Solution
             </h1>
-            <p className="mb-8 text-xl font-light leading-relaxed text-slate-400 max-w-xl">
-              This solution provides a systematic, high-efficiency, uniform and dust-free solution for the mixing of powders, granules and solid-liquid mixtures. Achieving CV &lt; 5% with up to 50% faster cycles.
+            <p className="mb-8 text-xl font-light leading-relaxed text-slate-400">
+              Systematic, high-efficiency, uniform and dust-free solution for mixing powders, granules and solid-liquid mixtures. From laboratory to industrial scale.
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-              <a href="#products" className="rounded-md border-2 border-orange-500 bg-orange-500 px-8 py-4 text-sm font-black tracking-widest text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-white hover:text-orange-500 hover:border-white">
-                VIEW MIXER RANGE
+              <a href="#products" className="rounded-md border-2 border-orange-500 bg-orange-500 px-8 py-3.5 text-sm font-black tracking-widest text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-600 hover:border-orange-600">
+                View Equipment
+              </a>
+              <a href="#contact" className="rounded-md border-2 border-slate-600 bg-transparent px-8 py-3.5 text-sm font-black tracking-widest text-white transition-all hover:border-slate-400 hover:bg-slate-800">
+                Contact Us
               </a>
             </div>
           </div>
-          <div className="lg:w-1/2 w-full">
-            <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-black">
-              <Image src="/assets/images/solutions/temp/powder.jpg" alt="Powder Mixing Solution" fill className="object-cover opacity-60" />
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                 <div className="p-8 backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl text-center">
-                    <div className="text-5xl font-black text-orange-500 mb-2 italic">CV &lt; 5%</div>
-                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Uniformity standard</div>
-                 </div>
-              </div>
+          <div className="lg:w-1/2 w-full flex justify-center">
+            <div className="relative w-full max-w-3xl aspect-[4/3]">
+              <Image 
+                src="/assets/images/temp/powder.jpg" 
+                alt="Powder Mixing Solution Banner" 
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Key Advantages */}
+      {/* 2. Core Advantages */}
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Blending Advantages" subtitle="Ensuring product consistency and cost optimization through design." />
+          <SectionHeader
+            title="Core Advantages"
+            subtitle="Six reasons why DoDoShark is the preferred choice for modern powder mixing solutions."
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AdvantageCard 
-              title="High Efficiency & Saving" 
-              icon="bolt" 
-              desc="30-50% faster mixing time with 20-40% lower energy consumption per batch, making it widely applicable across industries." 
-              img="/assets/images/solutions/temp/high-efficiency-energy-saving.png"
-            />
-            <AdvantageCard 
-              title="Dust-Free Sealing" 
-              icon="shield-virus" 
-              desc="Zero dust leakage throughout the entire process with modular design and customized configurations for clean production." 
-              img="/assets/images/solutions/temp/dust-free-sealing.png"
-            />
-            <AdvantageCard 
-              title="Leading Uniformity" 
-              icon="check-circle" 
-              desc="A mixing uniformity (CV) of <5% achieved even for small-batch laboratory applications to large-scale industrial production." 
-              img="/assets/images/solutions/temp/leading-uniformity.png"
-            />
-            <AdvantageCard 
-              title="No-Dead-Angle Design" 
-              icon="broom" 
-              desc="Complete discharge design eliminates cross-contamination and reduces the frequency of downtime for cleaning." 
-              img="/assets/images/solutions/temp/no-dead-angle-design.png"
-            />
-            <AdvantageCard 
-              title="Strong Adaptability" 
-              icon="sliders-h" 
-              desc="Handles powder-liquid, granule-granule, and solid-liquid mixtures with high precision and flexibility." 
-              img="/assets/images/solutions/temp/strong-adaptability.png"
-            />
-            <AdvantageCard 
-              title="Intelligent Control" 
-              icon="microchip" 
-              desc="PLC touch screen smart control ensures stable processing and reduces operational costs for all mixing requirements." 
-              img="/assets/images/solutions/temp/intelligent-control.png"
-            />
+            {/* Uniformity */}
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 text-center">
+              <div className="h-16 w-16 mb-6 relative grayscale group-hover:grayscale-0 transition-all duration-500 mx-auto">
+                <Image src="/assets/images/solutions/temp/excellent-quality.png" alt="Leading Uniformity" fill className="object-contain" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-3">Leading Uniformity</h3>
+              <p className="text-slate-500 font-light leading-relaxed">
+                Achieves mixing uniformity with CV &lt;5%, ensuring consistent product quality across every batch.
+              </p>
+            </div>
+            {/* Efficiency */}
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 text-center">
+              <div className="h-16 w-16 mb-6 relative grayscale group-hover:grayscale-0 transition-all duration-500 mx-auto">
+                <Image src="/assets/images/solutions/temp/efficiency-improvement.png" alt="High Efficiency" fill className="object-contain" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-3">High Efficiency</h3>
+              <p className="text-slate-500 font-light leading-relaxed">
+                Reduces mixing time by 30%-50% and energy consumption by 20%-40% compared to conventional methods.
+              </p>
+            </div>
+            {/* Sealing */}
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 text-center">
+              <div className="h-16 w-16 mb-6 relative grayscale group-hover:grayscale-0 transition-all duration-500 mx-auto">
+                <Image src="/assets/images/solutions/temp/clean-workshop.png" alt="Dust-Free Sealing" fill className="object-contain" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-3">Dust-Free Sealing</h3>
+              <p className="text-slate-500 font-light leading-relaxed">
+                Fully enclosed design with dust-free operation, ensuring clean production and operator safety.
+              </p>
+            </div>
+            {/* Intelligence */}
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 text-center">
+              <div className="h-16 w-16 mb-6 relative grayscale group-hover:grayscale-0 transition-all duration-500 mx-auto">
+                <Image src="/assets/images/solutions/temp/intelligent-worry-free.png" alt="Intelligent Control" fill className="object-contain" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-3">Intelligent Control</h3>
+              <p className="text-slate-500 font-light leading-relaxed">
+                PLC-based intelligent control system for precise parameter management and one-touch operation.
+              </p>
+            </div>
+            {/* Dead Angle */}
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 text-center">
+              <div className="h-16 w-16 mb-6 relative grayscale group-hover:grayscale-0 transition-all duration-500 mx-auto">
+                <Image src="/assets/images/solutions/temp/low-cost-high-roi.png" alt="No Dead Angle" fill className="object-contain" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-3">No Dead Angle Design</h3>
+              <p className="text-slate-500 font-light leading-relaxed">
+                Optimized internal structure eliminates mixing dead zones, ensuring thorough blending.
+              </p>
+            </div>
+            {/* Adaptability */}
+            <div className="premium-card p-8 rounded-2xl group border border-slate-100 hover:border-orange-100 transition-all bg-slate-50 hover:bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 text-center">
+              <div className="h-16 w-16 mb-6 relative grayscale group-hover:grayscale-0 transition-all duration-500 mx-auto">
+                <Image src="/assets/images/solutions/temp/long-term-guarantee.png" alt="Strong Adaptability" fill className="object-contain" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-3">Strong Adaptability</h3>
+              <p className="text-slate-500 font-light leading-relaxed">
+                Handles various materials including powders, granules, and solid-liquid mixtures with ease.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Materials Information */}
+      {/* 3 & 4. Material Characterisation */}
       <section className="py-24 bg-slate-50 border-t border-slate-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-           <div className="flex flex-col lg:flex-row gap-16">
+          <div className="flex flex-col lg:flex-row gap-16">
             <div className="lg:w-1/2">
-              <h2 className="text-3xl font-display font-black leading-tight mb-6">Powder Characterisation</h2>
+              <h2 className="text-3xl font-display font-black leading-tight mb-6">Classified by Density</h2>
+              <p className="text-slate-600 mb-8 font-light">
+                Understanding powder density is crucial for selecting the right mixing intensity and equipment volume.
+              </p>
               <div className="space-y-6">
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                  <h4 className="font-bold text-orange-600 mb-2 tracking-widest uppercase text-xs">Classified by Density</h4>
-                  <p className="text-slate-600 text-sm font-light">
-                    Light powder (Density &lt; 0.5g/cm³), Medium powder (0.5-1.5g/cm³), and Heavy powder (Density &gt; 1.5g/cm³).
-                  </p>
+                  <h4 className="font-bold text-orange-600 mb-2 flex items-center gap-2">
+                    <i className="fas fa-feather" /> Low Density
+                  </h4>
+                  <p className="text-sm text-slate-500 mb-2">Light powders that tend to float and require special mixing action.</p>
+                  <p className="text-xs font-bold text-slate-700">Examples: Flour, starch, protein powder</p>
                 </div>
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                  <h4 className="font-bold text-orange-600 mb-2 tracking-widest uppercase text-xs">Classified by Flowability</h4>
-                  <p className="text-slate-600 text-sm font-light">
-                    Excellent flowability (Free-flowing), average flowability (Requires agitation), and poor flowability (Caking or cohesive).
-                  </p>
+                  <h4 className="font-bold text-orange-600 mb-2 flex items-center gap-2">
+                    <i className="fas fa-balance-scale" /> Medium Density
+                  </h4>
+                  <p className="text-sm text-slate-500 mb-2">Standard powders with balanced flow characteristics.</p>
+                  <p className="text-xs font-bold text-slate-700">Examples: Feed powder, chemical powder, spice mixes</p>
+                </div>
+                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                  <h4 className="font-bold text-orange-600 mb-2 flex items-center gap-2">
+                    <i className="fas fa-dumbbell" /> High Density
+                  </h4>
+                  <p className="text-sm text-slate-500 mb-2">Heavy powders that tend to settle, requiring high-shear mixing.</p>
+                  <p className="text-xs font-bold text-slate-700">Examples: Mineral powder, metal powder, ceramic powder</p>
                 </div>
               </div>
             </div>
             <div className="lg:w-1/2">
-               <h2 className="text-3xl font-display font-black leading-tight mb-6">Technical Commitment</h2>
-               <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-                  <div className="text-4xl font-black text-slate-900 mb-4 tracking-tight italic">CV &lt; <span className="text-orange-500">5%</span></div>
-                  <p className="text-slate-500 font-light leading-relaxed mb-6 italic">
-                    "DoDoShark leverages its three main machine types to cover all mixing requirements, from small-batch laboratory applications to large-scale industrial production."
-                  </p>
-                  <ul className="grid grid-cols-2 gap-4 text-sm text-slate-700">
-                    <li className="flex items-center gap-2"><i className="fas fa-check text-green-500" /> Speed: 30-50% faster</li>
-                    <li className="flex items-center gap-2"><i className="fas fa-check text-green-500" /> Energy: 20-40% lower</li>
-                    <li className="flex items-center gap-2"><i className="fas fa-check text-green-500" /> Design: Modular</li>
-                    <li className="flex items-center gap-2"><i className="fas fa-check text-green-500" /> Control: PLC Smart</li>
-                  </ul>
-               </div>
+              <h2 className="text-3xl font-display font-black leading-tight mb-6">Classified by Flowability</h2>
+              <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+                <table className="w-full text-left text-sm text-slate-600">
+                  <thead className="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+                    <tr>
+                      <th className="p-4">Flow Type</th>
+                      <th className="p-4">Characteristics</th>
+                      <th className="p-4">Example Samples</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr className="hover:bg-slate-50">
+                      <td className="p-4 font-bold text-slate-900">Good Flow</td>
+                      <td className="p-4">Free-flowing, mixes easily, discharges quickly</td>
+                      <td className="p-4">Granules, crystalline materials</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50">
+                      <td className="p-4 font-bold text-slate-900">Poor Flow</td>
+                      <td className="p-4">Cohesive, tends to clump, requires high-shear</td>
+                      <td className="p-4">Fine powders, sticky materials</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50">
+                      <td className="p-4 font-bold text-slate-900">Special Flow</td>
+                      <td className="p-4">Unique character requiring customization</td>
+                      <td className="p-4">Fibrous materials, abrasive powders</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-8 rounded-lg bg-orange-50 border border-orange-100 p-6 flex gap-4 items-start text-orange-800">
+                <i className="fas fa-info-circle text-2xl text-orange-500 mt-1 shrink-0" />
+                <div>
+                  <h4 className="font-bold mb-1">DoDoShark Optimization</h4>
+                  <p className="text-sm">Our mixers are programmed with specific rotation cycles adapted to each material flow type to prevent clumping and ensure 100% uniformity.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Comparison Section (Pain Points) */}
+      {/* 5. Problems Comparison */}
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Industry Challenges & Solutions" />
+          <SectionHeader title="Industry Pain Points vs DoDoShark Solutions" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <PainPointCard
-              title="Serious Dust Pollution"
-              desc="Open mixing environments causing health hazards and material loss."
-              solution="Hermetically sealed modular design."
-              icon="mask"
-            />
-            <PainPointCard
-              title="High Discharge Residue"
-              desc="Material sticking to walls or dead corners causing wastage."
-              solution="No-dead-angle bottom discharge."
-              icon="dumpster"
-              img="/assets/images/solutions/temp/high-residue.jpg"
-            />
-            <PainPointCard
-              title="Poor Mixing Uniformity"
-              desc="Inconsistent distribution of trace ingredients."
-              solution="Optimized blade/vessel geometry (CV < 5%)."
-              icon="random"
-              img="/assets/images/solutions/temp/poor-mixing-uniformity.jpg"
-            />
-            <PainPointCard
-              title="Excessive Temperature Rise"
-              desc="Heat generated by high-speed friction damaging sensitive ingredients."
-              solution="Variable speed control & cooling jackets."
-              icon="thermometer-high"
-              img="/assets/images/solutions/temp/high-temp-rise.jpg"
-            />
+            <div className="rounded-xl bg-slate-50 p-6 flex flex-col">
+              <div className="mb-4 h-40 relative overflow-hidden">
+                <Image src="/assets/images/temp/serious-dust-pollution.jpg" alt="Dust Pollution" fill className="object-cover rounded-lg" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Dust Pollution</h4>
+              <p className="text-sm text-slate-600 mb-3">Open design causes leakage, leading to material waste (0.5%-2%) and safety hazards.</p>
+              <div className="pt-3 border-t border-slate-200 mt-auto">
+                <span className="text-xs font-black text-green-600 uppercase tracking-wider"><i className="fas fa-check mr-1" /> DoDoShark solves:</span>
+                <p className="text-sm mt-1">99.9% Dust containment</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-6 flex flex-col">
+              <div className="mb-4 h-40 relative overflow-hidden">
+                <Image src="/assets/images/temp/poor-mixing-uniformity.jpg" alt="Poor Uniformity" fill className="object-cover rounded-lg" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Poor Uniformity</h4>
+              <p className="text-sm text-slate-600 mb-3">Inadequate mixing action results in uneven distribution with CV &gt;10%.</p>
+              <div className="pt-3 border-t border-slate-200 mt-auto">
+                <span className="text-xs font-black text-green-600 uppercase tracking-wider"><i className="fas fa-check mr-1" /> DoDoShark solves:</span>
+                <p className="text-sm mt-1">3D motion CV &lt;5% uniformity</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-6 flex flex-col">
+              <div className="mb-4 h-40 relative overflow-hidden">
+                <Image src="/assets/images/temp/excessive-temperature-rise-mixing.jpg" alt="Temperature Rise" fill className="object-cover rounded-lg" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Temperature Rise</h4>
+              <p className="text-sm text-slate-600 mb-3">Friction heat can damage temperature-sensitive nutrient materials.</p>
+              <div className="pt-3 border-t border-slate-200 mt-auto">
+                <span className="text-xs font-black text-green-600 uppercase tracking-wider"><i className="fas fa-check mr-1" /> DoDoShark solves:</span>
+                <p className="text-sm mt-1">Low-friction cool mixing</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-6 flex flex-col">
+              <div className="mb-4 h-40 relative overflow-hidden">
+                <Image src="/assets/images/temp/high-discharge-residue.jpg" alt="High Residue" fill className="object-cover rounded-lg" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">High Residue</h4>
+              <p className="text-sm text-slate-600 mb-3">Dead angles leave 3%-5% material residue after discharge causing contamination.</p>
+              <div className="pt-3 border-t border-slate-200 mt-auto">
+                <span className="text-xs font-black text-green-600 uppercase tracking-wider"><i className="fas fa-check mr-1" /> DoDoShark solves:</span>
+                <p className="text-sm mt-1">No dead angle discharge</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Product Range */}
-      <section id="products" className="py-24 bg-slate-50 border-y border-slate-100">
+      {/* 6. Recommended Products */}
+      <section id="products" className="py-24 bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Mixer Portfolio" subtitle="The perfect machine for every specific gravity and viscosity challenge." />
+          <SectionHeader title="Recommended Product Selection" subtitle="A variety of mixing principles to perfectly match your material type and batch size." />
+
           <div className="space-y-16">
-            <ProductCard 
-              num="01"
-              category="Industrial Scale"
-              title="Double Cone Drum Mixer (Large)"
-              img="/assets/images/solutions/temp/dodoshark-double-cone-drum-mixer-large.png"
-              specs={{ "Homogeneity": "CV < 1%", "Capacity": "500kg - 5t / batch", "Principle": "Gravity Diffusion", "Material": "Stainless Steel" }}
-              desc="Handles light and heavy powders with minimal shear, ideal for sensitive granules."
-            />
-            <ProductCard 
-              num="02"
-              category="Precision & Lab"
-              title="Double Cone Drum Mixer (Lab Edition)"
-              img="/assets/images/solutions/temp/dodoshark-double-cone-drum-mixer-lab.png"
-              specs={{ "Homogeneity": "CV < 0.5%", "Capacity": "1kg - 20kg / batch", "Principle": "High-speed Rotation", "Material": "Polish SS304" }}
-              desc="Perfect for R&D, small-batch luxury food, or pharmaceutical experimentation."
-              reverse
-            />
-            <ProductCard 
-              num="03"
-              category="Convective Mixing"
-              title="Double Screw Ribbon Mixer"
-              img="/assets/images/solutions/temp/dodoshark-double-ribbon-mixer-ss.png"
-              specs={{ "Homogeneity": "CV < 3%", "Capacity": "100kg - 5t / batch", "Principle": "Outer/Inner Screw", "Material": "SS304 / SS316" }}
-              desc="High-speed convective mixing for paste-like or damp powder applications."
-            />
-            <ProductCard 
-              num="04"
-              category="Versatile Blending"
-              title="DoDoShark Drum Mixer"
-              img="/assets/images/solutions/temp/dodoshark-drum-mixer-ss.png"
-              specs={{ "Homogeneity": "CV < 2%", "Capacity": "50kg - 2t / batch", "Principle": "Tumbling Action", "Material": "Mirror Polish Stainless" }}
-              desc="Simple, robust, and easy to clean for rapid product changeovers."
-              reverse
-            />
+            {/* Product 1 */}
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col lg:flex-row gap-12 items-center">
+              <div className="lg:w-2/5 flex justify-center">
+                <div className="relative w-full max-w-sm aspect-square">
+                  <Image src="/assets/images/temp/dodoshark-double-cone-drum-mixer-lab.png" alt="Lab Drum Mixer" fill className="object-contain" />
+                </div>
+              </div>
+              <div className="lg:w-3/5">
+                <div className="text-sm font-bold text-orange-500 mb-2 tracking-widest uppercase">01 / Lab & Small Batch</div>
+                <h3 className="text-3xl font-display font-bold mb-6">Double-Cone Drum Mixer (Lab)</h3>
+                <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 text-sm text-slate-600">
+                  <div><strong className="text-slate-900 block">Capacity</strong> 5L ~ 50L</div>
+                  <div><strong className="text-slate-900 block">Uniformity</strong> CV &lt;3%</div>
+                  <div><strong className="text-slate-900 block">Power</strong> 0.75kw ~ 1.5kw</div>
+                  <div><strong className="text-slate-900 block">Material</strong> 304 Stainless Steel</div>
+                </div>
+                <p className="text-slate-500 font-light leading-relaxed mb-6">
+                  <strong>Principle:</strong> The double-cone drum rotates, creating a complex three-dimensional motion that ensures thorough mixing with minimal material damage.<br/><br/>
+                  <strong>Application:</strong> Ideal for laboratory testing, small-batch production, and R&D samples.
+                </p>
+                <Link href="/products/lab-drum-mixer" className="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center gap-2">
+                  View Product Details <i className="fas fa-arrow-right" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Product 2 */}
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col lg:flex-row-reverse gap-12 items-center">
+              <div className="lg:w-2/5 flex justify-center">
+                <div className="relative w-full max-w-sm aspect-square">
+                  <Image src="/assets/images/temp/dodoshark-double-cone-drum-mixer-large.png" alt="Large Drum Mixer" fill className="object-contain" />
+                </div>
+              </div>
+              <div className="lg:w-3/5">
+                <div className="text-sm font-bold text-orange-500 mb-2 tracking-widest uppercase">02 / Industrial Scale</div>
+                <h3 className="text-3xl font-display font-bold mb-6">Double-Cone Drum Mixer (Large)</h3>
+                <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 text-sm text-slate-600">
+                  <div><strong className="text-slate-900 block">Capacity</strong> 100L ~ 5000L</div>
+                  <div><strong className="text-slate-900 block">Uniformity</strong> CV &lt;5%</div>
+                  <div><strong className="text-slate-900 block">Power</strong> 2.2kw ~ 15kw</div>
+                  <div><strong className="text-slate-900 block">Control</strong> PLC Smart System</div>
+                </div>
+                <p className="text-slate-500 font-light leading-relaxed mb-6">
+                  <strong>Principle:</strong> Large-capacity double-cone design with optimized rotation speed ensures uniform mixing for bulk production while maintaining gentle handling.<br/><br/>
+                  <strong>Application:</strong> Widely used in food, pharmaceutical, and chemical bulk production.
+                </p>
+                <Link href="/products/large-drum-mixer" className="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center gap-2">
+                  View Product Details <i className="fas fa-arrow-right" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Product 3 */}
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col lg:flex-row gap-12 items-center">
+              <div className="lg:w-2/5 flex justify-center">
+                <div className="relative w-full max-w-sm aspect-square">
+                  <Image src="/assets/images/temp/dodoshark-drum-mixer-ss.png" alt="Drum Agitator" fill className="object-contain" />
+                </div>
+              </div>
+              <div className="lg:w-3/5">
+                <div className="text-sm font-bold text-orange-500 mb-2 tracking-widest uppercase">03 / High-Shear Mixing</div>
+                <h3 className="text-3xl font-display font-bold mb-6">DoDoShark Drum Agitator</h3>
+                <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 text-sm text-slate-600">
+                  <div><strong className="text-slate-900 block">Capacity</strong> 50L ~ 3000L</div>
+                  <div><strong className="text-slate-900 block">Power</strong> 3kw ~ 22kw</div>
+                  <div><strong className="text-slate-900 block">Material</strong> Stainless / Carbon Steel</div>
+                  <div><strong className="text-slate-900 block">Speed</strong> VFD Speed Control</div>
+                </div>
+                <p className="text-slate-500 font-light leading-relaxed mb-6">
+                  <strong>Principle:</strong> Rotating drum with internal agitator blades provides high-shear mixing action, ideal for materials requiring intensive blending.<br/><br/>
+                  <strong>Application:</strong> Perfect for solid-liquid mixing and materials requiring high dispersion.
+                </p>
+                <Link href="/products/drum-agitator" className="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center gap-2">
+                  View Product Details <i className="fas fa-arrow-right" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Product 4 */}
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col lg:flex-row-reverse gap-12 items-center">
+              <div className="lg:w-2/5 flex justify-center">
+                <div className="relative w-full max-w-sm aspect-square">
+                  <Image src="/assets/images/temp/dodoshark-double-ribbon-mixer-ss.png" alt="Ribbon Mixer" fill className="object-contain" />
+                </div>
+              </div>
+              <div className="lg:w-3/5">
+                <div className="text-sm font-bold text-orange-500 mb-2 tracking-widest uppercase">04 / Rapid Blending</div>
+                <h3 className="text-3xl font-display font-bold mb-6">Double-Screw Ribbon Mixer</h3>
+                <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 text-sm text-slate-600">
+                  <div><strong className="text-slate-900 block">Capacity</strong> 100L ~ 10000L</div>
+                  <div><strong className="text-slate-900 block">Mixing Time</strong> 5 ~ 15 Minutes</div>
+                  <div><strong className="text-slate-900 block">Power</strong> 4kw ~ 45kw</div>
+                  <div><strong className="text-slate-900 block">Discharge</strong> Complete Discharge</div>
+                </div>
+                <p className="text-slate-500 font-light leading-relaxed mb-6">
+                  <strong>Principle:</strong> Double helical ribbons create axial and radial material movement, achieving rapid and uniform mixing.<br/><br/>
+                  <strong>Application:</strong> Suitable for powder-powder and powder-granule mixing.
+                </p>
+                <Link href="/products/ribbon-mixer" className="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center gap-2">
+                  View Product Details <i className="fas fa-arrow-right" />
+                </Link>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* 6. Success Stories */}
+      {/* 7. Technical Advantages */}
+      <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-5" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl font-display font-black leading-tight md:text-5xl mb-4">Mixing System Technology</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+              <div className="text-3xl text-orange-500 mb-4"><i className="fas fa-bullseye" /></div>
+              <h4 className="text-xl font-bold mb-3">Uniformity Precision</h4>
+              <p className="text-slate-400 font-light text-sm leading-relaxed">
+                DoDoShark's three-dimensional mixing action ensures CV &lt;5% uniformity regardless of material density differences.
+              </p>
+            </div>
+            <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+              <div className="text-3xl text-orange-500 mb-4"><i className="fas fa-shield-virus" /></div>
+              <h4 className="text-xl font-bold mb-3">Clean Environment</h4>
+              <p className="text-slate-400 font-light text-sm leading-relaxed">
+                Fully sealed design with optional dust collection system achieves 99.9% dust containment for a green workshop.
+              </p>
+            </div>
+            <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
+              <div className="text-3xl text-orange-500 mb-4"><i className="fas fa-leaf" /></div>
+              <h4 className="text-xl font-bold mb-3">Energy Efficiency</h4>
+              <p className="text-slate-400 font-light text-sm leading-relaxed">
+                Optimized mixing geometry reduces mixing time by 30%-50% and energy consumption by 20%-40%.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8 & 9. Choose Us & Cases */}
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Success Case Study" />
-          <div className="max-w-5xl mx-auto rounded-3xl overflow-hidden border border-slate-200 shadow-2xl flex flex-col md:flex-row">
-            <div className="md:w-1/2 bg-slate-900 p-12 text-white">
-               <div className="inline-block bg-orange-500 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">Nutrition Enterprise</div>
-               <h3 className="text-3xl font-display font-black mb-6">Bozhou Nutritional Meal Replacement Project</h3>
-               <div className="space-y-6 text-slate-400 font-light">
-                  <div>
-                    <h5 className="text-white font-bold mb-2">The Challenge</h5>
-                    <p className="text-sm">Production of blended nutritional meal replacement powder, requiring uniform mixing of whole grain and cereal powders with trace additives in 150kg batches.</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-bold mb-2">Our Solution</h5>
-                    <p className="text-sm">DoDoShark High-Capacity Twin-Cone Drum Mixer (400L) with PLC timer and polished internals for zero residue.</p>
-                  </div>
-               </div>
+
+          <SectionHeader 
+            title="Comprehensive Solutions & Beyond" 
+            subtitle="Expertise and full-link support to ensure your long-term mixing success." 
+          />
+          <div className="mb-24 grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div className="p-8 group border border-slate-100 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300">
+              <div className="h-16 w-16 mx-auto mb-4 relative grayscale group-hover:grayscale-0 transition-all duration-300">
+                <Image src="/assets/images/solutions/temp/complete-products.png" alt="Complete Products" fill className="object-contain" />
+              </div>
+              <h4 className="font-bold text-lg mb-2 text-slate-900">Complete Selection</h4>
+              <p className="text-sm text-slate-500">Models from 5L to 10000L for any scale.</p>
             </div>
-            <div className="md:w-1/2 bg-slate-50 p-12 flex flex-col justify-center">
-               <div className="text-6xl font-black text-orange-500 mb-4">15 <span className="text-2xl text-slate-400 font-light">min</span></div>
-               <p className="text-xl font-bold text-slate-900 mb-8 leading-tight">Batch cycle reached 15 minutes with perfect distribution.</p>
-               <div className="p-6 bg-white rounded-xl border border-slate-200">
-                  <div className="flex items-center gap-4">
-                     <div className="h-12 w-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl">
-                        <i className="fas fa-check" />
-                     </div>
-                     <div>
-                        <span className="block font-black text-xs uppercase text-slate-400 tracking-widest">Client Feedback</span>
-                        <p className="text-sm text-slate-600">Subsequently purchased 5 more units for different formulations.</p>
-                     </div>
-                  </div>
-               </div>
+            <div className="p-8 group border border-slate-100 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300">
+              <div className="h-16 w-16 mx-auto mb-4 relative grayscale group-hover:grayscale-0 transition-all duration-300">
+                <Image src="/assets/images/solutions/temp/high-roi.png" alt="High Return" fill className="object-contain" />
+              </div>
+              <h4 className="font-bold text-lg mb-2 text-slate-900">High Stability</h4>
+              <p className="text-sm text-slate-500">Durable structure for continuous operation.</p>
             </div>
+            <div className="p-8 group border border-slate-100 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300">
+              <div className="h-16 w-16 mx-auto mb-4 relative grayscale group-hover:grayscale-0 transition-all duration-300">
+                <Image src="/assets/images/solutions/temp/full-link-delivery.png" alt="Full-Link Delivery" fill className="object-contain" />
+              </div>
+              <h4 className="font-bold text-lg mb-2 text-slate-900">Modular Design</h4>
+              <p className="text-sm text-slate-500">Easy to integrate and upgrade systems.</p>
+            </div>
+            <div className="p-8 group border border-slate-100 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300">
+              <div className="h-16 w-16 mx-auto mb-4 relative grayscale group-hover:grayscale-0 transition-all duration-300">
+                <Image src="/assets/images/solutions/temp/sustainable-upgrade.png" alt="Sustainable Upgrade" fill className="object-contain" />
+              </div>
+              <h4 className="font-bold text-lg mb-2 text-slate-900">Smart Control</h4>
+              <p className="text-sm text-slate-500">PLC touch screen for one-key operation.</p>
+            </div>
+          </div>
+
+          <SectionHeader title="Success Cases" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+              <div className="bg-slate-50 p-8 h-full flex flex-col justify-between">
+                <div>
+                  <div className="inline-block bg-white px-3 py-1 rounded-full text-xs font-bold text-orange-600 border border-orange-200 mb-4">Bozhou, Anhui</div>
+                  <h3 className="text-xl font-display font-bold mb-4">Nutritional Meal Replacement Powder</h3>
+                  <div className="space-y-3 text-sm text-slate-600 mb-6">
+                    <p><strong>Requirement:</strong> Uniform mixing of various whole grain powders with additives, 150kg batch.</p>
+                    <p><strong>Solution:</strong> 400L Twin-Cone Drum Mixer.</p>
+                  </div>
+                </div>
+                <div className="bg-green-50 rounded-lg p-4 border border-green-100">
+                  <span className="block text-green-700 font-bold mb-1">Result</span>
+                  <p className="text-xs text-green-600">Uniform mixing within 15 minutes, food safety standards met. Client purchased 5 more units.</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+              <div className="bg-slate-50 p-8 h-full flex flex-col justify-between">
+                <div>
+                  <div className="inline-block bg-white px-3 py-1 rounded-full text-xs font-bold text-orange-600 border border-orange-200 mb-4">Chemical Plant</div>
+                  <h3 className="text-xl font-display font-bold mb-4">Pigment Dispersion Upgrade</h3>
+                  <div className="space-y-3 text-sm text-slate-600 mb-6">
+                    <p><strong>Requirement:</strong> Batching of pigments and chemical additives, high dispersion.</p>
+                    <p><strong>Solution:</strong> High-Shear Drum Agitator with VFD.</p>
+                  </div>
+                </div>
+                <div className="bg-green-50 rounded-lg p-4 border border-green-100">
+                  <span className="block text-green-700 font-bold mb-1">Result</span>
+                  <p className="text-xs text-green-600">Dispersion time reduced by 40%, particle size distribution significantly improved.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-center">
+            <Link href="/cases" className="inline-flex items-center gap-2 rounded-md border-2 border-slate-200 px-6 py-3 text-sm font-bold tracking-widest text-slate-700 hover:border-slate-800 hover:bg-slate-800 hover:text-white transition-all">
+              View All Cases
+            </Link>
           </div>
         </div>
       </section>
     </main>
-  )
-}
-
-function AdvantageCard({ icon, title, desc, img }: { icon: string; title: string; desc: string; img: string }) {
-  return (
-    <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
-      <div className="h-14 w-14 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-2xl mb-6 shadow-inner group-hover:bg-orange-500 group-hover:text-white transition-colors">
-        <i className={`fas fa-${icon}`} />
-      </div>
-      <h3 className="text-xl font-display font-bold mb-4">{title}</h3>
-      <p className="text-slate-500 text-sm font-light leading-relaxed mb-6 h-16 overflow-hidden">{desc}</p>
-      <div className="relative h-32 w-full opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-        <Image src={img} alt={title} fill className="object-contain" />
-      </div>
-    </div>
-  )
-}
-
-function PainPointCard({ title, desc, solution, icon, img }: { title: string; desc: string; solution: string; icon: string; img?: string }) {
-  return (
-    <div className="rounded-xl border border-red-100 bg-red-50 p-6 flex flex-col group overflow-hidden">
-      {img && (
-        <div className="relative h-32 -mx-6 -mt-6 mb-6 overflow-hidden border-b border-red-100 bg-white">
-          <Image src={img} alt={title} fill className="object-cover opacity-80 group-hover:scale-105 transition-transform" />
-        </div>
-      )}
-      {!img && (
-        <div className="text-red-500 mb-4"><i className={`fas fa-${icon} text-3xl`} /></div>
-      )}
-      <h4 className="font-bold text-slate-900 mb-2">{title}</h4>
-      <p className="text-sm text-slate-600 mb-4">{desc}</p>
-      <div className="pt-3 border-t border-red-200 mt-auto">
-        <span className="text-xs font-black text-green-600 uppercase tracking-wider"><i className="fas fa-check mr-1" /> Dodoshark solves:</span>
-        <p className="text-sm mt-1 text-slate-800 font-medium">{solution}</p>
-      </div>
-    </div>
-  )
-}
-
-function ProductCard({ num, category, title, img, specs, desc, reverse = false }: any) {
-  return (
-    <div className={`bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col lg:flex-row gap-12 items-center ${reverse ? 'lg:flex-row-reverse' : ''}`}>
-      <div className="lg:w-2/5 relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 border border-slate-100">
-        <Image src={img} alt={title} fill className="object-contain p-8" />
-      </div>
-      <div className="lg:w-3/5">
-        <div className="text-sm font-bold text-orange-500 mb-2 tracking-widest uppercase">{num} / {category}</div>
-        <h3 className="text-3xl font-display font-bold mb-6">{title}</h3>
-        <p className="text-slate-500 font-light leading-relaxed mb-8 italic">"{desc}"</p>
-        <div className="grid grid-cols-2 gap-y-6 gap-x-8 mb-8 border-t border-slate-100 pt-8">
-          {Object.entries(specs).map(([k, v]: any) => (
-            <div key={k}>
-              <span className="block text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">{k}</span>
-              <span className="text-lg font-bold text-slate-800 leading-none">{v}</span>
-            </div>
-          ))}
-        </div>
-        <Link href="/products" className="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center gap-2 uppercase tracking-widest text-xs">
-          View Product Line < i className="fas fa-arrow-right" />
-        </Link>
-      </div>
-    </div>
   )
 }
