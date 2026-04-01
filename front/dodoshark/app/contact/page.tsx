@@ -98,7 +98,7 @@ async function getContactPageData(stega?: boolean) {
 
 export default async function ContactPage() {
   const [contact, pageData] = await Promise.all([getGlobalContact(), getContactPageData(true)])
-  
+
   const heroTitle = pageData?.hero?.title
   const heroSubtitle = renderText(pageData?.hero?.subtitle) || 'Reach out to our expert team for recommendations, quotations, and global technical support.'
   const heroImageSrc = toImageSrc(pageData?.hero?.backgroundImage, 1800) || '/assets/images/about/contact-hero.jpg'
@@ -110,8 +110,8 @@ export default async function ContactPage() {
 
   const pbTitle = renderText(pageData?.productionBases?.title) || 'Production Bases'
   const pbDesc = renderText(pageData?.productionBases?.description) || 'Three major manufacturing facilities located in Shandong Province.'
-  const pbCities = (pageData?.productionBases?.cities && pageData.productionBases.cities.length > 0) 
-    ? pageData.productionBases.cities 
+  const pbCities = (pageData?.productionBases?.cities && pageData.productionBases.cities.length > 0)
+    ? pageData.productionBases.cities
     : ['Jinan', 'Liaocheng', 'Weifang']
 
   const dcTitle = renderText(pageData?.directContact?.title) || 'Direct Contact'
@@ -249,14 +249,14 @@ export default async function ContactPage() {
                   fallbackAlt={showroomTitle}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent opacity-80" />
-                <div className="absolute bottom-8 left-8 right-8">
+                {/* <div className="absolute bottom-8 left-8 right-8">
                   <h2 className="text-2xl lg:text-3xl font-display font-extrabold text-white uppercase tracking-tight mb-3">
                     {showroomTitle}
                   </h2>
                   <p className="text-slate-200 text-sm font-light leading-relaxed">
                     {showroomDescription}
                   </p>
-                </div>
+                </div> */}
               </div>
 
               {/* Right Column: The Form */}

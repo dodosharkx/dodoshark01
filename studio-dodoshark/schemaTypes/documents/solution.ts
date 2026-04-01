@@ -10,6 +10,7 @@ export default defineType({
   groups: [
     {name: 'basic', title: 'Basic', default: true},
     {name: 'content', title: 'Page Content'},
+    {name: 'relations', title: 'Related Items'},
     {name: 'seo', title: 'SEO'},
   ],
   fields: [
@@ -71,6 +72,22 @@ export default defineType({
       type: 'solutionHtmlTemplate',
       group: 'content',
       hidden: ({document}) => document?.detailRenderMode !== 'htmlTemplate',
+    }),
+    defineField({
+      name: 'relatedProducts',
+      title: 'Related Products',
+      type: 'array',
+      group: 'relations',
+      description: 'Optional products to display at the bottom of the page.',
+      of: [{type: 'reference', to: [{type: 'product'}]}],
+    }),
+    defineField({
+      name: 'relatedVlogs',
+      title: 'Related Vlogs',
+      type: 'array',
+      group: 'relations',
+      description: 'Optional vlogs to display at the bottom of the page.',
+      of: [{type: 'reference', to: [{type: 'vlogItem'}]}],
     }),
   ],
   preview: {

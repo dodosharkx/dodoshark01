@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import type { ReactNode } from 'react'
 
 import { fetchSanityData } from '@/lib/sanity.live'
@@ -34,18 +33,6 @@ type SupportPageData = {
     title?: string
     description?: string
   }
-  urgentAssistance?: {
-    title?: string
-    description?: string
-    hotlineLabel?: string
-    hotlineValue?: string
-    salesLabel?: string
-    salesEmail?: string
-    supportLabel?: string
-    supportEmail?: string
-    teamCaptionTitle?: string
-    teamCaptionDescription?: string
-  }
   stats?: Array<{ label?: string; value?: string }>
   serviceIntro?: {
     eyebrow?: string
@@ -59,18 +46,11 @@ type SupportPageData = {
     features?: string[]
     image?: SanityImage
   }>
-  cta?: {
-    title?: string
-    description?: string
-    buttonLabel?: string
-    buttonHref?: string
-  }
   images?: {
     heroBackground?: SanityImage
     preSalesStageImage?: SanityImage
     midSalesStageImage?: SanityImage
     afterSalesStageImage?: SanityImage
-    supportTeamImage?: SanityImage
   }
 }
 
@@ -80,7 +60,6 @@ const SUPPORT_PAGE_QUERY = `coalesce(
 ){
   seo,
   hero,
-  urgentAssistance,
   stats[]{
     label,
     value
@@ -100,7 +79,6 @@ const SUPPORT_PAGE_QUERY = `coalesce(
       asset
     }
   },
-  cta,
   images{
     heroBackground{
       alt,
@@ -117,13 +95,9 @@ const SUPPORT_PAGE_QUERY = `coalesce(
     afterSalesStageImage{
       alt,
       asset
-    },
-    supportTeamImage{
-      alt,
-      asset
     }
   }
-}`
+} `
 
 async function getSupportPageData(stega?: boolean) {
   return fetchSanityData<SupportPageData | null>({
@@ -149,11 +123,9 @@ export default async function SupportPage() {
   const heroDescription =
     renderText(pageData?.hero?.description) ||
     'We are not just an equipment supplier, but your lifelong partner in value co-creation. We deliver measurable, continuously optimized production results.'
-  const urgentAssistanceTitle =
-    renderText(pageData?.urgentAssistance?.title) || 'Need Urgent Assistance?'
-  const urgentAssistanceDescription =
-    renderText(pageData?.urgentAssistance?.description) ||
-    'Our global technical response team is on standby to help you resolve equipment issues, order spare parts, or schedule an efficiency audit.'
+  const serviceEyebrow = renderText(pageData?.serviceIntro?.eyebrow) || 'Value Co-Creation'
+  const serviceTitle = renderText(pageData?.serviceIntro?.title) || 'Full-Lifecycle Efficiency Empowerment'
+
   const rawStats = (pageData?.stats && pageData.stats.length > 0) ? pageData.stats : []
   const parsedStats = rawStats.map((stat) => {
     const label = renderText(stat?.label)
@@ -167,8 +139,6 @@ export default async function SupportPage() {
     { label: 'Countries Served', val: '100+' },
     { label: 'Spare Parts Availability', val: '99%' },
   ]
-  const serviceEyebrow = renderText(pageData?.serviceIntro?.eyebrow) || 'Value Co-Creation'
-  const serviceTitle = renderText(pageData?.serviceIntro?.title) || 'Full-Lifecycle Efficiency Empowerment'
 
   const serviceStages = (pageData?.serviceStages && pageData.serviceStages.length > 0)
     ? pageData.serviceStages.map((stage, index) => {
@@ -206,21 +176,6 @@ export default async function SupportPage() {
       })
     : []
 
-  const hotlineLabel = renderText(pageData?.urgentAssistance?.hotlineLabel) || '24/7 Hotline'
-  const hotlineValue = renderText(pageData?.urgentAssistance?.hotlineValue) || '+86 19941519694'
-  const salesLabel = renderText(pageData?.urgentAssistance?.salesLabel) || 'Sales'
-  const salesEmail = renderText(pageData?.urgentAssistance?.salesEmail) || 'sales@dodoshark.com'
-  const supportLabel = renderText(pageData?.urgentAssistance?.supportLabel) || 'Technical Support'
-  const supportEmail = renderText(pageData?.urgentAssistance?.supportEmail) || 'support@dodoshark.com'
-  const teamCaptionTitle = renderText(pageData?.urgentAssistance?.teamCaptionTitle) || 'Experts You Can Trust'
-  const teamCaptionDescription =
-    renderText(pageData?.urgentAssistance?.teamCaptionDescription) || 'Direct connection to senior engineers.'
-  const ctaTitle = renderText(pageData?.cta?.title) || 'Ready to Optimize Your Value Partnership?'
-  const ctaDescription =
-    renderText(pageData?.cta?.description) ||
-    'Experience the DoDoShark difference with a partner that accompanies your growth from equipment service to full-lifecycle empowerment.'
-  const ctaButtonLabel = renderText(pageData?.cta?.buttonLabel) || 'Request Efficiency Audit'
-  const ctaButtonHref = cleanText(pageData?.cta?.buttonHref) || '/contact'
 
   return (
     <main className="bg-[#fcfdfd] text-slate-900 font-sans selection:bg-orange-100 selection:text-orange-900">
@@ -356,120 +311,7 @@ export default async function SupportPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-slate-950 py-24">
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-orange-500 opacity-10 blur-[150px]" />
-        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-blue-500 opacity-10 blur-[150px]" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2rem] border border-white/5 bg-slate-900/50 p-10 backdrop-blur-sm md:p-16">
-            <div className="grid items-center gap-16 lg:grid-cols-2">
-              <div>
-                <h2 className="mb-6 text-3xl font-display font-extrabold uppercase tracking-[-0.02em] text-white md:text-4xl">
-                  {urgentAssistanceTitle}
-                </h2>
-                <p className="mb-8 text-lg font-light leading-relaxed text-slate-400">
-                  {urgentAssistanceDescription}
-                </p>
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/20 text-orange-500">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="mb-1 font-bold text-white">{hotlineLabel}</div>
-                      <div className="text-2xl font-black text-orange-400">{hotlineValue}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-slate-400">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="mb-4 font-bold text-white">Email Channels</div>
-                      <div className="flex flex-col gap-y-6 sm:flex-row sm:gap-x-12">
-                        <div>
-                          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                            {salesLabel}
-                          </div>
-                          <div className="text-lg font-medium tracking-tight text-white">
-                            {salesEmail}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                            {supportLabel}
-                          </div>
-                          <div className="text-lg font-medium tracking-tight text-white">
-                            {supportEmail}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="relative">
-                <div className="group flex aspect-square flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-2 text-center">
-                  {pageData?.images?.supportTeamImage?.asset ? (
-                    <CMSImage
-                      image={pageData.images.supportTeamImage}
-                      fill
-                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                    />
-                  ) : (
-                    <Image
-                      src="/assets/images/about/team.jpg"
-                      alt="DoDoShark Global Support Team"
-                      fill
-                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                  <div className="absolute bottom-8 left-8 right-8">
-                    <p className="text-xl font-display font-extrabold uppercase tracking-tight text-white">
-                      {teamCaptionTitle}
-                    </p>
-                    <p className="text-sm font-light text-slate-400">
-                      {teamCaptionDescription}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-32">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="mb-8 text-3xl font-display font-extrabold leading-[1.1] tracking-[-0.02em] text-slate-900 md:text-5xl">
-            {ctaTitle}
-          </h2>
-          <p className="mb-12 text-lg font-light text-slate-500">{ctaDescription}</p>
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
-              href={ctaButtonHref}
-              className="rounded-full bg-orange-500 px-10 py-5 text-sm font-black uppercase tracking-widest text-white shadow-xl shadow-orange-500/20 transition-all hover:bg-orange-600"
-            >
-              {ctaButtonLabel}
-            </Link>
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

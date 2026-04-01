@@ -47,6 +47,8 @@ import {
 } from '@/components/page-builder/richFeatureMerge'
 import SolutionHtmlTemplateFrame from '@/components/solutions/SolutionHtmlTemplateFrame'
 import Icon from '@/components/ui/Icon'
+import RelatedProductsSection from '@/components/solutions/RelatedProductsSection'
+import RelatedVlogsSection from '@/components/solutions/RelatedVlogsSection'
 
 export const runtime = 'nodejs'
 
@@ -116,6 +118,8 @@ type SolutionData = {
   detailRenderMode?: 'pageBuilder' | 'htmlTemplate'
   htmlTemplate?: SolutionHtmlTemplateData
   contentBlocks?: SolutionBlock[]
+  relatedProducts?: any[]
+  relatedVlogs?: any[]
 }
 
 function splitTitle(title?: string) {
@@ -317,6 +321,24 @@ async function getSolution(slug: string, stega?: boolean) {
           }
         }
       }
+    },
+    relatedProducts[]->{
+      _id,
+      _type,
+      title,
+      name,
+      modelName,
+      slug { current },
+      shortDescription,
+      mainImage { ..., asset }
+    },
+    relatedVlogs[]->{
+      _id,
+      title,
+      excerpt,
+      youtubeUrl,
+      thumbnail { ..., asset },
+      category->{ title }
     }
   }`
 
@@ -686,6 +708,8 @@ export default async function SolutionPage({params}: SolutionPageProps) {
           title={cleanText(solution.title) || 'Solution template'}
           srcDoc={preparedTemplate.html}
         />
+        <RelatedProductsSection products={solution.relatedProducts || []} />
+        <RelatedVlogsSection vlogs={solution.relatedVlogs || []} />
       </main>
     )
   }
@@ -694,6 +718,8 @@ export default async function SolutionPage({params}: SolutionPageProps) {
     <div className="bg-white text-slate-900">
       {!hasBuilderHero && renderSolutionHero(solution)}
       <div id="solution-content">{renderGroups.map((group) => renderSolutionGroup(group, solution._id))}</div>
+      <RelatedProductsSection products={solution.relatedProducts || []} />
+      <RelatedVlogsSection vlogs={solution.relatedVlogs || []} />
     </div>
   )
 }
