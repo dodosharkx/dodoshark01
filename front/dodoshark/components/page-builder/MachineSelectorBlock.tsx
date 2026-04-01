@@ -7,7 +7,7 @@ import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { urlFor } from '@/lib/sanity'
-import { cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 import Icon from '@/components/ui/Icon'
 import {
   getSharedBackgroundTheme,
@@ -189,7 +189,7 @@ function MachineCard({
         {src ? (
           <Image
             src={src}
-            alt={image?.alt || title}
+            alt={sanitizeAltText(image?.alt, title) || title}
             width={image?.asset?.metadata?.dimensions?.width ?? 1000}
             height={image?.asset?.metadata?.dimensions?.height ?? 1000}
             style={{ transform: `scale(${zoomScale})` }}

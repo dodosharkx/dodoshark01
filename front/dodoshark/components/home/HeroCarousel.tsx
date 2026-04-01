@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import CMSImage from '@/components/ui/CMSImage'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 
 export type HeroCarouselImage = {
   src: string
@@ -77,7 +78,7 @@ export default function HeroCarousel({
           slides[0].sanityImage?.asset ? (
             <CMSImage
               image={slides[0].sanityImage}
-              alt={slides[0].alt}
+              alt={sanitizeAltText(slides[0].alt) || 'Hero image'}
               fill
               priority
               fetchPriority="high"
@@ -90,7 +91,7 @@ export default function HeroCarousel({
           ) : (
             <Image
               src={slides[0].src}
-              alt={slides[0].alt}
+              alt={sanitizeAltText(slides[0].alt) || 'Hero image'}
               fill
               priority
               fetchPriority="high"
@@ -130,7 +131,7 @@ export default function HeroCarousel({
               slide.sanityImage?.asset ? (
                 <CMSImage
                   image={slide.sanityImage}
-                  alt={slide.alt}
+                  alt={sanitizeAltText(slide.alt) || 'Hero image'}
                   fill
                   priority={index === 0}
                   fetchPriority={index === 0 ? 'high' : 'auto'}
@@ -143,7 +144,7 @@ export default function HeroCarousel({
               ) : (
                 <Image
                   src={slide.src}
-                  alt={slide.alt}
+                  alt={sanitizeAltText(slide.alt) || 'Hero image'}
                   fill
                   priority={index === 0}
                   fetchPriority={index === 0 ? 'high' : 'auto'}

@@ -1,0 +1,129 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e30] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e31]: Solutions
+        - link "Cases" [ref=e33] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e34]: Cases
+        - link "Vlog" [ref=e35] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e36]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - generic [ref=e51]:
+    - heading "Corn Milling Solution" [level=1] [ref=e52]:
+      - text: Corn Milling
+      - text: Solution
+    - generic [ref=e53]:
+      - link "Explore Solution" [ref=e54] [cursor=pointer]:
+        - /url: "#solution-content"
+      - link "Talk to Engineers" [ref=e55] [cursor=pointer]:
+        - /url: /contact
+  - contentinfo [ref=e56]:
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - region "DoDoShark" [ref=e59]:
+          - paragraph [ref=e60]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e61]
+          - paragraph [ref=e63]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e64]:
+            - listitem [ref=e65]:
+              - img [ref=e67]
+              - generic [ref=e69]:
+                - generic [ref=e70]: Phone
+                - link "+86 19941519694" [ref=e73] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e74]:
+              - img [ref=e76]
+              - generic [ref=e78]:
+                - generic [ref=e79]: Website
+                - link "www.dodoshark.com" [ref=e82] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e83]:
+              - img [ref=e85]
+              - generic [ref=e87]:
+                - generic [ref=e88]: Email
+                - generic [ref=e89]:
+                  - link "sales@dodoshark.com" [ref=e91] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e93] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e94]:
+          - paragraph [ref=e95]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e96]
+          - list [ref=e98]:
+            - listitem [ref=e99]:
+              - img [ref=e101]
+              - paragraph [ref=e105]: Customers cover 1,000+ cities across China
+            - listitem [ref=e106]:
+              - img [ref=e108]
+              - paragraph [ref=e112]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e113]:
+              - img [ref=e115]
+              - paragraph [ref=e119]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e120]:
+          - paragraph [ref=e121]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e122]
+          - generic [ref=e124]:
+            - link "Facebook" [ref=e125] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e127]
+            - link "X" [ref=e129] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e131]
+            - link "TikTok" [ref=e133] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e135]
+            - link "YouTube" [ref=e137] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e139]
+          - generic "Worldwide customer distribution map" [ref=e141]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e142]:
+        - generic [ref=e143]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e144]:
+          - link "Terms of Service" [ref=e146] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e147]:
+            - generic [ref=e148]: "|"
+            - link "Privacy Policy" [ref=e149] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e155] [cursor=pointer]:
+    - img [ref=e156]
+  - alert [ref=e159]

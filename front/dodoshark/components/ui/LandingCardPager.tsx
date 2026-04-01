@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useEffectEvent, useState } from 'react'
 
-import { renderSentenceCase } from '@/lib/sanity-utils'
+import { renderSentenceCase, sanitizeAltText } from '@/lib/sanity-utils'
 import Icon from '@/components/ui/Icon'
 
 export type LandingCardItem = {
@@ -190,7 +190,7 @@ export default function LandingCardPager({
               {item.imageSrc ? (
                 <Image
                   src={item.imageSrc}
-                  alt={item.imageAlt || item.title || 'Card image'}
+                  alt={sanitizeAltText(item.imageAlt, item.title) || 'Card image'}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105 group-focus-within:scale-105"
@@ -205,7 +205,7 @@ export default function LandingCardPager({
                 <div className="absolute bottom-4 left-4 z-[1] inline-flex max-w-[min(10rem,calc(100%-2rem))] items-center justify-center rounded-2xl border border-white/30 bg-white/92 px-3 py-2 shadow-[0_18px_38px_-22px_rgba(15,23,42,0.95)] backdrop-blur-sm">
                   <Image
                     src={item.logoSrc}
-                    alt={item.logoAlt || `${item.title} logo`}
+                    alt={sanitizeAltText(item.logoAlt, `${item.title} logo`) || `${item.title} logo`}
                     width={132}
                     height={40}
                     sizes="132px"

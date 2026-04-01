@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 import { getVideoOrientation, normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl } from '@/lib/video'
 import VideoLightbox from '@/components/page-builder/VideoLightbox'
 
@@ -37,7 +38,7 @@ export default function AboutVideoCard({
       >
         <Image
           src={finalThumbnail}
-          alt={thumbnailAlt || title}
+          alt={sanitizeAltText(thumbnailAlt, title) || title}
           fill
           className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
           sizes="(min-width: 1024px) 50vw, 100vw"

@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { fetchSanityData } from '@/lib/sanity.live'
 import { buildPageMetadata } from '@/lib/seo'
-import { cleanSlug, cleanText, firstParam, renderText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, firstParam, renderText, sanitizeAltText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/lib/types/sanity'
 import LandingCardPager, { type LandingCardItem } from '@/components/ui/LandingCardPager'
 import Icon from '@/components/ui/Icon'
@@ -159,7 +159,7 @@ export default async function SolutionsPage({ searchParams }: SolutionsPageProps
       title: renderText(item.title) || 'Solution',
       description: renderText(item.summary) || 'High-efficiency and stable industrial process design.',
       imageSrc: toImageSrc(item.heroImage, 900),
-      imageAlt: renderText(item.heroImage?.alt) || renderText(item.title) || 'Solution image',
+      imageAlt: sanitizeAltText(item.heroImage?.alt, renderText(item.title)) || 'Solution image',
       tag: renderText(item.category?.title) || 'Solution',
     }
   })
@@ -170,7 +170,7 @@ export default async function SolutionsPage({ searchParams }: SolutionsPageProps
         {heroImageSrc && (
           <Image
             src={heroImageSrc}
-            alt={renderText(landing?.hero?.image?.alt) || 'Solutions hero'}
+            alt={sanitizeAltText(landing?.hero?.image?.alt) || 'Solutions hero'}
             fill
             className="object-cover opacity-30"
           />

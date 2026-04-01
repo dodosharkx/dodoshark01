@@ -1,0 +1,163 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e30] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e31]: Solutions
+        - link "Cases" [ref=e32] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e33]: Cases
+        - link "Vlog" [ref=e34] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e35]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - img "Vlog Hero" [ref=e50]
+      - generic:
+        - img
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - img [ref=e54]
+          - generic [ref=e57]: Industrial Video Insights
+        - heading "DoDoShark Video Hub" [level=1] [ref=e58]
+        - paragraph [ref=e59]: Product demonstrations, processing materials, integrated solutions, customer usage scenarios, etc.
+    - generic [ref=e61]:
+      - generic [ref=e62]: No videos found for the current tag.
+      - generic [ref=e64]:
+        - heading "Browse by tag" [level=2] [ref=e66]
+        - generic [ref=e67]:
+          - link "All videos" [ref=e68] [cursor=pointer]:
+            - /url: /vlog
+          - link "Cast iron claw-type grinder" [ref=e69] [cursor=pointer]:
+            - /url: /vlog?tag=Cast-Iron-Claw-Type-Grinder
+          - link "Commercial dough mixer ( fully-enclosed model)" [ref=e70] [cursor=pointer]:
+            - /url: /vlog?tag=Commercial-Dough-Mixer-Fully-Enclosed-Model
+          - link "Commercial dough mixer (stand-type model)" [ref=e71] [cursor=pointer]:
+            - /url: /vlog?tag=Commercial-Dough-Mixer-Stand-Type-Model
+          - link "Commercial rice mill" [ref=e72] [cursor=pointer]:
+            - /url: /vlog?tag=Commercial-Rice-Mill
+          - link "Commercial sugarcane juicer" [ref=e73] [cursor=pointer]:
+            - /url: /vlog?tag=Commercial-Sugarcane-Juicer
+          - link "Compact sus304 grinder(150mesh)" [ref=e74] [cursor=pointer]:
+            - /url: /vlog?tag=Compact-SUS304-Grinder-150Mesh
+          - link "Home-use rice mill" [ref=e75] [cursor=pointer]:
+            - /url: /vlog?tag=Home-Use-Rice-Mill
+          - link "Iron dual-roller crusher" [ref=e76] [cursor=pointer]:
+            - /url: /vlog?tag=Iron-Dual-Roller-Crusher
+          - link "Iron hammer mill crusher" [ref=e77] [cursor=pointer]:
+            - /url: /vlog?tag=Iron-Hammer-Mill-Crusher
+          - link "Sus304 claw-type crusher (box-type model)" [ref=e78] [cursor=pointer]:
+            - /url: /vlog?tag=SUS304-Claw-Type-Grinder-Box-Type-Model
+          - link "Sus304 claw-type crusher (stand-type model)" [ref=e79] [cursor=pointer]:
+            - /url: /vlog?tag=SUS304-Claw-Type-Grinder-Stand-Type-Model
+          - link "Stainless steel double-cone blender" [ref=e80] [cursor=pointer]:
+            - /url: /vlog?tag=Stainless-Steel-Double-Cone-Blender
+          - link "Stainless steel tumbling mixer" [ref=e81] [cursor=pointer]:
+            - /url: /vlog?tag=Stainless-Steel-Tumbling-Mixer
+  - contentinfo [ref=e82]:
+    - generic [ref=e83]:
+      - generic [ref=e84]:
+        - region "DoDoShark" [ref=e85]:
+          - paragraph [ref=e86]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e87]
+          - paragraph [ref=e89]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e90]:
+            - listitem [ref=e91]:
+              - img [ref=e93]
+              - generic [ref=e95]:
+                - generic [ref=e96]: Phone
+                - link "+86 19941519694" [ref=e99] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e100]:
+              - img [ref=e102]
+              - generic [ref=e104]:
+                - generic [ref=e105]: Website
+                - link "www.dodoshark.com" [ref=e108] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e109]:
+              - img [ref=e111]
+              - generic [ref=e113]:
+                - generic [ref=e114]: Email
+                - generic [ref=e115]:
+                  - link "sales@dodoshark.com" [ref=e117] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e119] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e120]:
+          - paragraph [ref=e121]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e122]
+          - list [ref=e124]:
+            - listitem [ref=e125]:
+              - img [ref=e127]
+              - paragraph [ref=e131]: Customers cover 1,000+ cities across China
+            - listitem [ref=e132]:
+              - img [ref=e134]
+              - paragraph [ref=e138]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e139]:
+              - img [ref=e141]
+              - paragraph [ref=e145]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e146]:
+          - paragraph [ref=e147]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e148]
+          - generic [ref=e150]:
+            - link "Facebook" [ref=e151] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e153]
+            - link "X" [ref=e155] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e157]
+            - link "TikTok" [ref=e159] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e161]
+            - link "YouTube" [ref=e163] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e165]
+          - generic "Worldwide customer distribution map" [ref=e167]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e168]:
+        - generic [ref=e169]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e170]:
+          - link "Terms of Service" [ref=e172] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e173]:
+            - generic [ref=e174]: "|"
+            - link "Privacy Policy" [ref=e175] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e181] [cursor=pointer]:
+    - img [ref=e182]

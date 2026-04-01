@@ -4,6 +4,7 @@ import Image from 'next/image'
 
 import { useState, type ReactNode } from 'react'
 import CMSImage from '@/components/ui/CMSImage'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 import type { SanityImage } from '@/lib/types/sanity'
 
 import { getVideoOrientation, normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl, type VideoOrientation } from '@/lib/video'
@@ -76,7 +77,7 @@ export default function VideoPreviewTrigger({
           {sanityImage?.asset ? (
             <CMSImage
               image={sanityImage}
-              alt={imageAlt || title || 'Video cover'}
+              alt={sanitizeAltText(imageAlt, title) || 'Video cover'}
               fill
               sizes={imageSizes}
               className={joinClasses(
@@ -87,7 +88,7 @@ export default function VideoPreviewTrigger({
           ) : resolvedPosterSrc ? (
             <Image
               src={resolvedPosterSrc}
-              alt={imageAlt || title || 'Video cover'}
+              alt={sanitizeAltText(imageAlt, title) || 'Video cover'}
               fill
               sizes={imageSizes}
               className={joinClasses(

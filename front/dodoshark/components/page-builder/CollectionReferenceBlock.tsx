@@ -8,6 +8,7 @@ import type {Swiper as SwiperInstance} from 'swiper'
 import {Swiper, SwiperSlide} from 'swiper/react'
 
 import { urlFor } from '@/lib/sanity'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 import type { SanityImage } from '@/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import {
@@ -141,7 +142,7 @@ function ReferenceCard({
           {image?.asset ? (
             <Image
               src={urlFor(image).width(800).fit('max').url()}
-              alt={image.alt || title}
+              alt={sanitizeAltText(image.alt, title) || title}
               width={800}
               height={800}
               sizes={imageSizes}

@@ -10,7 +10,7 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 
 import {getSafeHref, isExternalHref} from '@/lib/safeHref'
 import {urlFor} from '@/lib/sanity'
-import {cleanSlug, cleanText, renderText} from '@/lib/sanity-utils'
+import {cleanSlug, cleanText, renderText, sanitizeAltText} from '@/lib/sanity-utils'
 import Icon from '@/components/ui/Icon'
 import {
   getSharedBackgroundTheme,
@@ -275,7 +275,7 @@ function GridCard({
         {imageSrc ? (
           <Image
             src={imageSrc}
-            alt={data.image?.alt || data.title || 'Card image'}
+            alt={sanitizeAltText(data.image?.alt, data.title) || 'Card image'}
             fill
             sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover"
@@ -342,7 +342,7 @@ function MobileCarouselCard({
         {imageSrc ? (
           <Image
             src={imageSrc}
-            alt={data.image?.alt || data.title || 'Card image'}
+            alt={sanitizeAltText(data.image?.alt, data.title) || 'Card image'}
             fill
             sizes="100vw"
             className="object-cover"
@@ -681,7 +681,7 @@ export default function CardGridBlock({block}: {block: CardGridBlockData}) {
           {bannerImageSrc ? (
             <Image
               src={bannerImageSrc}
-              alt={block.bannerImage?.alt || block.title || 'Card grid banner'}
+              alt={sanitizeAltText(block.bannerImage?.alt, block.title) || 'Card grid banner'}
               fill
               sizes="100vw"
               className="object-cover"

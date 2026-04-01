@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { getGlobalContact } from '@/lib/global-contact'
 import { fetchSanityData } from '@/lib/sanity.live'
 import { buildPageMetadata } from '@/lib/seo'
-import { renderText, toImageSrc } from '@/lib/sanity-utils'
+import { renderText, sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/lib/types/sanity'
 import LeadInquiryForm from '@/components/forms/LeadInquiryForm'
 import HeroTitle from '@/components/ui/HeroTitle'
@@ -102,7 +102,7 @@ export default async function ContactPage() {
   const heroTitle = pageData?.hero?.title
   const heroSubtitle = renderText(pageData?.hero?.subtitle) || 'Reach out to our expert team for recommendations, quotations, and global technical support.'
   const heroImageSrc = toImageSrc(pageData?.hero?.backgroundImage, 1800) || '/assets/images/about/contact-hero.jpg'
-  const heroImageAlt = renderText(pageData?.hero?.backgroundImage?.alt) || 'DoDoShark Contact Center'
+  const heroImageAlt = sanitizeAltText(pageData?.hero?.backgroundImage?.alt) || 'DoDoShark Contact Center'
 
   const hqTitle = renderText(pageData?.headquarters?.title) || 'Headquarters'
   const hqDesc = renderText(pageData?.headquarters?.description) || 'Located in Nanjing, Jiangsu Province, China.'

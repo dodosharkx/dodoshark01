@@ -11,6 +11,9 @@ type ToImageSrcOptions = {
   fit?: 'crop' | 'max'
 }
 
+const ZERO_WIDTH_TEXT_PATTERN = /[\u200B\u200C\u200D\uFEFF]/g
+let hasWarnedAboutZeroWidthAltText = false
+
 export function firstParam(value: QueryParamValue) {
   if (Array.isArray(value)) return value[0]
   return value
@@ -21,12 +24,47 @@ export function cleanText(value?: string | null) {
   if (value.trim() === '') return undefined
 
   try {
-    const cleaned = stegaClean(value)?.trim()
+    const cleaned = stegaClean(value)?.replace(ZERO_WIDTH_TEXT_PATTERN, '').trim()
     return cleaned || undefined
   } catch {
-    const trimmed = value.trim()
+    const trimmed = value.replace(ZERO_WIDTH_TEXT_PATTERN, '').trim()
     return trimmed || undefined
   }
+}
+
+function describeZeroWidthCodePoints(value: string) {
+  const codePoints = new Set(
+    Array.from(value.matchAll(ZERO_WIDTH_TEXT_PATTERN), ([char]) => `U+${char.codePointAt(0)?.toString(16).toUpperCase().padStart(4, '0')}`),
+  )
+
+  return Array.from(codePoints)
+}
+
+function cleanAltCandidate(value: string) {
+  try {
+    return stegaClean(value)
+  } catch {
+    return value
+  }
+}
+
+export function sanitizeAltText(...values: Array<string | null | undefined>) {
+  for (const value of values) {
+    if (typeof value !== 'string') continue
+
+    const cleanedValue = cleanAltCandidate(value)
+    const zeroWidthMatches = describeZeroWidthCodePoints(cleanedValue)
+    const sanitized = cleanedValue.replace(ZERO_WIDTH_TEXT_PATTERN, '').trim()
+
+    if (!hasWarnedAboutZeroWidthAltText && zeroWidthMatches.length > 0 && process.env.NODE_ENV !== 'production') {
+      hasWarnedAboutZeroWidthAltText = true
+      console.warn(`[sanity-utils] Removed zero-width characters from image alt text: ${zeroWidthMatches.join(', ')}`)
+    }
+
+    if (sanitized) return sanitized
+  }
+
+  return undefined
 }
 
 export function hasStegaMetadata(value?: string | null) {

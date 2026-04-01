@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { fetchSanityData } from '@/lib/sanity.live'
 import { buildPageMetadata } from '@/lib/seo'
-import { cleanSlug, cleanText, firstParam, renderText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, firstParam, renderText, sanitizeAltText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/lib/types/sanity'
 import LandingCardPager, { type LandingCardItem } from '@/components/ui/LandingCardPager'
 import Icon from '@/components/ui/Icon'
@@ -159,7 +159,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       description:
         renderText(product.shortDescription) || 'High performance industrial processing equipment.',
       imageSrc: toImageSrc(product.mainImage, 900),
-      imageAlt: renderText(product.mainImage?.alt) || renderText(product.title) || 'Product image',
+      imageAlt: sanitizeAltText(product.mainImage?.alt, renderText(product.title)) || 'Product image',
       tag: renderText(product.category?.title) || renderText(product.seriesTag) || 'Machine',
     }
   })
@@ -170,7 +170,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         {heroImageSrc && (
           <Image
             src={heroImageSrc}
-            alt={renderText(landing?.hero?.image?.alt) || 'Products hero'}
+            alt={sanitizeAltText(landing?.hero?.image?.alt) || 'Products hero'}
             fill
             className="object-cover opacity-30"
           />

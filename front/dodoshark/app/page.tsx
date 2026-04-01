@@ -8,7 +8,7 @@ import { urlFor } from '@/lib/sanity'
 import { buildPageMetadata } from '@/lib/seo'
 import { normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl } from '@/lib/video'
 import type { SeoMeta, SanityImage } from '@/lib/types/sanity'
-import { cleanSlug, cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 
 const DeferredHeroCarousel = dynamic(() => import('@/components/home/DeferredHeroCarousel'))
 const DeferredHomeBlogCarousel = dynamic(() => import('@/components/home/DeferredHomeBlogCarousel'))
@@ -514,7 +514,7 @@ export default async function HomePage() {
           if (!src) return null
           return {
             src,
-            alt: image.alt || `DoDoShark hero ${index + 1}`,
+            alt: sanitizeAltText(image.alt) || `DoDoShark hero ${index + 1}`,
             sanityImage: image,
           } as HeroCarouselImage
         })
@@ -532,7 +532,7 @@ export default async function HomePage() {
     resolveYouTubeThumbnailUrl(heroVideoUrl, 'maxresdefault') ??
     '/assets/images/factory-showcase.png'
   const whyChooseUsCoverImageAlt = hasSanityImageAsset(data?.whyChooseUsVideoCoverImage)
-    ? renderText(data?.whyChooseUsVideoCoverImage?.alt) || 'DoDoShark Factory Video'
+    ? sanitizeAltText(data?.whyChooseUsVideoCoverImage?.alt) || 'DoDoShark Factory Video'
     : 'DoDoShark Factory Video'
 
   const parsedStats = (data?.stats && data.stats.length > 0)
@@ -716,7 +716,9 @@ export default async function HomePage() {
           id: video._id,
           title: renderText(video.title) || 'Video',
           imageSrc: getSanityImageUrl(video.coverImage, { width: 1200 }) || undefined,
-          imageAlt: hasSanityImageAsset(video.coverImage) ? renderText(video.coverImage?.alt) || renderText(video.title) || 'Video cover' : renderText(video.title) || 'Video cover',
+          imageAlt: hasSanityImageAsset(video.coverImage)
+            ? sanitizeAltText(video.coverImage?.alt, renderText(video.title)) || 'Video cover'
+            : sanitizeAltText(renderText(video.title)) || 'Video cover',
           youtubeUrl,
           metaText: formatHomeVideoMeta(video.publishedAt, renderText(video.tags?.[0]?.title)),
         }

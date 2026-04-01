@@ -6,7 +6,7 @@ import { createDataAttribute } from 'next-sanity'
 import type { ReactNode } from 'react'
 
 import { fetchSanityData } from '@/lib/sanity.live'
-import { cleanSlug, cleanText, renderText, toImageSrc } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, renderText, sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/lib/types/sanity'
 
 const CardGridBlock = dynamic(() => import('@/components/page-builder/CardGridBlock'))
@@ -328,7 +328,7 @@ function renderLegacyFeatureGrid(block: FeatureGridBlockData, key: string | numb
                 {imageSrc && (
                   <Image
                     src={imageSrc}
-                    alt={item.image?.alt || item.title || 'Feature image'}
+                    alt={sanitizeAltText(item.image?.alt, item.title) || 'Feature image'}
                     width={500}
                     height={350}
                     className="h-full w-full object-contain"
@@ -361,7 +361,7 @@ function renderLegacyVideoGallery(block: VideoGalleryBlockData, key: string | nu
                 {thumbnailSrc && (
                   <Image
                     src={thumbnailSrc}
-                    alt={video.thumbnail?.alt || video.title || 'Video thumbnail'}
+                    alt={sanitizeAltText(video.thumbnail?.alt, video.title) || 'Video thumbnail'}
                     fill
                     className="h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"
                   />
@@ -501,7 +501,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       description,
       type: 'website',
       images: ogImage
-        ? [{ url: ogImage, alt: cleanText(product.seo?.ogImage?.alt) || cleanText(product.mainImage?.alt) || title }]
+        ? [{ url: ogImage, alt: sanitizeAltText(product.seo?.ogImage?.alt, product.mainImage?.alt, title) || title }]
         : undefined,
     },
     twitter: {
@@ -553,7 +553,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   {mainImageSrc && (
                     <Image
                       src={mainImageSrc}
-                      alt={cleanText(product.mainImage?.alt) || cleanText(product.title) || 'Product image'}
+                      alt={sanitizeAltText(product.mainImage?.alt, cleanText(product.title)) || 'Product image'}
                       width={1000}
                       height={800}
                       className="w-full h-auto rounded-lg"

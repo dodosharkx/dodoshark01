@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { getSafeHref, isExternalHref } from '@/lib/safeHref'
 import { urlFor } from '@/lib/sanity'
-import { cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 import {
   getSharedBackgroundTheme,
   type ShowcaseCssVars,
@@ -118,7 +118,7 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
         {imageSrc && (
           <Image
             src={imageSrc}
-            alt={item.image?.alt || title}
+            alt={sanitizeAltText(item.image?.alt, title) || title}
             fill
             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
             className={styles.image}
@@ -252,7 +252,7 @@ function SplitCarousel({
                       <div className={styles.splitMediaFrame}>
                         <Image
                           src={imageSrc}
-                          alt={item.image?.alt || title}
+                          alt={sanitizeAltText(item.image?.alt, title) || title}
                           fill
                           sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1023px) 100vw, 52vw"
                           className={styles.splitMediaImage}

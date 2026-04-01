@@ -9,7 +9,7 @@ import type { Swiper as SwiperInstance } from 'swiper'
 
 import { getSafeHref, isExternalHref } from '@/lib/safeHref'
 import { urlFor } from '@/lib/sanity'
-import { cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 import Icon from '@/components/ui/Icon'
 import {
   getSharedSurfaceClasses,
@@ -113,7 +113,7 @@ function resolveGalleryItemPreviewSrc(item: GalleryItem, width: number) {
 
 function resolveGalleryItemAlt(item: GalleryItem) {
   const image = resolveGalleryItemPreviewImage(item)
-  return image?.alt || item.caption || (item.type === 'videoUrl' ? 'Video thumbnail' : 'Gallery image')
+  return sanitizeAltText(image?.alt, item.caption) || (item.type === 'videoUrl' ? 'Video thumbnail' : 'Gallery image')
 }
 
 function getGalleryItemDimensions(item: GalleryItem, fallbackWidth: number, fallbackHeight: number) {
@@ -310,7 +310,7 @@ function ImageTile({
       <div className="relative aspect-video overflow-hidden bg-slate-800 shadow-xl">
         <Image
           src={src}
-          alt={image.alt || caption || 'Gallery image'}
+          alt={sanitizeAltText(image.alt, caption) || 'Gallery image'}
           width={width}
           height={height}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -354,7 +354,7 @@ function VideoTile({
         {thumbnailSrc ? (
           <Image
             src={thumbnailSrc}
-            alt={thumbnail?.alt || caption || 'Video thumbnail'}
+            alt={sanitizeAltText(thumbnail?.alt, caption) || 'Video thumbnail'}
             width={width}
             height={height}
             className="h-full w-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"

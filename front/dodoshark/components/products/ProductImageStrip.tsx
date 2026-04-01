@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 
 import type { ProductImageAsset } from '@/lib/mvp-data'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 
 type ProductImageStripProps = {
   images: ProductImageAsset[]
@@ -39,7 +40,7 @@ export default function ProductImageStrip({ images, productName }: ProductImageS
       <div className="relative aspect-square overflow-hidden rounded-lg border border-orange-300 bg-slate-50 shadow-[0_10px_24px_-18px_rgba(249,115,22,0.8)]">
         <Image
           src={activeImage.src}
-          alt={activeImage.alt}
+          alt={sanitizeAltText(activeImage.alt, productName) || productName}
           fill
           sizes="(min-width: 1024px) 20vw, 44vw"
           className="object-contain p-3 sm:p-4"
@@ -63,7 +64,7 @@ export default function ProductImageStrip({ images, productName }: ProductImageS
                     : 'border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <Image src={image.src} alt={image.alt} fill sizes="80px" className="object-contain p-1" />
+                <Image src={image.src} alt={sanitizeAltText(image.alt, productName) || productName} fill sizes="80px" className="object-contain p-1" />
               </button>
             )
           })}

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
-import { cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 import {
   getSharedBackgroundTheme,
   type SharedBackgroundVariant,
@@ -67,7 +67,7 @@ export default function MetricsBlock({ block }: { block: MetricsBlockData }) {
                     {item.image?.asset ? (
                       <Image
                         src={urlFor(item.image).width(600).height(600).url()}
-    alt={renderText(item.image.alt) || renderText(item.label) || ''}
+    alt={sanitizeAltText(item.image.alt, renderText(item.label)) || ''}
                         width={144}
                         height={144}
                         className="w-full h-full object-cover"

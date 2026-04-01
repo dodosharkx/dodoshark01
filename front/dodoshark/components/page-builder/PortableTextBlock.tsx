@@ -8,6 +8,7 @@ import {
 
 import { getSafeHref, isExternalHref } from '@/lib/safeHref'
 import { urlFor } from '@/lib/sanity'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 import type { SanityImage } from '@/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import {
@@ -132,7 +133,7 @@ function getPortableTextComponents(theme: SharedBackgroundTheme): PortableTextCo
             <div className={`rounded-lg overflow-hidden border shadow-xl ${mediaFrameClass}`}>
               <Image
                 src={urlFor(image).width(1400).fit('max').url()}
-                alt={image.alt || 'Embedded image'}
+                alt={sanitizeAltText(image.alt) || 'Embedded image'}
                 width={width}
                 height={height}
                 className="w-full h-auto object-cover"
@@ -169,7 +170,7 @@ function getPortableTextComponents(theme: SharedBackgroundTheme): PortableTextCo
                   {data.product.mainImage?.asset && (
                     <Image
                       src={urlFor(data.product.mainImage).width(600).fit('max').url()}
-                      alt={data.product.mainImage.alt || title}
+                      alt={sanitizeAltText(data.product.mainImage.alt, title) || title}
                       width={600}
                       height={450}
                       className="w-full h-full object-cover"

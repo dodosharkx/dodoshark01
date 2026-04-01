@@ -1,0 +1,254 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e30] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e31]: Solutions
+        - link "Cases" [ref=e33] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e34]: Cases
+        - link "Vlog" [ref=e35] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e36]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - img "Solutions Hero" [ref=e50]
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - img [ref=e55]
+          - generic [ref=e57]: Solutions catalog
+        - heading "Material Processing Solutions" [level=1] [ref=e58]
+        - paragraph [ref=e59]: Discover proven process flows for different materials and industries.
+    - generic [ref=e61]:
+      - generic [ref=e63]:
+        - link "All Solutions" [ref=e64] [cursor=pointer]:
+          - /url: /solutions
+        - link "Agri Processing Machinery" [ref=e65] [cursor=pointer]:
+          - /url: /solutions?category=agri-processing-machinery
+        - link "Food Processing Machinery" [ref=e66] [cursor=pointer]:
+          - /url: /solutions?category=food-processing-machinery
+      - generic [ref=e67]:
+        - article [ref=e68]:
+          - link "View Details - Flower-ring Auger" [ref=e69] [cursor=pointer]:
+            - /url: /solutions/auger-flower-ring
+            - generic [ref=e70]: View Details - Flower-ring Auger
+          - img "Flower-ring Auger" [ref=e72]
+          - generic [ref=e73]:
+            - generic "Food processing machinery" [ref=e75]:
+              - generic [ref=e77]: Food processing machinery
+            - heading "Flower-ring Auger" [level=3] [ref=e78]
+            - paragraph [ref=e79]: "Dough Characteristics: Soft Dough Applications: Steamed buns, dumplings, filled rolls"
+            - generic [ref=e81]:
+              - text: View Details
+              - img [ref=e82]
+        - article [ref=e84]:
+          - link "View Details - C-Type Auger" [ref=e85] [cursor=pointer]:
+            - /url: /solutions/auger-c-type
+            - generic [ref=e86]: View Details - C-Type Auger
+          - img "C-Type Auger" [ref=e88]
+          - generic [ref=e89]:
+            - generic "Solution" [ref=e91]:
+              - generic [ref=e93]: Solution
+            - heading "C-Type Auger" [level=3] [ref=e94]
+            - paragraph [ref=e95]: "Dough Characteristics: Medium firmness Applications: Steamed buns, dumplings, braided rolls"
+            - generic [ref=e97]:
+              - text: View Details
+              - img [ref=e98]
+        - article [ref=e100]:
+          - link "View Details - Knife-Type Auger" [ref=e101] [cursor=pointer]:
+            - /url: /solutions/auger-knife-type
+            - generic [ref=e102]: View Details - Knife-Type Auger
+          - img "Knife-Type Auger" [ref=e104]
+          - generic [ref=e105]:
+            - generic "Solution" [ref=e107]:
+              - generic [ref=e109]: Solution
+            - heading "Knife-Type Auger" [level=3] [ref=e110]
+            - paragraph [ref=e111]: "Dough Characteristics: Hard dough Applications: Plate noodles, knife-cut noodles, Lanzhou pulled noodles, hand-rolled noodles, Dumpling wrappers, wonton skins"
+            - generic [ref=e113]:
+              - text: View Details
+              - img [ref=e114]
+        - article [ref=e116]:
+          - link "View Details - Customised Wreath-shaped Auger" [ref=e117] [cursor=pointer]:
+            - /url: /solutions/auger-custom-wreath
+            - generic [ref=e118]: View Details - Customised Wreath-shaped Auger
+          - img "Customised Wreath-shaped Auger" [ref=e120]
+          - generic [ref=e121]:
+            - generic "Solution" [ref=e123]:
+              - generic [ref=e125]: Solution
+            - heading "Customised Wreath-shaped Auger" [level=3] [ref=e126]
+            - paragraph [ref=e127]: "Dough Characteristics: Ultra-soft dough Applications: Fried dough sticks, bread, scallion pancakes, hand-held flatbreads, stuffed pastries"
+            - generic [ref=e129]:
+              - text: View Details
+              - img [ref=e130]
+        - article [ref=e132]:
+          - link "View Details - Corn Milling Solution" [ref=e133] [cursor=pointer]:
+            - /url: /solutions/corn-milling-solution
+            - generic [ref=e134]: View Details - Corn Milling Solution
+          - img [ref=e137]
+          - generic [ref=e141]:
+            - generic "Solution" [ref=e143]:
+              - generic [ref=e145]: Solution
+            - heading "Corn Milling Solution" [level=3] [ref=e146]
+            - paragraph [ref=e147]: High-efficiency and stable industrial process design.
+            - generic [ref=e149]:
+              - text: View Details
+              - img [ref=e150]
+        - article [ref=e152]:
+          - link "View Details - Grain Milling Solution" [ref=e153] [cursor=pointer]:
+            - /url: /solutions/grain-milling-solution
+            - generic [ref=e154]: View Details - Grain Milling Solution
+          - img [ref=e157]
+          - generic [ref=e161]:
+            - generic "Solution" [ref=e163]:
+              - generic [ref=e165]: Solution
+            - heading "Grain Milling Solution" [level=3] [ref=e166]
+            - paragraph [ref=e167]: High-efficiency and stable industrial process design.
+            - generic [ref=e169]:
+              - text: View Details
+              - img [ref=e170]
+        - article [ref=e172]:
+          - link "View Details - Salt & Sugar Milling" [ref=e173] [cursor=pointer]:
+            - /url: /solutions/salt-sugar-milling
+            - generic [ref=e174]: View Details - Salt & Sugar Milling
+          - img "33" [ref=e176]
+          - generic [ref=e177]:
+            - generic "Solution" [ref=e179]:
+              - generic [ref=e181]: Solution
+            - heading "Salt & Sugar Milling" [level=3] [ref=e182]
+            - paragraph [ref=e183]: High-efficiency and stable industrial process design.
+            - generic [ref=e185]:
+              - text: View Details
+              - img [ref=e186]
+        - article [ref=e188]:
+          - link "View Details - Granule Mixing Solution" [ref=e189] [cursor=pointer]:
+            - /url: /solutions/granule-mixing-solution
+            - generic [ref=e190]: View Details - Granule Mixing Solution
+          - img [ref=e193]
+          - generic [ref=e197]:
+            - generic "Solution" [ref=e199]:
+              - generic [ref=e201]: Solution
+            - heading "Granule Mixing Solution" [level=3] [ref=e202]
+            - paragraph [ref=e203]: High-efficiency and stable industrial process design.
+            - generic [ref=e205]:
+              - text: View Details
+              - img [ref=e206]
+        - article [ref=e208]:
+          - link "View Details - Fertilizer Mixing" [ref=e209] [cursor=pointer]:
+            - /url: /solutions/fertilizer-mixing
+            - generic [ref=e210]: View Details - Fertilizer Mixing
+          - img [ref=e213]
+          - generic [ref=e217]:
+            - generic "Solution" [ref=e219]:
+              - generic [ref=e221]: Solution
+            - heading "Fertilizer Mixing" [level=3] [ref=e222]
+            - paragraph [ref=e223]: High-efficiency and stable industrial process design.
+            - generic [ref=e225]:
+              - text: View Details
+              - img [ref=e226]
+  - contentinfo [ref=e228]:
+    - generic [ref=e229]:
+      - generic [ref=e230]:
+        - region "DoDoShark" [ref=e231]:
+          - paragraph [ref=e232]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e233]
+          - paragraph [ref=e235]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e236]:
+            - listitem [ref=e237]:
+              - img [ref=e239]
+              - generic [ref=e241]:
+                - generic [ref=e242]: Phone
+                - link "+86 19941519694" [ref=e245] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e246]:
+              - img [ref=e248]
+              - generic [ref=e250]:
+                - generic [ref=e251]: Website
+                - link "www.dodoshark.com" [ref=e254] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e255]:
+              - img [ref=e257]
+              - generic [ref=e259]:
+                - generic [ref=e260]: Email
+                - generic [ref=e261]:
+                  - link "sales@dodoshark.com" [ref=e263] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e265] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e266]:
+          - paragraph [ref=e267]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e268]
+          - list [ref=e270]:
+            - listitem [ref=e271]:
+              - img [ref=e273]
+              - paragraph [ref=e277]: Customers cover 1,000+ cities across China
+            - listitem [ref=e278]:
+              - img [ref=e280]
+              - paragraph [ref=e284]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e285]:
+              - img [ref=e287]
+              - paragraph [ref=e291]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e292]:
+          - paragraph [ref=e293]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e294]
+          - generic [ref=e296]:
+            - link "Facebook" [ref=e297] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e299]
+            - link "X" [ref=e301] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e303]
+            - link "TikTok" [ref=e305] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e307]
+            - link "YouTube" [ref=e309] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e311]
+          - generic "Worldwide customer distribution map" [ref=e313]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e314]:
+        - generic [ref=e315]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e316]:
+          - link "Terms of Service" [ref=e318] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e319]:
+            - generic [ref=e320]: "|"
+            - link "Privacy Policy" [ref=e321] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e327] [cursor=pointer]:
+    - img [ref=e328]

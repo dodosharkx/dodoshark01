@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import {urlFor} from '@/lib/sanity'
-import { cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 
 import AccentTitle from './AccentTitle'
 import FeatureListBlockCarousel from './FeatureListBlockCarousel'
@@ -111,7 +111,7 @@ function FeatureMedia({
     <div className={containerClass}>
       <Image
         src={mediaSrc}
-        alt={media.alt || item.title || 'Feature media'}
+        alt={sanitizeAltText(media.alt, item.title) || 'Feature media'}
         fill
         sizes="(min-width: 768px) 80px, 64px"
         className={imageClass}

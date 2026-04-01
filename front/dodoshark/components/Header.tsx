@@ -11,7 +11,7 @@ import {isNavItemActive, type NavItem} from '@/components/header/nav-utils'
 import {SANITY_DATASET, SANITY_PROJECT_ID} from '@/lib/env'
 import {studioUrl} from '@/lib/sanity'
 import type {GlobalSettingsData} from '@/lib/global-settings'
-import {cleanText, renderText, toImageSrc} from '@/lib/sanity-utils'
+import {cleanText, renderText, sanitizeAltText, toImageSrc} from '@/lib/sanity-utils'
 
 type HeaderProps = {
   settings?: GlobalSettingsData | null
@@ -62,7 +62,7 @@ export default function Header({settings}: HeaderProps) {
 
   const navItems = toNavItems(settings)
   const logoSrc = toImageSrc(settings?.logo, 400) || '/assets/images/brand/dodoshark-logo.png'
-  const logoAlt = renderText(settings?.logo?.alt) || renderText(settings?.siteName) || 'DoDoShark'
+  const logoAlt = sanitizeAltText(settings?.logo?.alt, renderText(settings?.siteName)) || 'DoDoShark'
   
   // Header content with hardcoded fallbacks per user request
   const sloganLabel = renderText(settings?.header?.sloganLabel) || 'Our Slogan'
@@ -158,7 +158,7 @@ export default function Header({settings}: HeaderProps) {
                 {settings?.header?.topBar?.sloganIcon?.asset ? (
                   <Image
                     src={toImageSrc(settings.header.topBar.sloganIcon, 40) || ''}
-                    alt={renderText(settings.header.topBar.sloganIcon.alt) || 'Icon'}
+                    alt={sanitizeAltText(settings.header.topBar.sloganIcon.alt) || 'Icon'}
                     width={24}
                     height={24}
                     className="h-6 w-6 object-contain"
@@ -180,7 +180,7 @@ export default function Header({settings}: HeaderProps) {
                 {settings?.header?.topBar?.workingHoursIcon?.asset ? (
                   <Image
                     src={toImageSrc(settings.header.topBar.workingHoursIcon, 40) || ''}
-                    alt={renderText(settings.header.topBar.workingHoursIcon.alt) || 'Icon'}
+                    alt={sanitizeAltText(settings.header.topBar.workingHoursIcon.alt) || 'Icon'}
                     width={24}
                     height={24}
                     className="h-6 w-6 object-contain"

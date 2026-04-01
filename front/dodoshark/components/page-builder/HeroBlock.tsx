@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
-import { cleanText, renderText } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
 import { getSafeHref, isExternalHref } from '@/lib/safeHref'
 import { urlFor } from '@/lib/sanity'
 import {
@@ -300,7 +300,7 @@ function SplitHeroMedia({
           <Image
             key={image?._key ?? src}
             src={src}
-            alt={image?.alt || title || `Hero product image ${index + 1}`}
+            alt={sanitizeAltText(image?.alt, title) || `Hero product image ${index + 1}`}
             width={dimensions.width}
             height={dimensions.height}
             sizes="(min-width: 1024px) 45vw, 90vw"
@@ -340,7 +340,7 @@ function LegacyHero({
         {imageSrc ? (
           <Image
             src={imageSrc}
-            alt={image?.alt || block.title || 'Hero image'}
+            alt={sanitizeAltText(image?.alt, block.title) || 'Hero image'}
             fill
             sizes="100vw"
             preload={safeActiveImageIndex === 0}
@@ -431,7 +431,7 @@ function SplitHero({
         {backgroundSrc ? (
           <Image
             src={backgroundSrc}
-            alt={backgroundImage?.alt || block.title || 'Hero background image'}
+            alt={sanitizeAltText(backgroundImage?.alt, block.title) || 'Hero background image'}
             fill
             sizes="100vw"
             preload

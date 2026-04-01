@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import {urlFor} from '@/lib/sanity'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 import Icon from '@/components/ui/Icon'
 
 import type {SharedBackgroundTheme} from './backgroundTheme'
@@ -107,7 +108,7 @@ export function FeatureListStandaloneCard({
         {imageSrc ? (
           <Image
             src={imageSrc}
-            alt={image?.alt || item.title || 'Feature image'}
+            alt={sanitizeAltText(image?.alt, item.title) || 'Feature image'}
             fill
             sizes={sizes}
             className={imageClass}

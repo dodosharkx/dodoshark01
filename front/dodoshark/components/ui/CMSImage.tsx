@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type { ComponentProps } from 'react'
 
-import { renderText, toImageSrc } from '@/lib/sanity-utils'
+import { sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 import type { SanityImage } from '@/lib/types/sanity'
 
 type CMSImageProps = Omit<ComponentProps<typeof Image>, 'src' | 'alt'> & {
@@ -30,7 +30,7 @@ export default function CMSImage({
   ...props
 }: CMSImageProps) {
   const src = toImageSrc(image, width || 1200)
-  const alt = altOverride || renderText(image?.alt) || fallbackAlt
+  const alt = sanitizeAltText(altOverride, image?.alt, fallbackAlt) || 'DoDoShark Image'
 
   // If Sanity resolution fails but we have a fallback source, use it
   if (!src && fallbackSrc) {

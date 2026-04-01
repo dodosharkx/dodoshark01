@@ -7,7 +7,7 @@ import type {ReactNode} from 'react'
 
 import dynamic from 'next/dynamic'
 import { fetchSanityData } from '@/lib/sanity.live'
-import {cleanSlug, cleanText, hasStegaMetadata, renderText, toImageSrc} from '@/lib/sanity-utils'
+import {cleanSlug, cleanText, hasStegaMetadata, renderText, sanitizeAltText, toImageSrc} from '@/lib/sanity-utils'
 import {
   prepareSolutionTemplate,
   type SolutionHtmlTemplateData,
@@ -467,7 +467,7 @@ function renderSolutionGroup(group: PageBuilderRenderGroup<SolutionBlock>, docum
                       <div className="h-48 rounded-lg overflow-hidden mb-6 bg-white">
                         <Image
                           src={featureImageSrc}
-                          alt={item.image?.alt || item.title || 'Feature image'}
+                          alt={sanitizeAltText(item.image?.alt, item.title) || 'Feature image'}
                           width={800}
                           height={500}
                           className="w-full h-full object-cover"
@@ -515,7 +515,7 @@ function renderSolutionGroup(group: PageBuilderRenderGroup<SolutionBlock>, docum
                       {videoThumbnailSrc && (
                         <Image
                           src={videoThumbnailSrc}
-                          alt={video.thumbnail?.alt || video.title || 'Video thumbnail'}
+                          alt={sanitizeAltText(video.thumbnail?.alt, video.title) || 'Video thumbnail'}
                           fill
                           sizes="(min-width: 1024px) 50vw, 100vw"
                           className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
@@ -553,7 +553,7 @@ function renderSolutionHero(solution: SolutionData) {
         <div className="absolute inset-0 opacity-20">
           <Image
             src={heroImageSrc}
-            alt={solution.heroImage?.alt || solution.title || 'Solution hero image'}
+            alt={sanitizeAltText(solution.heroImage?.alt, solution.title) || 'Solution hero image'}
             fill
             sizes="100vw"
             preload
@@ -649,7 +649,7 @@ export async function generateMetadata({
       description,
       type: 'website',
       images: ogImage
-        ? [{url: ogImage, alt: cleanText(solution.seo?.ogImage?.alt) || cleanText(solution.heroImage?.alt) || title}]
+        ? [{url: ogImage, alt: sanitizeAltText(solution.seo?.ogImage?.alt, solution.heroImage?.alt, title) || title}]
         : undefined,
     },
     twitter: {

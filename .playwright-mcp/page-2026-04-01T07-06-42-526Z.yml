@@ -1,0 +1,293 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e31] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e32]: Solutions
+        - link "Cases" [ref=e33] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e34]: Cases
+        - link "Vlog" [ref=e35] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e36]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - generic [ref=e48]:
+    - generic [ref=e51]:
+      - img "background" [ref=e52]
+      - generic [ref=e54]:
+        - generic [ref=e56]:
+          - generic [ref=e59]:
+            - button "Previous hero image" [ref=e60]:
+              - img [ref=e61]
+            - button "Next hero image" [ref=e63]:
+              - img [ref=e64]
+            - img "11" [ref=e66]
+          - generic [ref=e67]:
+            - button "Switch hero image 1" [ref=e68]
+            - button "Switch hero image 2" [ref=e70]
+            - button "Switch hero image 3" [ref=e72]
+            - button "Switch hero image 4" [ref=e74]
+            - button "Switch hero image 5" [ref=e76]
+        - generic [ref=e79]:
+          - heading "DoDoShark Commercial Stand-Mounted Dough Mixer" [level=1] [ref=e80]
+          - paragraph [ref=e83]: The DoDoShark Commercial Stand-Mounted Dough Mixer is a food processing appliance featuring a high-toughness stainless steel dough chamber, solid stainless steel auger, and transmission mechanism. Designed specifically for commercial settings, it accommodates substantial dough-mixing requirements. The machine employs an electric motor to drive the mixing paddle at a constant speed, generating kneading, flipping, and folding actions that replicate manual dough-kneading techniques. This ensures thorough integration of ingredients and additives, efficiently completing the dough-kneading process. By selecting different auger configurations, dough of varying textures can be produced to meet the processing requirements for diverse flour-based products such as buns, dumplings, noodles, wonton wrappers, and bread.
+    - generic [ref=e87]:
+      - heading "Core advantage of Dodoshark" [level=2] [ref=e90]
+      - generic [ref=e96]:
+        - article [ref=e98]:
+          - img "11" [ref=e100]
+          - generic [ref=e101]:
+            - heading "Robust Kneading Performance" [level=3] [ref=e102]
+            - paragraph [ref=e103]: 28cm large gear drive delivers enhanced torque
+        - article [ref=e105]:
+          - img "11" [ref=e107]
+          - generic [ref=e108]:
+            - heading "Motor Protection" [level=3] [ref=e109]
+            - paragraph [ref=e110]: New motor guard for enhanced safety and durability
+        - article [ref=e112]:
+          - img "1" [ref=e114]
+          - generic [ref=e115]:
+            - heading "Upgraded Switch" [level=3] [ref=e116]
+            - paragraph [ref=e117]: Push-button switch for precise and safe operation
+        - article [ref=e119]:
+          - img "1" [ref=e121]
+          - generic [ref=e122]:
+            - heading "Faster dough kneading" [level=3] [ref=e123]
+            - paragraph [ref=e124]: Efficient kneading, completed in 10 minutes
+        - article [ref=e126]:
+          - img "1" [ref=e128]
+          - generic [ref=e129]:
+            - heading "Professional auger" [level=3] [ref=e130]
+            - paragraph [ref=e131]: Refined through 18 R&D iterations, with two professional auger options available
+        - article [ref=e133]:
+          - img "1" [ref=e135]
+          - generic [ref=e136]:
+            - heading "Premium Materials" [level=3] [ref=e137]
+            - paragraph [ref=e138]: Stainless steel hopper + stainless steel solid auger
+    - generic [ref=e140]:
+      - generic [ref=e141]:
+        - img "111" [ref=e142]
+        - heading "The Types and Features of DoDoShark Commercial Stand-Mounted Dough Mixer" [level=2] [ref=e148]
+      - generic [ref=e152]:
+        - heading "Auger Options" [level=3] [ref=e155]
+        - generic [ref=e158]:
+          - article [ref=e159]:
+            - img "Knife-Type Auger" [ref=e161]
+            - generic [ref=e162]:
+              - heading "Knife-Type Auger" [level=3] [ref=e163]
+              - paragraph [ref=e164]: "Dough Characteristics: Hard dough Applications: Plate noodles, knife-cut noodles, Lanzhou pulled noodles,hand-rolled noodles,dumpling wrappers, wonton skins"
+          - article [ref=e165]:
+            - img "Flower-ring Auger 2" [ref=e167]
+            - generic [ref=e168]:
+              - heading "Flower-ring Auger" [level=3] [ref=e169]
+              - paragraph [ref=e170]: "Dough Characteristics: Soft Dough Applications: Steamed buns, dumplings, filled rolls"
+    - generic [ref=e173]:
+      - heading "Material Options" [level=2] [ref=e176]
+      - table [ref=e180]:
+        - rowgroup [ref=e181]:
+          - row "Type Appearance Description" [ref=e182]:
+            - columnheader "Type" [ref=e183]
+            - columnheader "Appearance" [ref=e184]
+            - columnheader "Description" [ref=e185]
+        - rowgroup [ref=e186]:
+          - 'row "Material 201 Hopper - Cover Plate - Central Shaft - Auger - Frame Guard: All constructed from 201 stainless steel" [ref=e187]':
+            - cell "Material" [ref=e188]
+            - cell "201" [ref=e189]
+            - 'cell "Hopper - Cover Plate - Central Shaft - Auger - Frame Guard: All constructed from 201 stainless steel" [ref=e190]'
+          - row "Material 304 Front compartment, cover plate, central shaft, and auger are all made of 304 stainless steel; frame guard is made of 201 stainless steel" [ref=e191]:
+            - cell "Material" [ref=e192]
+            - cell "304" [ref=e193]
+            - cell "Front compartment, cover plate, central shaft, and auger are all made of 304 stainless steel; frame guard is made of 201 stainless steel" [ref=e194]
+    - generic [ref=e197]:
+      - heading "Actual Product Images" [level=2] [ref=e200]
+      - button "Currently viewing stand-alone" [ref=e208]: stand-alone
+      - generic [ref=e212]:
+        - article [ref=e214]:
+          - img "10kg" [ref=e216]
+          - heading "10kg" [level=3] [ref=e218]
+        - article [ref=e220]:
+          - img "15kg" [ref=e222]
+          - heading "15kg" [level=3] [ref=e224]
+        - article [ref=e226]:
+          - img "25kg" [ref=e228]
+          - heading "25kg" [level=3] [ref=e230]
+    - generic [ref=e233]:
+      - heading "Model Specifications" [level=2] [ref=e236]
+      - table [ref=e240]:
+        - rowgroup [ref=e241]:
+          - row "Model Model 10 Model 15 Model 25" [ref=e242]:
+            - columnheader "Model" [ref=e243]
+            - columnheader "Model 10" [ref=e244]
+            - columnheader "Model 15" [ref=e245]
+            - columnheader "Model 25" [ref=e246]
+        - rowgroup [ref=e247]:
+          - row "Single Batch Capacity 6–10 kg dry flour 10–15 kg dry flour 16–25 kg dry flour" [ref=e248]:
+            - cell "Single Batch Capacity" [ref=e249]
+            - cell "6–10 kg dry flour" [ref=e250]
+            - cell "10–15 kg dry flour" [ref=e251]
+            - cell "16–25 kg dry flour" [ref=e252]
+          - row "Hopper Capacity 32L 38L 73L" [ref=e253]:
+            - cell "Hopper Capacity" [ref=e254]
+            - cell "32L" [ref=e255]
+            - cell "38L" [ref=e256]
+            - cell "73L" [ref=e257]
+          - row "Main Shaft Speed 40 RPM 37 RPM 30 RPM" [ref=e258]:
+            - cell "Main Shaft Speed" [ref=e259]
+            - cell "40 RPM" [ref=e260]
+            - cell "37 RPM" [ref=e261]
+            - cell "30 RPM" [ref=e262]
+          - row "Motor Power 1.1kW 1.5kW 2.2kW" [ref=e263]:
+            - cell "Motor Power" [ref=e264]
+            - cell "1.1kW" [ref=e265]
+            - cell "1.5kW" [ref=e266]
+            - cell "2.2kW" [ref=e267]
+          - row "Voltage and Frequency 220v/50Hz 220v/50Hz 220v/50Hz" [ref=e268]:
+            - cell "Voltage and Frequency" [ref=e269]
+            - cell "220v/50Hz" [ref=e270]
+            - cell "220v/50Hz" [ref=e271]
+            - cell "220v/50Hz" [ref=e272]
+          - row "Overall Weight 42kg 44kg 60kg" [ref=e273]:
+            - cell "Overall Weight" [ref=e274]
+            - cell "42kg" [ref=e275]
+            - cell "44kg" [ref=e276]
+            - cell "60kg" [ref=e277]
+          - row "Product Dimensions (L*W*H) 59*36*80 61*37*77 73*46*89" [ref=e278]:
+            - cell "Product Dimensions (L*W*H)" [ref=e279]
+            - cell "59*36*80" [ref=e280]
+            - cell "61*37*77" [ref=e281]
+            - cell "73*46*89" [ref=e282]
+          - row "Flour Hopper Auger Material 201 201 201" [ref=e283]:
+            - cell "Flour Hopper Auger Material" [ref=e284]
+            - cell "201" [ref=e285]
+            - cell "201" [ref=e286]
+            - cell "201" [ref=e287]
+    - generic [ref=e290]:
+      - heading "Videos to Learn About the Product" [level=2] [ref=e293]
+      - generic [ref=e296]:
+        - button "Previous videos" [disabled] [ref=e297]:
+          - img [ref=e298]
+        - button "Next videos" [ref=e300]:
+          - img [ref=e301]
+        - generic [ref=e304]:
+          - article [ref=e306]:
+            - img "11" [ref=e308]
+            - heading "DoDoShark Production Base" [level=3] [ref=e310]
+          - article [ref=e312]:
+            - img "11" [ref=e314]
+            - heading "First Use of the Product" [level=3] [ref=e316]
+          - article [ref=e318]:
+            - img "11" [ref=e320]
+            - heading "Different Auger Configurations and Dough Results" [level=3] [ref=e322]
+          - article [ref=e324]:
+            - img "11" [ref=e326]
+            - heading "Customer Use Cases" [level=3] [ref=e328]
+      - link "View More" [ref=e330] [cursor=pointer]:
+        - /url: "#"
+        - text: View More
+        - img [ref=e331]
+  - contentinfo [ref=e333]:
+    - generic [ref=e334]:
+      - generic [ref=e335]:
+        - region "DoDoShark" [ref=e336]:
+          - paragraph [ref=e337]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e338]
+          - paragraph [ref=e340]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e341]:
+            - listitem [ref=e342]:
+              - img [ref=e344]
+              - generic [ref=e346]:
+                - generic [ref=e347]: Phone
+                - link "+86 19941519694" [ref=e350] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e351]:
+              - img [ref=e353]
+              - generic [ref=e355]:
+                - generic [ref=e356]: Website
+                - link "www.dodoshark.com" [ref=e359] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e360]:
+              - img [ref=e362]
+              - generic [ref=e364]:
+                - generic [ref=e365]: Email
+                - generic [ref=e366]:
+                  - link "sales@dodoshark.com" [ref=e368] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e370] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e371]:
+          - paragraph [ref=e372]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e373]
+          - list [ref=e375]:
+            - listitem [ref=e376]:
+              - img [ref=e378]
+              - paragraph [ref=e382]: Customers cover 1,000+ cities across China
+            - listitem [ref=e383]:
+              - img [ref=e385]
+              - paragraph [ref=e389]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e390]:
+              - img [ref=e392]
+              - paragraph [ref=e396]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e397]:
+          - paragraph [ref=e398]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e399]
+          - generic [ref=e401]:
+            - link "Facebook" [ref=e402] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e404]
+            - link "X" [ref=e406] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e408]
+            - link "TikTok" [ref=e410] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e412]
+            - link "YouTube" [ref=e414] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e416]
+          - generic "Worldwide customer distribution map" [ref=e418]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e419]:
+        - generic [ref=e420]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e421]:
+          - link "Terms of Service" [ref=e423] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e424]:
+            - generic [ref=e425]: "|"
+            - link "Privacy Policy" [ref=e426] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e432] [cursor=pointer]:
+    - img [ref=e433]

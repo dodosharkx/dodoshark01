@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 
 import { fetchSanityData } from '@/lib/sanity.live'
-import { cleanSlug, cleanText, firstParam, renderText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, firstParam, renderText, sanitizeAltText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 import LandingCardPager, { type LandingCardItem } from '@/components/ui/LandingCardPager'
@@ -218,10 +218,10 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
       description:
         renderText(item.excerpt) || 'Detailed case study content is available in the full project report.',
       imageSrc: toImageSrc(item.coverImage, 900),
-      imageAlt: renderText(item.coverImage?.alt) || renderText(item.title) || 'Case cover',
+      imageAlt: sanitizeAltText(item.coverImage?.alt, renderText(item.title)) || 'Case cover',
       imageAspectRatio: getCoverImageAspectRatio(item.coverImage),
       logoSrc: toImageSrc(item.clientLogo, 320),
-      logoAlt: renderText(item.clientLogo?.alt) || renderText(item.title) || 'Client logo',
+      logoAlt: sanitizeAltText(item.clientLogo?.alt, renderText(item.title)) || 'Client logo',
       tag: renderText(item.tags?.[0]?.title) || 'Case Study',
       metaText: renderText(item.location),
     }
@@ -246,7 +246,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
         {heroImageSrc && (
           <Image
             src={heroImageSrc}
-            alt={renderText(landing?.hero?.image?.alt) || 'Cases hero'}
+            alt={sanitizeAltText(landing?.hero?.image?.alt) || 'Cases hero'}
             fill
             sizes="100vw"
             className="object-cover opacity-30"

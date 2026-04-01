@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { cleanText, toImageSrc } from '@/lib/sanity-utils'
+import { cleanText, sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 import type { SeoMeta } from '@/lib/types/sanity'
 
 type BuildPageMetadataOptions = {
@@ -45,7 +45,7 @@ export function buildPageMetadata({
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: normalizeText(seo?.ogImage?.alt) || title,
+          alt: sanitizeAltText(seo?.ogImage?.alt, title) || title,
         },
       ]
     : undefined

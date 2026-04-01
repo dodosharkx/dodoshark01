@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { fetchSanityData } from '@/lib/sanity.live'
 import { buildPageMetadata } from '@/lib/seo'
-import { cleanSlug, cleanText, firstParam, renderText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, firstParam, renderText, sanitizeAltText, toImageSrc, type QueryParamValue } from '@/lib/sanity-utils'
 import type { SeoMeta, SanityImage } from '@/lib/types/sanity'
 import VlogVideoGrid, { type VlogVideoCardItem } from '@/components/vlog/VlogVideoGrid'
 import Icon from '@/components/ui/Icon'
@@ -185,7 +185,9 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
     title: renderText(post.title) || 'Video',
     excerpt: renderText(post.excerpt) || 'Watch the full video for equipment demos and process highlights.',
     imageSrc: toImageSrc(post.coverImage, 900),
-    imageAlt: hasSanityImageAsset(post.coverImage) ? renderText(post.coverImage?.alt) || renderText(post.title) || 'Video cover' : renderText(post.title) || 'Video cover',
+    imageAlt: hasSanityImageAsset(post.coverImage)
+      ? sanitizeAltText(post.coverImage?.alt, renderText(post.title)) || 'Video cover'
+      : sanitizeAltText(renderText(post.title)) || 'Video cover',
     youtubeUrl: cleanText(post.youtubeUrl),
     tagLabel: renderText(post.tags?.[0]?.title) || 'Video',
   }))
@@ -209,7 +211,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
         {heroImageSrc && (
           <Image
             src={heroImageSrc}
-            alt={renderText(landing?.hero?.image?.alt) || 'Blog hero'}
+            alt={sanitizeAltText(landing?.hero?.image?.alt) || 'Blog hero'}
             fill
             sizes="100vw"
             className="object-cover opacity-30"

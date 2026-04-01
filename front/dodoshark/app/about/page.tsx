@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 
 import { fetchSanityData } from '@/lib/sanity.live'
 import { buildPageMetadata } from '@/lib/seo'
-import { cleanText, renderText, toImageSrc } from '@/lib/sanity-utils'
+import { cleanText, renderText, sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 import type { SanityImage, SeoMeta } from '@/lib/types/sanity'
 import AboutVideoCard from '@/components/about/AboutVideoCard'
 import CMSImage from '@/components/ui/CMSImage'
@@ -330,7 +330,7 @@ export default async function AboutPage() {
         <div className="absolute inset-0 opacity-30">
           <Image
             src={heroImageSrc}
-            alt={cleanText(heroImage?.alt) || 'DoDoShark Hero'}
+            alt={sanitizeAltText(heroImage?.alt) || 'DoDoShark Hero'}
             fill
             sizes="100vw"
             className="object-cover"
@@ -365,7 +365,7 @@ export default async function AboutPage() {
                 youtubeUrl={brandStoryVideoUrl}
                 title={brandStoryTitle}
                 thumbnailUrl={toImageSrc(brandStoryThumbnail, 1000) || '/assets/images/brand/DoDoShark-Brand-cover.jpg'}
-                thumbnailAlt={cleanText(brandStoryThumbnail?.alt) || brandStoryTitle}
+                thumbnailAlt={sanitizeAltText(brandStoryThumbnail?.alt, brandStoryTitle) || brandStoryTitle}
                 aspectRatio="aspect-[9/16]"
               />
             </div>
@@ -456,7 +456,7 @@ export default async function AboutPage() {
         <div className="absolute inset-0 opacity-20">
           <Image
             src={toImageSrc(globalLayoutBackgroundImage, 1800) || '/assets/images/about/global-layout.jpg'}
-            alt={cleanText(globalLayoutBackgroundImage?.alt) || 'Global Layout'}
+            alt={sanitizeAltText(globalLayoutBackgroundImage?.alt) || 'Global Layout'}
             fill
             className="object-cover"
           />
@@ -579,7 +579,7 @@ export default async function AboutPage() {
             <div className="absolute inset-0 opacity-30">
               <Image
                 src={toImageSrc(valuePropositionBackgroundImage, 1800) || '/assets/images/about/value-proposition.jpg'}
-                alt={cleanText(valuePropositionBackgroundImage?.alt) || 'Value Proposition'}
+                alt={sanitizeAltText(valuePropositionBackgroundImage?.alt) || 'Value Proposition'}
                 fill
                 className="object-cover"
               />

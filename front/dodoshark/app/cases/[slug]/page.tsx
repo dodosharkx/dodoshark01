@@ -6,7 +6,7 @@ import { PortableText, type PortableTextBlock, type PortableTextComponents } fro
 
 import { getSafeHref, isExternalHref } from '@/lib/safeHref'
 import { fetchSanityData } from '@/lib/sanity.live'
-import { cleanSlug, cleanText, renderSentenceCase, renderText, toImageSrc } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, renderSentenceCase, renderText, sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 import type { SanityAsset, SanityImage, SeoMeta } from '@/lib/types/sanity'
 import Icon from '@/components/ui/Icon'
 
@@ -219,7 +219,7 @@ function buildPortableTextComponents(): PortableTextComponents {
             <div className="overflow-hidden rounded-lg border border-slate-200">
               <Image
                 src={imageSrc}
-                alt={image.alt || 'Case study image'}
+                alt={sanitizeAltText(image.alt) || 'Case study image'}
                 width={width}
                 height={height}
                 className="w-full h-auto object-cover"
@@ -269,7 +269,7 @@ export async function generateMetadata({ params }: CaseDetailPageProps): Promise
       title,
       description,
       type: 'article',
-      images: ogImage ? [{ url: ogImage, alt: cleanText(caseStudy.seo?.ogImage?.alt) || cleanText(caseStudy.coverImage?.alt) || title }] : undefined,
+      images: ogImage ? [{ url: ogImage, alt: sanitizeAltText(caseStudy.seo?.ogImage?.alt, caseStudy.coverImage?.alt, title) || title }] : undefined,
     },
     twitter: {
       card: 'summary_large_image',
@@ -309,7 +309,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
           <div className="absolute inset-0 opacity-30">
             <Image
               src={coverImageSrc}
-              alt={renderText(caseStudy.coverImage?.alt) || renderText(caseStudy.title) || 'Case cover image'}
+              alt={sanitizeAltText(caseStudy.coverImage?.alt, renderText(caseStudy.title)) || 'Case cover image'}
               fill
               sizes="100vw"
               priority
@@ -327,7 +327,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
             <div className="mx-auto mt-8 w-full max-w-[220px] rounded-[1.5rem] border border-white/20 bg-white/92 px-4 py-3 shadow-[0_20px_45px_-24px_rgba(15,23,42,0.95)] backdrop-blur-sm">
               <Image
                 src={clientLogoSrc}
-                alt={renderText(caseStudy.clientLogo?.alt) || renderText(caseStudy.title) || 'Client logo'}
+                alt={sanitizeAltText(caseStudy.clientLogo?.alt, renderText(caseStudy.title)) || 'Client logo'}
                 width={176}
                 height={56}
                 sizes="176px"
@@ -394,7 +394,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
                         {imageSrc ? (
                           <Image
                             src={imageSrc}
-                            alt={item.image?.alt || title}
+                            alt={sanitizeAltText(item.image?.alt, title) || title}
                             width={320}
                             height={320}
                             className="h-full w-full object-contain"

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import HeroCarousel, { type HeroCarouselProps } from '@/components/home/HeroCarousel'
+import { sanitizeAltText } from '@/lib/sanity-utils'
 
 export default function DeferredHeroCarousel(props: HeroCarouselProps) {
   const [hasMounted, setHasMounted] = useState(false)
@@ -21,7 +22,7 @@ export default function DeferredHeroCarousel(props: HeroCarouselProps) {
     return (
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#64748b_0,#475569_45%,#334155_100%)]" />
-        {fallbackSlide ? <Image src={fallbackSlide.src} alt={fallbackSlide.alt} fill sizes="100vw" className="object-cover" priority /> : null}
+        {fallbackSlide ? <Image src={fallbackSlide.src} alt={sanitizeAltText(fallbackSlide.alt) || 'Hero image'} fill sizes="100vw" className="object-cover" priority /> : null}
       </div>
     )
   }

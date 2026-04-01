@@ -1,0 +1,305 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "DoDoShark Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "DoDoShark Logo" [ref=e5]
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - generic [ref=e11]:
+          - paragraph [ref=e12]: OUR SLOGAN
+          - paragraph [ref=e13]: Work with Confidence, Reap in Joy
+      - generic [ref=e14]:
+        - img [ref=e16]
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: WORKING HOURS (BEIJING TIME)
+          - paragraph [ref=e21]: "Mon - Sun: 9:00 - 22:00"
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - navigation [ref=e25]:
+        - link "Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e27]: Home
+        - link "Products" [ref=e28] [cursor=pointer]:
+          - /url: /products
+          - generic [ref=e29]: Products
+        - link "Solutions" [ref=e30] [cursor=pointer]:
+          - /url: /solutions
+          - generic [ref=e31]: Solutions
+        - link "Cases" [ref=e32] [cursor=pointer]:
+          - /url: /cases
+          - generic [ref=e33]: Cases
+        - link "Vlog" [ref=e35] [cursor=pointer]:
+          - /url: /vlog
+          - generic [ref=e36]: Vlog
+        - link "Support" [ref=e37] [cursor=pointer]:
+          - /url: /support
+          - generic [ref=e38]: Support
+        - link "About" [ref=e39] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e40]: About
+        - link "Contact" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - generic [ref=e42]: Contact
+        - link "Recruit Agents" [ref=e43] [cursor=pointer]:
+          - /url: /recruit-agents
+          - generic [ref=e44]: Recruit Agents
+      - link "Request Quote" [ref=e47] [cursor=pointer]:
+        - /url: /contact
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - img "Cases Hero" [ref=e50]
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - img [ref=e56]
+          - generic [ref=e59]: Global Success Stories
+        - heading "Success Stories in Action" [level=1] [ref=e60]
+        - paragraph [ref=e61]: Discover how DoDoShark help customers improve throughput and efficiency with real deployments.
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - article [ref=e65]:
+          - link "View Details - Hangzhou Wuhua Technology Management Co., Ltd." [ref=e66] [cursor=pointer]:
+            - /url: /cases/hangzhou-wuhua-technology-management-co-ltd
+            - generic [ref=e67]: View Details - Hangzhou Wuhua Technology Management Co., Ltd.
+          - img "222" [ref=e69]
+          - generic [ref=e70]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e72]:
+              - generic [ref=e74]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e75]:
+              - img [ref=e76]
+              - generic [ref=e79]: Zhejiang,China
+            - heading "Hangzhou Wuhua Technology Management Co., Ltd." [level=3] [ref=e80]
+            - paragraph [ref=e81]: 304 Stainless Steel Grinder
+            - generic [ref=e83]:
+              - text: View Details
+              - img [ref=e84]
+        - article [ref=e86]:
+          - link "View Details - A Condiment Processing Plant in Jiangsu" [ref=e87] [cursor=pointer]:
+            - /url: /cases/a-condiment-processing-plant-in-jiangsu
+            - generic [ref=e88]: View Details - A Condiment Processing Plant in Jiangsu
+          - img "222" [ref=e90]
+          - generic [ref=e91]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e93]:
+              - generic [ref=e95]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e96]:
+              - img [ref=e97]
+              - generic [ref=e100]: Jiangsu,China
+            - heading "A Condiment Processing Plant in Jiangsu" [level=3] [ref=e101]
+            - paragraph [ref=e102]: 304 Stainless Steel Grinder
+            - generic [ref=e104]:
+              - text: View Details
+              - img [ref=e105]
+        - article [ref=e107]:
+          - link "View Details - Cangzhou Tianhuo Food Company" [ref=e108] [cursor=pointer]:
+            - /url: /cases/cangzhou-tianhuo-food-company
+            - generic [ref=e109]: View Details - Cangzhou Tianhuo Food Company
+          - img "222" [ref=e111]
+          - generic [ref=e112]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e114]:
+              - generic [ref=e116]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e117]:
+              - img [ref=e118]
+              - generic [ref=e121]: Hebei,China
+            - heading "Cangzhou Tianhuo Food Company" [level=3] [ref=e122]
+            - paragraph [ref=e123]: Primary coarse crushing followed by tooth-claw grinding.
+            - generic [ref=e125]:
+              - text: View Details
+              - img [ref=e126]
+        - article [ref=e128]:
+          - link "View Details - Sichuan Jinliang Food Co., Ltd." [ref=e129] [cursor=pointer]:
+            - /url: /cases/sichuan-jinliang-food-co-ltd
+            - generic [ref=e130]: View Details - Sichuan Jinliang Food Co., Ltd.
+          - img "222" [ref=e132]
+          - generic [ref=e133]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e135]:
+              - generic [ref=e137]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e138]:
+              - img [ref=e139]
+              - generic [ref=e142]: Sichuan,China
+            - heading "Sichuan Jinliang Food Co., Ltd." [level=3] [ref=e143]
+            - paragraph [ref=e144]: 304 Stainless Steel Grinder
+            - generic [ref=e146]:
+              - text: View Details
+              - img [ref=e147]
+        - article [ref=e149]:
+          - link "View Details - Anhui Gongting Food Factory" [ref=e150] [cursor=pointer]:
+            - /url: /cases/anhui-gongting-food-factory
+            - generic [ref=e151]: View Details - Anhui Gongting Food Factory
+          - img "222" [ref=e153]
+          - generic [ref=e154]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e156]:
+              - generic [ref=e158]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e159]:
+              - img [ref=e160]
+              - generic [ref=e163]: Anhui,China
+            - heading "Anhui Gongting Food Factory" [level=3] [ref=e164]
+            - paragraph [ref=e165]: 304 Stainless Steel Grinder
+            - generic [ref=e167]:
+              - text: View Details
+              - img [ref=e168]
+        - article [ref=e170]:
+          - link "View Details - A Large-scale Livestock Farmer in Chifeng, Inner Mongolia" [ref=e171] [cursor=pointer]:
+            - /url: /cases/a-large-scale-livestock-farmer-in-chifeng-inner-mongolia
+            - generic [ref=e172]: View Details - A Large-scale Livestock Farmer in Chifeng, Inner Mongolia
+          - img "222" [ref=e174]
+          - generic [ref=e175]:
+            - generic "Cast iron claw-type grinder" [ref=e177]:
+              - generic [ref=e179]: Cast iron claw-type grinder
+            - generic [ref=e180]:
+              - img [ref=e181]
+              - generic [ref=e184]: Inner Mongolia, China
+            - heading "A Large-scale Livestock Farmer in Chifeng, Inner Mongolia" [level=3] [ref=e185]
+            - paragraph [ref=e186]: Model 80 Cast Iron Tooth-Claw Grinder
+            - generic [ref=e188]:
+              - text: View Details
+              - img [ref=e189]
+        - article [ref=e191]:
+          - link "View Details - A Food Processing Plant in Korea" [ref=e192] [cursor=pointer]:
+            - /url: /cases/a-food-processing-plant-in-korea
+            - generic [ref=e193]: View Details - A Food Processing Plant in Korea
+          - img "222" [ref=e195]
+          - generic [ref=e196]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e198]:
+              - generic [ref=e200]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e201]:
+              - img [ref=e202]
+              - generic [ref=e205]: Busan, South Korea
+            - heading "A Food Processing Plant in Korea" [level=3] [ref=e206]
+            - paragraph [ref=e207]: 304 Stainless Steel Grinder (Twin-unit model)
+            - generic [ref=e209]:
+              - text: View Details
+              - img [ref=e210]
+        - article [ref=e212]:
+          - link "View Details - A Food Processing Enterprise in Bozhou, Anhui" [ref=e213] [cursor=pointer]:
+            - /url: /cases/a-food-processing-enterprise-in-bozhou-anhui
+            - generic [ref=e214]: View Details - A Food Processing Enterprise in Bozhou, Anhui
+          - img "222" [ref=e216]
+          - generic [ref=e217]:
+            - generic "Stainless steel double-cone blender" [ref=e219]:
+              - generic [ref=e221]: Stainless steel double-cone blender
+            - generic [ref=e222]:
+              - img [ref=e223]
+              - generic [ref=e226]: Anhui, China
+            - heading "A Food Processing Enterprise in Bozhou, Anhui" [level=3] [ref=e227]
+            - paragraph [ref=e228]: A Food Processing Enterprise in Bozhou, Anhui
+            - generic [ref=e230]:
+              - text: View Details
+              - img [ref=e231]
+        - article [ref=e233]:
+          - link "View Details - Sichuan Zhengjiyuan Group" [ref=e234] [cursor=pointer]:
+            - /url: /cases/sichuan-zhengjiyuan-group0
+            - generic [ref=e235]: View Details - Sichuan Zhengjiyuan Group
+          - img "222" [ref=e237]
+          - generic [ref=e238]:
+            - generic "Sus304 claw-type crusher (stand-type model)" [ref=e240]:
+              - generic [ref=e242]: Sus304 claw-type crusher (stand-type model)
+            - generic [ref=e243]:
+              - img [ref=e244]
+              - generic [ref=e247]: Sichuan,China
+            - heading "Sichuan Zhengjiyuan Group" [level=3] [ref=e248]
+            - paragraph [ref=e249]: Dust-free corn powder line, 100 mesh, export standard.
+            - generic [ref=e251]:
+              - text: View Details
+              - img [ref=e252]
+      - generic [ref=e255]:
+        - heading "Browse by tag" [level=2] [ref=e257]
+        - generic [ref=e258]:
+          - link "All cases" [ref=e259] [cursor=pointer]:
+            - /url: /cases
+          - link "Cast iron claw-type grinder" [ref=e260] [cursor=pointer]:
+            - /url: /cases?tag=Cast-Iron-Claw-Type-Grinder
+          - link "Commercial dough mixer ( fully-enclosed model)" [ref=e261] [cursor=pointer]:
+            - /url: /cases?tag=Commercial-Dough-Mixer-Fully-Enclosed-Model
+          - link "Commercial dough mixer (stand-type model)" [ref=e262] [cursor=pointer]:
+            - /url: /cases?tag=Commercial-Dough-Mixer-Stand-Type-Model
+          - link "Commercial rice mill" [ref=e263] [cursor=pointer]:
+            - /url: /cases?tag=Commercial-Rice-Mill
+          - link "Commercial sugarcane juicer" [ref=e264] [cursor=pointer]:
+            - /url: /cases?tag=Commercial-Sugarcane-Juicer
+          - link "Compact sus304 grinder(150mesh)" [ref=e265] [cursor=pointer]:
+            - /url: /cases?tag=Compact-SUS304-Grinder-150Mesh
+          - link "Home-use rice mill" [ref=e266] [cursor=pointer]:
+            - /url: /cases?tag=Home-Use-Rice-Mill
+          - link "Iron dual-roller crusher" [ref=e267] [cursor=pointer]:
+            - /url: /cases?tag=Iron-Dual-Roller-Crusher
+          - link "Iron hammer mill crusher" [ref=e268] [cursor=pointer]:
+            - /url: /cases?tag=Iron-Hammer-Mill-Crusher
+          - link "Sus304 claw-type crusher (box-type model)" [ref=e269] [cursor=pointer]:
+            - /url: /cases?tag=SUS304-Claw-Type-Grinder-Box-Type-Model
+          - link "Sus304 claw-type crusher (stand-type model)" [ref=e270] [cursor=pointer]:
+            - /url: /cases?tag=SUS304-Claw-Type-Grinder-Stand-Type-Model
+          - link "Stainless steel double-cone blender" [ref=e271] [cursor=pointer]:
+            - /url: /cases?tag=Stainless-Steel-Double-Cone-Blender
+          - link "Stainless steel tumbling mixer" [ref=e272] [cursor=pointer]:
+            - /url: /cases?tag=Stainless-Steel-Tumbling-Mixer
+  - contentinfo [ref=e273]:
+    - generic [ref=e274]:
+      - generic [ref=e275]:
+        - region "DoDoShark" [ref=e276]:
+          - paragraph [ref=e277]: Headquarters
+          - heading "DoDoShark" [level=2] [ref=e278]
+          - paragraph [ref=e280]: Located in Nanjing, Jiangsu, China. DoDoShark is a brand of Nanjing Heici Machinery Co., Ltd.
+          - list [ref=e281]:
+            - listitem [ref=e282]:
+              - img [ref=e284]
+              - generic [ref=e286]:
+                - generic [ref=e287]: Phone
+                - link "+86 19941519694" [ref=e290] [cursor=pointer]:
+                  - /url: tel:+8619941519694
+            - listitem [ref=e291]:
+              - img [ref=e293]
+              - generic [ref=e295]:
+                - generic [ref=e296]: Website
+                - link "www.dodoshark.com" [ref=e299] [cursor=pointer]:
+                  - /url: https://www.dodoshark.com
+            - listitem [ref=e300]:
+              - img [ref=e302]
+              - generic [ref=e304]:
+                - generic [ref=e305]: Email
+                - generic [ref=e306]:
+                  - link "sales@dodoshark.com" [ref=e308] [cursor=pointer]:
+                    - /url: mailto:sales@dodoshark.com
+                  - link "support@dodoshark.com" [ref=e310] [cursor=pointer]:
+                    - /url: mailto:support@dodoshark.com
+        - region "Our Network" [ref=e311]:
+          - paragraph [ref=e312]: Regional Coverage
+          - heading "Our Network" [level=2] [ref=e313]
+          - list [ref=e315]:
+            - listitem [ref=e316]:
+              - img [ref=e318]
+              - paragraph [ref=e322]: Customers cover 1,000+ cities across China
+            - listitem [ref=e323]:
+              - img [ref=e325]
+              - paragraph [ref=e329]: Business operations cover 12+ countries worldwide
+            - listitem [ref=e330]:
+              - img [ref=e332]
+              - paragraph [ref=e336]: "Three major production bases: Jinan / Liaocheng / Weifang"
+        - region "Follow Us" [ref=e337]:
+          - paragraph [ref=e338]: Stay Connected
+          - heading "Follow Us" [level=2] [ref=e339]
+          - generic [ref=e341]:
+            - link "Facebook" [ref=e342] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e344]
+            - link "X" [ref=e346] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e348]
+            - link "TikTok" [ref=e350] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e352]
+            - link "YouTube" [ref=e354] [cursor=pointer]:
+              - /url: /vlog
+              - img [ref=e356]
+          - generic "Worldwide customer distribution map" [ref=e358]:
+            - img "World map showing DoDoShark global presence"
+      - generic [ref=e359]:
+        - generic [ref=e360]: © 2026 DoDoShark. All rights reserved.
+        - generic [ref=e361]:
+          - link "Terms of Service" [ref=e363] [cursor=pointer]:
+            - /url: /terms
+          - generic [ref=e364]:
+            - generic [ref=e365]: "|"
+            - link "Privacy Policy" [ref=e366] [cursor=pointer]:
+              - /url: /privacy
+  - button "Open Next.js Dev Tools" [ref=e372] [cursor=pointer]:
+    - img [ref=e373]
