@@ -5,7 +5,8 @@
   "packageManager": "pnpm@10.11.1",
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm dlx @opennextjs/cloudflare@1.17.1 build",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "build": "pnpm run cf-typegen && opennextjs-cloudflare build",
     "build:next": "next build",
     "deploy": "pnpm dlx wrangler deploy",
     "start": "next start",
@@ -32,6 +33,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.79.0"
   }
 }

@@ -24,6 +24,7 @@ Local dev server: `http://localhost:3000`
 Other common commands:
 
 - `pnpm run start`
+- `pnpm run cf-typegen`
 - `pnpm run build`
 - `pnpm run build:next`
 - `pnpm run deploy`
@@ -46,6 +47,7 @@ Notes:
 
 - `NEXT_PUBLIC_SANITY_STUDIO_URL` defaults to `http://localhost:3333` in local development.
 - `SANITY_API_READ_TOKEN` is used by the frontend's draft / preview workflow.
+- After changing Cloudflare bindings in `wrangler.jsonc`, rerun `pnpm run cf-typegen` and commit `cloudflare-env.d.ts`.
 
 ## Important Paths
 
