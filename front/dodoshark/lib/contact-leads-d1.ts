@@ -24,10 +24,10 @@ export type ContactLeadRecord = {
 
 function getContactLeadsDb() {
   const { env } = getCloudflareContext()
-  const db = env?.CONTACT_LEADS_DB as D1DatabaseBinding | undefined
+  const db = env?.DB as D1DatabaseBinding | undefined
 
   if (!db) {
-    throw new Error('Cloudflare D1 binding "CONTACT_LEADS_DB" is not configured.')
+    throw new Error('Cloudflare D1 binding "DB" is not configured.')
   }
 
   return db

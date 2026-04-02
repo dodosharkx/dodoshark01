@@ -351,11 +351,8 @@ export async function submitContactLeadInquiry(formData: FormData): Promise<Lead
   }
 
   const apiKey = process.env.RESEND_API_KEY
-  const toEmail = process.env.CONTACT_FORM_TO_EMAIL || process.env.LEAD_TO_EMAIL || 'service@dodoshark.com'
-  const fromEmail =
-    process.env.CONTACT_FORM_FROM_EMAIL ||
-    process.env.LEAD_FROM_EMAIL ||
-    'DoDoShark Leads <onboarding@resend.dev>'
+  const toEmail = process.env.LEAD_TO_EMAIL || 'service@dodoshark.com'
+  const fromEmail = process.env.LEAD_FROM_EMAIL || 'DoDoShark Leads <onboarding@resend.dev>'
 
   if (!apiKey) {
     return {
