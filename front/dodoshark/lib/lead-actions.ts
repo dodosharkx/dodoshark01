@@ -33,6 +33,7 @@ const FORM_STARTED_AT_FIELD = 'formStartedAt'
 const LEAD_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const LEAD_RATE_LIMIT_MAX_REQUESTS = 5
 const MIN_FORM_COMPLETION_MS = 800
+const MAX_FORM_COMPLETION_MS = 30 * 60 * 1000
 const globalLeadRateLimitStore = globalThis as typeof globalThis & {
   __dodosharkLeadRateLimit?: Map<string, LeadRateLimitEntry>
 }
@@ -83,7 +84,7 @@ function hasValue(value?: string) {
 }
 
 function hasValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value)
 }
 
 function getClientIdentifier(headerStore: Headers) {
@@ -102,17 +103,20 @@ function getClientIdentifier(headerStore: Headers) {
   )
 }
 
-function isRateLimited(identifier?: string) {
-  if (!identifier) return false
-
-  const now = Date.now()
-  const store = getLeadRateLimitStore()
-
+function pruneExpiredRateLimitEntries(store: Map<string, LeadRateLimitEntry>, now: number) {
   for (const [key, entry] of store.entries()) {
     if (entry.resetAt <= now) {
       store.delete(key)
     }
   }
+}
+
+function consumeRateLimit(identifier?: string) {
+  if (!identifier) return false
+
+  const now = Date.now()
+  const store = getLeadRateLimitStore()
+  pruneExpiredRateLimitEntries(store, now)
 
   const existing = store.get(identifier)
   if (!existing || existing.resetAt <= now) {
@@ -129,6 +133,14 @@ function isRateLimited(identifier?: string) {
 
   existing.count += 1
   store.set(identifier, existing)
+  return false
+}
+
+function shouldTreatAsBotSubmission(elapsedMs?: number) {
+  if (elapsedMs === undefined) return false
+  if (elapsedMs < 0) return true
+  if (elapsedMs < MIN_FORM_COMPLETION_MS) return true
+  if (elapsedMs > MAX_FORM_COMPLETION_MS) return true
   return false
 }
 
@@ -156,12 +168,12 @@ export async function submitLeadInquiry(formData: FormData): Promise<LeadActionR
   const startedAtValue = Number.parseInt(cleanValue(formData.get(FORM_STARTED_AT_FIELD)), 10)
   const elapsedMs = Number.isFinite(startedAtValue) ? Date.now() - startedAtValue : undefined
 
-  if (botTrapValue || (elapsedMs !== undefined && elapsedMs >= 0 && elapsedMs < MIN_FORM_COMPLETION_MS)) {
+  if (botTrapValue || shouldTreatAsBotSubmission(elapsedMs)) {
     return { success: true, message: getSuccessMessage(inquiryType) }
   }
 
   const headerStore = await headers()
-  if (isRateLimited(getClientIdentifier(headerStore))) {
+  if (consumeRateLimit(getClientIdentifier(headerStore))) {
     return {
       success: false,
       message: 'Too many submissions. Please wait a few minutes and try again.',

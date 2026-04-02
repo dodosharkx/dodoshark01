@@ -51,3 +51,7 @@ __pycache__/
 
 # Temp files
 /tmp/*
+front/dodoshark/eslint-report.txt
+front/dodoshark/opennext-error.txt
+front/dodoshark/public/assets/images/temp/
+front/dodoshark/public/assets/images/solutions/temp/

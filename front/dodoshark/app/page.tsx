@@ -3,14 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import dynamic from 'next/dynamic'
+import DeferredHeroCarousel from '@/components/home/DeferredHeroCarousel'
 import { fetchSanityData } from '@/lib/sanity.live'
-import { urlFor } from '@/lib/sanity'
 import { buildPageMetadata } from '@/lib/seo'
 import { normalizeYouTubeEmbedUrl, resolveYouTubeThumbnailUrl } from '@/lib/video'
 import type { SeoMeta, SanityImage } from '@/lib/types/sanity'
-import { cleanSlug, cleanText, renderText, sanitizeAltText } from '@/lib/sanity-utils'
+import { cleanSlug, cleanText, renderText, sanitizeAltText, toImageSrc } from '@/lib/sanity-utils'
 
-const DeferredHeroCarousel = dynamic(() => import('@/components/home/DeferredHeroCarousel'))
 const DeferredHomeBlogCarousel = dynamic(() => import('@/components/home/DeferredHomeBlogCarousel'))
 const DeferredProjectCasesCarousel = dynamic(() => import('@/components/home/DeferredProjectCasesCarousel'))
 const VideoPreviewTrigger = dynamic(() => import('@/components/ui/VideoPreviewTrigger'))
@@ -342,22 +341,6 @@ const homeQuery = `coalesce(
 // Removed hardcoded contents (stats, aboutFeatures, confidenceCards, agriProducts, foodProducts, grindingSolutions, mixingSolutions, projectCaseItems, advantages) 
 // as they are now fully managed by Sanity CMS.
 
-function getSanityImageUrl(image?: HomeSanityImage, options?: { width?: number; height?: number }) {
-  if (!image) return null
-
-  if (image.asset?._ref || image.asset?._id) {
-    let builder = urlFor(image)
-    if (options?.width) builder = builder.width(options.width)
-    if (options?.height) builder = builder.height(options.height)
-    return builder.fit(options?.height ? 'crop' : 'max').auto('format').quality(75).url()
-  }
-
-  if (image.imageUrl?.trim()) return image.imageUrl
-  if (image.asset?.url?.trim()) return image.asset.url
-
-  return null
-}
-
 function hasSanityImageAsset(image?: HomeSanityImage) {
   return Boolean(image?.asset?._ref || image?.asset?._id || image?.asset?.url || image?.imageUrl?.trim())
 }
@@ -510,7 +493,7 @@ export default async function HomePage() {
   const heroSlidesParsed: HeroCarouselImage[] = (data?.heroBackgrounds && data.heroBackgrounds.length > 0)
     ? data.heroBackgrounds
       .map((image, index): HeroCarouselImage | null => {
-        const src = getSanityImageUrl(image, { width: 1920 })
+        const src = toImageSrc(image, 1920, { auto: 'format', quality: 75 })
         if (!src) return null
         return {
           src,
@@ -528,7 +511,7 @@ export default async function HomePage() {
 
   const heroVideoUrl = cleanText(data?.whyChooseUsVideoUrl)
   const whyChooseUsCoverImageSrc =
-    getSanityImageUrl(data?.whyChooseUsVideoCoverImage, { width: 1200 }) ??
+    toImageSrc(data?.whyChooseUsVideoCoverImage, 1200, { auto: 'format', quality: 75 }) ??
     resolveYouTubeThumbnailUrl(heroVideoUrl, 'maxresdefault') ??
     '/assets/images/factory-showcase.png'
   const whyChooseUsCoverImageAlt = hasSanityImageAsset(data?.whyChooseUsVideoCoverImage)
@@ -559,7 +542,7 @@ export default async function HomePage() {
       .map((item) => {
         const title = renderText(item?.title)
         const description = renderText(item?.description)
-        const image = getSanityImageUrl(item?.image, { width: 256 })
+        const image = toImageSrc(item?.image, 256, { auto: 'format', quality: 75 })
         if (!title || !description || !image) return null
         return { title, description, image, sanityImage: item.image }
       })
@@ -586,7 +569,7 @@ export default async function HomePage() {
       .map((card) => {
         const title = renderText(card?.title)
         const subtitle = renderText(card?.subtitle)
-        const image = getSanityImageUrl(card?.image, { width: 1200 })
+        const image = toImageSrc(card?.image, 1200, { auto: 'format', quality: 75 })
         if (!title || !subtitle || !image) return null
         return {
           title,
@@ -614,7 +597,12 @@ export default async function HomePage() {
   const featuredAgriProducts: HomeProductCard[] = (data?.featuredAgriProducts && data.featuredAgriProducts.length > 0)
     ? data.featuredAgriProducts
       .map((product) => {
-        const image = getSanityImageUrl(product.mainImage, { width: 800, height: 800 })
+        const image = toImageSrc(product.mainImage, 800, {
+          height: 800,
+          fit: 'crop',
+          auto: 'format',
+          quality: 75,
+        })
         if (!image) return null
 
         return {
@@ -639,7 +627,12 @@ export default async function HomePage() {
   const featuredFoodProducts: HomeProductCard[] =
     data?.featuredFoodProducts
       ?.map((product) => {
-        const image = getSanityImageUrl(product.mainImage, { width: 800, height: 800 })
+        const image = toImageSrc(product.mainImage, 800, {
+          height: 800,
+          fit: 'crop',
+          auto: 'format',
+          quality: 75,
+        })
         if (!image) return null
 
         return {
@@ -658,7 +651,12 @@ export default async function HomePage() {
   const featuredSolutions: HomeSolutionCard[] =
     data?.featuredSolutions
       ?.map((solution) => {
-        const image = getSanityImageUrl(solution.heroImage, { width: 800, height: 800 })
+        const image = toImageSrc(solution.heroImage, 800, {
+          height: 800,
+          fit: 'crop',
+          auto: 'format',
+          quality: 75,
+        })
         if (!image) return null
 
         return {
@@ -674,7 +672,12 @@ export default async function HomePage() {
   const featuredCases: HomeCaseCard[] =
     data?.featuredCases
       ?.map((caseItem) => {
-        const image = getSanityImageUrl(caseItem.coverImage, { width: 1200, height: 600 })
+        const image = toImageSrc(caseItem.coverImage, 1200, {
+          height: 600,
+          fit: 'crop',
+          auto: 'format',
+          quality: 75,
+        })
         if (!image) return null
 
         return {
@@ -683,7 +686,7 @@ export default async function HomePage() {
             renderText(caseItem.excerpt) || 'Detailed case study content is available in the full project report.',
           image,
           sanityImage: caseItem.coverImage,
-          logo: getSanityImageUrl(caseItem.clientLogo, { width: 264 }),
+          logo: toImageSrc(caseItem.clientLogo, 264, { auto: 'format', quality: 75 }),
           logoImage: caseItem.clientLogo,
           href: buildDetailHref('/cases', caseItem.slug),
         }
@@ -694,7 +697,7 @@ export default async function HomePage() {
     ?.map((item) => {
       const title = renderText(item?.title)
       const description = renderText(item?.description)
-      const image = getSanityImageUrl(item?.image, { width: 256 })
+      const image = toImageSrc(item?.image, 256, { auto: 'format', quality: 75 })
       if (!title || !description || !image) return null
       return { title, description, image, sanityImage: item.image }
     })
@@ -715,7 +718,7 @@ export default async function HomePage() {
         return {
           id: video._id,
           title: renderText(video.title) || 'Video',
-          imageSrc: getSanityImageUrl(video.coverImage, { width: 1200 }) || undefined,
+          imageSrc: toImageSrc(video.coverImage, 1200, { auto: 'format', quality: 75 }) || undefined,
           imageAlt: hasSanityImageAsset(video.coverImage)
             ? sanitizeAltText(video.coverImage?.alt, renderText(video.title)) || 'Video cover'
             : sanitizeAltText(renderText(video.title)) || 'Video cover',

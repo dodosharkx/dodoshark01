@@ -9,6 +9,8 @@ export type QueryParamValue = string | string[] | undefined
 type ToImageSrcOptions = {
   height?: number
   fit?: 'crop' | 'max'
+  quality?: number
+  auto?: 'format'
 }
 
 const ZERO_WIDTH_TEXT_PATTERN = /[\u200B\u200C\u200D\uFEFF]/g
@@ -121,7 +123,14 @@ export function toImageSrc(image?: SanityImage, width = 1200, options?: ToImageS
     if (options?.height) {
       imageBuilder = imageBuilder.height(options.height)
     }
-    return imageBuilder.fit(options?.fit ?? 'max').url()
+    imageBuilder = imageBuilder.fit(options?.fit ?? 'max')
+    if (options?.auto) {
+      imageBuilder = imageBuilder.auto(options.auto)
+    }
+    if (options?.quality) {
+      imageBuilder = imageBuilder.quality(options.quality)
+    }
+    return imageBuilder.url()
   } catch {
     return undefined
   }
