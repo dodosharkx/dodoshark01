@@ -368,9 +368,6 @@ export async function submitContactLeadInquiry(formData: FormData): Promise<Lead
     return validationError
   }
 
-  let insertSucceeded = false
-  let emailSucceeded = false
-
   try {
     await insertContactLead({
       id: crypto.randomUUID(),
@@ -381,9 +378,8 @@ export async function submitContactLeadInquiry(formData: FormData): Promise<Lead
       message: payload.message || '',
       createdAt: new Date().toISOString(),
     })
-    insertSucceeded = true
   } catch (error) {
-    console.error('Failed to save contact lead to D1:', error)
+    console.error('Contact lead backup save to D1 failed:', error)
   }
 
   try {
@@ -393,17 +389,13 @@ export async function submitContactLeadInquiry(formData: FormData): Promise<Lead
       toEmail,
       fromEmail,
     })
-    emailSucceeded = true
+
+    return { success: true, message: getSuccessMessage(payload.inquiryType) }
   } catch (error) {
     console.error('Failed to send contact lead email:', error)
-  }
-
-  if (insertSucceeded && emailSucceeded) {
-    return { success: true, message: getSuccessMessage(payload.inquiryType) }
-  }
-
-  return {
-    success: false,
-    message: 'Submission failed. Please try again or contact us by email/WhatsApp directly.',
+    return {
+      success: false,
+      message: 'Submission failed. Please try again or contact us by email/WhatsApp directly.',
+    }
   }
 }
