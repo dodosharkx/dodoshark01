@@ -22,10 +22,10 @@
   ],
   "d1_databases": [
     {
-      "binding": "CONTACT_LEADS_DB",
-      "database_name": "dodoshark-contact-leads",
-      "database_id": "REPLACE_WITH_PRODUCTION_D1_DATABASE_ID",
-      "preview_database_id": "REPLACE_WITH_PREVIEW_D1_DATABASE_ID",
+      "binding": "DB",
+      "database_name": "dodoshark",
+      "database_id": "597c6e6c-f943-4adb-b8d6-9a62a927ebd6",
+      "preview_database_id": "597c6e6c-f943-4adb-b8d6-9a62a927ebd6",
       "migrations_dir": "migrations-contact-leads"
     }
   ],
