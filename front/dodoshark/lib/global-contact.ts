@@ -13,8 +13,8 @@ export type GlobalContact = {
 const FALLBACK_CONTACT: GlobalContact = {
   email: 'service@dodoshark.com',
   supportEmail: 'support@dodoshark.com',
-  whatsapp: '+86 13662385371',
-  phone: '+86 13662385371',
+  whatsapp: '+86 19941519694',
+  phone: '+86 19941519694',
   websiteLabel: 'www.dodoshark.com',
   websiteUrl: 'https://www.dodoshark.com',
 }
