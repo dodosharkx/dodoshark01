@@ -23,9 +23,9 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "dodoshark",
-      "database_id": "597c6e6c-f943-4adb-b8d6-9a62a927ebd6",
-      "preview_database_id": "597c6e6c-f943-4adb-b8d6-9a62a927ebd6",
+      "database_name": "dodoshark_contact_form",
+      "database_id": "f2f0b253-bb55-4513-b6b4-cfe24a75f651",
+      "preview_database_id": "f2f0b253-bb55-4513-b6b4-cfe24a75f651",
       "migrations_dir": "migrations-contact-leads"
     }
   ],
