@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DoDoShark Frontend
 
-## Getting Started
+This app is the public-facing DoDoShark website built with Next.js 16, React 19, and Sanity-backed content.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 App Router
+- React 19
+- Tailwind CSS 4
+- Sanity content fetching and Visual Editing integration
+- OpenNext / Cloudflare-oriented production output
+
+## Development
+
+Use `pnpm` for all commands.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Local dev server: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other common commands:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `pnpm run start`
+- `pnpm run build`
+- `pnpm run build:next`
+- `pnpm run deploy`
+- `pnpm run lint`
 
-## Learn More
+## Environment
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env.local` and provide the required values:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `RESEND_API_KEY`
+- `LEAD_TO_EMAIL`
+- `LEAD_FROM_EMAIL`
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `NEXT_PUBLIC_SANITY_STUDIO_URL`
+- `NEXT_PUBLIC_SANITY_API_VERSION`
+- `SANITY_API_READ_TOKEN`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Notes:
 
-## Deploy on Vercel
+- `NEXT_PUBLIC_SANITY_STUDIO_URL` defaults to `http://localhost:3333` in local development.
+- `SANITY_API_READ_TOKEN` is used by the frontend's draft / preview workflow.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Important Paths
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/`: routes and page entrypoints
+- `components/page-builder/`: Sanity page-builder rendering
+- `components/ui/`: shared UI primitives
+- `lib/`: Sanity helpers, SEO helpers, and app data mapping
+- `public/assets/images/`: tracked fallback and static site assets
+
+## Working Rules
+
+- Reuse existing helpers and components before adding new files.
+- Keep page-builder frontend types aligned with Studio schema values.
+- Preserve mobile and desktop behavior when changing layouts.
+- Use `renderText()` for Sanity text fields.
+- Keep hardcoded image fallbacks until CMS data is verified.
+
+## Repository Hygiene
+
+- Do not commit generated reports such as lint dumps or runtime error text files.
+- Do not commit temporary assets under `public/assets/images/**/temp`.
+- Do not commit build output such as `.next/`, `.open-next/`, or `.wrangler/`.
+- Large local backup archives should stay outside source paths or be moved under the ignored root `archive/` folder.
