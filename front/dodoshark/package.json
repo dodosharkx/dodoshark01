@@ -7,10 +7,6 @@
     "dev": "next dev",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "build": "next build",
-<<<<<<< HEAD
-=======
-    "build:cloudflare": "pnpm run cf-typegen && opennextjs-cloudflare build",
->>>>>>> eca1a5d879c36fc43e84242d65cb2a67350ab3c3
     "build:next": "next build",
     "deploy": "pnpm dlx wrangler deploy",
     "start": "next start",
@@ -18,7 +14,7 @@
     "check:no-font-awesome": "bash ./scripts/check-no-font-awesome.sh",
     "preinstall": "npx only-allow pnpm"
   },
-  "dependencies": {
+  "dependencies": { 
     "@opennextjs/cloudflare": "^1.17.1",
     "@sanity/image-url": "^2.0.3",
     "next": "16.1.6",
