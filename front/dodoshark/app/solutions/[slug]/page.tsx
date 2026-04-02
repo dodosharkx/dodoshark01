@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import { fetchSanityData } from '@/lib/sanity.live'
 import {cleanSlug, cleanText, hasStegaMetadata, renderText, sanitizeAltText, toImageSrc} from '@/lib/sanity-utils'
 import {
-  prepareSolutionTemplate,
+  buildSolutionTemplateFrameSrc,
   type SolutionHtmlTemplateData,
 } from '@/lib/solution-template'
 import type {SanityImage, SeoMeta} from '@/lib/types/sanity'
@@ -180,16 +180,10 @@ async function getSolution(slug: string, stega?: boolean) {
     summary,
     detailRenderMode,
     htmlTemplate {
-      html,
-      customCss,
-      templateImages[] {
-        _key,
-        key,
-        image {
-          ...,
-          asset
-        }
-      }
+      renderedSignature,
+      renderedAt,
+      renderStatus,
+      renderError
     },
     category -> {
       _id,
@@ -733,18 +727,30 @@ export default async function SolutionPage({params}: SolutionPageProps) {
   ) ?? []
   const renderGroups = groupPageBuilderBlocks(contentBlocks)
   const hasBuilderHero = solution.contentBlocks?.some((block) => block?._type === 'heroBlock')
-  const preparedTemplate =
-    solution.detailRenderMode === 'htmlTemplate'
-      ? await prepareSolutionTemplate(solution.htmlTemplate)
-      : null
+  const solutionSlug = cleanSlug(solution.slug) || slug
+  const templateSignature = cleanText(solution.htmlTemplate?.renderedSignature) || 'missing'
+  const templateRenderStatus = cleanText(solution.htmlTemplate?.renderStatus) || 'pending'
+  const templateRenderError = cleanText(solution.htmlTemplate?.renderError)
+  const templateSrc = buildSolutionTemplateFrameSrc(solutionSlug, templateSignature)
 
-  if (solution.detailRenderMode === 'htmlTemplate' && preparedTemplate?.html) {
+  if (solution.detailRenderMode === 'htmlTemplate') {
     return (
       <main className="bg-white text-slate-900">
+        {process.env.NODE_ENV !== 'production' && templateRenderStatus !== 'ready' && (
+          <section className="border-b border-amber-200 bg-amber-50 px-4 py-4 text-amber-950">
+            <div className="mx-auto max-w-7xl">
+              <p className="font-bold">Template render artifact not ready</p>
+              <p className="mt-1 text-sm">
+                slug: {solutionSlug} | status: {templateRenderStatus}
+                {templateRenderError ? ` | error: ${templateRenderError}` : ''}
+              </p>
+            </div>
+          </section>
+        )}
         <SolutionHtmlTemplateFrame
-          templateKey={`${solution._id}:${preparedTemplate.signature}`}
+          src={templateSrc}
+          templateKey={`${solution._id}:${templateSignature}`}
           title={cleanText(solution.title) || 'Solution template'}
-          srcDoc={preparedTemplate.html}
         />
         <RelatedProductsSection products={relatedProducts} />
         <RelatedVlogsSection vlogs={relatedVlogs} />
@@ -752,40 +758,8 @@ export default async function SolutionPage({params}: SolutionPageProps) {
     )
   }
 
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    solution.detailRenderMode === 'htmlTemplate' &&
-    preparedTemplate &&
-    !preparedTemplate.html
-  ) {
-    console.error('[solution-template] Failed to prepare htmlTemplate', {
-      slug,
-      issues: preparedTemplate.issues,
-      error: preparedTemplate.error,
-    })
-  }
-
   return (
     <div className="bg-white text-slate-900">
-      {process.env.NODE_ENV !== 'production' &&
-        solution.detailRenderMode === 'htmlTemplate' &&
-        preparedTemplate &&
-        !preparedTemplate.html && (
-          <section className="border-b border-amber-200 bg-amber-50 px-4 py-4 text-amber-950">
-            <div className="mx-auto max-w-7xl">
-              <p className="font-bold">Template render fallback</p>
-              <p className="mt-1 text-sm">
-                slug: {slug}
-                {preparedTemplate.error ? ` | error: ${preparedTemplate.error}` : ''}
-              </p>
-              {preparedTemplate.issues.length > 0 && (
-                <pre className="mt-3 overflow-x-auto rounded bg-white p-3 text-xs leading-relaxed">
-                  {preparedTemplate.issues.join('\n')}
-                </pre>
-              )}
-            </div>
-          </section>
-        )}
       {!hasBuilderHero && renderSolutionHero(solution)}
       <div id="solution-content">{renderGroups.map((group) => renderSolutionGroup(group, solution._id))}</div>
       <RelatedProductsSection products={relatedProducts} />

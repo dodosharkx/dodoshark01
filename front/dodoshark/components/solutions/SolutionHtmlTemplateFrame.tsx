@@ -3,13 +3,13 @@
 import {useEffect, useRef, useState} from 'react'
 
 type SolutionHtmlTemplateFrameProps = {
-  srcDoc: string
+  src: string
   templateKey: string
   title?: string
 }
 
 export default function SolutionHtmlTemplateFrame({
-  srcDoc,
+  src,
   templateKey,
   title,
 }: SolutionHtmlTemplateFrameProps) {
@@ -86,7 +86,7 @@ export default function SolutionHtmlTemplateFrame({
       cancelAnimationFrame(animationFrame)
       imageListeners.forEach(({image, handler}) => image.removeEventListener('load', handler))
     }
-  }, [srcDoc, templateKey])
+  }, [src, templateKey])
 
   return (
     <div className="bg-white">
@@ -94,7 +94,7 @@ export default function SolutionHtmlTemplateFrame({
         key={templateKey}
         ref={iframeRef}
         title={title || 'Solution template'}
-        srcDoc={srcDoc}
+        src={src}
         sandbox="allow-same-origin"
         scrolling="no"
         className="block w-full border-0 bg-white"

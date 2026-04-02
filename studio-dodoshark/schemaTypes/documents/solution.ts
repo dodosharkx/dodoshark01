@@ -99,12 +99,23 @@ export default defineType({
       media: 'heroImage',
       detailRenderMode: 'detailRenderMode',
       templateImages: 'htmlTemplate.templateImages',
+      renderStatus: 'htmlTemplate.renderStatus',
       contentBlocks: 'contentBlocks',
     },
-    prepare({title, categoryTitle, summary, media, detailRenderMode, templateImages, contentBlocks}) {
+    prepare({title, categoryTitle, summary, media, detailRenderMode, templateImages, renderStatus, contentBlocks}) {
       const renderModeSummary =
         detailRenderMode === 'htmlTemplate'
-          ? joinPreview(['HTML Template', itemCount(templateImages) ? `${itemCount(templateImages)} template images` : undefined])
+          ? joinPreview([
+              'HTML Template',
+              itemCount(templateImages) ? `${itemCount(templateImages)} template images` : undefined,
+              renderStatus === 'ready'
+                ? 'Artifact ready'
+                : renderStatus === 'failed'
+                  ? 'Artifact failed'
+                  : renderStatus === 'pending'
+                    ? 'Artifact pending'
+                    : undefined,
+            ])
           : joinPreview(['Page Builder', itemCount(contentBlocks) ? `${itemCount(contentBlocks)} blocks` : undefined])
 
       return {

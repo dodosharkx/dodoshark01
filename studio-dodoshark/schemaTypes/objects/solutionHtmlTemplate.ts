@@ -8,6 +8,8 @@ type CodeFieldValue = {
   language?: string
 } | string | undefined
 
+type RenderStatusValue = 'pending' | 'ready' | 'failed'
+
 const forbiddenHtmlPatterns = [
   {pattern: /<script\b/i, message: 'Scripts are not allowed.'},
   {pattern: /<iframe\b/i, message: 'Nested iframes are not allowed.'},
@@ -148,16 +150,83 @@ export default defineType({
           return true
         }),
     }),
+    defineField({
+      name: 'renderStatus',
+      title: 'Render Status',
+      type: 'string',
+      description: 'Generated automatically when the template is rendered for deployment.',
+      options: {
+        list: [
+          {title: 'Pending', value: 'pending'},
+          {title: 'Ready', value: 'ready'},
+          {title: 'Failed', value: 'failed'},
+        ],
+        layout: 'radio',
+      },
+      readOnly: true,
+    }),
+    defineField({
+      name: 'renderedAt',
+      title: 'Rendered At',
+      type: 'datetime',
+      description: 'The last time the deployment-ready HTML artifact was generated.',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'renderedSignature',
+      title: 'Rendered Signature',
+      type: 'string',
+      description: 'Version identifier for the generated artifact used by the frontend cache key.',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'renderError',
+      title: 'Render Error',
+      type: 'text',
+      rows: 5,
+      description: 'The latest artifact generation error, if rendering failed.',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'renderedHtml',
+      title: 'Rendered HTML Artifact',
+      type: 'code',
+      options: {
+        language: 'html',
+        languageAlternatives: [{title: 'HTML', value: 'html'}],
+      },
+      description: 'Generated automatically on publish. The frontend serves this artifact directly in production.',
+      readOnly: true,
+    }),
   ],
   preview: {
     select: {
       html: 'html',
       customCss: 'customCss',
       templateImages: 'templateImages',
+      renderStatus: 'renderStatus',
     },
-    prepare({html, customCss, templateImages}: {html?: CodeFieldValue; customCss?: CodeFieldValue; templateImages?: unknown[]}) {
+    prepare({
+      html,
+      customCss,
+      templateImages,
+      renderStatus,
+    }: {
+      html?: CodeFieldValue
+      customCss?: CodeFieldValue
+      templateImages?: unknown[]
+      renderStatus?: RenderStatusValue
+    }) {
       const hasHtml = getCodeValue(html).trim().length > 0
       const hasCustomCss = getCodeValue(customCss).trim().length > 0
+      const renderSummary =
+        renderStatus === 'ready'
+          ? 'Artifact ready'
+          : renderStatus === 'failed'
+            ? 'Artifact failed'
+            : renderStatus === 'pending'
+              ? 'Artifact pending'
+              : undefined
 
       return {
         title: 'HTML Template',
@@ -166,6 +235,7 @@ export default defineType({
             hasHtml ? 'HTML ready' : 'Missing HTML',
             hasCustomCss ? 'CSS ready' : undefined,
             itemCount(templateImages) ? `${itemCount(templateImages)} template images` : undefined,
+            renderSummary,
           ]) || 'Template',
       }
     },
