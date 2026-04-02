@@ -26,15 +26,6 @@ const FALLBACK_FAVICON_URL = "/favicon-fallback.png";
 const defaultMetadata: Metadata = {
   title: "DoDoShark - Industrial Milling Systems",
   description: "Professional Crushing & Grinding Equipment Manufacturer",
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
-    },
-  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

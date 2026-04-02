@@ -4,33 +4,6 @@ import {client} from '@/lib/sanity'
 export const dynamic = 'force-dynamic'
 
 export const GET = async (request: Request) => {
-  const url = new URL(request.url)
-
-  // Temporary debug endpoint 鈥?visit /api/draft/enable?debug=1
-  if (url.searchParams.get('debug') === '1') {
-    const allKeys = Object.keys(process.env || {})
-    const sanityKeys = allKeys.filter(
-      (k) => k.includes('SANITY') || k.includes('NEXT_PUBLIC')
-    )
-    return new Response(
-      JSON.stringify(
-        {
-          processType: typeof process,
-          processEnvType: typeof process?.env,
-          envKeyCount: allKeys.length,
-          sanityRelatedKeys: sanityKeys,
-          hasReadToken: !!process.env['SANITY_API_READ_TOKEN'],
-          hasReadTokenDynamic: !!process.env[('SANITY' + '_API_READ_TOKEN') as string],
-          readTokenLength: process.env['SANITY_API_READ_TOKEN']?.length ?? 0,
-          sampleKeys: allKeys.slice(0, 20),
-        },
-        null,
-        2
-      ),
-      { headers: { 'Content-Type': 'application/json' } }
-    )
-  }
-
   const envKey = 'SANITY_API_READ_TOKEN' as string
   const token = process.env[envKey]?.trim()
 

@@ -172,7 +172,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: cleanText(seo?.description) || 'Explore real industrial project case studies and outcomes.',
     keywords: seo?.keywords,
     alternates: cleanText(seo?.canonicalUrl) ? { canonical: cleanText(seo?.canonicalUrl) } : undefined,
-    robots: { index: false, follow: false },
+    robots: seo?.noIndex ? { index: false, follow: false } : undefined,
   }
 }
 

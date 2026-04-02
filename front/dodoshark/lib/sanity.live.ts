@@ -7,7 +7,6 @@ import {sanityReadToken} from '@/lib/sanity.token'
 export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: sanityReadToken,
-  browserToken: sanityReadToken,
 })
 
 type FetchSanityDataOptions = {

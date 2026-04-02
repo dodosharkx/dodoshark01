@@ -264,7 +264,7 @@ export async function generateMetadata({ params }: CaseDetailPageProps): Promise
     description,
     keywords: caseStudy.seo?.keywords?.filter(Boolean),
     alternates: { canonical },
-    robots: { index: false, follow: false },
+    robots: caseStudy.seo?.noIndex ? { index: false, follow: false } : undefined,
     openGraph: {
       title,
       description,

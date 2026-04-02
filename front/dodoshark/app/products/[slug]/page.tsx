@@ -509,7 +509,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     description,
     keywords: product.seo?.keywords?.filter(Boolean),
     alternates: { canonical },
-    robots: { index: false, follow: false },
+    robots: product.seo?.noIndex ? { index: false, follow: false } : undefined,
     openGraph: {
       title,
       description,

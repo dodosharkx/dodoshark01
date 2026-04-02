@@ -696,7 +696,7 @@ export async function generateMetadata({
     description,
     keywords: solution.seo?.keywords?.filter(Boolean),
     alternates: {canonical},
-    robots: {index: false, follow: false},
+    robots: solution.seo?.noIndex ? {index: false, follow: false} : undefined,
     openGraph: {
       title,
       description,
