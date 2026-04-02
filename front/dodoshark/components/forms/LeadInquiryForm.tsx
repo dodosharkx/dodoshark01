@@ -2,12 +2,17 @@
 
 import { useState } from 'react'
 
-import { submitLeadInquiry, type LeadActionResult } from '@/lib/lead-actions'
+import {
+  submitContactLeadInquiry,
+  submitLeadInquiry,
+  type LeadActionResult,
+} from '@/lib/lead-actions'
 import type { InquiryType } from '@/lib/mvp-data'
 
 type LeadInquiryFormProps = {
   inquiryType: InquiryType
   variant?: 'contact' | 'video_demo' | 'mini'
+  submissionStrategy?: 'default' | 'contact'
   submitLabel?: string
   introText?: string
   className?: string
@@ -20,6 +25,7 @@ const FIELD_CLASS =
 export default function LeadInquiryForm({
   inquiryType,
   variant,
+  submissionStrategy = 'default',
   submitLabel,
   introText,
   className,
@@ -34,7 +40,10 @@ export default function LeadInquiryForm({
     setResult(null)
 
     try {
-      const response = await submitLeadInquiry(formData)
+      const response =
+        submissionStrategy === 'contact'
+          ? await submitContactLeadInquiry(formData)
+          : await submitLeadInquiry(formData)
       setResult(response)
     } catch {
       setResult({
