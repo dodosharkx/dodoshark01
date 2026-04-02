@@ -21,19 +21,20 @@ function getEnv(key: string, defaultValue?: string, required = false): string {
   return value
 }
 
+function warnMissingEnv(key: string) {
+  if (typeof window !== 'undefined') return
+  console.warn(`[ENV WARNING]: Critical environment variable "${key}" is missing.`)
+}
+
 // 1. Literal access for NEXT_PUBLIC_ variables to ensure client-side availability
 export const SANITY_PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim() || ''
 export const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET?.trim() || 'production'
 export const SANITY_API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION?.trim() || '2024-01-01'
 
-// Validation for critical public variables (runs on server and client during SSR)
-if (!SANITY_PROJECT_ID && (process.env.NODE_ENV === 'production' || typeof window === 'undefined')) {
-  const errorMsg = 'Critical environment variable "NEXT_PUBLIC_SANITY_PROJECT_ID" is missing. Please check your .env files.'
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error(errorMsg)
-  } else if (typeof window === 'undefined') {
-    console.warn(`[ENV WARNING]: ${errorMsg}`)
-  }
+// Keep missing Sanity config non-fatal so the app can still render fallback UI on hosts
+// where CMS env vars have not been configured yet.
+if (!SANITY_PROJECT_ID) {
+  warnMissingEnv('NEXT_PUBLIC_SANITY_PROJECT_ID')
 }
 
 // Studio URL logic
