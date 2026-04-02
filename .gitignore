@@ -29,8 +29,12 @@ Thumbs.db
 
 # Backups and Archives
 /archive/
+*.tar
 *.tar.gz
+*.tgz
 *.zip
+*.7z
+*.rar
 *.bak
 
 # Media and large files (Optional/Aggressive - keeping as per previous setup)
@@ -55,3 +59,4 @@ front/dodoshark/eslint-report.txt
 front/dodoshark/opennext-error.txt
 front/dodoshark/public/assets/images/temp/
 front/dodoshark/public/assets/images/solutions/temp/
+studio-dodoshark/functions/**/.build/

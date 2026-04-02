@@ -1,6 +1,7 @@
 # Sanity specific
 /.sanity/
 /dist/
+functions/**/.build/
 
 #pnpm
 .pnpm-store

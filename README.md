@@ -142,3 +142,12 @@ When updating Sanity schemas, also verify the frontend layer that consumes them.
 - Read `AGENTS.md` before making changes.
 - Prefer minimal, local edits.
 - Do not run `pnpm run lint` or `pnpm run build` after code edits unless a human explicitly asks for it.
+
+## Repository Hygiene
+
+- `archive/` is a local holding area for historical scripts, reports, one-off exports, and removed assets. It is intentionally ignored and should not be used for active source files.
+- Keep large local backup/export archives out of source paths. Store them under `archive/` or leave them untracked.
+- Do not commit generated reports such as lint dumps or runtime error text files.
+- Do not commit temporary image folders under `front/dodoshark/public/assets/images/**/temp`.
+- Do not commit generated function build output under `studio-dodoshark/functions/**/.build`.
+- If a file is only needed for local investigation or one-time migration, move it under `archive/` instead of leaving it at the repository root.
