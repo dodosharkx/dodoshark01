@@ -7,6 +7,10 @@
     "dev": "next dev",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "build": "next build",
+<<<<<<< HEAD
+=======
+    "build:cloudflare": "pnpm run cf-typegen && opennextjs-cloudflare build",
+>>>>>>> eca1a5d879c36fc43e84242d65cb2a67350ab3c3
     "build:next": "next build",
     "deploy": "pnpm dlx wrangler deploy",
     "start": "next start",

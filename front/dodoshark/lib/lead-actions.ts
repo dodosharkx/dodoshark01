@@ -3,7 +3,6 @@
 import { headers } from 'next/headers'
 import { Resend } from 'resend'
 
-import { insertContactLead } from '@/lib/contact-leads-d1'
 import type { InquiryType } from '@/lib/mvp-data'
 
 export type LeadInquiry = {
@@ -336,63 +335,6 @@ export async function submitLeadInquiry(formData: FormData): Promise<LeadActionR
     return { success: true, message: getSuccessMessage(payload.inquiryType) }
   } catch (error) {
     console.error('Failed to send lead email:', error)
-    return {
-      success: false,
-      message: 'Submission failed. Please try again or contact us by email/WhatsApp directly.',
-    }
-  }
-}
-
-export async function submitContactLeadInquiry(formData: FormData): Promise<LeadActionResult> {
-  const inquiryType = parseInquiryType(formData)
-  const guard = await guardLeadSubmission(formData, inquiryType)
-  if (guard.blocked) {
-    return guard.result
-  }
-
-  const apiKey = process.env.RESEND_API_KEY
-  const toEmail = process.env.LEAD_TO_EMAIL || 'service@dodoshark.com'
-  const fromEmail = process.env.LEAD_FROM_EMAIL || 'DoDoShark Leads <onboarding@resend.dev>'
-
-  if (!apiKey) {
-    return {
-      success: false,
-      message:
-        'Form service is not configured yet. Please email us directly at your business contact address.',
-    }
-  }
-
-  const payload = parseLeadPayload(formData)
-  const validationError = validateLeadPayload(payload)
-  if (validationError) {
-    return validationError
-  }
-
-  try {
-    await insertContactLead({
-      id: crypto.randomUUID(),
-      name: payload.name,
-      email: payload.email,
-      city: payload.city || '',
-      whatsapp: payload.whatsapp || '',
-      message: payload.message || '',
-      createdAt: new Date().toISOString(),
-    })
-  } catch (error) {
-    console.error('Contact lead backup save to D1 failed:', error)
-  }
-
-  try {
-    await sendLeadEmail({
-      payload,
-      apiKey,
-      toEmail,
-      fromEmail,
-    })
-
-    return { success: true, message: getSuccessMessage(payload.inquiryType) }
-  } catch (error) {
-    console.error('Failed to send contact lead email:', error)
     return {
       success: false,
       message: 'Submission failed. Please try again or contact us by email/WhatsApp directly.',

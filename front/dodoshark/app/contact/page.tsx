@@ -270,7 +270,6 @@ export default async function ContactPage() {
                   <LeadInquiryForm
                     inquiryType="quote"
                     variant="contact"
-                    submissionStrategy="contact"
                     className="space-y-5"
                     submitLabel="Send Contact Request"
                     introText=""

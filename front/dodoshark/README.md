@@ -8,7 +8,7 @@ This app is the public-facing DoDoShark website built with Next.js 16, React 19,
 - React 19
 - Tailwind CSS 4
 - Sanity content fetching and Visual Editing integration
-- OpenNext / Cloudflare-oriented production output
+- Resend-based form delivery
 
 ## Development
 
@@ -26,6 +26,7 @@ Other common commands:
 - `pnpm run start`
 - `pnpm run cf-typegen`
 - `pnpm run build`
+- `pnpm run build:cloudflare`
 - `pnpm run build:next`
 - `pnpm run deploy`
 - `pnpm run lint`
@@ -47,7 +48,8 @@ Notes:
 
 - `NEXT_PUBLIC_SANITY_STUDIO_URL` defaults to `http://localhost:3333` in local development.
 - `SANITY_API_READ_TOKEN` is used by the frontend's draft / preview workflow.
-- After changing Cloudflare bindings in `wrangler.jsonc`, rerun `pnpm run cf-typegen` and commit `cloudflare-env.d.ts`.
+- The contact form on `/contact` only requires `RESEND_API_KEY` and `LEAD_TO_EMAIL` in production. `LEAD_FROM_EMAIL` is optional.
+- If you still maintain the Cloudflare deployment path, rerun `pnpm run cf-typegen` after changing `wrangler.jsonc`.
 
 ## Important Paths
 
